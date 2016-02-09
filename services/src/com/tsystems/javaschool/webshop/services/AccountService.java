@@ -1,4 +1,4 @@
-package services;
+package com.tsystems.javaschool.webshop.services;
 
 /** Used to manage user accounts.
  */
