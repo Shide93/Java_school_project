@@ -1,34 +1,13 @@
 package com.tsystems.javaschool.webshop.dao;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import com.tsystems.javaschool.webshop.dao.exceptions.DaoException;
 
 /**
- *
+ * Created by Shide on 11.02.2016.
  */
-public class UsersDAO {
-    public void addUser() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("webShopDB");
-        EntityManager em = emf.createEntityManager();
+public interface UsersDAO {
 
-        User u = new User();
-        u.setName("asd");
-        u.setPassword("asdsa");
-        u.setEmail("ew@ds.rt");
-        u.setUserType("user");
-        u.setAddress("user");
-        u.setBirthDate("user");
-        u.setUserType("user");
-        em.getTransaction().begin();
-        em.persist(u);
-        em.getTransaction().commit();
-        em.close();
-        emf.close();
-    }
+    void addUser(User newUser) throws DaoException;
+    boolean isRegistered(String email);
 
-    public static void main(String[] args) {
-        UsersDAO usersDAO = new UsersDAO();
-        usersDAO.addUser();
-    }
 }

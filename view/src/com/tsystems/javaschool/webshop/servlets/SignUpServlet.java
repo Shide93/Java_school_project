@@ -2,6 +2,7 @@ package com.tsystems.javaschool.webshop.servlets;
 
 import com.tsystems.javaschool.webshop.services.AccountService;
 import com.tsystems.javaschool.webshop.services.AccountServiceImpl;
+import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,15 +16,33 @@ import java.io.IOException;
  */
 @WebServlet(value = "/signup")
 public class SignUpServlet extends HttpServlet {
+
+    private AccountService accountService;
+
+    public SignUpServlet() {
+        this.accountService = new AccountServiceImpl();
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        String name = req.getParameter("name");
+
 
         //create user
-        AccountService accountService = new AccountServiceImpl();
-        accountService.createUser(email, password, name);
+        try {
+            accountService.createUser(email, password);
+            resp.getWriter().println("OK!");
+            resp.setStatus(HttpServletResponse.SC_OK);
+        } catch (ServiceException e) {
+            //log
+            //
+            resp.getWriter().println("ERROR! " + e.getMessage());
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+
+
     }
 }

@@ -13,10 +13,10 @@
 </head>
 <body>
     <form class="" action="/signup" method="post">
-        email
-        <input class="" type="text" name="email">
-        pass
-        <input class="" type="text" name="password">
+        email<br>
+        <input class="" type="text" name="email"><br>
+        password<br>
+        <input class="" type="text" name="password"><br>
 
         <input class="" type="submit">
 

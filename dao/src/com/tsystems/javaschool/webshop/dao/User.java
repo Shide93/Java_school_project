@@ -1,11 +1,12 @@
 package com.tsystems.javaschool.webshop.dao;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
-@SuppressWarnings("ALL")
+
 @Entity
 @Table(name = "user")
-public class User {
+public class User { //Manually created
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +19,7 @@ public class User {
     private String lastName;
 
     @Column(name = "birth_date")
-    private String birthDate;
+    private Timestamp birthDate; //Timestamp? Date?
 
     @Column(name = "email")
     private String email;
@@ -29,6 +30,7 @@ public class User {
     @Column(name = "address")
     private String address;
 
+    //TODO: to enum: user, manager
     @Column(name = "user_type")
     private String userType;
 
@@ -44,7 +46,7 @@ public class User {
         return lastName;
     }
 
-    public String getBirthDate() {
+    public Timestamp getBirthDate() {
         return birthDate;
     }
 
@@ -72,7 +74,7 @@ public class User {
         this.lastName = lastName;
     }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(Timestamp birthDate) {
         this.birthDate = birthDate;
     }
 
