@@ -1,21 +1,24 @@
-package com.tsystems.javaschool.webshop.dao;
+package com.tsystems.javaschool.webshop.dao.DAOImpl;
 
+import com.tsystems.javaschool.webshop.dao.DAOInterfaces.UsersDAO;
+import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.dao.exceptions.DaoException;
+import com.tsystems.javaschool.webshop.dao.utils.EntityManagerFactorySingleton;
 
 import javax.persistence.*;
 
 /**
  *
  */
-public class UsersDAOImpl  implements UsersDAO{
+public class UsersDAOImpl  implements UsersDAO {
 
     private EntityManagerFactory entityManagerFactory;
 
     public UsersDAOImpl() {
-        entityManagerFactory = Persistence.createEntityManagerFactory("webShopDB");
+        entityManagerFactory = EntityManagerFactorySingleton.getInstance().getFactory();
     }
 
-    public void addUser(User newUser) throws DaoException {
+    public void addUser(UserEntity newUser) throws DaoException {
         EntityManager manager = entityManagerFactory.createEntityManager();
 
         EntityTransaction tr = manager.getTransaction();
@@ -34,19 +37,19 @@ public class UsersDAOImpl  implements UsersDAO{
         manager.close();
     }
 
-    public boolean isRegistered(String email) {
-
+    @Override
+    public UserEntity getUserByEmail(String email) {
         EntityManager manager = entityManagerFactory.createEntityManager();
 
-        try{
-            Query query = manager.createQuery("SELECT u FROM User u WHERE u.email = :email");
+        try {
+            Query query = manager.createNamedQuery("UserEntity.getByEmail");
             query.setParameter("email", email);
-            if(query.getResultList().size() > 0) {
-                return true;
-            }
-        }finally {
+            return (UserEntity) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } finally {
             manager.close();
         }
-        return false;
     }
+
 }

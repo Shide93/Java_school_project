@@ -1,26 +1,23 @@
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %><%--
-  Created by IntelliJ IDEA.
-  User: Shide
-  Date: 08.02.2016
-  Time: 20:57
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Sign up</title>
-</head>
-<body>
-    <form class="" action="/signup" method="post">
-        email<br>
-        <input class="" type="text" name="email"><br>
-        password<br>
-        <input class="" type="text" name="password"><br>
+<%@page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:frontendLayout>
+    <jsp:attribute name="content">
 
-        <input class="" type="submit">
+         <div class="">
+             <h2>Sign up</h2>
+             <form class="" action="/signup" method="post">
+                 email<br>
+                 <input class="" type="text" name="email"><br>
 
-    </form>
-</body>
-</html>
+                 password<br>
+                 <input class="" type="text" name="password"><br>
+
+                 <input class="" type="submit">
+
+             </form>
+         </div>
+    </jsp:attribute>
+
+</t:frontendLayout>
 

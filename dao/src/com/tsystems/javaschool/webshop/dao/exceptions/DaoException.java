@@ -1,9 +1,10 @@
 package com.tsystems.javaschool.webshop.dao.exceptions;
 
 /**
- * Created by Shide on 11.02.2016.
+ *
  */
 public class DaoException extends Exception {
+
     public DaoException() {
     }
 
