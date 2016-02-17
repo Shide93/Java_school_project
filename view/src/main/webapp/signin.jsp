@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Sign in</title>
@@ -15,6 +15,9 @@
 
             <div class="">Password</div>
             <input class="" type="text" name="password"><br>
+
+            <span class="">Remember me?</span>
+            <input class="" type="checkbox" name="remember">
 
             <input class="" type="submit">
 

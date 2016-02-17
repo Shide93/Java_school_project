@@ -9,11 +9,13 @@ import com.tsystems.javaschool.webshop.dao.exceptions.DaoException;
 public interface UsersDAO {
 
     /**
+     *
      * Adds new user to DB.
      * @param newUser user to add
+     * @return user id
      * @throws DaoException throws when adding failed
      */
-    void addUser(UserEntity newUser) throws DaoException;
+    int addUser(UserEntity newUser) throws DaoException;
 
     /**
      * Search a user by his email.

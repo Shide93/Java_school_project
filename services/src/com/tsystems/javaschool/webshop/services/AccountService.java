@@ -8,21 +8,28 @@ import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 public interface AccountService {
 
     /**
-     * Signs up user in shop.
+     *  Signs up user in shop.
+     *
+     * @param name user name
+     * @param lastName user last name
      * @param email user email
      * @param password user password
+     * @return user id
      * @throws ServiceException
      */
-    void signUpUser(String email, String password) throws ServiceException;
+    int signUpUser(String name, String lastName, String email, String password) throws ServiceException;
 
     /**
      * Sign in user to shop.
+     *
      * @param email user email
      * @param password user password
+     * @return user id
+     * @throws ServiceException
      */
-    void signInUser(String email, String password);
+    int signInUser(String email, String password) throws ServiceException;
 
     void logout();
 
-    void getUSerInfo();
+    void getUSerProfile();
 }

@@ -7,11 +7,20 @@
          <div class="">
              <h2>Sign up</h2>
              <form class="" action="/signup" method="post">
-                 email<br>
+                 <div class="">Name</div>
+                 <input class="" type="text" name="name"><br>
+
+                 <div class="">Last name</div>
+                 <input class="" type="text" name="last_name"><br>
+
+                 <div class="">Email</div>
                  <input class="" type="text" name="email"><br>
 
-                 password<br>
-                 <input class="" type="text" name="password"><br>
+                 <div class="">Password</div>
+                 <input class="" type="password" name="password"><br>
+
+                 <div class="">Re-type password</div>
+                 <input class="" type="password" name="password2"><br>
 
                  <input class="" type="submit">
 
