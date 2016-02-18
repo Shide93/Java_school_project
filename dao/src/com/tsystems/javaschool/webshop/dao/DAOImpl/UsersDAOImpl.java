@@ -22,17 +22,17 @@ public class UsersDAOImpl  implements UsersDAO {
         entityManagerFactory = EntityManagerFactorySingleton.getInstance().getFactory();
     }
 
-    public int addUser(UserEntity newUser) throws DaoException {
+    public UserEntity addUser(UserEntity newUser) throws DaoException {
         EntityManager manager = entityManagerFactory.createEntityManager();
 
         EntityTransaction tr = manager.getTransaction();
         try {
-            int userId = 0;
+
             tr.begin();
             manager.persist(newUser);
-            userId = newUser.getId();
+
             tr.commit();
-            return userId;
+            return newUser;
         } catch (RollbackException e) {
             tr.rollback();
             LOGGER.error("add user transaction rollbacked", e);
@@ -57,4 +57,13 @@ public class UsersDAOImpl  implements UsersDAO {
         }
     }
 
+    @Override
+    public UserEntity getUserById(int id) {
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        try {
+            return manager.find(UserEntity.class, id);
+        } finally {
+            manager.close();
+        }
+    }
 }

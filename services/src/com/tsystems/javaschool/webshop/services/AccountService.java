@@ -1,5 +1,6 @@
 package com.tsystems.javaschool.webshop.services;
 
+import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 
 /**
@@ -17,19 +18,29 @@ public interface AccountService {
      * @return user id
      * @throws ServiceException
      */
-    int signUpUser(String name, String lastName, String email, String password) throws ServiceException;
+    UserEntity signUpUser(String name, String lastName, String email, String password) throws ServiceException;
 
     /**
      * Sign in user to shop.
      *
      * @param email user email
      * @param password user password
-     * @return user id
+     * @return user object
      * @throws ServiceException
      */
-    int signInUser(String email, String password) throws ServiceException;
+    UserEntity signInUser(String email, String password) throws ServiceException;
 
-    void logout();
+    /**
+     * Checks is user exists in base.
+     * @param userID user id
+     * @return user object
+     */
+    UserEntity getUser(int userID);
 
-    void getUSerProfile();
+    /**
+     * Saves user profile.
+     * @param user
+     * @return
+     */
+    boolean saveUser(UserEntity user);
 }

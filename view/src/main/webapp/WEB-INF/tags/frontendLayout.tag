@@ -6,18 +6,18 @@
 <t:mainLayout>
     <jsp:attribute name="header">
         <div class="">abc</div>
-        <c:if test="${sessionScope.userID != null}">
+        <c:if test="${sessionScope.user != null}">
             <div class="">
-                <a href="/profile">Привет ${sessionScope.userID}</a>
+                <a href="<c:url value="/profile.jsp"/>">Привет ${sessionScope.user.getName()}</a>
                 /
-                <a href="/logout">Выход</a>
+                <a href="<c:url value="/logout"/>">Выход</a>
             </div>
         </c:if>
-        <c:if test="${sessionScope.userID == null}">
+        <c:if test="${sessionScope.user == null}">
             <div class="">
-                <a href="signin.jsp">Вход</a>
+                <a href="<c:url value="/signin.jsp"/>">Вход</a>
                 /
-                <a href="signup.jsp">Регистрация</a>
+                <a href="<c:url value="/signup.jsp"/>">Регистрация</a>
             </div>
         </c:if>
     </jsp:attribute>

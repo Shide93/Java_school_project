@@ -34,13 +34,31 @@
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>SaveProfileServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.webshop.servlets.SaveProfileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SaveProfileServlet</servlet-name>
+        <url-pattern>/saveprofile</url-pattern>
+    </servlet-mapping>
+
     <!--Filters-->
     <filter>
-        <filter-name>SignInCheckFilter</filter-name>
-        <filter-class>com.tsystems.javaschool.webshop.servlets.SignInCheckFilter</filter-class>
+        <filter-name>AuthCheckFilter</filter-name>
+        <filter-class>com.tsystems.javaschool.webshop.servlets.AuthCheckFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>SignInCheckFilter</filter-name>
+        <filter-name>AuthCheckFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>RedirectFilter</filter-name>
+        <filter-class>com.tsystems.javaschool.webshop.servlets.RedirectFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RedirectFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 

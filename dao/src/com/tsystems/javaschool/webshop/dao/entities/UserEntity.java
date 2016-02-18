@@ -1,14 +1,6 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -26,7 +18,8 @@ public class UserEntity {
     private String name;
     private String lastName;
     private Timestamp birthDate;
-    private String userType;
+    private Boolean isAdmin;
+    private AddressEntity address;
 
     @Id
     @Column(name = "id")
@@ -90,14 +83,36 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "user_type")
-    public String getUserType() {
-        return userType;
+    @Column(name = "is_admin")
+    public Boolean getIsAdmin() {
+        return isAdmin;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType;
+    public void setIsAdmin(Boolean userType) {
+        this.isAdmin = userType;
     }
 
+    @OneToOne
+    @JoinColumn(name = "address_id")
+    public AddressEntity getAddress() {
+        return address;
+    }
 
+    public void setAddress(AddressEntity address) {
+        this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthDate=" + birthDate +
+                ", isAdmin=" + isAdmin +
+                ", address=" + address +
+                '}';
+    }
 }

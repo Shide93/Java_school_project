@@ -1,5 +1,9 @@
 package com.tsystems.javaschool.webshop.servlets;
 
+import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
+import com.tsystems.javaschool.webshop.services.AccountService;
+import com.tsystems.javaschool.webshop.services.AccountServiceImpl;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -16,12 +20,16 @@ import java.io.IOException;
  * Servlet filter that checks is user already authorized.
  *
  * Checks is the user have authorized cookie and associates session with user.
- * Otherwise creates an unauthorized session and set cookie userId = -1.
  */
-public class SignInCheckFilter implements Filter {
+public class AuthCheckFilter implements Filter {
+    /**
+     * AccountService instance
+     */
+    private AccountService accountService;
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        accountService = new AccountServiceImpl();
     }
 
     @Override
@@ -29,35 +37,28 @@ public class SignInCheckFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
-
         HttpSession session = req.getSession();
 
-        // if user already associated to session
-        if (session.getAttribute("userID") != null) {
-            if (session.getAttribute("userID").equals("-1")
-                    && req.getRequestURI().equals("/checkout")) {       // if unauthorized tries to buy
-                resp.sendRedirect("/signin.jsp");
-                return;
-            }
+        // if user already associated to session - pass through
+        if (session.getAttribute("user") != null) {
             chain.doFilter(request, response);
             return;
         }
-        //TODO: how to save unauth user cart when he close browser??????
-        //TODO: check auth user cookie and associate session
-        //if user enters site first time
-        if (req.getCookies() == null) {
-            session.setAttribute("userID", req.getServletContext().getAttribute("UNAUTHORIZED_USER"));
-
-        } else {
-            //if user enters site repeatedly
-         /*   for (Cookie cookie : req.getCookies()) {
+        //TODO: how to save unauth user cart when he close browser? - create cartFilter and set cart cookie to users!
+        //if user enters site with user cookie - associate user with session
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("userID")) {
-                    // req.
+                    UserEntity user = accountService.getUser(Integer.parseInt(cookie.getValue()));
+                    if (user == null) {
+                        req.getSession().setAttribute("user", user);
+                        break;
+                    }
                 }
-            }*/
+            }
         }
-
-        chain.doFilter(request, response);
+        chain.doFilter(req, resp);
     }
 
     @Override

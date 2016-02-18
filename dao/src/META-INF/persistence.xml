@@ -3,6 +3,17 @@
 
     <persistence-unit name="webShopDB" transaction-type="RESOURCE_LOCAL">
         <class>com.tsystems.javaschool.webshop.dao.entities.UserEntity</class>
+        <class>com.tsystems.javaschool.webshop.dao.entities.AddressEntity</class>
+        <class>com.tsystems.javaschool.webshop.dao.entities.CartEntity</class>
+        <class>com.tsystems.javaschool.webshop.dao.entities.CartProductEntity</class>
+        <class>com.tsystems.javaschool.webshop.dao.entities.CategoryEntity</class>
+        <class>com.tsystems.javaschool.webshop.dao.entities.CategoryProductEntity</class>
+        <class>com.tsystems.javaschool.webshop.dao.entities.FeatureEntity</class>
+        <class>com.tsystems.javaschool.webshop.dao.entities.FeatureValueEntity</class>
+        <class>com.tsystems.javaschool.webshop.dao.entities.OrderEntity</class>
+        <class>com.tsystems.javaschool.webshop.dao.entities.OrderProductEntity</class>
+        <class>com.tsystems.javaschool.webshop.dao.entities.ProductEntity</class>
+        <class>com.tsystems.javaschool.webshop.dao.entities.FeatureValueProductEntity</class>
         <validation-mode>AUTO</validation-mode>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/web_shop"/>
@@ -13,7 +24,7 @@
             <property name="hibernate.archive.autodetection" value="class"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
-            <property name="hibernate.hbm2ddl.auto" value="validate"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="javax.persistence.validation.mode" value="AUTO" />
             <property name="hibernate.validator.autoregister_listeners" value="true" />
             <property name="javax.persistence.validation.group.pre-persist" value="javax.validation.groups.Default"/>

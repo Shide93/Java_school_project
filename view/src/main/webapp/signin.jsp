@@ -8,16 +8,19 @@
     <div class="">
         <h2>Sign in</h2>
         <div>Please sign in using the form below</div>
-        <form class="" action="/signin" method="post">
+        <form class="" action="<c:url value="/signin"/>" method="post">
 
-            <div class="">Email</div>
-            <input class="" type="text" name="email"><br>
+            <label>Email
+                <input class="" type="email" name="email">
+            </label><br>
 
-            <div class="">Password</div>
-            <input class="" type="text" name="password"><br>
+            <label>Password
+                <input class="" type="text" name="password">
+            </label><br>
 
-            <span class="">Remember me?</span>
-            <input class="" type="checkbox" name="remember">
+            <label>Remember me
+                <input class="" type="checkbox" name="remember" checked>
+            </label>
 
             <input class="" type="submit">
 

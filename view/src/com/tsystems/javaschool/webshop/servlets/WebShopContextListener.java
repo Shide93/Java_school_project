@@ -12,7 +12,6 @@ public class WebShopContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         sce.getServletContext().setAttribute("USER_COOKIE_MAX_AGE", 2 * 60);
-        sce.getServletContext().setAttribute("UNAUTHORIZED_USER", "-1");
         EntityManagerFactorySingleton.getInstance();
     }
 

@@ -22,7 +22,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
 
-    public int signUpUser(String name, String lastName, String email, String password) throws ServiceException {
+    public UserEntity signUpUser(String name, String lastName, String email, String password) throws ServiceException {
 
         //TODO: validate email, hash password
 
@@ -34,7 +34,7 @@ public class AccountServiceImpl implements AccountService {
         newUser.setPassword(password);
         newUser.setName(name);
         newUser.setLastName(lastName);
-        newUser.setUserType("user");
+        newUser.setIsAdmin(false);
         try {
             return usersDAO.addUser(newUser);
         } catch (DaoException e) {
@@ -44,8 +44,9 @@ public class AccountServiceImpl implements AccountService {
 
     }
 
+
     @Override
-    public int signInUser(String email, String password) throws ServiceException{
+    public UserEntity signInUser(String email, String password) throws ServiceException{
 
         UserEntity user = usersDAO.getUserByEmail(email);
 
@@ -53,20 +54,22 @@ public class AccountServiceImpl implements AccountService {
             throw new ServiceException("User with this email not found");
         }
         //TODO: hash password
+
         if (!user.getPassword().equals(password)) {
             throw new ServiceException("Wrong password");
         }
-        return user.getId();
+        return user;
 
     }
 
     @Override
-    public void logout() {
-
+    public UserEntity getUser(int userID) {
+        return usersDAO.getUserById(userID);
     }
 
     @Override
-    public void getUSerProfile() {
-
+    public boolean saveUser(UserEntity user) {
+        return false;
     }
+
 }

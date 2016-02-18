@@ -1,5 +1,6 @@
 package com.tsystems.javaschool.webshop.servlets;
 
+import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.services.AccountService;
 import com.tsystems.javaschool.webshop.services.AccountServiceImpl;
 
@@ -44,12 +45,12 @@ public class SignUpServlet extends HttpServlet {
 
         //create user
         try {
-            int userId = accountService.signUpUser(name, lastName, email, password);
+            UserEntity user = accountService.signUpUser(name, lastName, email, password);
 
-            Cookie cookie = new Cookie("userID", String.valueOf(userId));
+            Cookie cookie = new Cookie("userID", String.valueOf(user.getId()));
             cookie.setMaxAge((Integer) this.getServletContext().getAttribute("USER_COOKIE_MAX_AGE"));
             resp.addCookie(cookie);
-            req.getSession().setAttribute("userID", userId);
+            req.getSession().setAttribute("user", user);
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.sendRedirect("/welcome.jsp");
         } catch (ServiceException e) {

@@ -6,21 +6,30 @@
 
          <div class="">
              <h2>Sign up</h2>
-             <form class="" action="/signup" method="post">
-                 <div class="">Name</div>
-                 <input class="" type="text" name="name"><br>
+             <form class="" action="<c:url value="/signup"/>" method="post">
 
-                 <div class="">Last name</div>
-                 <input class="" type="text" name="last_name"><br>
+                 <label>Name
+                     <input class="" type="text" name="name">
+                 </label><br>
 
-                 <div class="">Email</div>
-                 <input class="" type="text" name="email"><br>
 
-                 <div class="">Password</div>
-                 <input class="" type="password" name="password"><br>
+                 <label>Last name
+                     <input class="" type="text" name="last_name">
+                 </label><br>
 
-                 <div class="">Re-type password</div>
-                 <input class="" type="password" name="password2"><br>
+
+                 <label> Email
+                     <input class="" type="email" name="email">
+                 </label><br>
+
+
+                 <label>Password
+                     <input class="" type="password" name="password">
+                 </label><br>
+
+                 <label>Re-type password
+                     <input class="" type="password" name="password2">
+                 </label><br>
 
                  <input class="" type="submit">
 

@@ -1,5 +1,6 @@
 package com.tsystems.javaschool.webshop.servlets;
 
+import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.services.AccountService;
 import com.tsystems.javaschool.webshop.services.AccountServiceImpl;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
@@ -36,13 +37,14 @@ public class SignInServlet extends HttpServlet {
         System.out.println(email + " " + isRemember);
         try {
 
-            int userId = accountService.signInUser(email, password);
+            UserEntity user = accountService.signInUser(email, password);
+            System.out.println(user);
             if (isRemember != null && isRemember.equals("on")) {
-                Cookie cookie = new Cookie("userID", String.valueOf(userId));
+                Cookie cookie = new Cookie("userID", String.valueOf(user.getId()));
                 cookie.setMaxAge((Integer) this.getServletContext().getAttribute("USER_COOKIE_MAX_AGE"));
                 resp.addCookie(cookie);
             }
-            req.getSession().setAttribute("userID", userId);
+            req.getSession().setAttribute("user", user);
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.sendRedirect("/");
         } catch (ServiceException e) {

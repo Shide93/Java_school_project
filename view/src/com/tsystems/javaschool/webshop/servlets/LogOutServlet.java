@@ -14,11 +14,12 @@ public class LogOutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        if (req.getSession().getAttribute("userID") != null) {
+        if (req.getSession().getAttribute("user") != null) {
             req.getSession().invalidate();
             Cookie clrUserID = new Cookie("userID", "");
             clrUserID.setMaxAge(0);
             resp.addCookie(clrUserID);
+            resp.sendRedirect("/");
         }
     }
 }

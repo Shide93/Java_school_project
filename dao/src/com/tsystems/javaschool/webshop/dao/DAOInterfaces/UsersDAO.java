@@ -15,7 +15,7 @@ public interface UsersDAO {
      * @return user id
      * @throws DaoException throws when adding failed
      */
-    int addUser(UserEntity newUser) throws DaoException;
+    UserEntity addUser(UserEntity newUser) throws DaoException;
 
     /**
      * Search a user by his email.
@@ -23,5 +23,12 @@ public interface UsersDAO {
      * @return User object or null if user not found
      */
     UserEntity getUserByEmail(String email);
+
+    /**
+     * Search user by his id
+     * @param id user id in DB
+     * @return User object or null if user not found
+     */
+    UserEntity getUserById(int id);
 
 }
