@@ -1,7 +1,7 @@
 package com.tsystems.javaschool.webshop.services.exceptions;
 
 /**
- * Created by Shide on 11.02.2016.
+ * Exception of service layer.
  */
 public class ServiceException extends Exception {
     public ServiceException() {

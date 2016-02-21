@@ -8,7 +8,7 @@
         <div class="">abc</div>
         <c:if test="${sessionScope.user != null}">
             <div class="">
-                <a href="<c:url value="/profile.jsp"/>">Привет ${sessionScope.user.getName()}</a>
+                <a href="<c:url value="/profile"/>">Привет ${sessionScope.user.name}</a>
                 /
                 <a href="<c:url value="/logout"/>">Выход</a>
             </div>

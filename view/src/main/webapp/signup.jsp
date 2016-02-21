@@ -19,7 +19,7 @@
 
 
                  <label> Email
-                     <input class="" type="email" name="email">
+                     <input class="" type="" name="email">
                  </label><br>
 
 

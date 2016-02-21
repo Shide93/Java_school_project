@@ -3,6 +3,8 @@ package com.tsystems.javaschool.webshop.services;
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 
+import java.util.Date;
+
 /**
  * Used to manage user accounts.
  */
@@ -16,7 +18,7 @@ public interface AccountService {
      * @param email user email
      * @param password user password
      * @return user id
-     * @throws ServiceException
+     * @throws ServiceException when user cannot been created
      */
     UserEntity signUpUser(String name, String lastName, String email, String password) throws ServiceException;
 
@@ -25,8 +27,8 @@ public interface AccountService {
      *
      * @param email user email
      * @param password user password
-     * @return user object
-     * @throws ServiceException
+     * @return user object if found
+     * @throws ServiceException if password wrong or user not found
      */
     UserEntity signInUser(String email, String password) throws ServiceException;
 
@@ -39,8 +41,33 @@ public interface AccountService {
 
     /**
      * Saves user profile.
-     * @param user
-     * @return
+     * @param email user email
+     * @param password user password
+     * @param name user name
+     * @param lastName user lastName
+     * @param phone user phone
+     * @param birthDate user birthDate
+     * @param country user country
+     * @param region user region
+     * @param city user city
+     * @param zip user zip
+     * @param addr user addr
+     * @param oldUser old user
+     * @return user that saved to db
+     * @throws ServiceException if user save failed
      */
-    boolean saveUser(UserEntity user);
+    UserEntity saveProfile(String email,
+                           String password,
+                           String name,
+                           String lastName,
+                           String phone,
+                           Date birthDate,
+                           String country,
+                           String region,
+                           String city,
+                           Integer zip,
+                           String addr,
+                           UserEntity oldUser)
+            throws ServiceException;
+
 }

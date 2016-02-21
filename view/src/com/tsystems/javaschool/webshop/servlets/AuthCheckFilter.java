@@ -38,7 +38,7 @@ public class AuthCheckFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession();
-
+        System.out.println("AUTHER AAAA = "+((HttpServletRequest) request).getRequestURL());
         // if user already associated to session - pass through
         if (session.getAttribute("user") != null) {
             chain.doFilter(request, response);
@@ -51,7 +51,7 @@ public class AuthCheckFilter implements Filter {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("userID")) {
                     UserEntity user = accountService.getUser(Integer.parseInt(cookie.getValue()));
-                    if (user == null) {
+                    if (user != null) {
                         req.getSession().setAttribute("user", user);
                         break;
                     }

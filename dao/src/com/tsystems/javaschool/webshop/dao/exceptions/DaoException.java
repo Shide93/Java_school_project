@@ -1,7 +1,7 @@
 package com.tsystems.javaschool.webshop.dao.exceptions;
 
 /**
- *
+ * Exception of dao layer.
  */
 public class DaoException extends Exception {
 

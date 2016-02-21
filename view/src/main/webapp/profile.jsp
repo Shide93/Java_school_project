@@ -6,24 +6,19 @@
 
         <div class="">
             <h2>Your Profile, ${sessionScope.user.name}!</h2>
-            <form class="" action="<c:url value="/saveprofile"/>" method="post">
+            <form class="" action="<c:url value="/profile"/>" method="post">
                 <div class="">
                     <h6>Change email:</h6>
                     <label>Email
-                        <input class="" type="email" name="email" value="${sessionScope.user.email}">
+                        <input class="" type="" name="email" value="${sessionScope.user.email}">
                     </label><br>
                 </div>
                 <div>
                     <h6>Change password:</h6>
 
-
-                    <label>Old password
-                        <input class="" type="password" name="old_password">
-                    </label><br>
-
-
-                    <label>New password
-                        <input class="" type="password" name="password">
+                    <label>Password
+                        <input class="" type="password" name="password" value="${sessionScope.user.password}">
+                        <span class = "">${requestScope.passNotEq}</span>
                     </label><br>
 
                     <div class="">Re-type password</div>
@@ -42,9 +37,13 @@
                     <label>Last name
                         <input class="" type="text" name="last_name" value="${sessionScope.user.lastName}">
                     </label><br>
+                    <label>Phone
+                        <input class="" type="text" name="phone" value="${sessionScope.user.phone}">
+                    </label><br>
 
                     <label>Birth date
                         <input class="" type="text" name="birth_date" value="${sessionScope.user.birthDate}">
+                        <span class = "">${requestScope.wrongBirth}</span>
                     </label><br>
                 </div>
                 <div class="">
@@ -64,10 +63,11 @@
 
                     <label>Zip
                         <input class="" type="text" name="zip" value="${sessionScope.user.address.zip}">
+                        <span class = "">${requestScope.wrongZip}</span>
                     </label><br>
 
                     <label>Address
-                        <input class="" type="text" name="address" value="${sessionScope.user.address.address}">
+                        <input class="" type="text" name="address" value="${sessionScope.user.address.addr}">
                     </label><br>
 
                 </div>

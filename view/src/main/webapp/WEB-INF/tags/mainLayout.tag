@@ -9,13 +9,26 @@
 <html>
     <head>
         <title>${title}</title>
+        <link rel="stylesheet" href="../../css/main.css"/>
+        <script type="text/javascript" src="../../js/main.js"></script>
     </head>
     <body>
         <header>
+            ${requestScope}
+            <br>
+            ${sessionScope}
+            <br>
+            ${cookie}
+            <br>
+            ${pageContext}
+            <br>
+            ${initParam}
+            <br>
+            ${param}
             <jsp:invoke fragment="header"/>
         </header>
 
-        <div ckass="sidebar">
+        <div class="sidebar">
             <jsp:invoke fragment="sidebar"/>
         </div>
 

@@ -36,7 +36,7 @@ public class RedirectFilter implements Filter {
                 return;
             }
 
-            if (req.getRequestURI().equals("/profile.jsp")){
+            if (req.getRequestURI().equals("/profile")){
                 resp.sendRedirect("/");
                 return;
             }

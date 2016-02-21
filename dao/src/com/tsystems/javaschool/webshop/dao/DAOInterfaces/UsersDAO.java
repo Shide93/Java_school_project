@@ -31,4 +31,6 @@ public interface UsersDAO {
      */
     UserEntity getUserById(int id);
 
+
+    UserEntity updateUser(UserEntity user) throws DaoException;
 }

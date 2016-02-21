@@ -1,6 +1,5 @@
 package com.tsystems.javaschool.webshop.dao.utils;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -28,7 +27,7 @@ public final class EntityManagerFactorySingleton {
             instance = new EntityManagerFactorySingleton();
         }
         return instance;
-    };
+    }
 
     /**
      * Method is used to close factory on application close.

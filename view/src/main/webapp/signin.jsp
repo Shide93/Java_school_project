@@ -11,7 +11,7 @@
         <form class="" action="<c:url value="/signin"/>" method="post">
 
             <label>Email
-                <input class="" type="email" name="email">
+                <input class="" type="" name="email">
             </label><br>
 
             <label>Password

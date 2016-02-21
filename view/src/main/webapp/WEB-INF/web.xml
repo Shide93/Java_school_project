@@ -40,7 +40,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>SaveProfileServlet</servlet-name>
-        <url-pattern>/saveprofile</url-pattern>
+        <url-pattern>/profile</url-pattern>
     </servlet-mapping>
 
     <!--Filters-->

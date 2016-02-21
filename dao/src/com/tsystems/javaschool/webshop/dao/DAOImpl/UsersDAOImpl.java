@@ -66,4 +66,25 @@ public class UsersDAOImpl  implements UsersDAO {
             manager.close();
         }
     }
+
+    @Override
+    public UserEntity updateUser(UserEntity user) throws  DaoException{
+
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        EntityTransaction tr = manager.getTransaction();
+        try {
+
+            tr.begin();
+
+            manager.merge(user);
+            tr.commit();
+            return user;
+        } catch (RollbackException e) {
+            tr.rollback();
+            LOGGER.error("update user transaction rollbacked", e);
+            throw new DaoException("adding user is rollbacked", e);
+        } finally {
+            manager.close();
+        }
+    }
 }

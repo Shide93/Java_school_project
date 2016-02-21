@@ -42,7 +42,9 @@ public class SignUpServlet extends HttpServlet {
 
         //TODO:validate email
         //TODO:validate pass
-
+        if (!password.equals(password2)) {
+            //TODO: passwords are not equal
+        }
         //create user
         try {
             UserEntity user = accountService.signUpUser(name, lastName, email, password);

@@ -1,7 +1,19 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
+
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import java.util.Date;
 
 /**
  *
@@ -17,7 +29,8 @@ public class UserEntity {
     private String password;
     private String name;
     private String lastName;
-    private Timestamp birthDate;
+    private String phone;
+    private Date birthDate;
     private Boolean isAdmin;
     private AddressEntity address;
 
@@ -73,12 +86,22 @@ public class UserEntity {
     }
 
     @Basic
+    @Column(name = "phone")
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    @Basic
     @Column(name = "birth_date")
-    public Timestamp getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Timestamp birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -92,7 +115,7 @@ public class UserEntity {
         this.isAdmin = userType;
     }
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinColumn(name = "address_id")
     public AddressEntity getAddress() {
         return address;
