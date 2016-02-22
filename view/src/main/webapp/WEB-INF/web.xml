@@ -43,6 +43,15 @@
         <url-pattern>/profile</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ProductPageServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.webshop.servlets.ProductPageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProductPageServlet</servlet-name>
+        <url-pattern>/product/*</url-pattern>
+    </servlet-mapping>
+
     <!--Filters-->
     <filter>
         <filter-name>AuthCheckFilter</filter-name>
@@ -60,6 +69,7 @@
     <filter-mapping>
         <filter-name>RedirectFilter</filter-name>
         <url-pattern>/*</url-pattern>
+
     </filter-mapping>
 
     <!--Listeners-->

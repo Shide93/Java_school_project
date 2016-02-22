@@ -1,23 +1,26 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.Set;
 
 /**
- * Created by Shide on 18.02.2016.
+ * Created by Shide on 22.02.2016.
  */
 @Entity
-@Table(name = "feature", schema = "web_shop", catalog = "")
+@Table(name = "feature", schema = "web_shop")
 public class FeatureEntity {
     private int id;
     private String name;
     private String type;
-    private String dimension;
-    private Set<FeatureValueEntity> featureValues;
+    private Set<ProductFeatureEntity> products;
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -46,22 +49,21 @@ public class FeatureEntity {
         this.type = type;
     }
 
-    @Basic
-    @Column(name = "dimension")
-    public String getDimension() {
-        return dimension;
-    }
-
-    public void setDimension(String dimension) {
-        this.dimension = dimension;
-    }
-
     @OneToMany(mappedBy = "feature")
-    public Set<FeatureValueEntity> getFeatureValues() {
-        return featureValues;
+    public Set<ProductFeatureEntity> getProducts() {
+        return products;
     }
 
-    public void setFeatureValues(Set<FeatureValueEntity> featureValues) {
-        this.featureValues = featureValues;
+    public void setProducts(Set<ProductFeatureEntity> products) {
+        this.products = products;
+    }
+
+    @Override
+    public String toString() {
+        return "FeatureEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                '}';
     }
 }

@@ -41,33 +41,11 @@ public interface AccountService {
 
     /**
      * Saves user profile.
-     * @param email user email
-     * @param password user password
-     * @param name user name
-     * @param lastName user lastName
-     * @param phone user phone
-     * @param birthDate user birthDate
-     * @param country user country
-     * @param region user region
-     * @param city user city
-     * @param zip user zip
-     * @param addr user addr
-     * @param oldUser old user
+     * @param user user with new values
      * @return user that saved to db
      * @throws ServiceException if user save failed
      */
-    UserEntity saveProfile(String email,
-                           String password,
-                           String name,
-                           String lastName,
-                           String phone,
-                           Date birthDate,
-                           String country,
-                           String region,
-                           String city,
-                           Integer zip,
-                           String addr,
-                           UserEntity oldUser)
+    UserEntity saveProfile(UserEntity user)
             throws ServiceException;
 
 }

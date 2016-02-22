@@ -22,7 +22,7 @@
         </c:if>
     </jsp:attribute>
     <jsp:attribute name="sidebar">
-        <div>this is sidebar</div>
+       <jsp:include page="sidebar.jsp"/>
     </jsp:attribute>
     <jsp:attribute name="content">
        <jsp:invoke fragment="content"/>

@@ -5,10 +5,16 @@ import com.tsystems.javaschool.webshop.dao.exceptions.DaoException;
 import javax.persistence.EntityManager;
 
 /**
- * Created by Shide on 22.02.2016.
+ * Loads data from DAO.
+ * @param <T> type of return object
  */
 @FunctionalInterface
 public interface ServiceLoadAction<T> {
-
-    void performAction(EntityManager manager) throws DaoException;
+    /**
+     *
+     * @param manager used to work with DAO
+     * @return object of specified type
+     * @throws DaoException if something wrong
+     */
+    T performAction(EntityManager manager) throws DaoException;
 }

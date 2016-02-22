@@ -10,11 +10,11 @@ import java.util.List;
 /**
  * Implementation of genericDAO interface.
  */
-public class GenericDAOImpl<T> implements GenericDAO<T> {
+public class AbstractGenericDAO<T> implements GenericDAO<T> {
 
     private Class<T> type;
 
-    public GenericDAOImpl(Class<T> type) {
+    public AbstractGenericDAO(Class<T> type) {
         this.type = type;
     }
 

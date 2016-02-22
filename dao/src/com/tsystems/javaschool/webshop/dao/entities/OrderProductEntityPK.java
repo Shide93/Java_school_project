@@ -5,20 +5,20 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by Shide on 21.02.2016.
+ * Created by Shide on 22.02.2016.
  */
-public class CartProductEntityPK implements Serializable {
-    private int cartId;
+public class OrderProductEntityPK implements Serializable {
+    private int orderId;
     private int productId;
 
-    @Column(name = "cart_id")
+    @Column(name = "order_id")
     @Id
-    public int getCartId() {
-        return cartId;
+    public int getOrderId() {
+        return orderId;
     }
 
-    public void setCartId(int cartId) {
-        this.cartId = cartId;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
     @Column(name = "product_id")
@@ -36,16 +36,16 @@ public class CartProductEntityPK implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CartProductEntityPK that = (CartProductEntityPK) o;
+        OrderProductEntityPK that = (OrderProductEntityPK) o;
 
-        if (cartId != that.cartId) return false;
+        if (orderId != that.orderId) return false;
         return productId == that.productId;
 
     }
 
     @Override
     public int hashCode() {
-        int result = cartId;
+        int result = orderId;
         result = 31 * result + productId;
         return result;
     }

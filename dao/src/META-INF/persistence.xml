@@ -6,11 +6,12 @@
         <class>com.tsystems.javaschool.webshop.dao.entities.AddressEntity</class>
         <class>com.tsystems.javaschool.webshop.dao.entities.CartEntity</class>
         <class>com.tsystems.javaschool.webshop.dao.entities.CategoryEntity</class>
-        <class>com.tsystems.javaschool.webshop.dao.entities.FeatureEntity</class>
-        <class>com.tsystems.javaschool.webshop.dao.entities.FeatureValueEntity</class>
         <class>com.tsystems.javaschool.webshop.dao.entities.OrderEntity</class>
         <class>com.tsystems.javaschool.webshop.dao.entities.ProductEntity</class>
         <class>com.tsystems.javaschool.webshop.dao.entities.CartProductEntity</class>
+        <class>com.tsystems.javaschool.webshop.dao.entities.FeatureEntity</class>
+        <class>com.tsystems.javaschool.webshop.dao.entities.ProductFeatureEntity</class>
+        <class>com.tsystems.javaschool.webshop.dao.entities.OrderProductEntity</class>
         <validation-mode>AUTO</validation-mode>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/web_shop"/>

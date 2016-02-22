@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Set;
@@ -14,11 +16,13 @@ import java.util.Set;
  * Created by Shide on 18.02.2016.
  */
 @Entity
-@Table(name = "cart", schema = "web_shop", catalog = "")
+@NamedQueries({
+        @NamedQuery(name = "CartEntity.getByCookie", query = "SELECT c FROM CartEntity c WHERE cookie = :cookie")
+})
+@Table(name = "cart", schema = "web_shop")
 public class CartEntity {
     private int id;
-    private String code;
-    private int userId;
+    private String cookie;
     private Set<CartProductEntity> products;
 
     @Id
@@ -33,23 +37,13 @@ public class CartEntity {
     }
 
     @Basic
-    @Column(name = "code")
-    public String getCode() {
-        return code;
+    @Column(name = "cookie", nullable = false, unique = true)
+    public String getCookie() {
+        return cookie;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    @Basic
-    @Column(name = "user_id")
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setCookie(String cookie) {
+        this.cookie = cookie;
     }
 
     @OneToMany(mappedBy = "cart")
@@ -65,8 +59,7 @@ public class CartEntity {
     public String toString() {
         return "CartEntity{" +
                 "id=" + id +
-                ", code='" + code + '\'' +
-                ", userId=" + userId +
+                ", cookie='" + cookie + '\'' +
                 ", products=" + products +
                 '}';
     }

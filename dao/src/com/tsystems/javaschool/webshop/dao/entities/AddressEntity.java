@@ -1,6 +1,12 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "address", schema = "web_shop")
@@ -10,7 +16,9 @@ public class AddressEntity {
     private String region;
     private String city;
     private int zip;
-    private String addr;
+    private String street;
+    private int building;
+    private int flat;
 
 
     @Id
@@ -65,13 +73,33 @@ public class AddressEntity {
     }
 
     @Basic
-    @Column(name = "addr")
-    public String getAddr() {
-        return addr;
+    @Column(name = "street")
+    public String getStreet() {
+        return street;
     }
 
-    public void setAddr(String addr) {
-        this.addr = addr;
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    @Basic
+    @Column(name = "building")
+    public int getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(int building) {
+        this.building = building;
+    }
+
+    @Basic
+    @Column(name = "flat")
+    public int getFlat() {
+        return flat;
+    }
+
+    public void setFlat(int flat) {
+        this.flat = flat;
     }
 
     @Override
@@ -82,7 +110,10 @@ public class AddressEntity {
                 ", region='" + region + '\'' +
                 ", city='" + city + '\'' +
                 ", zip=" + zip +
-                ", addr='" + addr + '\'' +
+                ", street='" + street + '\'' +
+                ", building=" + building +
+                ", flat=" + flat +
                 '}';
     }
 }
+

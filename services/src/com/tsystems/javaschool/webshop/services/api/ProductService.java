@@ -8,51 +8,15 @@ import java.util.List;
 /**
  * Service provides product manipulation logic.
  */
-public interface ProductService {
+public interface ProductService extends GenericService<ProductEntity> {
+
 
     /**
-     *
-     * @param product
-     * @throws ServiceException
-     */
-    void addProduct(ProductEntity product) throws ServiceException;
-
-    /**
-     *
-     * @param product
-     * @throws ServiceException
-     */
-    void updateProduct(ProductEntity product) throws ServiceException;
-
-    /**
-     *
-     * @param product
-     * @throws ServiceException
-     */
-    void deleteProduct(ProductEntity product) throws ServiceException;
-
-    /**
-     *
-     * @param productId
-     * @return
-     * @throws ServiceException
-     */
-    ProductEntity getProduct(int productId) throws ServiceException;
-
-    /**
-     *
-     * @return
-     * @throws ServiceException
-     */
-    List<ProductEntity> getAllProducts() throws ServiceException;
-
-    /**
-     *
-     * @param searchQuery
-     * @return
+     * Searches products that contain string in name or description.
+     * @param searchQuery query to search
+     * @return list of products that satisfact query
      * @throws ServiceException
      */
     List<ProductEntity> searchProducts(String searchQuery) throws ServiceException;
-
 
 }

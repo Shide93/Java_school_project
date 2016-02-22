@@ -3,10 +3,12 @@ package com.tsystems.javaschool.webshop.dao.entities;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Set;
 
@@ -19,10 +21,12 @@ public class ProductEntity {
     private int id;
     private String name;
     private int price;
-    private Integer count;
+    private Integer stock;
     private String description;
     private String sku;
     private Set<CategoryEntity> categories;
+    private Set<ProductFeatureEntity> features;
+    private Set<OrderProductEntity> orders;
 
     @Id
     @Column(name = "id")
@@ -56,13 +60,13 @@ public class ProductEntity {
     }
 
     @Basic
-    @Column(name = "count")
-    public Integer getCount() {
-        return count;
+    @Column(name = "stock")
+    public Integer getStock() {
+        return stock;
     }
 
-    public void setCount(Integer count) {
-        this.count = count;
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 
     @Basic
@@ -85,7 +89,7 @@ public class ProductEntity {
         this.sku = sku;
     }
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(mappedBy = "products", fetch = FetchType.EAGER)
     public Set<CategoryEntity> getCategories() {
         return categories;
     }
@@ -94,16 +98,36 @@ public class ProductEntity {
         this.categories = categories;
     }
 
+    @OneToMany(mappedBy = "product")
+    public Set<ProductFeatureEntity> getFeatures() {
+        return features;
+    }
+
+    public void setFeatures(Set<ProductFeatureEntity> features) {
+        this.features = features;
+    }
+
+    @OneToMany(mappedBy = "product")
+    public Set<OrderProductEntity> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<OrderProductEntity> orders) {
+        this.orders = orders;
+    }
+
     @Override
     public String toString() {
         return "ProductEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
-                ", count=" + count +
+                ", stock=" + stock +
                 ", description='" + description + '\'' +
                 ", sku='" + sku + '\'' +
                 ", categories=" + categories +
+                ", features=" + features +
+                ", orders=" + orders +
                 '}';
     }
 }

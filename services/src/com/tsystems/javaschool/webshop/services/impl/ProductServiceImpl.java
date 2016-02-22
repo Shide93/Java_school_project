@@ -5,8 +5,9 @@ import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
 import com.tsystems.javaschool.webshop.dao.impl.ProductDAOImpl;
 import com.tsystems.javaschool.webshop.services.api.ProductService;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
-import com.tsystems.javaschool.webshop.services.util.GenericService;
-import com.tsystems.javaschool.webshop.services.util.GenericServiceImpl;
+import com.tsystems.javaschool.webshop.services.util.ServiceHelper;
+import com.tsystems.javaschool.webshop.services.util.ServiceHelperImpl;
+import com.tsystems.javaschool.webshop.services.util.ServiceLoadAction;
 
 import java.util.List;
 
@@ -16,55 +17,63 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     private ProductDAO productDAO;
-    private GenericService genericService;
+    private ServiceHelper serviceHelper;
     public ProductServiceImpl() {
         productDAO = new ProductDAOImpl();
 
-        genericService = new GenericServiceImpl();
+        serviceHelper = new ServiceHelperImpl();
     }
 
     @Override
-    public void addProduct(ProductEntity product) throws ServiceException {
+    public void add(ProductEntity product) throws ServiceException {
 
-        genericService.executeTransactionally(manager -> {
-            ProductEntity prod = new ProductEntity();
-            prod.setName("qwe");
-            prod.setPrice(123);
+        serviceHelper.executeTransactionally(manager -> {
+
             //TODO: HOW THIS WORKS? WHY Product DAO accessed here???
-            productDAO.create(prod, manager);
-
+            productDAO.create(product, manager);
         });
     }
 
     @Override
-    public void updateProduct(ProductEntity product) throws ServiceException {
+    public void update(ProductEntity product) throws ServiceException {
+        serviceHelper.executeTransactionally(manager -> {
+
+            productDAO.update(product, manager);
+        });
+    }
+
+    @Override
+    public void delete(ProductEntity product) throws ServiceException {
+        serviceHelper.executeTransactionally(manager -> {
+
+            productDAO.delete(product, manager);
+        });
+    }
+
+    @Override
+    public ProductEntity get(int productId) throws ServiceException {
+        return serviceHelper.load(manager -> {
+
+            return productDAO.getById(productId, manager);
+        });
+
 
     }
 
     @Override
-    public void deleteProduct(ProductEntity product) throws ServiceException {
+    public List<ProductEntity> getAll() throws ServiceException {
+        return serviceHelper.loadTransactionally(manager -> {
 
-    }
-
-    @Override
-    public ProductEntity getProduct(int productId) throws ServiceException {
-
-
-        return null;
-    }
-
-    @Override
-    public List<ProductEntity> getAllProducts() throws ServiceException {
-        return null;
+            return productDAO.getAll(manager);
+        });
     }
 
     @Override
     public List<ProductEntity> searchProducts(String searchQuery) throws ServiceException {
-        return null;
-    }
+        return  serviceHelper.loadTransactionally((ServiceLoadAction<List<ProductEntity>>) manager -> {
 
-    public static void main(String[] args) throws ServiceException{
-        ProductService ps = new ProductServiceImpl();
-        ps.addProduct(new ProductEntity());
+
+            return null;
+        });
     }
 }

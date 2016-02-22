@@ -5,21 +5,11 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by Shide on 21.02.2016.
+ * Created by Shide on 22.02.2016.
  */
-public class CartProductEntityPK implements Serializable {
-    private int cartId;
+public class ProductFeatureEntityPK implements Serializable {
     private int productId;
-
-    @Column(name = "cart_id")
-    @Id
-    public int getCartId() {
-        return cartId;
-    }
-
-    public void setCartId(int cartId) {
-        this.cartId = cartId;
-    }
+    private int featureId;
 
     @Column(name = "product_id")
     @Id
@@ -31,22 +21,32 @@ public class CartProductEntityPK implements Serializable {
         this.productId = productId;
     }
 
+    @Column(name = "feature_id")
+    @Id
+    public int getFeatureId() {
+        return featureId;
+    }
+
+    public void setFeatureId(int featureId) {
+        this.featureId = featureId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CartProductEntityPK that = (CartProductEntityPK) o;
+        ProductFeatureEntityPK that = (ProductFeatureEntityPK) o;
 
-        if (cartId != that.cartId) return false;
-        return productId == that.productId;
+        if (productId != that.productId) return false;
+        return featureId == that.featureId;
 
     }
 
     @Override
     public int hashCode() {
-        int result = cartId;
-        result = 31 * result + productId;
+        int result = productId;
+        result = 31 * result + featureId;
         return result;
     }
 }

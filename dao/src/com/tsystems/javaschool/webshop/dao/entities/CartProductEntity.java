@@ -73,8 +73,8 @@ public class CartProductEntity {
     public String toString() {
         return "CartProductEntity{" +
                 "cartId=" + cartId +
+                ", productId=" + productId +
                 ", quantity=" + quantity +
-                ", product=" + product +
                 '}';
     }
 }

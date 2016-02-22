@@ -1,5 +1,6 @@
 package com.tsystems.javaschool.webshop.servlets;
 
+import com.tsystems.javaschool.webshop.dao.entities.AddressEntity;
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
 import com.tsystems.javaschool.webshop.services.impl.AccountServiceImpl;
@@ -83,15 +84,36 @@ public class SaveProfileServlet extends HttpServlet {
         }
         String addr = req.getParameter("address");
 
-        UserEntity oldUser = (UserEntity) req.getSession().getAttribute("user");
+        UserEntity user = (UserEntity) req.getSession().getAttribute("user");
+
+        user.setName(name);
+        user.setLastName(lastName);
+        user.setPhone(phone);
+        user.setBirthDate(birthDate);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setIsAdmin(false);
+        AddressEntity address = user.getAddress();
+        if (address != null) {
+            address.setCountry(country);
+            address.setRegion(region);
+            address.setCity(city);
+            if (zip != null) {
+                address.setZip(zip);
+            }
+            //TODO: remake address
+            address.setStreet(addr);
+            address.setBuilding(1);
+            address.setFlat(1);
+        }
+
         if (hasErrors) {
             RequestDispatcher rd = req.getRequestDispatcher("profile.jsp");
             rd.forward(req, resp);
         } else {
             try {
                 //TODO: change to updating current user in session, and JPA.refresh it if fails
-                UserEntity newUser = accountService.saveProfile(email, password, name, lastName, phone,
-                        birthDate, country, region, city, zip, addr, oldUser);
+                UserEntity newUser = accountService.saveProfile(user);
                 req.getSession().setAttribute("user", newUser);
                 req.setAttribute("profileSaved", "Profile saved!");
                 RequestDispatcher rd = req.getRequestDispatcher("profile.jsp");

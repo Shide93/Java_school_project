@@ -72,45 +72,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public UserEntity saveProfile(String email,
-                           String password,
-                           String name,
-                           String lastName,
-                           String phone,
-                           Date birthDate,
-                           String country,
-                           String region,
-                           String city,
-                           Integer zip,
-                           String addr,
-                           UserEntity oldUser)
+    public UserEntity saveProfile(UserEntity user)
             throws ServiceException {
 
-
-        UserEntity user = new UserEntity();
-        user.setId(oldUser.getId());
-        user.setName(name);
-        user.setLastName(lastName);
-        user.setPhone(phone);
-        user.setBirthDate(birthDate);
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setIsAdmin(false);
-        AddressEntity address = new AddressEntity();
-        if (oldUser.getAddress() != null) {
-            address.setId(oldUser.getAddress().getId());
-        }
-        address.setCountry(country);
-        address.setRegion(region);
-        address.setCity(city);
-        if (zip != null) {
-            address.setZip(zip);
-        }
-        address.setAddr(addr);
-        user.setAddress(address);
-
         try {
-            oldUser = usersDAO.updateUser(user);
+            usersDAO.updateUser(user);
             return null;
         } catch (DaoException e) {
             LOGGER.error("save profile failed", e);

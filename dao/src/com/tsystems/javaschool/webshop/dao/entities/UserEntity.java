@@ -1,19 +1,9 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
 
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 /**
  *
@@ -33,6 +23,7 @@ public class UserEntity {
     private Date birthDate;
     private Boolean isAdmin;
     private AddressEntity address;
+    private Set<OrderEntity> orders;
 
     @Id
     @Column(name = "id")
@@ -125,17 +116,12 @@ public class UserEntity {
         this.address = address;
     }
 
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", birthDate=" + birthDate +
-                ", isAdmin=" + isAdmin +
-                ", address=" + address +
-                '}';
+    @OneToMany(mappedBy = "user")
+    public Set<OrderEntity> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<OrderEntity> orders) {
+        this.orders = orders;
     }
 }
