@@ -1,8 +1,8 @@
 package com.tsystems.javaschool.webshop.servlets;
 
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
-import com.tsystems.javaschool.webshop.services.AccountService;
-import com.tsystems.javaschool.webshop.services.AccountServiceImpl;
+import com.tsystems.javaschool.webshop.services.api.AccountService;
+import com.tsystems.javaschool.webshop.services.impl.AccountServiceImpl;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -11,7 +11,6 @@ public class AddressEntity {
     private String city;
     private int zip;
     private String addr;
-    private UserEntity user;
 
 
     @Id
@@ -73,15 +72,6 @@ public class AddressEntity {
 
     public void setAddr(String addr) {
         this.addr = addr;
-    }
-
-    @OneToOne(mappedBy = "address")
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
     }
 
     @Override

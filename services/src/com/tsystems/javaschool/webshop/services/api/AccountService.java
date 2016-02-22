@@ -1,4 +1,4 @@
-package com.tsystems.javaschool.webshop.services;
+package com.tsystems.javaschool.webshop.services.api;
 
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;

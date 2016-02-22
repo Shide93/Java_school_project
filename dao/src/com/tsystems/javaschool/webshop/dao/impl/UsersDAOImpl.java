@@ -1,13 +1,18 @@
-package com.tsystems.javaschool.webshop.dao.DAOImpl;
+package com.tsystems.javaschool.webshop.dao.impl;
 
-import com.tsystems.javaschool.webshop.dao.DAOInterfaces.UsersDAO;
+import com.tsystems.javaschool.webshop.dao.api.UsersDAO;
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.dao.exceptions.DaoException;
 import com.tsystems.javaschool.webshop.dao.utils.EntityManagerFactorySingleton;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
+import javax.persistence.RollbackException;
 
 /**
  *

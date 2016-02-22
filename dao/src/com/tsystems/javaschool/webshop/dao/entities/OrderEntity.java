@@ -18,6 +18,7 @@ public class OrderEntity {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -86,36 +87,4 @@ public class OrderEntity {
         this.orderStatus = orderStatus;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        OrderEntity that = (OrderEntity) o;
-
-        if (id != that.id) return false;
-        if (userId != that.userId) return false;
-        if (addressId != that.addressId) return false;
-        if (paymentMethod != null ? !paymentMethod.equals(that.paymentMethod) : that.paymentMethod != null)
-            return false;
-        if (shippingMethod != null ? !shippingMethod.equals(that.shippingMethod) : that.shippingMethod != null)
-            return false;
-        if (paymentStatus != null ? !paymentStatus.equals(that.paymentStatus) : that.paymentStatus != null)
-            return false;
-        if (orderStatus != null ? !orderStatus.equals(that.orderStatus) : that.orderStatus != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + userId;
-        result = 31 * result + addressId;
-        result = 31 * result + (paymentMethod != null ? paymentMethod.hashCode() : 0);
-        result = 31 * result + (shippingMethod != null ? shippingMethod.hashCode() : 0);
-        result = 31 * result + (paymentStatus != null ? paymentStatus.hashCode() : 0);
-        result = 31 * result + (orderStatus != null ? orderStatus.hashCode() : 0);
-        return result;
-    }
 }

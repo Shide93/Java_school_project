@@ -1,16 +1,15 @@
-package com.tsystems.javaschool.webshop.services;
+package com.tsystems.javaschool.webshop.services.impl;
 
-import com.tsystems.javaschool.webshop.dao.DAOInterfaces.UsersDAO;
-import com.tsystems.javaschool.webshop.dao.DAOImpl.UsersDAOImpl;
+import com.tsystems.javaschool.webshop.dao.api.UsersDAO;
+import com.tsystems.javaschool.webshop.dao.impl.UsersDAOImpl;
 import com.tsystems.javaschool.webshop.dao.entities.AddressEntity;
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.dao.exceptions.DaoException;
-import com.tsystems.javaschool.webshop.dao.utils.EntityManagerFactorySingleton;
+import com.tsystems.javaschool.webshop.services.api.AccountService;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.persistence.EntityManager;
 import java.util.Date;
 
 /**
@@ -111,7 +110,8 @@ public class AccountServiceImpl implements AccountService {
         user.setAddress(address);
 
         try {
-            return usersDAO.updateUser(user);
+            oldUser = usersDAO.updateUser(user);
+            return null;
         } catch (DaoException e) {
             LOGGER.error("save profile failed", e);
             throw new ServiceException(e);

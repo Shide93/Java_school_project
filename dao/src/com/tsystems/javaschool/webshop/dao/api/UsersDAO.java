@@ -1,4 +1,4 @@
-package com.tsystems.javaschool.webshop.dao.DAOInterfaces;
+package com.tsystems.javaschool.webshop.dao.api;
 
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.dao.exceptions.DaoException;
@@ -31,6 +31,11 @@ public interface UsersDAO {
      */
     UserEntity getUserById(int id);
 
-
+    /**
+     * Update user with new values.
+     * @param user user object with new values
+     * @return updated object
+     * @throws DaoException if update failed
+     */
     UserEntity updateUser(UserEntity user) throws DaoException;
 }

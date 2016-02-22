@@ -1,8 +1,8 @@
 package com.tsystems.javaschool.webshop.servlets;
 
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
-import com.tsystems.javaschool.webshop.services.AccountService;
-import com.tsystems.javaschool.webshop.services.AccountServiceImpl;
+import com.tsystems.javaschool.webshop.services.api.AccountService;
+import com.tsystems.javaschool.webshop.services.impl.AccountServiceImpl;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -89,6 +89,7 @@ public class SaveProfileServlet extends HttpServlet {
             rd.forward(req, resp);
         } else {
             try {
+                //TODO: change to updating current user in session, and JPA.refresh it if fails
                 UserEntity newUser = accountService.saveProfile(email, password, name, lastName, phone,
                         birthDate, country, region, city, zip, addr, oldUser);
                 req.getSession().setAttribute("user", newUser);

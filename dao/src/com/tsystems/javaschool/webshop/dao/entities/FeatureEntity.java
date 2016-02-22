@@ -1,6 +1,7 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by Shide on 18.02.2016.
@@ -12,9 +13,11 @@ public class FeatureEntity {
     private String name;
     private String type;
     private String dimension;
+    private Set<FeatureValueEntity> featureValues;
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -53,27 +56,12 @@ public class FeatureEntity {
         this.dimension = dimension;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        FeatureEntity that = (FeatureEntity) o;
-
-        if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (type != null ? !type.equals(that.type) : that.type != null) return false;
-        if (dimension != null ? !dimension.equals(that.dimension) : that.dimension != null) return false;
-
-        return true;
+    @OneToMany(mappedBy = "feature")
+    public Set<FeatureValueEntity> getFeatureValues() {
+        return featureValues;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + (dimension != null ? dimension.hashCode() : 0);
-        return result;
+    public void setFeatureValues(Set<FeatureValueEntity> featureValues) {
+        this.featureValues = featureValues;
     }
 }

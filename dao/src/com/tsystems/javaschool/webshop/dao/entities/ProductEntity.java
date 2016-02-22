@@ -1,12 +1,20 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import java.util.Set;
 
 /**
- * Created by Shide on 18.02.2016.
+ *
  */
 @Entity
-@Table(name = "product", schema = "web_shop", catalog = "")
+@Table(name = "product", schema = "web_shop")
 public class ProductEntity {
     private int id;
     private String name;
@@ -14,9 +22,11 @@ public class ProductEntity {
     private Integer count;
     private String description;
     private String sku;
+    private Set<CategoryEntity> categories;
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -75,31 +85,25 @@ public class ProductEntity {
         this.sku = sku;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    @ManyToMany(mappedBy = "products")
+    public Set<CategoryEntity> getCategories() {
+        return categories;
+    }
 
-        ProductEntity that = (ProductEntity) o;
-
-        if (id != that.id) return false;
-        if (price != that.price) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (count != null ? !count.equals(that.count) : that.count != null) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (sku != null ? !sku.equals(that.sku) : that.sku != null) return false;
-
-        return true;
+    public void setCategories(Set<CategoryEntity> categories) {
+        this.categories = categories;
     }
 
     @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + price;
-        result = 31 * result + (count != null ? count.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (sku != null ? sku.hashCode() : 0);
-        return result;
+    public String toString() {
+        return "ProductEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", count=" + count +
+                ", description='" + description + '\'' +
+                ", sku='" + sku + '\'' +
+                ", categories=" + categories +
+                '}';
     }
 }

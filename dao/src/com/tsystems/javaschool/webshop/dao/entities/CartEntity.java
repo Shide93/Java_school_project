@@ -1,6 +1,14 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.util.Set;
 
 /**
  * Created by Shide on 18.02.2016.
@@ -11,9 +19,11 @@ public class CartEntity {
     private int id;
     private String code;
     private int userId;
+    private Set<CartProductEntity> products;
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -42,25 +52,22 @@ public class CartEntity {
         this.userId = userId;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    @OneToMany(mappedBy = "cart")
+    public Set<CartProductEntity> getProducts() {
+        return products;
+    }
 
-        CartEntity that = (CartEntity) o;
-
-        if (id != that.id) return false;
-        if (userId != that.userId) return false;
-        if (code != null ? !code.equals(that.code) : that.code != null) return false;
-
-        return true;
+    public void setProducts(Set<CartProductEntity> products) {
+        this.products = products;
     }
 
     @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (code != null ? code.hashCode() : 0);
-        result = 31 * result + userId;
-        return result;
+    public String toString() {
+        return "CartEntity{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", userId=" + userId +
+                ", products=" + products +
+                '}';
     }
 }
