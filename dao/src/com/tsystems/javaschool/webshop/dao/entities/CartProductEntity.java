@@ -1,13 +1,6 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 @Entity
@@ -49,7 +42,7 @@ public class CartProductEntity {
         this.quantity = quantity;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id", insertable = false, updatable = false)
     public CartEntity getCart() {
         return cart;
@@ -59,7 +52,7 @@ public class CartProductEntity {
         this.cart = cart;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id", insertable = false, updatable = false)
     public ProductEntity getProduct() {
         return product;

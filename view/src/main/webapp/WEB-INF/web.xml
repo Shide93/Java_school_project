@@ -52,6 +52,23 @@
         <url-pattern>/product/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>CategoryServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.webshop.servlets.CategoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CategoryServlet</servlet-name>
+        <url-pattern>/category/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>CartServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.webshop.servlets.CartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CartServlet</servlet-name>
+        <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
     <!--Filters-->
     <filter>
         <filter-name>CookieCheckFilter</filter-name>

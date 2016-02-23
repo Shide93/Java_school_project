@@ -1,9 +1,9 @@
 package com.tsystems.javaschool.webshop.servlets;
 
-import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
-import com.tsystems.javaschool.webshop.services.api.ProductService;
+import com.tsystems.javaschool.webshop.dao.entities.CategoryEntity;
+import com.tsystems.javaschool.webshop.services.api.CategoryService;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
-import com.tsystems.javaschool.webshop.services.impl.ProductServiceImpl;
+import com.tsystems.javaschool.webshop.services.impl.CategoryServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,58 +16,56 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
- * Created by Shide on 22.02.2016.
+ * Created by Shide on 23.02.2016.
  */
-public class ProductPageServlet extends HttpServlet {
+public class CategoryServlet extends HttpServlet {
+
     private static final Logger LOGGER = LogManager.getLogger(ProductPageServlet.class);
 
-    private ProductService productService;
+    private CategoryService categoryService;
 
-    public ProductPageServlet() {
-        this.productService = new ProductServiceImpl();
+    public CategoryServlet() {
+        this.categoryService = new CategoryServiceImpl();
     }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        //parse request and extract productId
+        //TODO: here is code duplication, need to create Frontend Controller
+        //parse request and extract categoryId
         String path = req.getRequestURI();
         LOGGER.warn(path);
         String[] tokens = path.split("/");
         LOGGER.warn(Arrays.toString(tokens));
-        int productId = 0;
+        int categoryId = 0;
         for (int i = 0; i < tokens.length; i++) {
-            if (tokens[i].equals("product")) {
+            if (tokens[i].equals("category")) {
                 try {
-                    productId = Integer.parseInt(tokens[i + 1]);
+                    categoryId = Integer.parseInt(tokens[i + 1]);
                     break;
                 } catch (NumberFormatException e) {
-                    LOGGER.warn("Entered rong path query", e);
+                    LOGGER.warn("Entered Wrong path query", e);
                     resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                     resp.sendRedirect("/error.jsp");
                     return;
                 }
             }
         }
-        //retrieve product data by id and send to view
-        LOGGER.info("asdasdsad " + productId);
+        //retrieve category data by id and send to view
         try {
-            ProductEntity product = productService.get(productId);
-            req.setAttribute("product", product);
+            CategoryEntity category = categoryService.get(categoryId);
+            req.setAttribute("category", category);
         } catch (ServiceException e) {
-            LOGGER.error("cannot find product with id " + productId, e);
+            LOGGER.error("cannot find product with id " + categoryId, e);
             resp.sendRedirect("/error.jsp");
             return;
         }
-        RequestDispatcher rd = req.getRequestDispatcher("/product.jsp");
+        RequestDispatcher rd = req.getRequestDispatcher("/category.jsp");
         rd.forward(req, resp);
 
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-
+        super.doPost(req, resp);
     }
 }

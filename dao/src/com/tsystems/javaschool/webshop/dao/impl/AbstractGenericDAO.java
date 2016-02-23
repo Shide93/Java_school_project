@@ -42,6 +42,9 @@ public class AbstractGenericDAO<T> implements GenericDAO<T> {
         try {
             manager.merge(obj);
         } catch (Exception e) {
+            //TODO: try-catch somehow
+            //TODO: how to revert changes of entity
+            //manager.refresh(obj);
             throw  new DaoException(e);
         }
     }

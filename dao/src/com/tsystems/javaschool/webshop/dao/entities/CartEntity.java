@@ -59,12 +59,23 @@ public class CartEntity {
         this.summary = summary;
     }
 
-    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER)
-    public Set<CartProductEntity> getProducts() {
+    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    public Set<CartProductEntity> getItems() {
         return items;
     }
 
-    public void setProducts(Set<CartProductEntity> products) {
+    public void setItems(Set<CartProductEntity> products) {
         this.items = products;
+    }
+
+    @Override
+    public String toString() {
+        return "CartEntity{" +
+                "id=" + id +
+                ", cookie='" + cookie + '\'' +
+                ", count=" + count +
+                ", summary=" + summary +
+                ", items=" + items +
+                '}';
     }
 }

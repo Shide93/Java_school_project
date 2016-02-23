@@ -14,4 +14,13 @@ public interface CartService extends GenericService<CartEntity> {
      * @throws ServiceException if smth wrong
      */
     CartEntity getByCookie(String cookie) throws ServiceException;
+
+    /**
+     * Method adds product with it's quantity to cart.
+     * @param productId id of product to add
+     * @param quantity quantity of product in cart
+     * @param cart cart to add product
+     * @throws ServiceException if smth wrong
+     */
+    void addToCart(Integer productId, Integer quantity, CartEntity cart) throws ServiceException;
 }
