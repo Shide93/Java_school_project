@@ -19,7 +19,7 @@ import java.util.Arrays;
  * Created by Shide on 22.02.2016.
  */
 public class ProductPageServlet extends HttpServlet {
-    private static final Logger LOGGER = LogManager.getLogger(SaveProfileServlet.class);
+    private static final Logger LOGGER = LogManager.getLogger(ProductPageServlet.class);
 
     private ProductService productService;
 
@@ -30,6 +30,7 @@ public class ProductPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        //parse request and extract productId
         String path = req.getRequestURI();
         LOGGER.warn(path);
         String[] tokens = path.split("/");
@@ -45,7 +46,7 @@ public class ProductPageServlet extends HttpServlet {
                 return;
             }
         }
-
+        //retrieve product data by id and send to view
         try {
             ProductEntity product = productService.get(productId);
             req.setAttribute("product", product);
@@ -60,6 +61,8 @@ public class ProductPageServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //buy button processing
+
 
     }
 }

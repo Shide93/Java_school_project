@@ -1,11 +1,6 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 /**
@@ -21,6 +16,7 @@ public class FeatureEntity {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -49,7 +45,7 @@ public class FeatureEntity {
         this.type = type;
     }
 
-    @OneToMany(mappedBy = "feature")
+    @OneToMany(mappedBy = "feature", fetch = FetchType.EAGER)
     public Set<ProductFeatureEntity> getProducts() {
         return products;
     }

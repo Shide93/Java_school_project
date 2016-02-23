@@ -1,15 +1,6 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 /**
@@ -23,7 +14,9 @@ import java.util.Set;
 public class CartEntity {
     private int id;
     private String cookie;
-    private Set<CartProductEntity> products;
+    private int count;
+    private int summary;
+    private Set<CartProductEntity> items;
 
     @Id
     @Column(name = "id")
@@ -46,21 +39,32 @@ public class CartEntity {
         this.cookie = cookie;
     }
 
-    @OneToMany(mappedBy = "cart")
+    @Basic
+    @Column(name = "items_count")
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    @Basic
+    @Column(name = "summary")
+    public int getSummary() {
+        return summary;
+    }
+
+    public void setSummary(int summary) {
+        this.summary = summary;
+    }
+
+    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER)
     public Set<CartProductEntity> getProducts() {
-        return products;
+        return items;
     }
 
     public void setProducts(Set<CartProductEntity> products) {
-        this.products = products;
-    }
-
-    @Override
-    public String toString() {
-        return "CartEntity{" +
-                "id=" + id +
-                ", cookie='" + cookie + '\'' +
-                ", products=" + products +
-                '}';
+        this.items = products;
     }
 }

@@ -9,22 +9,22 @@
 <html>
     <head>
         <title>${title}</title>
-        <link rel="stylesheet" href="../../css/main.css"/>
-        <script type="text/javascript" src="../../js/main.js"></script>
+        <link rel="stylesheet" href="<c:url value="/css/main.css"/>"type="text/css"/>
+        <script type="text/javascript" src="<c:url value="/js/main.js"/>"></script>
     </head>
     <body>
-        <header>
-            ${requestScope}
+        <header class="header">
+           Request: ${requestScope}
             <br>
-            ${sessionScope}
+           Session: ${sessionScope}
             <br>
-            ${cookie}
+           Cookies:  ${cookie}
             <br>
-            ${pageContext}
+           Page: ${pageContext}
             <br>
-            ${initParam}
+           InitParam: ${initParam}
             <br>
-            ${param}
+           Param: ${param}
             <jsp:invoke fragment="header"/>
         </header>
 
@@ -36,7 +36,7 @@
             <jsp:invoke fragment="content"/>
         </div>
 
-        <footer>
+        <footer class="footer">
             <jsp:invoke fragment="footer"/>
         </footer>
     </body>

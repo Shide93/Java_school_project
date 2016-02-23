@@ -98,7 +98,7 @@ public class ProductEntity {
         this.categories = categories;
     }
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     public Set<ProductFeatureEntity> getFeatures() {
         return features;
     }
@@ -107,7 +107,7 @@ public class ProductEntity {
         this.features = features;
     }
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     public Set<OrderProductEntity> getOrders() {
         return orders;
     }

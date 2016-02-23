@@ -3,8 +3,12 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <t:frontendLayout>
     <jsp:attribute name="content">
+        <div class="">
+            <h1 class="">Product ${requestScope.product.name}</h1>
 
-        <h1 class="">Product ${requestScope.product.name}</h1>
+
+
+        </div>
 
     </jsp:attribute>
 

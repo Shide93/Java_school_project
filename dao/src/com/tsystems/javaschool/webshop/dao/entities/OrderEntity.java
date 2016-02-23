@@ -1,15 +1,10 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import com.tsystems.javaschool.webshop.dao.entities.enums.OrderStatus;
+import com.tsystems.javaschool.webshop.dao.entities.enums.PaymentMethod;
+import com.tsystems.javaschool.webshop.dao.entities.enums.ShippringMethod;
+
+import javax.persistence.*;
 import java.util.Set;
 
 /**
@@ -21,10 +16,9 @@ public class OrderEntity {
     private int id;
     private UserEntity user;
     private AddressEntity address;
-    private String paymentMethod;
-    private String shippingMethod;
-    private String paymentStatus;
-    private String orderStatus;
+    private PaymentMethod paymentMethod;
+    private ShippringMethod shippingMethod;
+    private OrderStatus orderStatus;
     private Set<OrderProductEntity> products;
 
     @Id
@@ -60,45 +54,38 @@ public class OrderEntity {
 
     @Basic
     @Column(name = "payment_method")
-    public String getPaymentMethod() {
+    @Enumerated(EnumType.STRING)
+    public PaymentMethod getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 
     @Basic
     @Column(name = "shipping_method")
-    public String getShippingMethod() {
+    @Enumerated(EnumType.STRING)
+    public ShippringMethod getShippingMethod() {
         return shippingMethod;
     }
 
-    public void setShippingMethod(String shippingMethod) {
+    public void setShippingMethod(ShippringMethod shippingMethod) {
         this.shippingMethod = shippingMethod;
     }
 
     @Basic
-    @Column(name = "payment_status")
-    public String getPaymentStatus() {
-        return paymentStatus;
-    }
-
-    public void setPaymentStatus(String paymentStatus) {
-        this.paymentStatus = paymentStatus;
-    }
-
-    @Basic
     @Column(name = "order_status")
-    public String getOrderStatus() {
+    @Enumerated(EnumType.STRING)
+    public OrderStatus getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(String orderStatus) {
+    public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
     }
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     public Set<OrderProductEntity> getProducts() {
         return products;
     }
@@ -115,7 +102,6 @@ public class OrderEntity {
                 ", address=" + address +
                 ", paymentMethod='" + paymentMethod + '\'' +
                 ", shippingMethod='" + shippingMethod + '\'' +
-                ", paymentStatus='" + paymentStatus + '\'' +
                 ", orderStatus='" + orderStatus + '\'' +
                 ", products=" + products +
                 '}';

@@ -19,7 +19,8 @@ public class LogOutServlet extends HttpServlet {
             Cookie clrUserID = new Cookie("userID", "");
             clrUserID.setMaxAge(0);
             resp.addCookie(clrUserID);
-            resp.sendRedirect("/");
+            System.out.println("blah");
+            resp.sendRedirect("");
         }
     }
 }

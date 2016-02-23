@@ -5,14 +5,15 @@ import com.tsystems.javaschool.webshop.dao.entities.CartEntity;
 import com.tsystems.javaschool.webshop.dao.exceptions.DaoException;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 /**
  * Created by Shide on 22.02.2016.
  */
-public class CartDaoImpl extends AbstractGenericDAO<CartEntity> implements CartDAO {
+public class CartDAOImpl extends AbstractGenericDAO<CartEntity> implements CartDAO {
 
-    public CartDaoImpl() {
+    public CartDAOImpl() {
         super(CartEntity.class);
     }
 
@@ -22,6 +23,9 @@ public class CartDaoImpl extends AbstractGenericDAO<CartEntity> implements CartD
             TypedQuery<CartEntity> query = manager.createNamedQuery("CartEntity.getByCookie", CartEntity.class);
             query.setParameter("cookie", cookie);
             return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+            //TODO: need return null but method creates exception is it good to catch like that?
         } catch (Exception e) {
             throw  new DaoException(e);
         }
