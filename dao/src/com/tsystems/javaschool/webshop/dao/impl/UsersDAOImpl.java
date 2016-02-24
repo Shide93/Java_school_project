@@ -15,19 +15,29 @@ import javax.persistence.Query;
 import javax.persistence.RollbackException;
 
 /**
- *
+ * The type Users dao.
  */
 public class UsersDAOImpl  implements UsersDAO {
 
+    /**
+     * The constant LOGGER.
+     */
     private static final Logger LOGGER = LogManager.getLogger(UsersDAOImpl.class);
 
+    /**
+     * The Entity manager factory.
+     */
     private EntityManagerFactory entityManagerFactory;
 
+    /**
+     * Instantiates a new Users dao.
+     */
     public UsersDAOImpl() {
-        entityManagerFactory = EntityManagerFactorySingleton.getInstance().getFactory();
+        entityManagerFactory =
+                EntityManagerFactorySingleton.getInstance().getFactory();
     }
-
-    public UserEntity addUser(UserEntity newUser) throws DaoException {
+    @Override
+    public final UserEntity addUser(final UserEntity newUser) throws DaoException {
         EntityManager manager = entityManagerFactory.createEntityManager();
 
         EntityTransaction tr = manager.getTransaction();
@@ -48,7 +58,7 @@ public class UsersDAOImpl  implements UsersDAO {
     }
 
     @Override
-    public UserEntity getUserByEmail(String email) {
+    public final UserEntity getUserByEmail(final String email) {
         EntityManager manager = entityManagerFactory.createEntityManager();
 
         try {
@@ -63,7 +73,7 @@ public class UsersDAOImpl  implements UsersDAO {
     }
 
     @Override
-    public UserEntity getUserById(int id) {
+    public final UserEntity getUserById(final int id) {
         EntityManager manager = entityManagerFactory.createEntityManager();
         try {
             return manager.find(UserEntity.class, id);
@@ -73,7 +83,7 @@ public class UsersDAOImpl  implements UsersDAO {
     }
 
     @Override
-    public UserEntity updateUser(UserEntity user) throws  DaoException{
+    public final UserEntity updateUser(final UserEntity user) throws  DaoException{
 
         EntityManager manager = entityManagerFactory.createEntityManager();
         EntityTransaction tr = manager.getTransaction();

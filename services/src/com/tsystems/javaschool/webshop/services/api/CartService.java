@@ -8,7 +8,7 @@ import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
  */
 public interface CartService extends GenericService<CartEntity> {
     /**
-     * Search cart by cookie
+     * Search cart by cookie.
      * @param cookie cookie of cart needed
      * @return cart or null if not found
      * @throws ServiceException if smth wrong
@@ -22,5 +22,7 @@ public interface CartService extends GenericService<CartEntity> {
      * @param cart cart to add product
      * @throws ServiceException if smth wrong
      */
-    void addToCart(Integer productId, Integer quantity, CartEntity cart) throws ServiceException;
+    void addToCart(Integer productId,
+                   Integer quantity, CartEntity cart)
+            throws ServiceException;
 }

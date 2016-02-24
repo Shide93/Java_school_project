@@ -13,111 +13,228 @@ import javax.persistence.Table;
 import java.util.Set;
 
 /**
- *
+ * The type Product entity.
  */
 @Entity
 @Table(name = "product", schema = "web_shop")
 public class ProductEntity {
+    /**
+     * The Id.
+     */
     private int id;
+    /**
+     * The Name.
+     */
     private String name;
+    /**
+     * The Price.
+     */
     private int price;
+    /**
+     * The Stock.
+     */
     private Integer stock;
+    /**
+     * The Description.
+     */
     private String description;
+    /**
+     * The Sku.
+     */
     private String sku;
+    /**
+     * The Categories.
+     */
     private Set<CategoryEntity> categories;
+    /**
+     * The Features.
+     */
     private Set<ProductFeatureEntity> features;
+    /**
+     * The Orders.
+     */
     private Set<OrderProductEntity> orders;
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int getId() {
+    public final int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
+    public final void setId(final int id) {
         this.id = id;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     @Basic
     @Column(name = "name")
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
+    public final void setName(final String name) {
         this.name = name;
     }
 
+    /**
+     * Gets price.
+     *
+     * @return the price
+     */
     @Basic
     @Column(name = "price")
-    public int getPrice() {
+    public final int getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    /**
+     * Sets price.
+     *
+     * @param price the price
+     */
+    public final void setPrice(final int price) {
         this.price = price;
     }
 
+    /**
+     * Gets stock.
+     *
+     * @return the stock
+     */
     @Basic
     @Column(name = "stock")
-    public Integer getStock() {
+    public final Integer getStock() {
         return stock;
     }
 
-    public void setStock(Integer stock) {
+    /**
+     * Sets stock.
+     *
+     * @param stock the stock
+     */
+    public final void setStock(final Integer stock) {
         this.stock = stock;
     }
 
+    /**
+     * Gets description.
+     *
+     * @return the description
+     */
     @Basic
     @Column(name = "description")
-    public String getDescription() {
+    public final String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    /**
+     * Sets description.
+     *
+     * @param description the description
+     */
+    public final void setDescription(final String description) {
         this.description = description;
     }
 
+    /**
+     * Gets sku.
+     *
+     * @return the sku
+     */
     @Basic
     @Column(name = "sku")
-    public String getSku() {
+    public final String getSku() {
         return sku;
     }
 
-    public void setSku(String sku) {
+    /**
+     * Sets sku.
+     *
+     * @param sku the sku
+     */
+    public final void setSku(final String sku) {
         this.sku = sku;
     }
 
+    /**
+     * Gets categories.
+     *
+     * @return the categories
+     */
     @ManyToMany(mappedBy = "products", fetch = FetchType.EAGER)
-    public Set<CategoryEntity> getCategories() {
+    public final Set<CategoryEntity> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<CategoryEntity> categories) {
+    /**
+     * Sets categories.
+     *
+     * @param categories the categories
+     */
+    public final void setCategories(final Set<CategoryEntity> categories) {
         this.categories = categories;
     }
 
+    /**
+     * Gets features.
+     *
+     * @return the features
+     */
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
-    public Set<ProductFeatureEntity> getFeatures() {
+    public final Set<ProductFeatureEntity> getFeatures() {
         return features;
     }
 
-    public void setFeatures(Set<ProductFeatureEntity> features) {
+    /**
+     * Sets features.
+     *
+     * @param features the features
+     */
+    public final void setFeatures(final Set<ProductFeatureEntity> features) {
         this.features = features;
     }
 
+    /**
+     * Gets orders.
+     *
+     * @return the orders
+     */
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
-    public Set<OrderProductEntity> getOrders() {
+    public final Set<OrderProductEntity> getOrders() {
         return orders;
     }
 
-    public void setOrders(Set<OrderProductEntity> orders) {
+    /**
+     * Sets orders.
+     *
+     * @param orders the orders
+     */
+    public final void setOrders(final Set<OrderProductEntity> orders) {
         this.orders = orders;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return "ProductEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +

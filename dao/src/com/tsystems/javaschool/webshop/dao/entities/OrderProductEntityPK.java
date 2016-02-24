@@ -8,31 +8,57 @@ import java.io.Serializable;
  * Created by Shide on 22.02.2016.
  */
 public class OrderProductEntityPK implements Serializable {
+    /**
+     * The Order id.
+     */
     private int orderId;
+    /**
+     * The Product id.
+     */
     private int productId;
 
+    /**
+     * Gets order id.
+     *
+     * @return the order id
+     */
     @Column(name = "order_id")
     @Id
-    public int getOrderId() {
+    public final int getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(int orderId) {
+    /**
+     * Sets order id.
+     *
+     * @param orderId the order id
+     */
+    public final void setOrderId(final int orderId) {
         this.orderId = orderId;
     }
 
+    /**
+     * Gets product id.
+     *
+     * @return the product id
+     */
     @Column(name = "product_id")
     @Id
-    public int getProductId() {
+    public final int getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    /**
+     * Sets product id.
+     *
+     * @param productId the product id
+     */
+    public final void setProductId(final int productId) {
         this.productId = productId;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public final boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -44,7 +70,7 @@ public class OrderProductEntityPK implements Serializable {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         int result = orderId;
         result = 31 * result + productId;
         return result;

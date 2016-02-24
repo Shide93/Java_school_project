@@ -5,34 +5,60 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by Shide on 21.02.2016.
+ * Primary key for caertProductEntity.
  */
 public class CartProductEntityPK implements Serializable {
+    /**
+     * The Cart id.
+     */
     private int cartId;
+    /**
+     * The Product id.
+     */
     private int productId;
 
+    /**
+     * Gets cart id.
+     *
+     * @return the cart id
+     */
     @Column(name = "cart_id")
     @Id
-    public int getCartId() {
+    public final int getCartId() {
         return cartId;
     }
 
-    public void setCartId(int cartId) {
+    /**
+     * Sets cart id.
+     *
+     * @param cartId the cart id
+     */
+    public final void setCartId(final int cartId) {
         this.cartId = cartId;
     }
 
+    /**
+     * Gets product id.
+     *
+     * @return the product id
+     */
     @Column(name = "product_id")
     @Id
-    public int getProductId() {
+    public final int getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    /**
+     * Sets product id.
+     *
+     * @param productId the product id
+     */
+    public final void setProductId(final int productId) {
         this.productId = productId;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public final boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -44,7 +70,7 @@ public class CartProductEntityPK implements Serializable {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         int result = cartId;
         result = 31 * result + productId;
         return result;

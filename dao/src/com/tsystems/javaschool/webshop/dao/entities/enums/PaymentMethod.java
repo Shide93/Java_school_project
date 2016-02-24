@@ -1,19 +1,19 @@
 package com.tsystems.javaschool.webshop.dao.entities.enums;
 
 /**
- * Created by Shide on 23.02.2016.
+ * Enumeration represents possible payment methods.
  */
 public enum PaymentMethod {
     /**
-     * cash payment
+     * cash payment.
      */
     CASH,
     /**
-     * card payment
+     * card payment.
      */
     BANK_CARD,
     /**
-     * webmoney payment
+     * webmoney payment.
      */
     WEBMONEY
 

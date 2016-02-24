@@ -29,7 +29,6 @@ public class ProductServiceImpl implements ProductService {
 
         serviceHelper.executeTransactionally(manager -> {
 
-            //TODO: HOW THIS WORKS? WHY Product DAO accessed here???
             productDAO.create(product, manager);
         });
     }

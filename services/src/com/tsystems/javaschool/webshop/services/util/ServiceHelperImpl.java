@@ -9,17 +9,25 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
 /**
- *
+ * The type Service helper.
  */
 public class ServiceHelperImpl implements ServiceHelper {
+    /**
+     * The EntityManager factory.
+     */
     private EntityManagerFactory entMgrFactory;
 
+    /**
+     * Instantiates a new Service helper.
+     */
     public ServiceHelperImpl() {
-        entMgrFactory = EntityManagerFactorySingleton.getInstance().getFactory();
+        entMgrFactory =
+                EntityManagerFactorySingleton.getInstance().getFactory();
     }
     //TODO: add exception messages
     @Override
-    public void executeTransactionally(ServiceExecuteAction action) throws ServiceException {
+    public final void executeTransactionally(final ServiceExecuteAction action)
+            throws ServiceException {
 
         EntityManager manager = null;
         EntityTransaction trx = null;
@@ -47,7 +55,8 @@ public class ServiceHelperImpl implements ServiceHelper {
     }
 
     @Override
-    public <T> T load(ServiceLoadAction<T> action) throws ServiceException {
+    public final <T> T load(final ServiceLoadAction<T> action)
+            throws ServiceException {
         EntityManager manager = null;
         try {
             manager = entMgrFactory.createEntityManager();
@@ -55,7 +64,7 @@ public class ServiceHelperImpl implements ServiceHelper {
         } catch (DaoException e) {
             throw new ServiceException(e);
         } catch (Exception e) {
-            throw new ServiceException();
+            throw new ServiceException(e);
         } finally {
             if (manager != null) {
                 manager.close();
@@ -64,7 +73,8 @@ public class ServiceHelperImpl implements ServiceHelper {
     }
 
     @Override
-    public <T> T loadTransactionally(ServiceLoadAction<T> action) throws ServiceException {
+    public final <T> T loadTransactionally(final ServiceLoadAction<T> action)
+            throws ServiceException {
 
         EntityManager manager = null;
         EntityTransaction trx = null;

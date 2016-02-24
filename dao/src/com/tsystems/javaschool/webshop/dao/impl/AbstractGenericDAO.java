@@ -9,64 +9,78 @@ import java.util.List;
 
 /**
  * Implementation of genericDAO interface.
+ *
+ * @param <T> the type parameter
  */
 public class AbstractGenericDAO<T> implements GenericDAO<T> {
 
+    /**
+     * The Type parameter.
+     */
     private Class<T> type;
 
-    public AbstractGenericDAO(Class<T> type) {
-        this.type = type;
+    /**
+     * Instantiates a new Abstract generic dao.
+     *
+     * @param pType the type
+     */
+    public AbstractGenericDAO(final Class<T> pType) {
+        this.type = pType;
     }
 
 
     @Override
-    public void create(T newObj, EntityManager manager) throws DaoException {
+    public final void create(final T newObj, final EntityManager manager)
+            throws DaoException {
         try {
             manager.persist(newObj);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw  new DaoException(e);
         }
     }
 
     @Override
-    public T getById(int id, EntityManager manager) throws DaoException {
+    public final T getById(final int id, final EntityManager manager)
+            throws DaoException {
         try {
             return manager.find(type, id);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw  new DaoException(e);
         }
     }
 
     @Override
-    public void update(T obj, EntityManager manager) throws DaoException {
+    public final void update(final T obj, final EntityManager manager)
+            throws DaoException {
         try {
             manager.merge(obj);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             //TODO: try-catch somehow
             //TODO: how to revert changes of entity
-            //manager.refresh(obj);
             throw  new DaoException(e);
         }
     }
 
     @Override
-    public void delete(T obj, EntityManager manager) throws DaoException {
+    public final void delete(final T obj, final EntityManager manager)
+            throws DaoException {
         try {
             manager.remove(obj);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw  new DaoException(e);
         }
     }
 
     @Override
-    public List<T> getAll(EntityManager manager) throws DaoException {
+    public final List<T> getAll(final EntityManager manager)
+            throws DaoException {
         try {
-            String queryString = "select t from " +
-                    type.getSimpleName() +
-                    " t";
+            String queryString = "select t from "
+                   + type.getSimpleName()
+                   + " t";
             TypedQuery<T> query = manager.createQuery(queryString, type);
             return query.getResultList();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw  new DaoException(e);
         }
 

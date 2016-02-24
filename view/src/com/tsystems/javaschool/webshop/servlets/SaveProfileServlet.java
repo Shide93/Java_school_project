@@ -23,22 +23,37 @@ import java.util.Date;
  */
 public class SaveProfileServlet extends HttpServlet {
 
-    private static final Logger LOGGER = LogManager.getLogger(SaveProfileServlet.class);
+    /**
+     * The constant LOGGER.
+     */
+    private static final Logger LOGGER =
+            LogManager.getLogger(SaveProfileServlet.class);
 
+    /**
+     * The Account service.
+     */
     private AccountService accountService;
 
+    /**
+     * Instantiates a new Save profile servlet.
+     */
     public SaveProfileServlet() {
-        accountService = new AccountServiceImpl();
+        accountService =
+                new AccountServiceImpl();
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected final void doGet(final HttpServletRequest req,
+                               final HttpServletResponse resp)
+            throws ServletException, IOException {
         RequestDispatcher rd = req.getRequestDispatcher("profile.jsp");
         rd.forward(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected final void doPost(final HttpServletRequest req,
+                                final HttpServletResponse resp)
+            throws ServletException, IOException {
 
         boolean hasErrors = false;
 

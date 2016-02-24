@@ -16,64 +16,129 @@ import javax.persistence.Table;
 @Table(name = "product_feature", schema = "web_shop")
 @IdClass(ProductFeatureEntityPK.class)
 public class ProductFeatureEntity {
+    /**
+     * The Product id.
+     */
     private int productId;
+    /**
+     * The Feature id.
+     */
     private int featureId;
+    /**
+     * The Value.
+     */
     private String value;
+    /**
+     * The Product.
+     */
     private ProductEntity product;
+    /**
+     * The Feature.
+     */
     private FeatureEntity feature;
 
+    /**
+     * Gets product id.
+     *
+     * @return the product id
+     */
     @Id
     @Column(name = "product_id")
-    public int getProductId() {
+    public final int getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    /**
+     * Sets product id.
+     *
+     * @param productId the product id
+     */
+    public final void setProductId(final int productId) {
         this.productId = productId;
     }
 
+    /**
+     * Gets feature id.
+     *
+     * @return the feature id
+     */
     @Id
     @Column(name = "feature_id")
-    public int getFeatureId() {
+    public final int getFeatureId() {
         return featureId;
     }
 
-    public void setFeatureId(int featureId) {
+    /**
+     * Sets feature id.
+     *
+     * @param featureId the feature id
+     */
+    public final void setFeatureId(final int featureId) {
         this.featureId = featureId;
     }
 
+    /**
+     * Gets value.
+     *
+     * @return the value
+     */
     @Basic
     @Column(name = "value")
-    public String getValue() {
+    public final String getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    /**
+     * Sets value.
+     *
+     * @param value the value
+     */
+    public final void setValue(final String value) {
         this.value = value;
     }
 
+    /**
+     * Gets product.
+     *
+     * @return the product
+     */
     @ManyToOne
     @JoinColumn(name = "product_id", updatable = false, insertable = false)
-    public ProductEntity getProduct() {
+    public final ProductEntity getProduct() {
         return product;
     }
 
-    public void setProduct(ProductEntity product) {
+    /**
+     * Sets product.
+     *
+     * @param product the product
+     */
+    public final void setProduct(final ProductEntity product) {
         this.product = product;
     }
 
+    /**
+     * Gets feature.
+     *
+     * @return the feature
+     */
     @ManyToOne
     @JoinColumn(name = "feature_id", updatable = false, insertable = false)
-    public FeatureEntity getFeature() {
+    public final FeatureEntity getFeature() {
         return feature;
     }
 
-    public void setFeature(FeatureEntity feature) {
+    /**
+     * Sets feature.
+     *
+     * @param feature the feature
+     */
+    public final void setFeature(final FeatureEntity feature) {
         this.feature = feature;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return "ProductFeatureEntity{" +
                 "productId=" + productId +
                 ", featureId=" + featureId +

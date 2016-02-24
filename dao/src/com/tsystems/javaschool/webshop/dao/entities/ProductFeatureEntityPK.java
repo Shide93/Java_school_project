@@ -8,31 +8,57 @@ import java.io.Serializable;
  * Created by Shide on 22.02.2016.
  */
 public class ProductFeatureEntityPK implements Serializable {
+    /**
+     * The Product id.
+     */
     private int productId;
+    /**
+     * The Feature id.
+     */
     private int featureId;
 
+    /**
+     * Gets product id.
+     *
+     * @return the product id
+     */
     @Column(name = "product_id")
     @Id
-    public int getProductId() {
+    public final int getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    /**
+     * Sets product id.
+     *
+     * @param productId the product id
+     */
+    public final void setProductId(final int productId) {
         this.productId = productId;
     }
 
+    /**
+     * Gets feature id.
+     *
+     * @return the feature id
+     */
     @Column(name = "feature_id")
     @Id
-    public int getFeatureId() {
+    public final int getFeatureId() {
         return featureId;
     }
 
-    public void setFeatureId(int featureId) {
+    /**
+     * Sets feature id.
+     *
+     * @param featureId the feature id
+     */
+    public final void setFeatureId(final int featureId) {
         this.featureId = featureId;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public final boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -44,7 +70,7 @@ public class ProductFeatureEntityPK implements Serializable {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         int result = productId;
         result = 31 * result + featureId;
         return result;

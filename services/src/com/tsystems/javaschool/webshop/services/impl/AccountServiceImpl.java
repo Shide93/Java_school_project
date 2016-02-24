@@ -13,20 +13,29 @@ import org.apache.logging.log4j.Logger;
 import java.util.Date;
 
 /**
- *
+ * The type Account service.
  */
 public class AccountServiceImpl implements AccountService {
 
+    /**
+     * The constant LOGGER.
+     */
     private static final Logger LOGGER = LogManager.getLogger(AccountService.class);
 
+    /**
+     * The Users dao.
+     */
     private UsersDAO usersDAO;
 
+    /**
+     * Instantiates a new Account service.
+     */
     public AccountServiceImpl() {
         this.usersDAO = new UsersDAOImpl();
     }
 
-
-    public UserEntity signUpUser(String name, String lastName, String email, String password) throws ServiceException {
+    @Override
+    public final UserEntity signUpUser(final String name, final String lastName, final String email, final String password) throws ServiceException {
 
         //TODO: validate email, hash password
 
@@ -50,7 +59,7 @@ public class AccountServiceImpl implements AccountService {
 
 
     @Override
-    public UserEntity signInUser(String email, String password) throws ServiceException{
+    public final UserEntity signInUser(final String email, final String password) throws ServiceException{
 
         UserEntity user = usersDAO.getUserByEmail(email);
 
@@ -67,12 +76,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public UserEntity getUser(int userID) {
+    public final UserEntity getUser(final int userID) {
         return usersDAO.getUserById(userID);
     }
 
     @Override
-    public UserEntity saveProfile(UserEntity user)
+    public final UserEntity saveProfile(final UserEntity user)
             throws ServiceException {
 
         try {
@@ -83,6 +92,4 @@ public class AccountServiceImpl implements AccountService {
             throw new ServiceException(e);
         }
     }
-
-
 }

@@ -90,7 +90,7 @@
                 <version>2.2</version>
                 <configuration>
                     <server>tomcat</server>
-                    <url>http://localhost:8080/webshop</url>
+                    <url>http://localhost:8080/</url>
                     <path>/</path>
                 </configuration>
             </plugin>

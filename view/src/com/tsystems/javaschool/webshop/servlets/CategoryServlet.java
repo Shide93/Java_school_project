@@ -20,15 +20,26 @@ import java.util.Arrays;
  */
 public class CategoryServlet extends HttpServlet {
 
-    private static final Logger LOGGER = LogManager.getLogger(ProductPageServlet.class);
+    /**
+     * The constant LOGGER.
+     */
+    private static final Logger LOGGER =
+            LogManager.getLogger(ProductPageServlet.class);
 
+    /**
+     * The Category service.
+     */
     private CategoryService categoryService;
 
+    /**
+     * Instantiates a new Category servlet.
+     */
     public CategoryServlet() {
-        this.categoryService = new CategoryServiceImpl();
+        this.categoryService =
+        new CategoryServiceImpl();
     }
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected final void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
 
         //TODO: here is code duplication, need to create Frontend Controller
         //parse request and extract categoryId
@@ -65,7 +76,7 @@ public class CategoryServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected final void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
         super.doPost(req, resp);
     }
 }

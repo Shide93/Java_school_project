@@ -17,10 +17,14 @@ import java.util.List;
  */
 public class WebShopContextListener implements ServletContextListener {
 
-    private static final Logger LOGGER = LogManager.getLogger(ProductPageServlet.class);
+    /**
+     * The constant LOGGER.
+     */
+    private static final Logger LOGGER =
+            LogManager.getLogger(ProductPageServlet.class);
 
     @Override
-    public void contextInitialized(ServletContextEvent sce) {
+    public final void contextInitialized(final ServletContextEvent sce) {
         sce.getServletContext().setAttribute("USER_COOKIE_MAX_AGE", 2 * 60);
         EntityManagerFactorySingleton.getInstance();
 
@@ -36,7 +40,7 @@ public class WebShopContextListener implements ServletContextListener {
     }
 
     @Override
-    public void contextDestroyed(ServletContextEvent sce) {
+    public final void contextDestroyed(final ServletContextEvent sce) {
 
 
         EntityManagerFactorySingleton.closeFactory();

@@ -19,7 +19,7 @@ public interface GenericDAO<T> {
     void create(T newObj, EntityManager manager) throws DaoException;
 
     /**
-     * Reads an object from DB
+     * Reads an object from DB.
      * @param id identificator of object in DB
      * @param manager EntityManager to perform action
      * @return found object or null if object not found

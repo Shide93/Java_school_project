@@ -4,10 +4,14 @@ import com.tsystems.javaschool.webshop.dao.api.CategoryDAO;
 import com.tsystems.javaschool.webshop.dao.entities.CategoryEntity;
 
 /**
- * Created by Shide on 22.02.2016.
+ * Category dao implementation.
  */
-public class CategoryDAOImpl  extends AbstractGenericDAO<CategoryEntity> implements CategoryDAO {
+public class CategoryDAOImpl  extends AbstractGenericDAO<CategoryEntity>
+        implements CategoryDAO {
 
+    /**
+     * Instantiates a new Category dao.
+     */
     public CategoryDAOImpl() {
         super(CategoryEntity.class);
     }

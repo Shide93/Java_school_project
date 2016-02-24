@@ -1,6 +1,17 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.Set;
 
 /**
@@ -12,64 +23,129 @@ import java.util.Set;
 })
 @Table(name = "cart", schema = "web_shop")
 public class CartEntity {
+    /**
+     * The Id in table.
+     */
     private int id;
+    /**
+     * The cart Cookie.
+     */
     private String cookie;
+    /**
+     * The Count of items in cart.
+     */
     private int count;
+    /**
+     * The Summary.
+     */
     private int summary;
+    /**
+     * The Items in cart.
+     */
     private Set<CartProductEntity> items;
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int getId() {
+    public final int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
+    public final void setId(final int id) {
         this.id = id;
     }
 
+    /**
+     * Gets cookie.
+     *
+     * @return the cookie
+     */
     @Basic
     @Column(name = "cookie", nullable = false, unique = true)
-    public String getCookie() {
+    public final String getCookie() {
         return cookie;
     }
 
-    public void setCookie(String cookie) {
+    /**
+     * Sets cookie.
+     *
+     * @param cookie the cookie
+     */
+    public final void setCookie(final String cookie) {
         this.cookie = cookie;
     }
 
+    /**
+     * Gets count.
+     *
+     * @return the count
+     */
     @Basic
     @Column(name = "items_count")
-    public int getCount() {
+    public final int getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    /**
+     * Sets count.
+     *
+     * @param count the count
+     */
+    public final void setCount(final int count) {
         this.count = count;
     }
 
+    /**
+     * Gets summary.
+     *
+     * @return the summary
+     */
     @Basic
     @Column(name = "summary")
-    public int getSummary() {
+    public final int getSummary() {
         return summary;
     }
 
-    public void setSummary(int summary) {
+    /**
+     * Sets summary.
+     *
+     * @param summary the summary
+     */
+    public final void setSummary(final int summary) {
         this.summary = summary;
     }
 
+    /**
+     * Gets items.
+     *
+     * @return the items
+     */
     @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    public Set<CartProductEntity> getItems() {
+    public final Set<CartProductEntity> getItems() {
         return items;
     }
 
-    public void setItems(Set<CartProductEntity> products) {
+    /**
+     * Sets items.
+     *
+     * @param products the products
+     */
+    public final void setItems(final Set<CartProductEntity> products) {
         this.items = products;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return "CartEntity{" +
                 "id=" + id +
                 ", cookie='" + cookie + '\'' +

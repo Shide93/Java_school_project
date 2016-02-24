@@ -22,16 +22,28 @@ import java.io.IOException;
 public class SignUpServlet extends HttpServlet {
 
 
-    private static final Logger LOGGER = LogManager.getLogger(SignUpServlet.class);
+    /**
+     * The constant LOGGER.
+     */
+    private static final Logger LOGGER =
+            LogManager.getLogger(SignUpServlet.class);
 
+    /**
+     * The Account service.
+     */
     private AccountService accountService;
 
+    /**
+     * Instantiates a new Sign up servlet.
+     */
     public SignUpServlet() {
-        this.accountService = new AccountServiceImpl();
+        this.accountService =
+                new AccountServiceImpl();
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+    protected final void doPost(final HttpServletRequest req,
+                                final HttpServletResponse resp)
             throws ServletException, IOException {
 
         String name = req.getParameter("name");
@@ -47,10 +59,15 @@ public class SignUpServlet extends HttpServlet {
         }
         //create user
         try {
-            UserEntity user = accountService.signUpUser(name, lastName, email, password);
+            UserEntity user = accountService.signUpUser(name,
+                    lastName,
+                    email,
+                    password);
 
-            Cookie cookie = new Cookie("userID", String.valueOf(user.getId()));
-            cookie.setMaxAge((Integer) this.getServletContext().getAttribute("USER_COOKIE_MAX_AGE"));
+            Cookie cookie =
+                    new Cookie("userID", String.valueOf(user.getId()));
+            cookie.setMaxAge((Integer) this.getServletContext()
+                    .getAttribute("USER_COOKIE_MAX_AGE"));
             resp.addCookie(cookie);
             req.getSession().setAttribute("user", user);
             resp.setStatus(HttpServletResponse.SC_OK);

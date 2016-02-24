@@ -12,17 +12,21 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Redirect from pages, that not allowed in current user state (e.g. sign up page when authorized).
- *
+ * Redirect from pages, that not allowed in current user state
+ * (e.g. sign up page when authorized).
  */
 public class RedirectFilter implements Filter {
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(final FilterConfig filterConfig)
+            throws ServletException {
 
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public final void doFilter(final ServletRequest request,
+                               final ServletResponse response,
+                               final FilterChain chain)
+            throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession();
@@ -36,7 +40,7 @@ public class RedirectFilter implements Filter {
                 return;
             }
 
-            if (req.getRequestURI().equals("/profile")){
+            if (req.getRequestURI().equals("/profile")) {
                 resp.sendRedirect("/");
                 return;
             }

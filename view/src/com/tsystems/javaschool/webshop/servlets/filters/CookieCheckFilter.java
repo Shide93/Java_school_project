@@ -23,35 +23,46 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Servlet filter that checks user cookies and writes to session information about user.
- *
+ * Servlet filter that checks user cookies
+ * and writes to session information about user.
+ * <p>
  * Checks is the user have authorized cookie and associates session with user.
  * Checks is the user have cart cookie and add cart data to session.
  */
 public class CookieCheckFilter implements Filter {
-
-    private static final Logger LOGGER = LogManager.getLogger(CookieCheckFilter.class);
     /**
-     * AccountService instance
+     * The constant LOGGER.
+     */
+    private static final Logger LOGGER =
+            LogManager.getLogger(CookieCheckFilter.class);
+    /**
+     * AccountService instance.
      */
     private AccountService accountService;
+    /**
+     * The Cart service.
+     */
     private CartService cartService;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public final void init(final FilterConfig filterConfig)
+            throws ServletException {
         accountService = new AccountServiceImpl();
         cartService = new CartServiceImpl();
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+    public final void doFilter(final ServletRequest request,
+                               final ServletResponse response,
+                               final FilterChain chain)
             throws IOException, ServletException {
 
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession();
         Cookie[] cookies = req.getCookies();
-        LOGGER.debug("AUTHER AAAA = "+ ((HttpServletRequest) request).getRequestURL());
+        LOGGER.debug("AUTHER AAAA = "
+                + ((HttpServletRequest) request).getRequestURL());
 
         // user authorisation flag
         boolean userFlag = false;
@@ -75,7 +86,8 @@ public class CookieCheckFilter implements Filter {
         for (Cookie cookie : cookies) {
             //if user enters site with user cookie - add user to session
             if (cookie.getName().equals("userID") && !userFlag) {
-                UserEntity user = accountService.getUser(Integer.parseInt(cookie.getValue()));
+                UserEntity user = accountService.
+                        getUser(Integer.parseInt(cookie.getValue()));
                 if (user != null) {
                     req.getSession().setAttribute("user", user);
                     continue;
@@ -85,7 +97,8 @@ public class CookieCheckFilter implements Filter {
             //if user enters site with cart cookie - add cart to session
             if (cookie.getName().equals("cartID") && !cartFlag) {
                 try {
-                    CartEntity cart = cartService.getByCookie(cookie.getValue());
+                    CartEntity cart = cartService.
+                            getByCookie(cookie.getValue());
                     if (cart != null) {
                         req.getSession().setAttribute("cart", cart);
                     }

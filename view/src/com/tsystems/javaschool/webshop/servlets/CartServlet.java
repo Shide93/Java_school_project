@@ -17,25 +17,39 @@ import java.io.IOException;
  */
 public class CartServlet extends HttpServlet {
 
+    /**
+     * The constant LOGGER.
+     */
     private static final Logger LOGGER = LogManager.getLogger(CartServlet.class);
 
+    /**
+     * The Cart service.
+     */
     private CartService cartService;
 
+    /**
+     * Instantiates a new Cart servlet.
+     */
     public CartServlet() {
         cartService = new CartServiceImpl();
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected final void doGet(final HttpServletRequest req,
+                               final HttpServletResponse resp)
+            throws ServletException, IOException {
         RequestDispatcher rd = req.getRequestDispatcher("cart.jsp");
         rd.forward(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected final void doPost(final HttpServletRequest req,
+                                final HttpServletResponse resp)
+            throws ServletException, IOException {
         if (req.getParameter("action").equals("add")) {
             //check if cart exists in session or create it
-            CartEntity cart = (CartEntity) req.getSession().getAttribute("cart");
+            CartEntity cart = (CartEntity) req.getSession()
+                    .getAttribute("cart");
 
             //TODO: move to function
             if (cart == null) {
@@ -48,7 +62,8 @@ public class CartServlet extends HttpServlet {
                     req.getSession().setAttribute("cart", cart);
                     //TODO: cookie create function
                     Cookie cookie = new Cookie("cartID", cookieStr);
-                    cookie.setMaxAge((Integer) this.getServletContext().getAttribute("USER_COOKIE_MAX_AGE"));
+                    cookie.setMaxAge((Integer) this.getServletContext()
+                            .getAttribute("USER_COOKIE_MAX_AGE"));
                     resp.addCookie(cookie);
 
                 } catch (ServiceException e) {
@@ -59,8 +74,8 @@ public class CartServlet extends HttpServlet {
             }
             String productIdStr = req.getParameter("product_id");
             String quantityStr = req.getParameter("quantity");
-            Integer quantity = null;
-            Integer productId = null;
+            Integer quantity;
+            Integer productId;
             try {
                 productId = Integer.parseInt(productIdStr);
                 quantity = Integer.parseInt(quantityStr);

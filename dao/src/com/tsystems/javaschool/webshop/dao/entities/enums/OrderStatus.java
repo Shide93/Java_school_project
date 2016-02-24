@@ -1,32 +1,32 @@
 package com.tsystems.javaschool.webshop.dao.entities.enums;
 
 /**
- * Created by Shide on 23.02.2016.
+ * Enumeration represents possible order statuses.
  */
 public enum OrderStatus {
 
     /**
-     * new order, need to be paid
+     * new order, need to be paid.
      */
     NEW,
 
     /**
-     * paid order
+     * paid order.
      */
     PAID,
 
     /**
-     * order is shipped to customer
+     * order is shipped to customer.
      */
     SHIPPED,
 
     /**
-     * order is delivered to customer
+     * order is delivered to customer.
      */
     COMPLETED,
 
     /**
-     * order is cancelled
+     * order is cancelled.
      */
     CANCELLED,
 

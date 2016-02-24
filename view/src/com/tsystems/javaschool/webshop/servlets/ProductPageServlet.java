@@ -19,16 +19,29 @@ import java.util.Arrays;
  * Created by Shide on 22.02.2016.
  */
 public class ProductPageServlet extends HttpServlet {
-    private static final Logger LOGGER = LogManager.getLogger(ProductPageServlet.class);
+    /**
+     * The constant LOGGER.
+     */
+    private static final Logger LOGGER =
+            LogManager.getLogger(ProductPageServlet.class);
 
-    private ProductService productService;
+    /**
+     * The Product service.
+     */
+    private final ProductService productService;
 
+    /**
+     * Instantiates a new Product page servlet.
+     */
     public ProductPageServlet() {
-        this.productService = new ProductServiceImpl();
+        this.productService =
+                new ProductServiceImpl();
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected final void doGet(final HttpServletRequest req,
+                               final HttpServletResponse resp)
+            throws ServletException, IOException {
 
         //parse request and extract productId
         String path = req.getRequestURI();
@@ -65,9 +78,9 @@ public class ProductPageServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
+    protected void doPost(final HttpServletRequest req,
+                          final HttpServletResponse resp)
+            throws ServletException, IOException {
 
     }
 }

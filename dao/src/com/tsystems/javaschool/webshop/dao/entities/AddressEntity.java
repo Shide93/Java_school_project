@@ -8,102 +8,209 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Entity of address.
+ */
 @Entity
 @Table(name = "address", schema = "web_shop")
 public class AddressEntity {
+    /**
+     * id in table.
+     */
     private int id;
+    /**
+     * address country.
+     */
     private String country;
+    /**
+     * address region.
+     */
     private String region;
+    /**
+     * address city.
+     */
     private String city;
+    /**
+     * address zip.
+     */
     private int zip;
+    /**
+     * address street.
+     */
     private String street;
+    /**
+     * address building.
+     */
     private int building;
+    /**
+     * address flat.
+     */
     private int flat;
 
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int getId() {
+    public final int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
+    public final void setId(final int id) {
         this.id = id;
     }
 
+    /**
+     * Gets country.
+     *
+     * @return the country
+     */
     @Basic
     @Column(name = "country")
-    public String getCountry() {
+    public final String getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    /**
+     * Sets country.
+     *
+     * @param country the country
+     */
+    public final void setCountry(final String country) {
         this.country = country;
     }
 
+    /**
+     * Gets region.
+     *
+     * @return the region
+     */
     @Basic
     @Column(name = "region")
-    public String getRegion() {
+    public final String getRegion() {
         return region;
     }
 
-    public void setRegion(String region) {
+    /**
+     * Sets region.
+     *
+     * @param region the region
+     */
+    public final void setRegion(final String region) {
         this.region = region;
     }
 
+    /**
+     * Gets city.
+     *
+     * @return the city
+     */
     @Basic
     @Column(name = "city")
-    public String getCity() {
+    public final String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    /**
+     * Sets city.
+     *
+     * @param city the city
+     */
+    public final void setCity(final String city) {
         this.city = city;
     }
 
+    /**
+     * Gets zip.
+     *
+     * @return the zip
+     */
     @Basic
     @Column(name = "zip")
-    public int getZip() {
+    public final int getZip() {
         return zip;
     }
 
-    public void setZip(int zip) {
+    /**
+     * Sets zip.
+     *
+     * @param zip the zip
+     */
+    public final void setZip(final int zip) {
         this.zip = zip;
     }
 
+    /**
+     * Gets street.
+     *
+     * @return the street
+     */
     @Basic
     @Column(name = "street")
-    public String getStreet() {
+    public final String getStreet() {
         return street;
     }
 
-    public void setStreet(String street) {
+    /**
+     * Sets street.
+     *
+     * @param street the street
+     */
+    public final void setStreet(final String street) {
         this.street = street;
     }
 
+    /**
+     * Gets building.
+     *
+     * @return the building
+     */
     @Basic
     @Column(name = "building")
-    public int getBuilding() {
+    public final int getBuilding() {
         return building;
     }
 
-    public void setBuilding(int building) {
+    /**
+     * Sets building.
+     *
+     * @param building the building
+     */
+    public final void setBuilding(final int building) {
         this.building = building;
     }
 
+    /**
+     * Gets flat.
+     *
+     * @return the flat
+     */
     @Basic
     @Column(name = "flat")
-    public int getFlat() {
+    public final int getFlat() {
         return flat;
     }
 
-    public void setFlat(int flat) {
+    /**
+     * Sets flat.
+     *
+     * @param flat the flat
+     */
+    public final void setFlat(final int flat) {
         this.flat = flat;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return "AddressEntity{" +
                 "id=" + id +
                 ", country='" + country + '\'' +

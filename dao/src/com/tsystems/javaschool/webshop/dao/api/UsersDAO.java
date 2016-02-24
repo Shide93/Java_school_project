@@ -25,7 +25,7 @@ public interface UsersDAO {
     UserEntity getUserByEmail(String email);
 
     /**
-     * Search user by his id
+     * Search user by his id.
      * @param id user id in DB
      * @return User object or null if user not found
      */

@@ -3,7 +3,6 @@ package com.tsystems.javaschool.webshop.services.api;
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 
-import java.util.Date;
 
 /**
  * Used to manage user accounts.
@@ -20,7 +19,11 @@ public interface AccountService {
      * @return user id
      * @throws ServiceException when user cannot been created
      */
-    UserEntity signUpUser(String name, String lastName, String email, String password) throws ServiceException;
+    UserEntity signUpUser(String name,
+                          String lastName,
+                          String email,
+                          String password)
+            throws ServiceException;
 
     /**
      * Sign in user to shop.
@@ -30,7 +33,8 @@ public interface AccountService {
      * @return user object if found
      * @throws ServiceException if password wrong or user not found
      */
-    UserEntity signInUser(String email, String password) throws ServiceException;
+    UserEntity signInUser(String email, String password)
+            throws ServiceException;
 
     /**
      * Checks is user exists in base.
