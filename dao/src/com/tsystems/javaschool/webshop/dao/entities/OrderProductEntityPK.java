@@ -24,7 +24,7 @@ public class OrderProductEntityPK implements Serializable {
      */
     @Column(name = "order_id")
     @Id
-    public final int getOrderId() {
+    public int getOrderId() {
         return orderId;
     }
 
@@ -33,7 +33,7 @@ public class OrderProductEntityPK implements Serializable {
      *
      * @param orderId the order id
      */
-    public final void setOrderId(final int orderId) {
+    public void setOrderId(final int orderId) {
         this.orderId = orderId;
     }
 
@@ -44,7 +44,7 @@ public class OrderProductEntityPK implements Serializable {
      */
     @Column(name = "product_id")
     @Id
-    public final int getProductId() {
+    public int getProductId() {
         return productId;
     }
 
@@ -53,12 +53,12 @@ public class OrderProductEntityPK implements Serializable {
      *
      * @param productId the product id
      */
-    public final void setProductId(final int productId) {
+    public void setProductId(final int productId) {
         this.productId = productId;
     }
 
     @Override
-    public final boolean equals(final Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -70,7 +70,7 @@ public class OrderProductEntityPK implements Serializable {
     }
 
     @Override
-    public final int hashCode() {
+    public int hashCode() {
         int result = orderId;
         result = 31 * result + productId;
         return result;

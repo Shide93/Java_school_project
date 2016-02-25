@@ -26,7 +26,7 @@ public class ServiceHelperImpl implements ServiceHelper {
     }
     //TODO: add exception messages
     @Override
-    public final void executeTransactionally(final ServiceExecuteAction action)
+    public final void executeInTransaction(final ServiceExecuteAction action)
             throws ServiceException {
 
         EntityManager manager = null;
@@ -73,7 +73,7 @@ public class ServiceHelperImpl implements ServiceHelper {
     }
 
     @Override
-    public final <T> T loadTransactionally(final ServiceLoadAction<T> action)
+    public final <T> T loadInTransaction(final ServiceLoadAction<T> action)
             throws ServiceException {
 
         EntityManager manager = null;
@@ -90,7 +90,7 @@ public class ServiceHelperImpl implements ServiceHelper {
         } catch (DaoException e) {
             throw new ServiceException(e);
         } catch (Exception e) {
-            throw new ServiceException();
+            throw new ServiceException(e);
         } finally {
             if (trx != null && trx.isActive()) {
                 trx.rollback();

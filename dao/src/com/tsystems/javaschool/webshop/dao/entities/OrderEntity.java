@@ -5,6 +5,8 @@ import com.tsystems.javaschool.webshop.dao.entities.enums.PaymentMethod;
 import com.tsystems.javaschool.webshop.dao.entities.enums.ShippingMethod;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -40,7 +42,11 @@ public class OrderEntity {
     /**
      * The Products.
      */
-    private Set<OrderProductEntity> products;
+    private List<OrderProductEntity> products;
+
+    public OrderEntity() {
+        products = new ArrayList<>();
+    }
 
     /**
      * Gets id.
@@ -50,7 +56,7 @@ public class OrderEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public final int getId() {
+    public int getId() {
         return id;
     }
 
@@ -59,7 +65,7 @@ public class OrderEntity {
      *
      * @param id the id
      */
-    public final void setId(final int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -70,7 +76,7 @@ public class OrderEntity {
      */
     @ManyToOne
     @JoinColumn(name = "user_id")
-    public final UserEntity getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
@@ -79,7 +85,7 @@ public class OrderEntity {
      *
      * @param user the user
      */
-    public final void setUser(final UserEntity user) {
+    public void setUser(final UserEntity user) {
         this.user = user;
     }
 
@@ -90,7 +96,7 @@ public class OrderEntity {
      */
     @ManyToOne
     @JoinColumn(name = "address_id")
-    public final AddressEntity getAddress() {
+    public AddressEntity getAddress() {
         return address;
     }
 
@@ -99,7 +105,7 @@ public class OrderEntity {
      *
      * @param address the address
      */
-    public final void setAddress(final AddressEntity address) {
+    public void setAddress(final AddressEntity address) {
         this.address = address;
     }
 
@@ -111,7 +117,7 @@ public class OrderEntity {
     @Basic
     @Column(name = "payment_method")
     @Enumerated(EnumType.STRING)
-    public final PaymentMethod getPaymentMethod() {
+    public PaymentMethod getPaymentMethod() {
         return paymentMethod;
     }
 
@@ -120,7 +126,7 @@ public class OrderEntity {
      *
      * @param paymentMethod the payment method
      */
-    public final void setPaymentMethod(final PaymentMethod paymentMethod) {
+    public void setPaymentMethod(final PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 
@@ -132,7 +138,7 @@ public class OrderEntity {
     @Basic
     @Column(name = "shipping_method")
     @Enumerated(EnumType.STRING)
-    public final ShippingMethod getShippingMethod() {
+    public ShippingMethod getShippingMethod() {
         return shippingMethod;
     }
 
@@ -141,7 +147,7 @@ public class OrderEntity {
      *
      * @param shippingMethod the shipping method
      */
-    public final void setShippingMethod(final ShippingMethod shippingMethod) {
+    public void setShippingMethod(final ShippingMethod shippingMethod) {
         this.shippingMethod = shippingMethod;
     }
 
@@ -153,7 +159,7 @@ public class OrderEntity {
     @Basic
     @Column(name = "order_status")
     @Enumerated(EnumType.STRING)
-    public final OrderStatus getOrderStatus() {
+    public OrderStatus getOrderStatus() {
         return orderStatus;
     }
 
@@ -162,7 +168,7 @@ public class OrderEntity {
      *
      * @param orderStatus the order status
      */
-    public final void setOrderStatus(final OrderStatus orderStatus) {
+    public void setOrderStatus(final OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
     }
 
@@ -172,7 +178,7 @@ public class OrderEntity {
      * @return the products
      */
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
-    public final Set<OrderProductEntity> getProducts() {
+    public List<OrderProductEntity> getProducts() {
         return products;
     }
 
@@ -181,12 +187,12 @@ public class OrderEntity {
      *
      * @param products the products
      */
-    public final void setProducts(final Set<OrderProductEntity> products) {
+    public void setProducts(final List<OrderProductEntity> products) {
         this.products = products;
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return "OrderEntity{" +
                 "id=" + id +
                 ", user=" + user +

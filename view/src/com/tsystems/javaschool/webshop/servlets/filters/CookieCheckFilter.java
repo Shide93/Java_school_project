@@ -61,6 +61,7 @@ public class CookieCheckFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession();
         Cookie[] cookies = req.getCookies();
+
         LOGGER.debug("AUTHER AAAA = "
                 + ((HttpServletRequest) request).getRequestURL());
 
@@ -98,7 +99,7 @@ public class CookieCheckFilter implements Filter {
             if (cookie.getName().equals("cartID") && !cartFlag) {
                 try {
                     CartEntity cart = cartService.
-                            getByCookie(cookie.getValue());
+                            get(Integer.parseInt(cookie.getValue()));
                     if (cart != null) {
                         req.getSession().setAttribute("cart", cart);
                     }

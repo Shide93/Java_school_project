@@ -46,7 +46,7 @@ public class CartProductEntity {
      */
     @Id
     @Column(name = "cart_id")
-    public final int getCartId() {
+    public int getCartId() {
         return cartId;
     }
 
@@ -55,7 +55,7 @@ public class CartProductEntity {
      *
      * @param cartId the cart id
      */
-    public final void setCartId(final int cartId) {
+    public void setCartId(final int cartId) {
         this.cartId = cartId;
     }
 
@@ -66,7 +66,7 @@ public class CartProductEntity {
      */
     @Id
     @Column(name = "product_id")
-    public final int getProductId() {
+    public int getProductId() {
         return productId;
     }
 
@@ -75,7 +75,7 @@ public class CartProductEntity {
      *
      * @param productId the product id
      */
-    public final void setProductId(final int productId) {
+    public void setProductId(final int productId) {
         this.productId = productId;
     }
 
@@ -86,7 +86,7 @@ public class CartProductEntity {
      */
     @Basic
     @Column(name = "quantity")
-    public final Integer getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
@@ -95,7 +95,7 @@ public class CartProductEntity {
      *
      * @param quantity the quantity
      */
-    public final void setQuantity(final Integer quantity) {
+    public void setQuantity(final Integer quantity) {
         this.quantity = quantity;
     }
 
@@ -106,7 +106,7 @@ public class CartProductEntity {
      */
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id", insertable = false, updatable = false)
-    public final CartEntity getCart() {
+    public CartEntity getCart() {
         return cart;
     }
 
@@ -115,7 +115,7 @@ public class CartProductEntity {
      *
      * @param cart the cart
      */
-    public final void setCart(final CartEntity cart) {
+    public void setCart(final CartEntity cart) {
         this.cart = cart;
     }
 
@@ -124,9 +124,9 @@ public class CartProductEntity {
      *
      * @return the product
      */
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "product_id", insertable = false, updatable = false)
-    public final ProductEntity getProduct() {
+    public ProductEntity getProduct() {
         return product;
     }
 
@@ -135,16 +135,17 @@ public class CartProductEntity {
      *
      * @param product the product
      */
-    public final void setProduct(final ProductEntity product) {
+    public void setProduct(final ProductEntity product) {
         this.product = product;
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return "CartProductEntity{" +
                 "cartId=" + cartId +
                 ", productId=" + productId +
                 ", quantity=" + quantity +
+                ", product=" + product +
                 '}';
     }
 }

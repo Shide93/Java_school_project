@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -45,15 +47,24 @@ public class ProductEntity {
     /**
      * The Categories.
      */
-    private Set<CategoryEntity> categories;
+    private List<CategoryEntity> categories;
     /**
      * The Features.
      */
-    private Set<ProductFeatureEntity> features;
+    private List<ProductFeatureEntity> features;
     /**
      * The Orders.
      */
-    private Set<OrderProductEntity> orders;
+    private List<OrderProductEntity> orders;
+
+    /**
+     * Instantiates a new Product entity.
+     */
+    public ProductEntity() {
+        categories = new ArrayList<>();
+        features = new ArrayList<>();
+        orders = new ArrayList<>();
+    }
 
     /**
      * Gets id.
@@ -63,7 +74,7 @@ public class ProductEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public final int getId() {
+    public int getId() {
         return id;
     }
 
@@ -72,7 +83,7 @@ public class ProductEntity {
      *
      * @param id the id
      */
-    public final void setId(final int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -83,7 +94,7 @@ public class ProductEntity {
      */
     @Basic
     @Column(name = "name")
-    public final String getName() {
+    public String getName() {
         return name;
     }
 
@@ -92,7 +103,7 @@ public class ProductEntity {
      *
      * @param name the name
      */
-    public final void setName(final String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -103,7 +114,7 @@ public class ProductEntity {
      */
     @Basic
     @Column(name = "price")
-    public final int getPrice() {
+    public int getPrice() {
         return price;
     }
 
@@ -112,7 +123,7 @@ public class ProductEntity {
      *
      * @param price the price
      */
-    public final void setPrice(final int price) {
+    public void setPrice(final int price) {
         this.price = price;
     }
 
@@ -123,7 +134,7 @@ public class ProductEntity {
      */
     @Basic
     @Column(name = "stock")
-    public final Integer getStock() {
+    public Integer getStock() {
         return stock;
     }
 
@@ -132,7 +143,7 @@ public class ProductEntity {
      *
      * @param stock the stock
      */
-    public final void setStock(final Integer stock) {
+    public void setStock(final Integer stock) {
         this.stock = stock;
     }
 
@@ -143,7 +154,7 @@ public class ProductEntity {
      */
     @Basic
     @Column(name = "description")
-    public final String getDescription() {
+    public String getDescription() {
         return description;
     }
 
@@ -152,7 +163,7 @@ public class ProductEntity {
      *
      * @param description the description
      */
-    public final void setDescription(final String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -163,7 +174,7 @@ public class ProductEntity {
      */
     @Basic
     @Column(name = "sku")
-    public final String getSku() {
+    public String getSku() {
         return sku;
     }
 
@@ -172,7 +183,7 @@ public class ProductEntity {
      *
      * @param sku the sku
      */
-    public final void setSku(final String sku) {
+    public void setSku(final String sku) {
         this.sku = sku;
     }
 
@@ -182,7 +193,7 @@ public class ProductEntity {
      * @return the categories
      */
     @ManyToMany(mappedBy = "products", fetch = FetchType.EAGER)
-    public final Set<CategoryEntity> getCategories() {
+    public List<CategoryEntity> getCategories() {
         return categories;
     }
 
@@ -191,7 +202,7 @@ public class ProductEntity {
      *
      * @param categories the categories
      */
-    public final void setCategories(final Set<CategoryEntity> categories) {
+    public void setCategories(final List<CategoryEntity> categories) {
         this.categories = categories;
     }
 
@@ -201,7 +212,7 @@ public class ProductEntity {
      * @return the features
      */
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
-    public final Set<ProductFeatureEntity> getFeatures() {
+    public List<ProductFeatureEntity> getFeatures() {
         return features;
     }
 
@@ -210,7 +221,7 @@ public class ProductEntity {
      *
      * @param features the features
      */
-    public final void setFeatures(final Set<ProductFeatureEntity> features) {
+    public void setFeatures(final List<ProductFeatureEntity> features) {
         this.features = features;
     }
 
@@ -220,7 +231,7 @@ public class ProductEntity {
      * @return the orders
      */
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
-    public final Set<OrderProductEntity> getOrders() {
+    public List<OrderProductEntity> getOrders() {
         return orders;
     }
 
@@ -229,12 +240,12 @@ public class ProductEntity {
      *
      * @param orders the orders
      */
-    public final void setOrders(final Set<OrderProductEntity> orders) {
+    public void setOrders(final List<OrderProductEntity> orders) {
         this.orders = orders;
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return "ProductEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +

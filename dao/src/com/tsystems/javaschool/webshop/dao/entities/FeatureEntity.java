@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -32,7 +34,11 @@ public class FeatureEntity {
     /**
      * The Products.
      */
-    private Set<ProductFeatureEntity> products;
+    private List<ProductFeatureEntity> products;
+
+    public FeatureEntity() {
+        products = new ArrayList<>();
+    }
 
     /**
      * Gets id.
@@ -42,7 +48,7 @@ public class FeatureEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public final int getId() {
+    public int getId() {
         return id;
     }
 
@@ -51,7 +57,7 @@ public class FeatureEntity {
      *
      * @param id the id
      */
-    public final void setId(final int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -62,7 +68,7 @@ public class FeatureEntity {
      */
     @Basic
     @Column(name = "name")
-    public final String getName() {
+    public String getName() {
         return name;
     }
 
@@ -71,7 +77,7 @@ public class FeatureEntity {
      *
      * @param name the name
      */
-    public final void setName(final String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -82,7 +88,7 @@ public class FeatureEntity {
      */
     @Basic
     @Column(name = "type")
-    public final String getType() {
+    public String getType() {
         return type;
     }
 
@@ -91,7 +97,7 @@ public class FeatureEntity {
      *
      * @param type the type
      */
-    public final void setType(final String type) {
+    public void setType(final String type) {
         this.type = type;
     }
 
@@ -101,7 +107,7 @@ public class FeatureEntity {
      * @return the products
      */
     @OneToMany(mappedBy = "feature", fetch = FetchType.EAGER)
-    public final Set<ProductFeatureEntity> getProducts() {
+    public List<ProductFeatureEntity> getProducts() {
         return products;
     }
 
@@ -110,12 +116,12 @@ public class FeatureEntity {
      *
      * @param products the products
      */
-    public final void setProducts(final Set<ProductFeatureEntity> products) {
+    public void setProducts(final List<ProductFeatureEntity> products) {
         this.products = products;
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return "FeatureEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +

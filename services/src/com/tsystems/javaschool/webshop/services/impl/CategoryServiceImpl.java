@@ -23,21 +23,21 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void add(CategoryEntity category) throws ServiceException {
-        serviceHelper.executeTransactionally(manager -> {
+        serviceHelper.executeInTransaction(manager -> {
             categoryDAO.create(category, manager);
         });
     }
 
     @Override
     public void update(CategoryEntity category) throws ServiceException {
-        serviceHelper.executeTransactionally(manager -> {
+        serviceHelper.executeInTransaction(manager -> {
             categoryDAO.create(category, manager);
         });
     }
 
     @Override
     public void delete(CategoryEntity category) throws ServiceException {
-        serviceHelper.executeTransactionally(manager -> {
+        serviceHelper.executeInTransaction(manager -> {
             categoryDAO.create(category, manager);
         });
     }
@@ -49,6 +49,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryEntity> getAll() throws ServiceException {
-        return serviceHelper.loadTransactionally(manager -> categoryDAO.getAll(manager));
+        return serviceHelper.loadInTransaction(manager -> categoryDAO.getAll(manager));
     }
 }

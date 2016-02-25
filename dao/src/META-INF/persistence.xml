@@ -22,6 +22,7 @@
             <property name="hibernate.archive.autodetection" value="class"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.use_sql_comments" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="javax.persistence.validation.mode" value="AUTO" />
             <property name="hibernate.validator.autoregister_listeners" value="true" />

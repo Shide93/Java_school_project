@@ -14,7 +14,7 @@ public interface ServiceHelper {
      * @param action implementation of functional interface with useful logic
      * @throws ServiceException if something wrong
      */
-    void executeTransactionally(ServiceExecuteAction action)
+    void executeInTransaction(ServiceExecuteAction action)
             throws ServiceException;
 
     /**
@@ -34,6 +34,6 @@ public interface ServiceHelper {
      * @return specified object
      * @throws ServiceException if something wrong
      */
-    <T> T loadTransactionally(ServiceLoadAction<T> action)
+    <T> T loadInTransaction(ServiceLoadAction<T> action)
             throws ServiceException;
 }

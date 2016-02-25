@@ -15,7 +15,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -66,7 +68,14 @@ public class UserEntity {
     /**
      * The Orders.
      */
-    private Set<OrderEntity> orders;
+    private List<OrderEntity> orders;
+
+    /**
+     * Instantiates a new User entity.
+     */
+    public UserEntity() {
+        orders = new ArrayList<>();
+    }
 
     /**
      * Gets id.
@@ -76,7 +85,7 @@ public class UserEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public final int getId() {
+    public int getId() {
         return id;
     }
 
@@ -85,7 +94,7 @@ public class UserEntity {
      *
      * @param id the id
      */
-    public final void setId(final int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -96,7 +105,7 @@ public class UserEntity {
      */
     @Basic
     @Column(name = "email")
-    public final String getEmail() {
+    public String getEmail() {
         return email;
     }
 
@@ -105,7 +114,7 @@ public class UserEntity {
      *
      * @param email the email
      */
-    public final void setEmail(final String email) {
+    public void setEmail(final String email) {
         this.email = email;
     }
 
@@ -116,7 +125,7 @@ public class UserEntity {
      */
     @Basic
     @Column(name = "password")
-    public final String getPassword() {
+    public String getPassword() {
         return password;
     }
 
@@ -125,7 +134,7 @@ public class UserEntity {
      *
      * @param password the password
      */
-    public final void setPassword(final String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
@@ -136,7 +145,7 @@ public class UserEntity {
      */
     @Basic
     @Column(name = "name")
-    public final String getName() {
+    public String getName() {
         return name;
     }
 
@@ -145,7 +154,7 @@ public class UserEntity {
      *
      * @param name the name
      */
-    public final void setName(final String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -156,7 +165,7 @@ public class UserEntity {
      */
     @Basic
     @Column(name = "last_name")
-    public final String getLastName() {
+    public String getLastName() {
         return lastName;
     }
 
@@ -165,7 +174,7 @@ public class UserEntity {
      *
      * @param lastName the last name
      */
-    public final void setLastName(final String lastName) {
+    public void setLastName(final String lastName) {
         this.lastName = lastName;
     }
 
@@ -176,7 +185,7 @@ public class UserEntity {
      */
     @Basic
     @Column(name = "phone")
-    public final String getPhone() {
+    public String getPhone() {
         return phone;
     }
 
@@ -185,7 +194,7 @@ public class UserEntity {
      *
      * @param phone the phone
      */
-    public final void setPhone(final String phone) {
+    public void setPhone(final String phone) {
         this.phone = phone;
     }
 
@@ -196,7 +205,7 @@ public class UserEntity {
      */
     @Basic
     @Column(name = "birth_date")
-    public final Date getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
@@ -205,7 +214,7 @@ public class UserEntity {
      *
      * @param birthDate the birth date
      */
-    public final void setBirthDate(final Date birthDate) {
+    public void setBirthDate(final Date birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -216,7 +225,7 @@ public class UserEntity {
      */
     @Basic
     @Column(name = "is_admin")
-    public final Boolean getIsAdmin() {
+    public Boolean getIsAdmin() {
         return isAdmin;
     }
 
@@ -225,7 +234,7 @@ public class UserEntity {
      *
      * @param userType the user type
      */
-    public final void setIsAdmin(final Boolean userType) {
+    public void setIsAdmin(final Boolean userType) {
         this.isAdmin = userType;
     }
 
@@ -236,7 +245,7 @@ public class UserEntity {
      */
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinColumn(name = "address_id")
-    public final AddressEntity getAddress() {
+    public AddressEntity getAddress() {
         return address;
     }
 
@@ -245,7 +254,7 @@ public class UserEntity {
      *
      * @param address the address
      */
-    public final void setAddress(final AddressEntity address) {
+    public void setAddress(final AddressEntity address) {
         this.address = address;
     }
 
@@ -255,7 +264,7 @@ public class UserEntity {
      * @return the orders
      */
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    public final Set<OrderEntity> getOrders() {
+    public List<OrderEntity> getOrders() {
         return orders;
     }
 
@@ -264,7 +273,7 @@ public class UserEntity {
      *
      * @param orders the orders
      */
-    public final void setOrders(final Set<OrderEntity> orders) {
+    public void setOrders(final List<OrderEntity> orders) {
         this.orders = orders;
     }
 }

@@ -24,7 +24,7 @@ public class CartProductEntityPK implements Serializable {
      */
     @Column(name = "cart_id")
     @Id
-    public final int getCartId() {
+    public int getCartId() {
         return cartId;
     }
 
@@ -33,7 +33,7 @@ public class CartProductEntityPK implements Serializable {
      *
      * @param cartId the cart id
      */
-    public final void setCartId(final int cartId) {
+    public void setCartId(final int cartId) {
         this.cartId = cartId;
     }
 
@@ -44,7 +44,7 @@ public class CartProductEntityPK implements Serializable {
      */
     @Column(name = "product_id")
     @Id
-    public final int getProductId() {
+    public int getProductId() {
         return productId;
     }
 
@@ -53,12 +53,12 @@ public class CartProductEntityPK implements Serializable {
      *
      * @param productId the product id
      */
-    public final void setProductId(final int productId) {
+    public void setProductId(final int productId) {
         this.productId = productId;
     }
 
     @Override
-    public final boolean equals(final Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -70,7 +70,7 @@ public class CartProductEntityPK implements Serializable {
     }
 
     @Override
-    public final int hashCode() {
+    public int hashCode() {
         int result = cartId;
         result = 31 * result + productId;
         return result;

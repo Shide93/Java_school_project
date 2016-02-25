@@ -44,7 +44,7 @@ public class ProductFeatureEntity {
      */
     @Id
     @Column(name = "product_id")
-    public final int getProductId() {
+    public int getProductId() {
         return productId;
     }
 
@@ -53,7 +53,7 @@ public class ProductFeatureEntity {
      *
      * @param productId the product id
      */
-    public final void setProductId(final int productId) {
+    public void setProductId(final int productId) {
         this.productId = productId;
     }
 
@@ -64,7 +64,7 @@ public class ProductFeatureEntity {
      */
     @Id
     @Column(name = "feature_id")
-    public final int getFeatureId() {
+    public int getFeatureId() {
         return featureId;
     }
 
@@ -73,7 +73,7 @@ public class ProductFeatureEntity {
      *
      * @param featureId the feature id
      */
-    public final void setFeatureId(final int featureId) {
+    public void setFeatureId(final int featureId) {
         this.featureId = featureId;
     }
 
@@ -84,7 +84,7 @@ public class ProductFeatureEntity {
      */
     @Basic
     @Column(name = "value")
-    public final String getValue() {
+    public String getValue() {
         return value;
     }
 
@@ -93,7 +93,7 @@ public class ProductFeatureEntity {
      *
      * @param value the value
      */
-    public final void setValue(final String value) {
+    public void setValue(final String value) {
         this.value = value;
     }
 
@@ -104,7 +104,7 @@ public class ProductFeatureEntity {
      */
     @ManyToOne
     @JoinColumn(name = "product_id", updatable = false, insertable = false)
-    public final ProductEntity getProduct() {
+    public ProductEntity getProduct() {
         return product;
     }
 
@@ -113,7 +113,7 @@ public class ProductFeatureEntity {
      *
      * @param product the product
      */
-    public final void setProduct(final ProductEntity product) {
+    public void setProduct(final ProductEntity product) {
         this.product = product;
     }
 
@@ -124,7 +124,7 @@ public class ProductFeatureEntity {
      */
     @ManyToOne
     @JoinColumn(name = "feature_id", updatable = false, insertable = false)
-    public final FeatureEntity getFeature() {
+    public FeatureEntity getFeature() {
         return feature;
     }
 
@@ -133,12 +133,12 @@ public class ProductFeatureEntity {
      *
      * @param feature the feature
      */
-    public final void setFeature(final FeatureEntity feature) {
+    public void setFeature(final FeatureEntity feature) {
         this.feature = feature;
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return "ProductFeatureEntity{" +
                 "productId=" + productId +
                 ", featureId=" + featureId +

@@ -25,7 +25,7 @@ public class WebShopContextListener implements ServletContextListener {
 
     @Override
     public final void contextInitialized(final ServletContextEvent sce) {
-        sce.getServletContext().setAttribute("USER_COOKIE_MAX_AGE", 2 * 60);
+
         EntityManagerFactorySingleton.getInstance();
 
         //TODO: i think it should't be here...

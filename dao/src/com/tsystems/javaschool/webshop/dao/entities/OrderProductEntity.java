@@ -44,7 +44,7 @@ public class OrderProductEntity {
      */
     @Id
     @Column(name = "order_id")
-    public final int getOrderId() {
+    public int getOrderId() {
         return orderId;
     }
 
@@ -53,7 +53,7 @@ public class OrderProductEntity {
      *
      * @param orderId the order id
      */
-    public final void setOrderId(final int orderId) {
+    public void setOrderId(final int orderId) {
         this.orderId = orderId;
     }
 
@@ -64,7 +64,7 @@ public class OrderProductEntity {
      */
     @Id
     @Column(name = "product_id")
-    public final int getProductId() {
+    public int getProductId() {
         return productId;
     }
 
@@ -73,7 +73,7 @@ public class OrderProductEntity {
      *
      * @param productId the product id
      */
-    public final void setProductId(final int productId) {
+    public void setProductId(final int productId) {
         this.productId = productId;
     }
 
@@ -84,7 +84,7 @@ public class OrderProductEntity {
      */
     @Basic
     @Column(name = "quantity")
-    public final Integer getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
@@ -93,7 +93,7 @@ public class OrderProductEntity {
      *
      * @param quantity the quantity
      */
-    public final void setQuantity(final Integer quantity) {
+    public void setQuantity(final Integer quantity) {
         this.quantity = quantity;
     }
 
@@ -104,7 +104,7 @@ public class OrderProductEntity {
      */
     @ManyToOne
     @JoinColumn(name = "order_id", updatable = false, insertable = false)
-    public final OrderEntity getOrder() {
+    public OrderEntity getOrder() {
         return order;
     }
 
@@ -113,7 +113,7 @@ public class OrderProductEntity {
      *
      * @param order the order
      */
-    public final void setOrder(final OrderEntity order) {
+    public void setOrder(final OrderEntity order) {
         this.order = order;
     }
 
@@ -124,7 +124,7 @@ public class OrderProductEntity {
      */
     @ManyToOne
     @JoinColumn(name = "product_id", updatable = false, insertable = false)
-    public final ProductEntity getProduct() {
+    public ProductEntity getProduct() {
         return product;
     }
 
@@ -133,12 +133,12 @@ public class OrderProductEntity {
      *
      * @param product the product
      */
-    public final void setProduct(final ProductEntity product) {
+    public void setProduct(final ProductEntity product) {
         this.product = product;
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return "OrderProductEntity{" +
                 "orderId=" + orderId +
                 ", productId=" + productId +

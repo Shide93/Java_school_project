@@ -11,6 +11,7 @@ import javax.persistence.Table;
 /**
  * Entity of address.
  */
+@SuppressWarnings("CheckStyle")
 @Entity
 @Table(name = "address", schema = "web_shop")
 public class AddressEntity {
@@ -56,7 +57,7 @@ public class AddressEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public final int getId() {
+    public int getId() {
         return id;
     }
 
@@ -65,7 +66,7 @@ public class AddressEntity {
      *
      * @param id the id
      */
-    public final void setId(final int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -76,7 +77,7 @@ public class AddressEntity {
      */
     @Basic
     @Column(name = "country")
-    public final String getCountry() {
+    public String getCountry() {
         return country;
     }
 
@@ -85,7 +86,7 @@ public class AddressEntity {
      *
      * @param country the country
      */
-    public final void setCountry(final String country) {
+    public void setCountry(final String country) {
         this.country = country;
     }
 
@@ -96,7 +97,7 @@ public class AddressEntity {
      */
     @Basic
     @Column(name = "region")
-    public final String getRegion() {
+    public String getRegion() {
         return region;
     }
 
@@ -105,7 +106,7 @@ public class AddressEntity {
      *
      * @param region the region
      */
-    public final void setRegion(final String region) {
+    public void setRegion(final String region) {
         this.region = region;
     }
 
@@ -116,7 +117,7 @@ public class AddressEntity {
      */
     @Basic
     @Column(name = "city")
-    public final String getCity() {
+    public String getCity() {
         return city;
     }
 
@@ -125,7 +126,7 @@ public class AddressEntity {
      *
      * @param city the city
      */
-    public final void setCity(final String city) {
+    public void setCity(final String city) {
         this.city = city;
     }
 
@@ -136,7 +137,7 @@ public class AddressEntity {
      */
     @Basic
     @Column(name = "zip")
-    public final int getZip() {
+    public int getZip() {
         return zip;
     }
 
@@ -145,7 +146,7 @@ public class AddressEntity {
      *
      * @param zip the zip
      */
-    public final void setZip(final int zip) {
+    public void setZip(final int zip) {
         this.zip = zip;
     }
 
@@ -156,7 +157,7 @@ public class AddressEntity {
      */
     @Basic
     @Column(name = "street")
-    public final String getStreet() {
+    public String getStreet() {
         return street;
     }
 
@@ -165,7 +166,7 @@ public class AddressEntity {
      *
      * @param street the street
      */
-    public final void setStreet(final String street) {
+    public void setStreet(final String street) {
         this.street = street;
     }
 
@@ -176,7 +177,7 @@ public class AddressEntity {
      */
     @Basic
     @Column(name = "building")
-    public final int getBuilding() {
+    public int getBuilding() {
         return building;
     }
 
@@ -185,7 +186,7 @@ public class AddressEntity {
      *
      * @param building the building
      */
-    public final void setBuilding(final int building) {
+    public  void setBuilding(final int building) {
         this.building = building;
     }
 
@@ -196,7 +197,7 @@ public class AddressEntity {
      */
     @Basic
     @Column(name = "flat")
-    public final int getFlat() {
+    public int getFlat() {
         return flat;
     }
 
@@ -205,12 +206,12 @@ public class AddressEntity {
      *
      * @param flat the flat
      */
-    public final void setFlat(final int flat) {
+    public void setFlat(final int flat) {
         this.flat = flat;
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return "AddressEntity{" +
                 "id=" + id +
                 ", country='" + country + '\'' +

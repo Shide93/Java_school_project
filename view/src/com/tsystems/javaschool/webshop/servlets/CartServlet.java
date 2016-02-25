@@ -4,23 +4,27 @@ import com.tsystems.javaschool.webshop.dao.entities.CartEntity;
 import com.tsystems.javaschool.webshop.services.api.CartService;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import com.tsystems.javaschool.webshop.services.impl.CartServiceImpl;
+import com.tsystems.javaschool.webshop.servlets.utils.ServletUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Shide on 23.02.2016.
+ * Cart servlet that manages all cart manipulations.
  */
 public class CartServlet extends HttpServlet {
 
     /**
      * The constant LOGGER.
      */
-    private static final Logger LOGGER = LogManager.getLogger(CartServlet.class);
+    private static final Logger LOGGER =
+            LogManager.getLogger(CartServlet.class);
 
     /**
      * The Cart service.
@@ -46,60 +50,80 @@ public class CartServlet extends HttpServlet {
     protected final void doPost(final HttpServletRequest req,
                                 final HttpServletResponse resp)
             throws ServletException, IOException {
-        if (req.getParameter("action").equals("add")) {
-            //check if cart exists in session or create it
-            CartEntity cart = (CartEntity) req.getSession()
-                    .getAttribute("cart");
 
-            //TODO: move to function
-            if (cart == null) {
+        String productIdStr = req.getParameter("product_id");
+        String quantityStr = req.getParameter("quantity");
+        Integer quantity;
+        Integer productId;
+        try {
+            productId = Integer.parseInt(productIdStr);
+            quantity = Integer.parseInt(quantityStr);
+        } catch (NumberFormatException e) {
+            LOGGER.warn("invalid data format", e);
+            //TODO: error JSON?
+            return;
+        }
+        createCartIfNone(req, resp);
+        CartEntity cart = (CartEntity) req.getSession()
+                .getAttribute("cart");
+
+
+            if (req.getParameter("action").equals("add")) {
                 try {
-                    cart = new CartEntity();
-                    //TODO: cookie creation function, based on hashing  something
-                    String cookieStr = "coolHashedCookie";
-                    cart.setCookie(cookieStr);
-                    cartService.add(cart);
-                    req.getSession().setAttribute("cart", cart);
-                    //TODO: cookie create function
-                    Cookie cookie = new Cookie("cartID", cookieStr);
-                    cookie.setMaxAge((Integer) this.getServletContext()
-                            .getAttribute("USER_COOKIE_MAX_AGE"));
-                    resp.addCookie(cookie);
-
+                CartEntity newCart = cartService.addToCart(productId, quantity, cart.getId());
+                req.getSession().setAttribute("cart", newCart);
                 } catch (ServiceException e) {
-                    LOGGER.error("cart add failed", e);
-                    //TODO: error JSON?
-                    return;
+                    LOGGER.error("add to cart failed");
+                    // TODO: error JSON?
+                }
+            } else if (req.getParameter("action").equals("edit")) {
+                try {
+                    CartEntity newCart = cartService.editCartProduct(productId, quantity, cart.getId());
+                    req.getSession().setAttribute("cart", newCart);
+                } catch (ServiceException e) {
+                    LOGGER.error("product editing in cart failed");
+                    // TODO: error JSON?
+                }
+            } else if (req.getParameter("action").equals("remove")) {
+                try {
+                    CartEntity newCart = cartService.removeFromCart(productId, cart.getId());
+                    req.getSession().setAttribute("cart", newCart);
+                } catch (ServiceException e) {
+                    LOGGER.error("remove from cart failed");
+                    // TODO: error JSON?
                 }
             }
-            String productIdStr = req.getParameter("product_id");
-            String quantityStr = req.getParameter("quantity");
-            Integer quantity;
-            Integer productId;
-            try {
-                productId = Integer.parseInt(productIdStr);
-                quantity = Integer.parseInt(quantityStr);
-            } catch (NumberFormatException e) {
-                LOGGER.warn("invalid data format", e);
-                //TODO: error JSON?
-                return;
-            }
 
+    }
+
+    /**
+     * Checks cart for existing and creates if not exist then adds it to session.
+     *
+     * @param req  the request object
+     * @param resp the response object
+     */
+    public final void createCartIfNone(final HttpServletRequest req,
+                                 final HttpServletResponse resp) {
+
+        //check if cart exists in session or create it
+        CartEntity cart = (CartEntity) req.getSession()
+                .getAttribute("cart");
+
+        if (cart == null) {
             try {
-                cartService.addToCart(productId, quantity, cart);
+                cart = new CartEntity();
+                //TODO: cookie creation function, based on hashing  something
+
+                cartService.add(cart);
+                req.getSession().setAttribute("cart", cart);
+                //TODO: cookie create function
+
+                resp.addCookie(ServletUtils.createCookie("cartID", "" + cart.getId()));
 
             } catch (ServiceException e) {
-                LOGGER.error("add to cart failed");
-                // TODO: error JSON?
+                LOGGER.error("cart add failed", e);
+                //TODO: error JSON?
             }
-
-
-        } else if (req.getParameter("action").equals("edit")) {
-
-
-        } else if (req.getParameter("action").equals("remove")) {
-
-
         }
     }
 }

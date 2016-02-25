@@ -24,7 +24,7 @@ public class ProductFeatureEntityPK implements Serializable {
      */
     @Column(name = "product_id")
     @Id
-    public final int getProductId() {
+    public int getProductId() {
         return productId;
     }
 
@@ -33,7 +33,7 @@ public class ProductFeatureEntityPK implements Serializable {
      *
      * @param productId the product id
      */
-    public final void setProductId(final int productId) {
+    public void setProductId(final int productId) {
         this.productId = productId;
     }
 
@@ -44,7 +44,7 @@ public class ProductFeatureEntityPK implements Serializable {
      */
     @Column(name = "feature_id")
     @Id
-    public final int getFeatureId() {
+    public int getFeatureId() {
         return featureId;
     }
 
@@ -53,12 +53,12 @@ public class ProductFeatureEntityPK implements Serializable {
      *
      * @param featureId the feature id
      */
-    public final void setFeatureId(final int featureId) {
+    public void setFeatureId(final int featureId) {
         this.featureId = featureId;
     }
 
     @Override
-    public final boolean equals(final Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -70,7 +70,7 @@ public class ProductFeatureEntityPK implements Serializable {
     }
 
     @Override
-    public final int hashCode() {
+    public int hashCode() {
         int result = productId;
         result = 31 * result + featureId;
         return result;

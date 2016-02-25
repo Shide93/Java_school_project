@@ -25,21 +25,21 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void add(OrderEntity order) throws ServiceException {
-        serviceHelper.executeTransactionally(manager -> {
+        serviceHelper.executeInTransaction(manager -> {
             orderDAO.create(order, manager);
         });
     }
 
     @Override
     public void update(OrderEntity order) throws ServiceException {
-        serviceHelper.executeTransactionally(manager -> {
+        serviceHelper.executeInTransaction(manager -> {
             orderDAO.update(order, manager);
         });
     }
 
     @Override
     public void delete(OrderEntity order) throws ServiceException {
-        serviceHelper.executeTransactionally(manager -> {
+        serviceHelper.executeInTransaction(manager -> {
             orderDAO.delete(order, manager);
         });
     }
@@ -53,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderEntity> getAll() throws ServiceException {
-        return serviceHelper.loadTransactionally(manager -> {
+        return serviceHelper.loadInTransaction(manager -> {
 
             return orderDAO.getAll(manager);
         });

@@ -9,9 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -19,7 +20,7 @@ import java.util.Set;
  */
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "CartEntity.getByCookie", query = "SELECT c FROM CartEntity c WHERE cookie = :cookie")
+
 })
 @Table(name = "cart", schema = "web_shop")
 public class CartEntity {
@@ -27,10 +28,6 @@ public class CartEntity {
      * The Id in table.
      */
     private int id;
-    /**
-     * The cart Cookie.
-     */
-    private String cookie;
     /**
      * The Count of items in cart.
      */
@@ -42,7 +39,14 @@ public class CartEntity {
     /**
      * The Items in cart.
      */
-    private Set<CartProductEntity> items;
+    private List<CartProductEntity> items;
+
+    /**
+     * Instantiates a new Cart entity.
+     */
+    public CartEntity() {
+        items = new ArrayList<>();
+    }
 
     /**
      * Gets id.
@@ -52,7 +56,7 @@ public class CartEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public final int getId() {
+    public int getId() {
         return id;
     }
 
@@ -61,28 +65,8 @@ public class CartEntity {
      *
      * @param id the id
      */
-    public final void setId(final int id) {
+    public void setId(final int id) {
         this.id = id;
-    }
-
-    /**
-     * Gets cookie.
-     *
-     * @return the cookie
-     */
-    @Basic
-    @Column(name = "cookie", nullable = false, unique = true)
-    public final String getCookie() {
-        return cookie;
-    }
-
-    /**
-     * Sets cookie.
-     *
-     * @param cookie the cookie
-     */
-    public final void setCookie(final String cookie) {
-        this.cookie = cookie;
     }
 
     /**
@@ -92,7 +76,7 @@ public class CartEntity {
      */
     @Basic
     @Column(name = "items_count")
-    public final int getCount() {
+    public int getCount() {
         return count;
     }
 
@@ -101,7 +85,7 @@ public class CartEntity {
      *
      * @param count the count
      */
-    public final void setCount(final int count) {
+    public void setCount(final int count) {
         this.count = count;
     }
 
@@ -112,7 +96,7 @@ public class CartEntity {
      */
     @Basic
     @Column(name = "summary")
-    public final int getSummary() {
+    public int getSummary() {
         return summary;
     }
 
@@ -121,7 +105,7 @@ public class CartEntity {
      *
      * @param summary the summary
      */
-    public final void setSummary(final int summary) {
+    public void setSummary(final int summary) {
         this.summary = summary;
     }
 
@@ -130,8 +114,8 @@ public class CartEntity {
      *
      * @return the items
      */
-    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    public final Set<CartProductEntity> getItems() {
+    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<CartProductEntity> getItems() {
         return items;
     }
 
@@ -140,15 +124,14 @@ public class CartEntity {
      *
      * @param products the products
      */
-    public final void setItems(final Set<CartProductEntity> products) {
+    public void setItems(final List<CartProductEntity> products) {
         this.items = products;
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return "CartEntity{" +
                 "id=" + id +
-                ", cookie='" + cookie + '\'' +
                 ", count=" + count +
                 ", summary=" + summary +
                 ", items=" + items +

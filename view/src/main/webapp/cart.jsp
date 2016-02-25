@@ -5,7 +5,7 @@
     <jsp:attribute name="content">
 
         <h1 class="">This is cart!</h1>
-        <c:if test="${sessionScope.cart == null}">
+        <c:if test="${sessionScope.cart == null || sessionScope.cart.items == null}">
             <div>
                 Your cart is empty!
             </div>

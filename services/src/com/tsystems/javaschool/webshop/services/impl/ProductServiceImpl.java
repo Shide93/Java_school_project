@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void add(ProductEntity product) throws ServiceException {
 
-        serviceHelper.executeTransactionally(manager -> {
+        serviceHelper.executeInTransaction(manager -> {
 
             productDAO.create(product, manager);
         });
@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void update(ProductEntity product) throws ServiceException {
-        serviceHelper.executeTransactionally(manager -> {
+        serviceHelper.executeInTransaction(manager -> {
 
             productDAO.update(product, manager);
         });
@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void delete(ProductEntity product) throws ServiceException {
-        serviceHelper.executeTransactionally(manager -> {
+        serviceHelper.executeInTransaction(manager -> {
 
             productDAO.delete(product, manager);
         });
@@ -61,7 +61,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductEntity> getAll() throws ServiceException {
-        return serviceHelper.loadTransactionally(manager -> {
+        return serviceHelper.loadInTransaction(manager -> {
 
             return productDAO.getAll(manager);
         });
@@ -69,7 +69,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductEntity> searchProducts(String searchQuery) throws ServiceException {
-        return  serviceHelper.loadTransactionally((ServiceLoadAction<List<ProductEntity>>) manager -> {
+        return  serviceHelper.loadInTransaction((ServiceLoadAction<List<ProductEntity>>) manager -> {
 
 
             return null;

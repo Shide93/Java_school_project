@@ -11,7 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The type Category entity.
@@ -34,7 +35,11 @@ public class CategoryEntity {
     /**
      * The Products.
      */
-    private Set<ProductEntity> products;
+    private List<ProductEntity> products;
+
+    public CategoryEntity() {
+        products = new ArrayList<>();
+    }
 
     /**
      * Gets id.
@@ -44,7 +49,7 @@ public class CategoryEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public final int getId() {
+    public int getId() {
         return id;
     }
 
@@ -53,7 +58,7 @@ public class CategoryEntity {
      *
      * @param id the id
      */
-    public final void setId(final int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -64,7 +69,7 @@ public class CategoryEntity {
      */
     @Basic
     @Column(name = "name")
-    public final String getName() {
+    public String getName() {
         return name;
     }
 
@@ -73,7 +78,7 @@ public class CategoryEntity {
      *
      * @param name the name
      */
-    public final void setName(final String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -84,7 +89,7 @@ public class CategoryEntity {
      */
     @Basic
     @Column(name = "description")
-    public final String getDescription() {
+    public String getDescription() {
         return description;
     }
 
@@ -93,7 +98,7 @@ public class CategoryEntity {
      *
      * @param description the description
      */
-    public final void setDescription(final String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -106,7 +111,7 @@ public class CategoryEntity {
     @JoinTable(name = "category_product",
             joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
-    public final Set<ProductEntity> getProducts() {
+    public List<ProductEntity> getProducts() {
         return products;
     }
 
@@ -115,12 +120,12 @@ public class CategoryEntity {
      *
      * @param products the products
      */
-    public final void setProducts(final Set<ProductEntity> products) {
+    public void setProducts(final List<ProductEntity> products) {
         this.products = products;
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return "CategoryEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +

@@ -69,6 +69,16 @@
         <servlet-name>CartServlet</servlet-name>
         <url-pattern>/cart</url-pattern>
     </servlet-mapping>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error.jsp</location>
+    </error-page>
+
+    <!--error-page>
+        <error-code>500</error-code>
+        <location>/error.jsp</location>
+    </error-page-->
     <!--Filters-->
     <filter>
         <filter-name>CookieCheckFilter</filter-name>
