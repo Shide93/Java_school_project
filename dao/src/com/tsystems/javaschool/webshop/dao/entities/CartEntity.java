@@ -12,7 +12,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Shide on 18.02.2016.
@@ -38,13 +40,13 @@ public class CartEntity {
     /**
      * The Items in cart.
      */
-    private List<CartProductEntity> items;
+    private Set<CartProductEntity> items;
 
     /**
      * Instantiates a new Cart entity.
      */
     public CartEntity() {
-        items = new ArrayList<>();
+        items = new LinkedHashSet<>();
     }
 
     /**
@@ -114,7 +116,7 @@ public class CartEntity {
      * @return the items
      */
     @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<CartProductEntity> getItems() {
+    public Set<CartProductEntity> getItems() {
         return items;
     }
 
@@ -123,7 +125,7 @@ public class CartEntity {
      *
      * @param products the products
      */
-    public void setItems(final List<CartProductEntity> products) {
+    public void setItems(final Set<CartProductEntity> products) {
         this.items = products;
     }
 

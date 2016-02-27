@@ -1,18 +1,10 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The type Category entity.
@@ -35,10 +27,10 @@ public class CategoryEntity {
     /**
      * The Products.
      */
-    private List<ProductEntity> products;
+    private Set<ProductEntity> products;
 
     public CategoryEntity() {
-        products = new ArrayList<>();
+        products = new LinkedHashSet<>();
     }
 
     /**
@@ -108,10 +100,11 @@ public class CategoryEntity {
      * @return the products
      */
     @ManyToMany(fetch = FetchType.EAGER)
+    @OrderBy(value = "id")
     @JoinTable(name = "category_product",
             joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
-    public List<ProductEntity> getProducts() {
+    public Set<ProductEntity> getProducts() {
         return products;
     }
 
@@ -120,7 +113,7 @@ public class CategoryEntity {
      *
      * @param products the products
      */
-    public void setProducts(final List<ProductEntity> products) {
+    public void setProducts(final Set<ProductEntity> products) {
         this.products = products;
     }
 

@@ -6,6 +6,7 @@ import com.tsystems.javaschool.webshop.dao.entities.enums.ShippingMethod;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -42,10 +43,10 @@ public class OrderEntity {
     /**
      * The Products.
      */
-    private List<OrderProductEntity> products;
+    private Set<OrderProductEntity> products;
 
     public OrderEntity() {
-        products = new ArrayList<>();
+        products = new LinkedHashSet<>();
     }
 
     /**
@@ -178,7 +179,7 @@ public class OrderEntity {
      * @return the products
      */
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
-    public List<OrderProductEntity> getProducts() {
+    public Set<OrderProductEntity> getProducts() {
         return products;
     }
 
@@ -187,7 +188,7 @@ public class OrderEntity {
      *
      * @param products the products
      */
-    public void setProducts(final List<OrderProductEntity> products) {
+    public void setProducts(final Set<OrderProductEntity> products) {
         this.products = products;
     }
 

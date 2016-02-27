@@ -63,8 +63,6 @@ public class ErrorHandlerServlet extends HttpServlet {
                 out.println("Please return to the <a href=\"" +
                         resp.encodeURL("http://localhost:8080/") +
                         "\">Home Page</a>.");
-            } else if (statusCode != null){
-                out.println("The status code : " + statusCode);
             } else{
                 out.println("<h2>Error information</h2>");
                 out.println("Servlet Name : " + servletName +

@@ -11,6 +11,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -47,23 +48,23 @@ public class ProductEntity {
     /**
      * The Categories.
      */
-    private List<CategoryEntity> categories;
+    private Set<CategoryEntity> categories;
     /**
      * The Features.
      */
-    private List<ProductFeatureEntity> features;
+    private Set<ProductFeatureEntity> features;
     /**
      * The Orders.
      */
-    private List<OrderProductEntity> orders;
+    private Set<OrderProductEntity> orders;
 
     /**
      * Instantiates a new Product entity.
      */
     public ProductEntity() {
-        categories = new ArrayList<>();
-        features = new ArrayList<>();
-        orders = new ArrayList<>();
+        categories = new LinkedHashSet<>();
+        features = new LinkedHashSet<>();
+        orders = new LinkedHashSet<>();
     }
 
     /**
@@ -193,7 +194,7 @@ public class ProductEntity {
      * @return the categories
      */
     @ManyToMany(mappedBy = "products", fetch = FetchType.EAGER)
-    public List<CategoryEntity> getCategories() {
+    public Set<CategoryEntity> getCategories() {
         return categories;
     }
 
@@ -202,7 +203,7 @@ public class ProductEntity {
      *
      * @param categories the categories
      */
-    public void setCategories(final List<CategoryEntity> categories) {
+    public void setCategories(final Set<CategoryEntity> categories) {
         this.categories = categories;
     }
 
@@ -212,7 +213,7 @@ public class ProductEntity {
      * @return the features
      */
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
-    public List<ProductFeatureEntity> getFeatures() {
+    public Set<ProductFeatureEntity> getFeatures() {
         return features;
     }
 
@@ -221,7 +222,7 @@ public class ProductEntity {
      *
      * @param features the features
      */
-    public void setFeatures(final List<ProductFeatureEntity> features) {
+    public void setFeatures(final Set<ProductFeatureEntity> features) {
         this.features = features;
     }
 
@@ -231,7 +232,7 @@ public class ProductEntity {
      * @return the orders
      */
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
-    public List<OrderProductEntity> getOrders() {
+    public Set<OrderProductEntity> getOrders() {
         return orders;
     }
 
@@ -240,7 +241,7 @@ public class ProductEntity {
      *
      * @param orders the orders
      */
-    public void setOrders(final List<OrderProductEntity> orders) {
+    public void setOrders(final Set<OrderProductEntity> orders) {
         this.orders = orders;
     }
 

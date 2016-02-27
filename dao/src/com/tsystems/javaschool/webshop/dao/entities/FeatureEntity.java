@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -34,10 +35,10 @@ public class FeatureEntity {
     /**
      * The Products.
      */
-    private List<ProductFeatureEntity> products;
+    private Set<ProductFeatureEntity> products;
 
     public FeatureEntity() {
-        products = new ArrayList<>();
+        products = new LinkedHashSet<>();
     }
 
     /**
@@ -107,7 +108,7 @@ public class FeatureEntity {
      * @return the products
      */
     @OneToMany(mappedBy = "feature", fetch = FetchType.EAGER)
-    public List<ProductFeatureEntity> getProducts() {
+    public Set<ProductFeatureEntity> getProducts() {
         return products;
     }
 
@@ -116,7 +117,7 @@ public class FeatureEntity {
      *
      * @param products the products
      */
-    public void setProducts(final List<ProductFeatureEntity> products) {
+    public void setProducts(final Set<ProductFeatureEntity> products) {
         this.products = products;
     }
 

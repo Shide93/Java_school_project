@@ -15,10 +15,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * The type User entity.
@@ -68,13 +65,13 @@ public class UserEntity {
     /**
      * The Orders.
      */
-    private List<OrderEntity> orders;
+    private Set<OrderEntity> orders;
 
     /**
      * Instantiates a new User entity.
      */
     public UserEntity() {
-        orders = new ArrayList<>();
+        orders = new LinkedHashSet<>();
     }
 
     /**
@@ -264,7 +261,7 @@ public class UserEntity {
      * @return the orders
      */
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    public List<OrderEntity> getOrders() {
+    public Set<OrderEntity> getOrders() {
         return orders;
     }
 
@@ -273,7 +270,7 @@ public class UserEntity {
      *
      * @param orders the orders
      */
-    public void setOrders(final List<OrderEntity> orders) {
+    public void setOrders(final Set<OrderEntity> orders) {
         this.orders = orders;
     }
 }

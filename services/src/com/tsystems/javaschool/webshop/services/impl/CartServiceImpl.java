@@ -104,10 +104,6 @@ public class CartServiceImpl implements CartService {
             item.setProductId(productId);
             item.setCartId(cart.getId());
 
-            if (cart.getItems() == null) {
-                //TODO: move to getItems? setItems? declaration? constructor?
-                cart.setItems(new ArrayList<>());
-            }
             cart.getItems().add(item);
             cart.setCount(cart.getCount() + quantity);
             cart.setSummary(cart.getSummary()
