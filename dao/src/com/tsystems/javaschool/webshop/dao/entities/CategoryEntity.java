@@ -130,7 +130,7 @@ public class CategoryEntity {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-
+                ", products=" + products +
                 '}';
     }
 }

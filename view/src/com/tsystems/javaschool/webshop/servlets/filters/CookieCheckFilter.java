@@ -7,8 +7,8 @@ import com.tsystems.javaschool.webshop.services.api.CartService;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import com.tsystems.javaschool.webshop.services.impl.AccountServiceImpl;
 import com.tsystems.javaschool.webshop.services.impl.CartServiceImpl;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -97,15 +97,13 @@ public class CookieCheckFilter implements Filter {
 
             //if user enters site with cart cookie - add cart to session
             if (cookie.getName().equals("cartID") && !cartFlag) {
-                try {
-                    CartEntity cart = cartService.
-                            get(Integer.parseInt(cookie.getValue()));
-                    if (cart != null) {
-                        req.getSession().setAttribute("cart", cart);
-                    }
-                } catch (ServiceException e) {
-                    LOGGER.error("failed getting cart", e);
+
+                CartEntity cart = cartService.
+                        get(Integer.parseInt(cookie.getValue()));
+                if (cart != null) {
+                    req.getSession().setAttribute("cart", cart);
                 }
+
             }
         }
         chain.doFilter(req, resp);

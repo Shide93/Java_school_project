@@ -5,8 +5,8 @@ import com.tsystems.javaschool.webshop.dao.utils.EntityManagerFactorySingleton;
 import com.tsystems.javaschool.webshop.services.api.CategoryService;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import com.tsystems.javaschool.webshop.services.impl.CategoryServiceImpl;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -30,13 +30,8 @@ public class WebShopContextListener implements ServletContextListener {
 
         //TODO: i think it should't be here...
         CategoryService categoryService = new CategoryServiceImpl();
-        try {
-            List<CategoryEntity> categories = categoryService.getAll();
-            sce.getServletContext().setAttribute("categoryList", categories);
-        } catch (ServiceException e) {
-            LOGGER.error("category fetch failed!", e);
-        }
-
+        List<CategoryEntity> categories = categoryService.getAll();
+        sce.getServletContext().setAttribute("categoryList", categories);
     }
 
     @Override

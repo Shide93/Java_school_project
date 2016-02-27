@@ -13,37 +13,32 @@ public interface GenericService<T> {
     /**
      * adds object to DB.
      * @param object object to add
-     * @throws ServiceException if add failed
      */
-    void add(T object) throws ServiceException;
+    void add(T object);
 
     /**
      * updates object in DB.
      * @param object object to update
-     * @throws ServiceException if update failed
      */
-    void update(T object) throws ServiceException;
+    void update(T object);
 
     /**
      * deletes object from DB.
      * @param object object to delete
-     * @throws ServiceException if delete failed
      */
-    void delete(T object) throws ServiceException;
+    void delete(T object);
 
     /**
      * gets object by id.
      * @param objectId id of object
      * @return object with specified id
-     * @throws ServiceException if get failed
      */
-    T get(int objectId) throws ServiceException;
+    T get(int objectId);
 
     /**
      * Returns all existing objects.
      * @return all existing objects
-     * @throws ServiceException f get failed
      */
-    List<T> getAll() throws ServiceException;
+    List<T> getAll();
 
 }

@@ -4,8 +4,8 @@ import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
 import com.tsystems.javaschool.webshop.services.api.ProductService;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import com.tsystems.javaschool.webshop.services.impl.ProductServiceImpl;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -64,14 +64,10 @@ public class ProductPageServlet extends HttpServlet {
         }
         //retrieve product data by id and send to view
         LOGGER.info("asdasdsad " + productId);
-        try {
-            ProductEntity product = productService.get(productId);
-            req.setAttribute("product", product);
-        } catch (ServiceException e) {
-            LOGGER.error("cannot find product with id " + productId, e);
-            resp.sendRedirect("/error.jsp");
-            return;
-        }
+
+        ProductEntity product = productService.get(productId);
+        req.setAttribute("product", product);
+
         RequestDispatcher rd = req.getRequestDispatcher("/product.jsp");
         rd.forward(req, resp);
 

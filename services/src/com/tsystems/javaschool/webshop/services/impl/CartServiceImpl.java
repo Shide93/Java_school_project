@@ -9,12 +9,12 @@ import com.tsystems.javaschool.webshop.dao.impl.CartDAOImpl;
 import com.tsystems.javaschool.webshop.dao.impl.ProductDAOImpl;
 import com.tsystems.javaschool.webshop.dao.utils.EntityManagerFactorySingleton;
 import com.tsystems.javaschool.webshop.services.api.CartService;
-import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import com.tsystems.javaschool.webshop.services.util.ServiceHelper;
 import com.tsystems.javaschool.webshop.services.util.ServiceHelperImpl;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -22,6 +22,11 @@ import java.util.List;
  */
 public class CartServiceImpl implements CartService {
 
+    /**
+     * The constant LOGGER.
+     */
+    private static final Logger LOGGER =
+            LogManager.getLogger(CartServiceImpl.class);
     /**
      * The Cart dao.
      */
@@ -41,11 +46,11 @@ public class CartServiceImpl implements CartService {
     public CartServiceImpl() {
         cartDAO = new CartDAOImpl();
         productDAO = new ProductDAOImpl();
-        serviceHelper = new ServiceHelperImpl();
+        serviceHelper = new ServiceHelperImpl(LOGGER);
     }
 
     @Override
-    public final void add(final CartEntity cart) throws ServiceException {
+    public final void add(final CartEntity cart) {
         serviceHelper.executeInTransaction(manager -> {
 
             cartDAO.create(cart, manager);
@@ -53,7 +58,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public final void update(final CartEntity cart) throws ServiceException {
+    public final void update(final CartEntity cart) {
         serviceHelper.executeInTransaction(manager -> {
 
             cartDAO.update(cart, manager);
@@ -61,7 +66,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public final void delete(final CartEntity cart) throws ServiceException {
+    public final void delete(final CartEntity cart) {
         serviceHelper.executeInTransaction(manager -> {
 
             cartDAO.delete(cart, manager);
@@ -69,7 +74,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public final CartEntity get(final int cartId) throws ServiceException {
+    public final CartEntity get(final int cartId) {
         return serviceHelper.load(manager -> {
 
             return cartDAO.getById(cartId, manager);
@@ -77,7 +82,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public final List<CartEntity> getAll() throws ServiceException {
+    public final List<CartEntity> getAll() {
         return serviceHelper.loadInTransaction(manager -> {
 
             return cartDAO.getAll(manager);
@@ -87,12 +92,11 @@ public class CartServiceImpl implements CartService {
     @Override
     public final CartEntity addToCart(final Integer productId,
                                       final Integer quantity,
-                                      final Integer cartId)
-            throws ServiceException {
+                                      final Integer cartId) {
         return serviceHelper.loadInTransaction(manager -> {
             CartEntity cart = cartDAO.getById(cartId, manager);
             ProductEntity product = productDAO.getById(productId, manager);
-            CartProductEntity item= new CartProductEntity();
+            CartProductEntity item = new CartProductEntity();
 
             item.setQuantity(quantity);
             item.setProduct(product);
@@ -116,8 +120,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public final CartEntity editCartProduct(final Integer productId,
                                             final Integer quantity,
-                                            final Integer cartId)
-            throws ServiceException {
+                                            final Integer cartId) {
         return serviceHelper.loadInTransaction(manager -> {
             CartEntity cart = cartDAO.getById(cartId, manager);
 
@@ -133,39 +136,11 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public final CartEntity removeFromCart(final Integer productId,
-                                           final Integer cartId)
-            throws ServiceException {
+                                           final Integer cartId) {
         return serviceHelper.loadInTransaction(manager -> {
-            CartEntity cart = cartDAO.getById(cartId, manager);
-
-            Iterator<CartProductEntity> iterator = cart.getItems().iterator();
-            while (iterator.hasNext()) {
-                CartProductEntity cartProduct = iterator.next();
-                if (productId.equals(cartProduct.getProductId())) {
-                    iterator.remove();
-                    break;
-                }
-            }
-            //FIXME: deletes 2 rows exept one....
-            // cartDAO.update(cart, manager);
-            return cart;
+            cartDAO.removeFromCart(productId, cartId, manager);
+            return cartDAO.getById(cartId, manager);
         });
-    }
-
-    /**
-     * The entry point of application.
-     *
-     * @param args the input arguments
-     * @throws ServiceException the service exception
-     */
-    public static void main(String[] args) throws ServiceException {
-
-        CartService cartService = new CartServiceImpl();
-        // cartService.editCartProduct(1, 5, 23);
-        CartEntity cR = cartService.removeFromCart(3, 23);
-        System.err.println(cR);
-        EntityManagerFactorySingleton.closeFactory();
-
     }
 }
 

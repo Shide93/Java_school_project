@@ -3,7 +3,7 @@ package com.tsystems.javaschool.webshop.dao.exceptions;
 /**
  * Exception of dao layer.
  */
-public class DaoException extends Exception {
+public class DaoException extends RuntimeException {
 
     /**
      * Instantiates a new Dao exception.

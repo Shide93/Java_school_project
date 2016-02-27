@@ -4,8 +4,8 @@ import com.tsystems.javaschool.webshop.dao.entities.CategoryEntity;
 import com.tsystems.javaschool.webshop.services.api.CategoryService;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import com.tsystems.javaschool.webshop.services.impl.CategoryServiceImpl;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -62,14 +62,10 @@ public class CategoryServlet extends HttpServlet {
             }
         }
         //retrieve category data by id and send to view
-        try {
-            CategoryEntity category = categoryService.get(categoryId);
-            req.setAttribute("category", category);
-        } catch (ServiceException e) {
-            LOGGER.error("cannot find product with id " + categoryId, e);
-            resp.sendRedirect("/error.jsp");
-            return;
-        }
+
+        CategoryEntity category = categoryService.get(categoryId);
+        req.setAttribute("category", category);
+
         RequestDispatcher rd = req.getRequestDispatcher("/category.jsp");
         rd.forward(req, resp);
 

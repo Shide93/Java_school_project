@@ -3,11 +3,11 @@ package com.tsystems.javaschool.webshop.dao.impl;
 import com.tsystems.javaschool.webshop.dao.api.CartDAO;
 import com.tsystems.javaschool.webshop.dao.entities.CartEntity;
 import com.tsystems.javaschool.webshop.dao.exceptions.DaoException;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
-
+import javax.persistence.Query;
 
 /**
  * Cart dao implementation.
@@ -16,27 +16,31 @@ public class CartDAOImpl extends AbstractGenericDAO<CartEntity>
         implements CartDAO {
 
     /**
+     * The constant LOGGER.
+     */
+    private static final Logger LOGGER =
+            LogManager.getLogger(CartDAOImpl.class);
+
+    /**
      * Instantiates a new Cart dao.
      */
     public CartDAOImpl() {
-        super(CartEntity.class);
+        super(CartEntity.class, LOGGER);
     }
 
+
     @Override
-    public final CartEntity getByCookie(final String cookie,
-                                        final EntityManager manager)
+    public final void removeFromCart(final Integer productId,
+                               final Integer cartId,
+                               final EntityManager manager)
             throws DaoException {
-        try {
-            TypedQuery<CartEntity> query = manager.createNamedQuery(
-                    "CartEntity.getByCookie", CartEntity.class);
-            query.setParameter("cookie", cookie);
-            return query.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-            //TODO: need return null but method
-            // creates exception is it good to catch like that?
-        } catch (Exception e) {
-            throw  new DaoException(e);
+        Query q = manager.
+                createNamedQuery("CartProductEntity.removeFromCart");
+        q.setParameter("cartId", cartId);
+        q.setParameter("productId", productId);
+        int n = q.executeUpdate();
+        if (n > 1) {
+            throw new DaoException("More than one row deleted");
         }
     }
 }

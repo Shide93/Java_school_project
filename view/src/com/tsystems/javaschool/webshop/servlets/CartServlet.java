@@ -5,8 +5,8 @@ import com.tsystems.javaschool.webshop.services.api.CartService;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import com.tsystems.javaschool.webshop.services.impl.CartServiceImpl;
 import com.tsystems.javaschool.webshop.servlets.utils.ServletUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -69,29 +69,18 @@ public class CartServlet extends HttpServlet {
 
 
             if (req.getParameter("action").equals("add")) {
-                try {
+
                 CartEntity newCart = cartService.addToCart(productId, quantity, cart.getId());
                 req.getSession().setAttribute("cart", newCart);
-                } catch (ServiceException e) {
-                    LOGGER.error("add to cart failed");
-                    // TODO: error JSON?
-                }
             } else if (req.getParameter("action").equals("edit")) {
-                try {
+
                     CartEntity newCart = cartService.editCartProduct(productId, quantity, cart.getId());
                     req.getSession().setAttribute("cart", newCart);
-                } catch (ServiceException e) {
-                    LOGGER.error("product editing in cart failed");
-                    // TODO: error JSON?
-                }
+                    //TODO: error JSON?
             } else if (req.getParameter("action").equals("remove")) {
-                try {
+
                     CartEntity newCart = cartService.removeFromCart(productId, cart.getId());
                     req.getSession().setAttribute("cart", newCart);
-                } catch (ServiceException e) {
-                    LOGGER.error("remove from cart failed");
-                    // TODO: error JSON?
-                }
             }
 
     }
@@ -110,20 +99,15 @@ public class CartServlet extends HttpServlet {
                 .getAttribute("cart");
 
         if (cart == null) {
-            try {
-                cart = new CartEntity();
-                //TODO: cookie creation function, based on hashing  something
 
-                cartService.add(cart);
-                req.getSession().setAttribute("cart", cart);
-                //TODO: cookie create function
+            cart = new CartEntity();
+            //TODO: cookie creation function, based on hashing  something
 
-                resp.addCookie(ServletUtils.createCookie("cartID", "" + cart.getId()));
+            cartService.add(cart);
+            req.getSession().setAttribute("cart", cart);
+            //TODO: cookie create function
 
-            } catch (ServiceException e) {
-                LOGGER.error("cart add failed", e);
-                //TODO: error JSON?
-            }
+            resp.addCookie(ServletUtils.createCookie("cartID", "" + cart.getId()));
         }
     }
 }

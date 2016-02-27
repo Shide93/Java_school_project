@@ -8,6 +8,8 @@ import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import com.tsystems.javaschool.webshop.services.util.ServiceHelper;
 import com.tsystems.javaschool.webshop.services.util.ServiceHelperImpl;
 import com.tsystems.javaschool.webshop.services.util.ServiceLoadAction;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -16,16 +18,20 @@ import java.util.List;
  */
 public class ProductServiceImpl implements ProductService {
 
+    /**
+     * The constant LOGGER.
+     */
+    private static final Logger LOGGER = LogManager.getLogger(ProductServiceImpl.class);
     private ProductDAO productDAO;
     private ServiceHelper serviceHelper;
     public ProductServiceImpl() {
         productDAO = new ProductDAOImpl();
 
-        serviceHelper = new ServiceHelperImpl();
+        serviceHelper = new ServiceHelperImpl(LOGGER);
     }
 
     @Override
-    public void add(ProductEntity product) throws ServiceException {
+    public void add(ProductEntity product) {
 
         serviceHelper.executeInTransaction(manager -> {
 
@@ -34,7 +40,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void update(ProductEntity product) throws ServiceException {
+    public void update(ProductEntity product) {
         serviceHelper.executeInTransaction(manager -> {
 
             productDAO.update(product, manager);
@@ -42,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void delete(ProductEntity product) throws ServiceException {
+    public void delete(ProductEntity product) {
         serviceHelper.executeInTransaction(manager -> {
 
             productDAO.delete(product, manager);
@@ -50,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductEntity get(int productId) throws ServiceException {
+    public ProductEntity get(int productId) {
         return serviceHelper.load(manager -> {
 
             return productDAO.getById(productId, manager);
@@ -60,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductEntity> getAll() throws ServiceException {
+    public List<ProductEntity> getAll() {
         return serviceHelper.loadInTransaction(manager -> {
 
             return productDAO.getAll(manager);
@@ -68,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductEntity> searchProducts(String searchQuery) throws ServiceException {
+    public List<ProductEntity> searchProducts(String searchQuery){
         return  serviceHelper.loadInTransaction((ServiceLoadAction<List<ProductEntity>>) manager -> {
 
 

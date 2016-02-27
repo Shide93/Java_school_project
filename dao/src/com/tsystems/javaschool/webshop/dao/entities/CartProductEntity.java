@@ -1,13 +1,14 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 
@@ -15,7 +16,13 @@ import javax.persistence.Table;
  * The type Cart product entity.
  */
 @Entity
-@Table(name = "cart_product", schema = "web_shop", catalog = "")
+@NamedQueries({
+        @NamedQuery(name = "CartProductEntity.removeFromCart",
+                query = "delete from CartProductEntity cpe "
+                        + "where cpe.cartId = :cartId "
+                        + "and cpe.productId = :productId")
+})
+@Table(name = "cart_product", schema = "web_shop")
 @IdClass(CartProductEntityPK.class)
 public class CartProductEntity {
     /**
@@ -104,7 +111,7 @@ public class CartProductEntity {
      *
      * @return the cart
      */
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "cart_id", insertable = false, updatable = false)
     public CartEntity getCart() {
         return cart;

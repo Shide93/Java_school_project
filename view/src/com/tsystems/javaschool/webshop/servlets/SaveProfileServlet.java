@@ -5,8 +5,8 @@ import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
 import com.tsystems.javaschool.webshop.services.impl.AccountServiceImpl;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -78,6 +78,7 @@ public class SaveProfileServlet extends HttpServlet {
             LOGGER.info("user entered wrong date"); // TODO: am i need log this?
             req.setAttribute("wrongBirth", "Wrong birth date format");
             hasErrors = true;
+            //TODO: logic with exceptions not good
         }
 
         String country = req.getParameter("country");
@@ -100,42 +101,41 @@ public class SaveProfileServlet extends HttpServlet {
         String addr = req.getParameter("address");
 
         UserEntity user = (UserEntity) req.getSession().getAttribute("user");
+        UserEntity newUser = new UserEntity();
 
-        user.setName(name);
-        user.setLastName(lastName);
-        user.setPhone(phone);
-        user.setBirthDate(birthDate);
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setIsAdmin(false);
-        AddressEntity address = user.getAddress();
-        if (address != null) {
-            address.setCountry(country);
-            address.setRegion(region);
-            address.setCity(city);
-            if (zip != null) {
-                address.setZip(zip);
-            }
-            //TODO: remake address
-            address.setStreet(addr);
-            address.setBuilding(1);
-            address.setFlat(1);
+        newUser.setId(user.getId());
+        newUser.setName(name);
+        newUser.setLastName(lastName);
+        newUser.setPhone(phone);
+        newUser.setBirthDate(birthDate);
+        newUser.setEmail(email);
+        newUser.setPassword(password);
+        newUser.setIsAdmin(false);
+
+        AddressEntity address = new AddressEntity();
+        newUser.setAddress(address);
+        if (user.getAddress() != null) {
+            address.setId(user.getAddress().getId());
         }
-
+        address.setCountry(country);
+        address.setRegion(region);
+        address.setCity(city);
+        if (zip != null) {
+            address.setZip(zip);
+        }
+        //TODO: remake address
+        address.setStreet(addr);
+        address.setBuilding(1);
+        address.setFlat(1);
         if (hasErrors) {
             RequestDispatcher rd = req.getRequestDispatcher("profile.jsp");
             rd.forward(req, resp);
         } else {
-            try {
-                //TODO: change to updating current user in session, and JPA.refresh it if fails
-                UserEntity newUser = accountService.saveProfile(user);
-                req.getSession().setAttribute("user", newUser);
-                req.setAttribute("profileSaved", "Profile saved!");
-                RequestDispatcher rd = req.getRequestDispatcher("profile.jsp");
-                rd.forward(req, resp);
-            } catch (ServiceException e) {
-                LOGGER.error("Saving error");
-            }
+            newUser = accountService.saveProfile(newUser);
+            req.getSession().setAttribute("user", newUser);
+            req.setAttribute("profileSaved", "Profile saved!");
+            RequestDispatcher rd = req.getRequestDispatcher("profile.jsp");
+            rd.forward(req, resp);
         }
     }
 }

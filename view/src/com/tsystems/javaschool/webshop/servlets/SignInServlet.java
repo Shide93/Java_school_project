@@ -2,10 +2,13 @@ package com.tsystems.javaschool.webshop.servlets;
 
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
+import com.tsystems.javaschool.webshop.services.exceptions.AccountServiceException;
 import com.tsystems.javaschool.webshop.services.impl.AccountServiceImpl;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.tsystems.javaschool.webshop.services.util.ServiceHelper;
+import com.tsystems.javaschool.webshop.servlets.utils.ServletUtils;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -49,26 +52,22 @@ public class SignInServlet extends HttpServlet {
         String isRemember = req.getParameter("remember");
         System.out.println(email + " " + isRemember);
         try {
-
             UserEntity user = accountService.signInUser(email, password);
             System.out.println(user);
             if (isRemember != null && isRemember.equals("on")) {
-                Cookie cookie = new Cookie("userID",
+                Cookie cookie = ServletUtils.createCookie("userID",
                         String.valueOf(user.getId()));
-                cookie.setMaxAge((Integer) this.getServletContext()
-                        .getAttribute("USER_COOKIE_MAX_AGE"));
                 resp.addCookie(cookie);
             }
             req.getSession().setAttribute("user", user);
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.sendRedirect(resp.encodeRedirectURL("/"));
-        } catch (ServiceException e) {
+        } catch (AccountServiceException e) {
             LOGGER.warn("Login failed", e);
+            // TODO: manage exceptions
             // TODO: redirect to form with msg
             resp.getWriter().println("ERROR! " + e.getMessage());
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-
-
     }
 }

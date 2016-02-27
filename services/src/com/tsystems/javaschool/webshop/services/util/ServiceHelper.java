@@ -14,8 +14,7 @@ public interface ServiceHelper {
      * @param action implementation of functional interface with useful logic
      * @throws ServiceException if something wrong
      */
-    void executeInTransaction(ServiceExecuteAction action)
-            throws ServiceException;
+    void executeInTransaction(ServiceExecuteAction action);
 
     /**
      * Loads an object from DAO without transaction.
@@ -24,8 +23,7 @@ public interface ServiceHelper {
      * @return specified object
      * @throws ServiceException if something wrong
      */
-    <T> T load(ServiceLoadAction<T> action)
-            throws ServiceException;
+    <T> T load(ServiceLoadAction<T> action);
 
     /**
      * Loads an object from DAO inside a transaction.
@@ -34,6 +32,5 @@ public interface ServiceHelper {
      * @return specified object
      * @throws ServiceException if something wrong
      */
-    <T> T loadInTransaction(ServiceLoadAction<T> action)
-            throws ServiceException;
+    <T> T loadInTransaction(ServiceLoadAction<T> action);
 }

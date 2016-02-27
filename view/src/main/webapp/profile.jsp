@@ -67,7 +67,7 @@
                     </label><br>
 
                     <label>Address
-                        <input class="" type="text" name="address" value="${sessionScope.user.address.addr}">
+                        <input class="" type="text" name="street" value="${sessionScope.user.address.street}">
                     </label><br>
 
                 </div>

@@ -25,7 +25,7 @@
     <!--cart -->
         <div class="cart">
             <div>
-                <a href="<c:url value="cart"/>">Your cart:</a>
+                <a href="<c:url value="/cart"/>">Your cart:</a>
             </div>
             <div class=""><span>${sessionScope.cart.count} items</span> - <span>${sessionScope.cart.summary} $</span> </div>
         </div>

@@ -16,7 +16,6 @@ public interface ProductService extends GenericService<ProductEntity> {
      * @return list of products that satisfacts query
      * @throws ServiceException if something wrong
      */
-    List<ProductEntity> searchProducts(String searchQuery)
-            throws ServiceException;
+    List<ProductEntity> searchProducts(String searchQuery);
 
 }

@@ -1,6 +1,7 @@
 package com.tsystems.javaschool.webshop.services.util;
 
 import com.tsystems.javaschool.webshop.dao.exceptions.DaoException;
+import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 
 import javax.persistence.EntityManager;
 
@@ -11,8 +12,8 @@ import javax.persistence.EntityManager;
 public interface ServiceExecuteAction {
     /**
      * performs implemented actions.
+     *
      * @param mgr used to work with DAO
-     * @throws DaoException if something wrong
      */
-    void performAction(EntityManager mgr) throws DaoException;
+    void performAction(EntityManager mgr);
 }

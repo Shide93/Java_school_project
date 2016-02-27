@@ -2,11 +2,13 @@ package com.tsystems.javaschool.webshop.servlets;
 
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
+import com.tsystems.javaschool.webshop.services.exceptions.AccountServiceException;
 import com.tsystems.javaschool.webshop.services.impl.AccountServiceImpl;
 
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.tsystems.javaschool.webshop.servlets.utils.ServletUtils;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -64,15 +66,13 @@ public class SignUpServlet extends HttpServlet {
                     email,
                     password);
 
-            Cookie cookie =
-                    new Cookie("userID", String.valueOf(user.getId()));
-            cookie.setMaxAge((Integer) this.getServletContext()
-                    .getAttribute("USER_COOKIE_MAX_AGE"));
+            Cookie cookie = ServletUtils.createCookie("userID",
+                           String.valueOf(user.getId()));
             resp.addCookie(cookie);
             req.getSession().setAttribute("user", user);
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.sendRedirect("/welcome.jsp");
-        } catch (ServiceException e) {
+        } catch (AccountServiceException e) {
             LOGGER.warn("create user failed");
             // TODO: redirect to form with msg
             resp.getWriter().println("ERROR! " + e.getMessage());

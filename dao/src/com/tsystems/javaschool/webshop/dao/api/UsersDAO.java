@@ -1,41 +1,20 @@
 package com.tsystems.javaschool.webshop.dao.api;
 
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
-import com.tsystems.javaschool.webshop.dao.exceptions.DaoException;
+
+import javax.persistence.EntityManager;
 
 /**
  * DAO class to interact with User Entity.
  */
-public interface UsersDAO {
-
-    /**
-     *
-     * Adds new user to DB.
-     * @param newUser user to add
-     * @return user id
-     * @throws DaoException throws when adding failed
-     */
-    UserEntity addUser(UserEntity newUser) throws DaoException;
+public interface UsersDAO extends GenericDAO<UserEntity> {
 
     /**
      * Search a user by his email.
-     * @param email user email to search with
+     *
+     * @param email   user email to search with
+     * @param manager the manager
      * @return User object or null if user not found
      */
-    UserEntity getUserByEmail(String email);
-
-    /**
-     * Search user by his id.
-     * @param id user id in DB
-     * @return User object or null if user not found
-     */
-    UserEntity getUserById(int id);
-
-    /**
-     * Update user with new values.
-     * @param user user object with new values
-     * @return updated object
-     * @throws DaoException if update failed
-     */
-    UserEntity updateUser(UserEntity user) throws DaoException;
+    UserEntity getUserByEmail(String email, EntityManager manager);
 }

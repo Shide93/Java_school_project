@@ -14,11 +14,9 @@ public interface CartService extends GenericService<CartEntity> {
      * @param quantity  quantity of product in cart
      * @param cartId      user's cart
      * @return updated cart
-     * @throws ServiceException if something wrong
      */
     CartEntity addToCart(Integer productId,
-                         Integer quantity, Integer cartId)
-            throws ServiceException;
+                         Integer quantity, Integer cartId);
 
     /**
      * Method edits product quantity in cart.
@@ -27,11 +25,9 @@ public interface CartService extends GenericService<CartEntity> {
      * @param quantity  new quantity of product in cart
      * @param cartId      user's cart
      * @return updated cart
-     * @throws ServiceException if something wrong
      */
     CartEntity editCartProduct(Integer productId,
-                         Integer quantity, Integer cartId)
-            throws ServiceException;
+                         Integer quantity, Integer cartId);
 
     /**
      * Method removes product from cart.
@@ -39,8 +35,6 @@ public interface CartService extends GenericService<CartEntity> {
      * @param productId id of product to remove
      * @param cartId      user's cart
      * @return updated cart
-     * @throws ServiceException if something wrong
      */
-    CartEntity removeFromCart(Integer productId, Integer cartId)
-            throws ServiceException;
+    CartEntity removeFromCart(Integer productId, Integer cartId);
 }

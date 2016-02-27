@@ -70,15 +70,25 @@
         <url-pattern>/cart</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ErrorHandlerServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.webshop.servlets.ErrorHandlerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ErrorHandlerServlet</servlet-name>
+        <url-pattern>/err</url-pattern>
+    </servlet-mapping>
+
     <error-page>
         <error-code>404</error-code>
-        <location>/error.jsp</location>
+        <location>/err</location>
     </error-page>
 
-    <!--error-page>
-        <error-code>500</error-code>
-        <location>/error.jsp</location>
-    </error-page-->
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/err</location>
+    </error-page>
+
     <!--Filters-->
     <filter>
         <filter-name>CookieCheckFilter</filter-name>

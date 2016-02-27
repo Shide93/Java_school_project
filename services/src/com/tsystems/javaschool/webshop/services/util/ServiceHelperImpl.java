@@ -1,8 +1,7 @@
 package com.tsystems.javaschool.webshop.services.util;
 
-import com.tsystems.javaschool.webshop.dao.exceptions.DaoException;
 import com.tsystems.javaschool.webshop.dao.utils.EntityManagerFactorySingleton;
-import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
+import org.apache.log4j.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,21 +12,28 @@ import javax.persistence.EntityTransaction;
  */
 public class ServiceHelperImpl implements ServiceHelper {
     /**
+     * logger of the performing class.
+     */
+    private final Logger logger;
+
+
+    /**
      * The EntityManager factory.
      */
     private EntityManagerFactory entMgrFactory;
 
     /**
      * Instantiates a new Service helper.
+     *
+     * @param lgr the logger of the performing class
      */
-    public ServiceHelperImpl() {
+    public ServiceHelperImpl(final Logger lgr) {
         entMgrFactory =
                 EntityManagerFactorySingleton.getInstance().getFactory();
+        this.logger = lgr;
     }
-    //TODO: add exception messages
     @Override
-    public final void executeInTransaction(final ServiceExecuteAction action)
-            throws ServiceException {
+    public final void executeInTransaction(final ServiceExecuteAction action) {
 
         EntityManager manager = null;
         EntityTransaction trx = null;
@@ -39,13 +45,10 @@ public class ServiceHelperImpl implements ServiceHelper {
             action.performAction(manager);
 
             trx.commit();
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        } catch (Exception e) {
-            throw new ServiceException();
         } finally {
             if (trx != null && trx.isActive()) {
                 trx.rollback();
+                logger.warn("Transaction rollback!");
             }
             if (manager != null) {
                 manager.close();
@@ -53,18 +56,12 @@ public class ServiceHelperImpl implements ServiceHelper {
         }
 
     }
-
     @Override
-    public final <T> T load(final ServiceLoadAction<T> action)
-            throws ServiceException {
+    public final <T> T load(final ServiceLoadAction<T> action) {
         EntityManager manager = null;
         try {
             manager = entMgrFactory.createEntityManager();
             return action.performAction(manager);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        } catch (Exception e) {
-            throw new ServiceException(e);
         } finally {
             if (manager != null) {
                 manager.close();
@@ -73,8 +70,7 @@ public class ServiceHelperImpl implements ServiceHelper {
     }
 
     @Override
-    public final <T> T loadInTransaction(final ServiceLoadAction<T> action)
-            throws ServiceException {
+    public final <T> T loadInTransaction(final ServiceLoadAction<T> action) {
 
         EntityManager manager = null;
         EntityTransaction trx = null;
@@ -87,13 +83,10 @@ public class ServiceHelperImpl implements ServiceHelper {
 
             trx.commit();
             return result;
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        } catch (Exception e) {
-            throw new ServiceException(e);
         } finally {
             if (trx != null && trx.isActive()) {
                 trx.rollback();
+                logger.warn("Transaction rollback!");
             }
             if (manager != null) {
                 manager.close();

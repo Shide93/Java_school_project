@@ -253,7 +253,6 @@ public class ProductEntity {
                 ", stock=" + stock +
                 ", description='" + description + '\'' +
                 ", sku='" + sku + '\'' +
-                ", categories=" + categories +
                 ", features=" + features +
                 ", orders=" + orders +
                 '}';

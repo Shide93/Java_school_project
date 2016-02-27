@@ -11,12 +11,15 @@ import javax.persistence.EntityManager;
 public interface CartDAO extends GenericDAO<CartEntity> {
 
     /**
-     * Return cart object by specified cookie value.
-     * @param cookie cookie value
-     * @param manager to perform action
-     * @return cart object or null if cart not found
-     * @throws DaoException if something wrong
+     * Removes product from cart.
+     *
+     * @param productId the product id
+     * @param cartId    the cart id
+     * @param manager   the manager
+     * @throws DaoException ifDeleted more than one row
      */
-     CartEntity getByCookie(String cookie, EntityManager manager)
-             throws DaoException;
+    void removeFromCart(final Integer productId,
+                        final Integer cartId,
+                        final EntityManager manager)
+            throws DaoException;
 }

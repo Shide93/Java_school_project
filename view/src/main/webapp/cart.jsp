@@ -26,7 +26,11 @@
                         <tr>
                             <td>${item.product.name}</td>
                             <td>${item.product.price} $</td>
-                            <td>${item.quantity}</td>
+                            <td>
+                                <label>
+                                    <input type="text" value="${item.quantity}">
+                                </label>
+                            </td>
                             <td>${item.product.price * item.quantity}</td>
                         </tr>
                     </c:forEach>
