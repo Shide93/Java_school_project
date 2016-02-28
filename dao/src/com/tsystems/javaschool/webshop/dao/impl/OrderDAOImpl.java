@@ -8,7 +8,8 @@ import org.apache.log4j.Logger;
 /**
  * Order dao implementation.
  */
-public class OrderDAOImpl extends AbstractGenericDAO<OrderEntity> implements OrderDAO {
+public class OrderDAOImpl extends AbstractGenericDAO<OrderEntity>
+        implements OrderDAO {
     /**
      * The constant LOGGER.
      */

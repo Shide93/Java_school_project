@@ -6,15 +6,15 @@
 
         <div class="">
             <h2>Sign in</h2>
-            <div>Please sign in using the form below</div>
+            <div>Please sign in using the form below or <a href="<c:url value="/signup"/>">singn up.</a> </div>
             <form class="" action="<c:url value="/signin"/>" method="post">
 
                 <label>Email
-                    <input class="" type="" name="email">
+                    <input class="" type="text" name="email">
                 </label><br>
 
                 <label>Password
-                    <input class="" type="text" name="password">
+                    <input class="" type="password" name="password">
                 </label><br>
 
                 <label>Remember me

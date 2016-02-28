@@ -12,6 +12,8 @@
         <class>com.tsystems.javaschool.webshop.dao.entities.FeatureEntity</class>
         <class>com.tsystems.javaschool.webshop.dao.entities.ProductFeatureEntity</class>
         <class>com.tsystems.javaschool.webshop.dao.entities.OrderProductEntity</class>
+        <class>com.tsystems.javaschool.webshop.dao.entities.PaymentEntity</class>
+        <class>com.tsystems.javaschool.webshop.dao.entities.ShippingEntity</class>
         <validation-mode>AUTO</validation-mode>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/web_shop"/>

@@ -18,6 +18,7 @@
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Cost</th>
+                        <th>Remove</th>
                     </tr>
                 </thead>
 
@@ -32,6 +33,7 @@
                                 </label>
                             </td>
                             <td>${item.product.price * item.quantity}</td>
+                            <td><input type="button" class="" value="X"> </td>
                         </tr>
                     </c:forEach>
 
@@ -41,8 +43,13 @@
                         <td></td>
                         <td></td>
                         <td>Total cost:</td>
-                        <td>${sessionScope.cart.summary}</td>
+                        <td colspan="2">${sessionScope.cart.summary}</td>
                     </tr>
+                <tr>
+                    <td>
+                        <a href="/checkout">Proceed to checkout</a>
+                    </td>
+                </tr>
                 </tfoot>
             </table>
         </c:if>

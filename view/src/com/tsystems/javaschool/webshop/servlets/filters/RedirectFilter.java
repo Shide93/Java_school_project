@@ -34,7 +34,7 @@ public class RedirectFilter implements Filter {
         // if unauthorized tries to buy
         if (session.getAttribute("user") == null) {
 
-            if (req.getRequestURI().equals("/checkout.jsp")) {
+            if (req.getRequestURI().equals("/checkout")) {
                 //TODO: send some variable with text: Sign in before buying
                 resp.sendRedirect("/signin.jsp");
                 return;
@@ -44,16 +44,16 @@ public class RedirectFilter implements Filter {
                 resp.sendRedirect("/");
                 return;
             }
+        } else {
+            // if authorized tries to login or register
+            if (req.getRequestURI().equals("/signin.jsp")
+                    || req.getRequestURI().equals("/signup.jsp")) {
+                resp.sendRedirect("/");
+                return;
+            }
         }
 
-        // if authorized tries to login or register
-        if (session.getAttribute("user") != null
-                && (req.getRequestURI().equals("/signin.jsp")
-                    || req.getRequestURI().equals("/signup.jsp"))) {
 
-            resp.sendRedirect("/");
-            return;
-        }
         //TODO: redirect to adminLogin when user enters backend
 
         chain.doFilter(request, response);

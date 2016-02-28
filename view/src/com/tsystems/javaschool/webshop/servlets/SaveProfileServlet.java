@@ -98,7 +98,13 @@ public class SaveProfileServlet extends HttpServlet {
             req.setAttribute("wrongZip", "Wrong zip code format");
             hasErrors = true;
         }
-        String addr = req.getParameter("address");
+        String street = req.getParameter("street");
+
+        String buildingString = req.getParameter("building");
+        String flatString = req.getParameter("flat");
+        //TODO: validate
+        Integer building = Integer.parseInt(buildingString);
+        Integer flat = Integer.parseInt(flatString);
 
         UserEntity user = (UserEntity) req.getSession().getAttribute("user");
         UserEntity newUser = new UserEntity();
@@ -123,10 +129,9 @@ public class SaveProfileServlet extends HttpServlet {
         if (zip != null) {
             address.setZip(zip);
         }
-        //TODO: remake address
-        address.setStreet(addr);
-        address.setBuilding(1);
-        address.setFlat(1);
+        address.setStreet(street);
+        address.setBuilding(building);
+        address.setFlat(flat);
         if (hasErrors) {
             RequestDispatcher rd = req.getRequestDispatcher("profile.jsp");
             rd.forward(req, resp);

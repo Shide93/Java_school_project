@@ -76,6 +76,7 @@ public class CookieCheckFilter implements Filter {
         }
         // if user already have cart
         if (session.getAttribute("cart") != null) {
+            //TODO: cookie maxage refresh
             cartFlag = true;
         }
         // if user already have cart and authorized - pass through

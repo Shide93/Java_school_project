@@ -48,7 +48,6 @@
                 </div>
                 <div class="">
                     <h6>Shipping address</h6>
-<%--//TODO: address??--%>
                     <label>Country
                         <input class="" type="text" name="country" value="${sessionScope.user.address.country}">
                     </label><br>
@@ -66,8 +65,16 @@
                         <span class = "">${requestScope.wrongZip}</span>
                     </label><br>
 
-                    <label>Address
+                    <label>Street
                         <input class="" type="text" name="street" value="${sessionScope.user.address.street}">
+                    </label><br>
+
+                    <label>Building
+                        <input class="" type="text" name="building" value="${sessionScope.user.address.building}">
+                    </label><br>
+
+                    <label>Flat
+                        <input class="" type="text" name="flat" value="${sessionScope.user.address.flat}">
                     </label><br>
 
                 </div>

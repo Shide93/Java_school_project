@@ -1,13 +1,9 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
 import com.tsystems.javaschool.webshop.dao.entities.enums.OrderStatus;
-import com.tsystems.javaschool.webshop.dao.entities.enums.PaymentMethod;
-import com.tsystems.javaschool.webshop.dao.entities.enums.ShippingMethod;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -31,20 +27,33 @@ public class OrderEntity {
     /**
      * The Payment method.
      */
-    private PaymentMethod paymentMethod;
+    private PaymentEntity payment;
     /**
      * The Shipping method.
      */
-    private ShippingMethod shippingMethod;
+    private ShippingEntity shipping;
     /**
      * The Order status.
      */
     private OrderStatus orderStatus;
+
+    /**
+     * The Comment.
+     */
+    private String comment;
+
+    /**
+     * The Total.
+     */
+    private int total;
     /**
      * The Products.
      */
     private Set<OrderProductEntity> products;
 
+    /**
+     * Instantiates a new Order entity.
+     */
     public OrderEntity() {
         products = new LinkedHashSet<>();
     }
@@ -95,7 +104,7 @@ public class OrderEntity {
      *
      * @return the address
      */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     public AddressEntity getAddress() {
         return address;
@@ -115,20 +124,19 @@ public class OrderEntity {
      *
      * @return the payment method
      */
-    @Basic
-    @Column(name = "payment_method")
-    @Enumerated(EnumType.STRING)
-    public PaymentMethod getPaymentMethod() {
-        return paymentMethod;
+    @OneToOne
+    @JoinColumn(name = "payment_id")
+    public PaymentEntity getPayment() {
+        return payment;
     }
 
     /**
      * Sets payment method.
      *
-     * @param paymentMethod the payment method
+     * @param payment the payment method
      */
-    public void setPaymentMethod(final PaymentMethod paymentMethod) {
-        this.paymentMethod = paymentMethod;
+    public void setPayment(final PaymentEntity payment) {
+        this.payment = payment;
     }
 
     /**
@@ -136,20 +144,19 @@ public class OrderEntity {
      *
      * @return the shipping method
      */
-    @Basic
-    @Column(name = "shipping_method")
-    @Enumerated(EnumType.STRING)
-    public ShippingMethod getShippingMethod() {
-        return shippingMethod;
+    @OneToOne
+    @JoinColumn(name = "shipping_id")
+    public ShippingEntity getShipping() {
+        return shipping;
     }
 
     /**
      * Sets shipping method.
      *
-     * @param shippingMethod the shipping method
+     * @param shipping the shipping method
      */
-    public void setShippingMethod(final ShippingMethod shippingMethod) {
-        this.shippingMethod = shippingMethod;
+    public void setShipping(final ShippingEntity shipping) {
+        this.shipping = shipping;
     }
 
     /**
@@ -178,7 +185,7 @@ public class OrderEntity {
      *
      * @return the products
      */
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public Set<OrderProductEntity> getProducts() {
         return products;
     }
@@ -192,16 +199,58 @@ public class OrderEntity {
         this.products = products;
     }
 
+    /**
+     * Gets comment.
+     *
+     * @return the comment
+     */
+    @Basic
+    @Column(name = "comment")
+    public String getComment() {
+        return comment;
+    }
+
+    /**
+     * Sets comment.
+     *
+     * @param comment the comment
+     */
+    public void setComment(final String comment) {
+        this.comment = comment;
+    }
+
+    /**
+     * Gets total.
+     *
+     * @return the total
+     */
+    @Basic
+    @Column(name = "total")
+    public int getTotal() {
+        return total;
+    }
+
+    /**
+     * Sets total.
+     *
+     * @param total the total
+     */
+    public void setTotal(final int total) {
+        this.total = total;
+    }
+
     @Override
     public String toString() {
         return "OrderEntity{" +
                 "id=" + id +
                 ", user=" + user +
                 ", address=" + address +
-                ", paymentMethod='" + paymentMethod + '\'' +
-                ", shippingMethod='" + shippingMethod + '\'' +
-                ", orderStatus='" + orderStatus + '\'' +
+                ", payment=" + payment +
+                ", shipping=" + shipping +
+                ", orderStatus=" + orderStatus +
+                ", comment='" + comment + '\'' +
                 ", products=" + products +
                 '}';
     }
 }
+

@@ -12,7 +12,6 @@ public interface ServiceHelper {
     /**
      * Executes update, delete, insert logic inside a transaction.
      * @param action implementation of functional interface with useful logic
-     * @throws ServiceException if something wrong
      */
     void executeInTransaction(ServiceExecuteAction action);
 
@@ -21,7 +20,6 @@ public interface ServiceHelper {
      * @param action implementation of functional interface with useful logic
      * @param <T> type of return object
      * @return specified object
-     * @throws ServiceException if something wrong
      */
     <T> T load(ServiceLoadAction<T> action);
 
@@ -30,7 +28,6 @@ public interface ServiceHelper {
      * @param action implementation of functional interface with useful logic
      * @param <T> type of return object
      * @return specified object
-     * @throws ServiceException if something wrong
      */
     <T> T loadInTransaction(ServiceLoadAction<T> action);
 }

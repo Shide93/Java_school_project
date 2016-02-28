@@ -125,6 +125,7 @@ public class CartServiceImpl implements CartService {
                     cartProduct.setQuantity(quantity);
                     break;
                 }
+                //TODO: count and summary
             }
             return cart;
         });
@@ -135,8 +136,15 @@ public class CartServiceImpl implements CartService {
                                            final Integer cartId) {
         return serviceHelper.loadInTransaction(manager -> {
             cartDAO.removeFromCart(productId, cartId, manager);
+            //TODO: count and summary
             return cartDAO.getById(cartId, manager);
+
         });
+    }
+
+    private CartEntity calculateSummary(CartEntity cart) {
+
+        return cart;
     }
 }
 
