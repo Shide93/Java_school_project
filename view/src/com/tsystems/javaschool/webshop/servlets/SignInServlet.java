@@ -10,6 +10,7 @@ import com.tsystems.javaschool.webshop.servlets.utils.ServletUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -43,6 +44,12 @@ public class SignInServlet extends HttpServlet {
     }
 
     @Override
+    protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+        RequestDispatcher rd = req.getRequestDispatcher("signin.jsp");
+        rd.forward(req, resp);
+    }
+
+    @Override
     protected final void doPost(final HttpServletRequest req,
                                 final HttpServletResponse resp)
             throws ServletException, IOException {
@@ -64,7 +71,6 @@ public class SignInServlet extends HttpServlet {
             resp.sendRedirect(resp.encodeRedirectURL("/"));
         } catch (AccountServiceException e) {
             LOGGER.warn("Login failed", e);
-            // TODO: manage exceptions
             // TODO: redirect to form with msg
             resp.getWriter().println("ERROR! " + e.getMessage());
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

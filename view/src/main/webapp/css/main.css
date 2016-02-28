@@ -1,5 +1,5 @@
 /*CSS-reset*/
-* { padding: 0; margin: 0; border: 0; }
+* { padding: 0; margin: 0; }
 /****/
 
 .header {
@@ -17,4 +17,8 @@
 .footer {
     clear:both;
     background-color: #c9ddbb;
+}
+.inline-block {
+    display: inline-block;
+    vertical-align: top;
 }

@@ -80,6 +80,33 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>MainBackenServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.webshop.servlets.backend.MainBackendServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MainBackenServlet</servlet-name>
+        <url-pattern>/backend</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CategoryBackendServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.webshop.servlets.backend.CategoryBackendServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CategoryBackendServlet</servlet-name>
+        <url-pattern>/backend/categories</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FeaturesBackendServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.webshop.servlets.backend.FeaturesBackendServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FeaturesBackendServlet</servlet-name>
+        <url-pattern>/backend/features</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>ErrorHandlerServlet</servlet-name>
         <servlet-class>com.tsystems.javaschool.webshop.servlets.ErrorHandlerServlet</servlet-class>
     </servlet>

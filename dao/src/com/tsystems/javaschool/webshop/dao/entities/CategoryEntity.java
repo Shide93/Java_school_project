@@ -1,15 +1,30 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
-import javax.persistence.*;
-import java.util.ArrayList;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
  * The type Category entity.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "CategoryEntity.getAllIdNames",
+                query = "select new CategoryEntity(c.id, c.name) from CategoryEntity c")
+})
 @Table(name = "category", schema = "web_shop")
 public class CategoryEntity {
     /**
@@ -32,7 +47,10 @@ public class CategoryEntity {
     public CategoryEntity() {
         products = new LinkedHashSet<>();
     }
-
+    public CategoryEntity(final int id, final String name) {
+        this.id = id;
+        this.name = name;
+    }
     /**
      * Gets id.
      *

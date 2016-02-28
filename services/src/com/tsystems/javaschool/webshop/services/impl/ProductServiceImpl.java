@@ -48,10 +48,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void delete(ProductEntity product) {
+    public void delete(Integer productId) {
         serviceHelper.executeInTransaction(manager -> {
 
-            productDAO.delete(product, manager);
+            productDAO.delete(productId, manager);
         });
     }
 

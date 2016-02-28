@@ -40,10 +40,10 @@ public interface GenericDAO<T> {
     /**
      * Deletes object from DB.
      *
-     * @param obj     object to delete
+     * @param objId   obj id to delete
      * @param manager EntityManager to perform action
      */
-    void delete(T obj, EntityManager manager);
+    void delete(Integer objId, EntityManager manager);
 
     /**
      * Lists all objects of specified type.

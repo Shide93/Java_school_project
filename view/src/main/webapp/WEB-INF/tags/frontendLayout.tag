@@ -17,9 +17,9 @@
         </c:if>
         <c:if test="${sessionScope.user == null}">
             <div class="">
-                <a href="<c:url value="/signin.jsp"/>">Вход</a>
+                <a href="<c:url value="/signin"/>">Вход</a>
                 /
-                <a href="<c:url value="/signup.jsp"/>">Регистрация</a>
+                <a href="<c:url value="/signup"/>">Регистрация</a>
             </div>
         </c:if>
     <!--cart -->

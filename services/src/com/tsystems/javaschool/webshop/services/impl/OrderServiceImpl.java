@@ -45,9 +45,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void delete(OrderEntity order) {
+    public void delete(Integer orderId) {
         serviceHelper.executeInTransaction(manager -> {
-            orderDAO.delete(order, manager);
+            orderDAO.delete(orderId, manager);
         });
     }
 

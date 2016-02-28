@@ -5,6 +5,10 @@ import com.tsystems.javaschool.webshop.dao.entities.CategoryEntity;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import java.util.List;
+
 /**
  * Category dao implementation.
  */
@@ -21,6 +25,13 @@ public class CategoryDAOImpl  extends AbstractGenericDAO<CategoryEntity>
      */
     public CategoryDAOImpl() {
         super(CategoryEntity.class, LOGGER);
+    }
+
+    @Override
+    public final List<CategoryEntity> getAllIdNames(final EntityManager manager) {
+        TypedQuery<CategoryEntity> q = manager.createNamedQuery("CategoryEntity.getAllIdNames",
+                CategoryEntity.class);
+        return q.getResultList();
     }
 }
 

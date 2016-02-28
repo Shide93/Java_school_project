@@ -66,10 +66,10 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public final void delete(final CartEntity cart) {
+    public final void delete(final Integer cartId) {
         serviceHelper.executeInTransaction(manager -> {
 
-            cartDAO.delete(cart, manager);
+            cartDAO.delete(cartId, manager);
         });
     }
 

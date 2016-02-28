@@ -10,6 +10,7 @@ import com.tsystems.javaschool.webshop.servlets.utils.ServletUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -42,7 +43,11 @@ public class SignUpServlet extends HttpServlet {
         this.accountService =
                 new AccountServiceImpl();
     }
-
+    @Override
+    protected final void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+        RequestDispatcher rd = req.getRequestDispatcher("signup.jsp");
+        rd.forward(req, resp);
+    }
     @Override
     protected final void doPost(final HttpServletRequest req,
                                 final HttpServletResponse resp)

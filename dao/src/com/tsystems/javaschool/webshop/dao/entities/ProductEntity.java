@@ -1,5 +1,8 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,10 +56,6 @@ public class ProductEntity {
      * The Features.
      */
     private Set<ProductFeatureEntity> features;
-    /**
-     * The Orders.
-     */
-    private Set<OrderProductEntity> orders;
 
     /**
      * Instantiates a new Product entity.
@@ -64,7 +63,6 @@ public class ProductEntity {
     public ProductEntity() {
         categories = new LinkedHashSet<>();
         features = new LinkedHashSet<>();
-        orders = new LinkedHashSet<>();
     }
 
     /**
@@ -212,7 +210,8 @@ public class ProductEntity {
      *
      * @return the features
      */
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product")
+    @Fetch(FetchMode.JOIN)
     public Set<ProductFeatureEntity> getFeatures() {
         return features;
     }
@@ -226,25 +225,6 @@ public class ProductEntity {
         this.features = features;
     }
 
-    /**
-     * Gets orders.
-     *
-     * @return the orders
-     */
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
-    public Set<OrderProductEntity> getOrders() {
-        return orders;
-    }
-
-    /**
-     * Sets orders.
-     *
-     * @param orders the orders
-     */
-    public void setOrders(final Set<OrderProductEntity> orders) {
-        this.orders = orders;
-    }
-
     @Override
     public String toString() {
         return "ProductEntity{" +
@@ -255,7 +235,6 @@ public class ProductEntity {
                 ", description='" + description + '\'' +
                 ", sku='" + sku + '\'' +
                 ", features=" + features +
-                ", orders=" + orders +
                 '}';
     }
 }

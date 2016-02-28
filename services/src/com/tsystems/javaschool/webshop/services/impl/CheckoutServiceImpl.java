@@ -110,7 +110,7 @@ public class CheckoutServiceImpl implements CheckoutService {
             order.setProducts(orderItems);
 
 
-            cartDAO.delete(cartDAO.getById(cart.getId(), manager), manager);
+            cartDAO.delete(cart.getId(), manager);
         });
     }
 }

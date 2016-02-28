@@ -2,7 +2,7 @@
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 <log4j:configuration>
 
-    <appender name="ALL-LOG" class="org.apache.log4j.App">
+    <appender name="ALL-LOG" class="org.apache.log4j.FileAppender">
         <param name="file" value="/all.log"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d{ISO8601} [%5p] %m at %l%n"/>
@@ -20,7 +20,7 @@
     </appender>
 
     <root>
-        <priority value="All"/>
+        <priority value="INFO"/>
         <appender-ref ref="ALL-LOG"/>
         <appender-ref ref="CONSOLE-ALL"/>
     </root>

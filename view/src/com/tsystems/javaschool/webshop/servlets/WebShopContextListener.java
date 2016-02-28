@@ -5,6 +5,7 @@ import com.tsystems.javaschool.webshop.dao.utils.EntityManagerFactorySingleton;
 import com.tsystems.javaschool.webshop.services.api.CategoryService;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import com.tsystems.javaschool.webshop.services.impl.CategoryServiceImpl;
+import com.tsystems.javaschool.webshop.servlets.utils.ServletUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -27,16 +28,12 @@ public class WebShopContextListener implements ServletContextListener {
     public final void contextInitialized(final ServletContextEvent sce) {
 
         EntityManagerFactorySingleton.getInstance();
-
-        //TODO: i think it should't be here...
-        CategoryService categoryService = new CategoryServiceImpl();
-        List<CategoryEntity> categories = categoryService.getAll();
-        sce.getServletContext().setAttribute("categoryList", categories);
+        //Setting categories to context for showing them in sidebar.
+        ServletUtils.setCategoryListToContext(sce.getServletContext());
     }
 
     @Override
     public final void contextDestroyed(final ServletContextEvent sce) {
-
 
         EntityManagerFactorySingleton.closeFactory();
     }

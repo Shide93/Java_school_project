@@ -11,6 +11,7 @@
         <title>${title}</title>
         <link rel="stylesheet" href="<c:url value="/css/main.css"/>"type="text/css"/>
         <script type="text/javascript" src="<c:url value="/js/main.js"/>"></script>
+        <script type="text/javascript" src="<c:url value="/js/jquery-1.12.1.min.js"/>"></script>
     </head>
     <body>
         <header class="header">

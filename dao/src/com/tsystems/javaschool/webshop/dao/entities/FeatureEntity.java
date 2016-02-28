@@ -1,14 +1,10 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import com.tsystems.javaschool.webshop.dao.entities.enums.FeatureType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -31,7 +27,7 @@ public class FeatureEntity {
     /**
      * The Type.
      */
-    private String type;
+    private FeatureType type;
     /**
      * The Products.
      */
@@ -69,6 +65,7 @@ public class FeatureEntity {
      */
     @Basic
     @Column(name = "name")
+
     public String getName() {
         return name;
     }
@@ -89,7 +86,8 @@ public class FeatureEntity {
      */
     @Basic
     @Column(name = "type")
-    public String getType() {
+    @Enumerated(EnumType.STRING)
+    public FeatureType getType() {
         return type;
     }
 
@@ -98,7 +96,7 @@ public class FeatureEntity {
      *
      * @param type the type
      */
-    public void setType(final String type) {
+    public void setType(final FeatureType type) {
         this.type = type;
     }
 
@@ -107,7 +105,8 @@ public class FeatureEntity {
      *
      * @return the products
      */
-    @OneToMany(mappedBy = "feature", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "feature")
+    @Fetch(FetchMode.JOIN)
     public Set<ProductFeatureEntity> getProducts() {
         return products;
     }

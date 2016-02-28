@@ -66,7 +66,7 @@ public class CategoryServlet extends HttpServlet {
         CategoryEntity category = categoryService.get(categoryId);
         req.setAttribute("category", category);
 
-        RequestDispatcher rd = req.getRequestDispatcher("/category.jsp");
+        RequestDispatcher rd = req.getRequestDispatcher("/categories.jsp");
         rd.forward(req, resp);
 
     }

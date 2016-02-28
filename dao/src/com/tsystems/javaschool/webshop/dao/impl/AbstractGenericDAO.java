@@ -53,16 +53,17 @@ public class AbstractGenericDAO<T> implements GenericDAO<T> {
     }
 
     @Override
-    public final void delete(final T obj, final EntityManager manager) {
+    public final void delete(final Integer objId, final EntityManager manager) {
+        T obj = manager.find(type, objId);
         manager.remove(obj);
     }
 
     @Override
     public final List<T> getAll(final EntityManager manager) {
-        String queryString = "select t from "
-               + type.getSimpleName()
-               + " t";
-        TypedQuery<T> query = manager.createQuery(queryString, type);
-        return query.getResultList();
+            String queryString = "select t from "
+                    + type.getSimpleName()
+                    + " t";
+            TypedQuery<T> query = manager.createQuery(queryString, type);
+            return query.getResultList();
     }
 }
