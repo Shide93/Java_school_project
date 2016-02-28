@@ -46,7 +46,6 @@ public class CategoryServlet extends HttpServlet {
         String path = req.getRequestURI();
         LOGGER.warn(path);
         String[] tokens = path.split("/");
-        LOGGER.warn(Arrays.toString(tokens));
         int categoryId = 0;
         for (int i = 0; i < tokens.length; i++) {
             if (tokens[i].equals("category")) {
@@ -66,7 +65,7 @@ public class CategoryServlet extends HttpServlet {
         CategoryEntity category = categoryService.get(categoryId);
         req.setAttribute("category", category);
 
-        RequestDispatcher rd = req.getRequestDispatcher("/categories.jsp");
+        RequestDispatcher rd = req.getRequestDispatcher("/category.jsp");
         rd.forward(req, resp);
 
     }

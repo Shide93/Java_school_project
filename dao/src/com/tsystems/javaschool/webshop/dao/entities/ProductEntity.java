@@ -3,16 +3,7 @@ package com.tsystems.javaschool.webshop.dao.entities;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -45,13 +36,9 @@ public class ProductEntity {
      */
     private String description;
     /**
-     * The Sku.
-     */
-    private String sku;
-    /**
      * The Categories.
      */
-    private Set<CategoryEntity> categories;
+    private CategoryEntity category;
     /**
      * The Features.
      */
@@ -61,7 +48,6 @@ public class ProductEntity {
      * Instantiates a new Product entity.
      */
     public ProductEntity() {
-        categories = new LinkedHashSet<>();
         features = new LinkedHashSet<>();
     }
 
@@ -167,42 +153,23 @@ public class ProductEntity {
     }
 
     /**
-     * Gets sku.
-     *
-     * @return the sku
-     */
-    @Basic
-    @Column(name = "sku")
-    public String getSku() {
-        return sku;
-    }
-
-    /**
-     * Sets sku.
-     *
-     * @param sku the sku
-     */
-    public void setSku(final String sku) {
-        this.sku = sku;
-    }
-
-    /**
      * Gets categories.
      *
      * @return the categories
      */
-    @ManyToMany(mappedBy = "products", fetch = FetchType.EAGER)
-    public Set<CategoryEntity> getCategories() {
-        return categories;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id")
+    public CategoryEntity getCategory() {
+        return category;
     }
 
     /**
      * Sets categories.
      *
-     * @param categories the categories
+     * @param category the category
      */
-    public void setCategories(final Set<CategoryEntity> categories) {
-        this.categories = categories;
+    public void setCategory(final CategoryEntity category) {
+        this.category = category;
     }
 
     /**
@@ -233,7 +200,6 @@ public class ProductEntity {
                 ", price=" + price +
                 ", stock=" + stock +
                 ", description='" + description + '\'' +
-                ", sku='" + sku + '\'' +
                 ", features=" + features +
                 '}';
     }

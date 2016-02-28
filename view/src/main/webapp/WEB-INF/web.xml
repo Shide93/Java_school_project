@@ -98,6 +98,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>ProductBackendServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.webshop.servlets.backend.ProductBackendServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProductBackendServlet</servlet-name>
+        <url-pattern>/backend/products</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>FeaturesBackendServlet</servlet-name>
         <servlet-class>com.tsystems.javaschool.webshop.servlets.backend.FeaturesBackendServlet</servlet-class>
     </servlet>

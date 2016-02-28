@@ -1,7 +1,10 @@
 package com.tsystems.javaschool.webshop.services.impl;
 
+import com.tsystems.javaschool.webshop.dao.api.CategoryDAO;
 import com.tsystems.javaschool.webshop.dao.api.ProductDAO;
+import com.tsystems.javaschool.webshop.dao.entities.CategoryEntity;
 import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
+import com.tsystems.javaschool.webshop.dao.impl.CategoryDAOImpl;
 import com.tsystems.javaschool.webshop.dao.impl.ProductDAOImpl;
 import com.tsystems.javaschool.webshop.services.api.ProductService;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
@@ -23,10 +26,11 @@ public class ProductServiceImpl implements ProductService {
      */
     private static final Logger LOGGER = LogManager.getLogger(ProductServiceImpl.class);
     private ProductDAO productDAO;
+    private CategoryDAO categoryDAO;
     private ServiceHelper serviceHelper;
     public ProductServiceImpl() {
         productDAO = new ProductDAOImpl();
-
+        categoryDAO = new CategoryDAOImpl();
         serviceHelper = new ServiceHelperImpl(LOGGER);
     }
 
@@ -34,7 +38,10 @@ public class ProductServiceImpl implements ProductService {
     public void add(ProductEntity product) {
 
         serviceHelper.executeInTransaction(manager -> {
-
+            CategoryEntity category =
+                categoryDAO.getById(product.getCategory().getId(), manager);
+            product.setCategory(category);
+            //TODO: add product features
             productDAO.create(product, manager);
         });
     }
@@ -42,7 +49,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void update(ProductEntity product) {
         serviceHelper.executeInTransaction(manager -> {
-
+            CategoryEntity category =
+                categoryDAO.getById(product.getCategory().getId(), manager);
+            product.setCategory(category);
+            //TODO: save product features
             productDAO.update(product, manager);
         });
     }
