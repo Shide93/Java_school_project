@@ -1,7 +1,6 @@
 package com.tsystems.javaschool.webshop.services.api;
 
 import com.tsystems.javaschool.webshop.dao.entities.CartEntity;
-import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 
 /**
  * The interface Cart service.

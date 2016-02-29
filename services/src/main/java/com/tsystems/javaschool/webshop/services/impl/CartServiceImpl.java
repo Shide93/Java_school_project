@@ -7,14 +7,12 @@ import com.tsystems.javaschool.webshop.dao.entities.CartProductEntity;
 import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
 import com.tsystems.javaschool.webshop.dao.impl.CartDAOImpl;
 import com.tsystems.javaschool.webshop.dao.impl.ProductDAOImpl;
-import com.tsystems.javaschool.webshop.dao.utils.EntityManagerFactorySingleton;
 import com.tsystems.javaschool.webshop.services.api.CartService;
 import com.tsystems.javaschool.webshop.services.util.ServiceHelper;
 import com.tsystems.javaschool.webshop.services.util.ServiceHelperImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

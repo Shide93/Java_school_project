@@ -2,20 +2,18 @@
 * { padding: 0; margin: 0; }
 /****/
 
-.header {
+header {
     background-color: #acd6dd;
 }
-.sidebar {
+aside {
     background-color: #d2d0cf;
-    float:left;
-    width: 200px;
 }
-.content {
+article {
     background-color: #ddbdb8;
-    margin-left: 220px;
+
 }
-.footer {
-    clear:both;
+footer {
+
     background-color: #c9ddbb;
 }
 .inline-block {

@@ -4,7 +4,6 @@ import com.tsystems.javaschool.webshop.dao.entities.CartEntity;
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
 import com.tsystems.javaschool.webshop.services.api.CartService;
-import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import com.tsystems.javaschool.webshop.services.impl.AccountServiceImpl;
 import com.tsystems.javaschool.webshop.services.impl.CartServiceImpl;
 import org.apache.log4j.LogManager;
