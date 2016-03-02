@@ -27,7 +27,7 @@
             <div>
                 <a href="<c:url value="/cart"/>">Your cart:</a>
             </div>
-            <div class=""><span>${sessionScope.cart.count} items</span> - <span>${sessionScope.cart.summary} $</span> </div>
+            <div class=""><span class="cart_count">${sessionScope.cart.count}</span> items - <span class="cart_summary">${sessionScope.cart.summary}</span>$ </div>
         </div>
 
     </jsp:attribute>

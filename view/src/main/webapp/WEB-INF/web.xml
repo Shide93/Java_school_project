@@ -116,6 +116,33 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>OrderBackendServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.webshop.servlets.backend.OrderBackendServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrderBackendServlet</servlet-name>
+        <url-pattern>/backend/orders</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UsersBackendServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.webshop.servlets.backend.UsersBackendServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UsersBackendServlet</servlet-name>
+        <url-pattern>/backend/users</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AuthBackendServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.webshop.servlets.backend.AuthBackendServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AuthBackendServlet</servlet-name>
+        <url-pattern>/backend/auth</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>ErrorHandlerServlet</servlet-name>
         <servlet-class>com.tsystems.javaschool.webshop.servlets.ErrorHandlerServlet</servlet-class>
     </servlet>
@@ -151,7 +178,15 @@
     <filter-mapping>
         <filter-name>RedirectFilter</filter-name>
         <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
+    <filter>
+        <filter-name>BackendAuthFilter</filter-name>
+        <filter-class>com.tsystems.javaschool.webshop.servlets.filters.BackendAuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>BackendAuthFilter</filter-name>
+        <url-pattern>/backend/*</url-pattern>
     </filter-mapping>
 
     <!--Listeners-->

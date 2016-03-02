@@ -4,6 +4,8 @@ import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.services.exceptions.AccountServiceException;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 
+import java.util.List;
+
 
 /**
  * Used to manage user accounts.
@@ -52,5 +54,20 @@ public interface AccountService {
      * @return user that saved to db
      */
     UserEntity saveProfile(UserEntity user);
+
+    /**
+     * Gets all users.
+     *
+     * @return all users
+     */
+    List<UserEntity> getAll();
+
+    /**
+     * Sets user rights.
+     *
+     * @param userId  the user id
+     * @param isAdmin is user admin
+     */
+    void setUserRights(int userId, boolean isAdmin);
 
 }

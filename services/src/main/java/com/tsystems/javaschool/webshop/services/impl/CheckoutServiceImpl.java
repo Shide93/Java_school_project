@@ -16,6 +16,7 @@ import com.tsystems.javaschool.webshop.services.util.ServiceHelperImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -94,8 +95,9 @@ public class CheckoutServiceImpl implements CheckoutService {
             order.setUser(user);
             order.setAddress(address);
             order.setComment(comment);
+            order.setOrderDate(new Date());
             //TODO: total calculation
-            order.setTotal(1000);
+            order.setTotal(cart.getSummary());
             orderDAO.create(order, manager);
             Set<OrderProductEntity> orderItems = order.getProducts();
             for (CartProductEntity cartItem : cart.getItems()) {

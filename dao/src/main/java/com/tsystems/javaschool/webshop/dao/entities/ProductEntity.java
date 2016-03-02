@@ -179,6 +179,7 @@ public class ProductEntity {
      */
     @OneToMany(mappedBy = "product")
     @Fetch(FetchMode.JOIN)
+    @OrderBy(value = "featureId")
     public Set<ProductFeatureEntity> getFeatures() {
         return features;
     }

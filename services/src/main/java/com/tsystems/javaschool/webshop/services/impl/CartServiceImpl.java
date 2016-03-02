@@ -103,9 +103,7 @@ public class CartServiceImpl implements CartService {
             item.setCartId(cart.getId());
 
             cart.getItems().add(item);
-            cart.setCount(cart.getCount() + quantity);
-            cart.setSummary(cart.getSummary()
-                    + (product.getPrice() * quantity));
+            updateSummaryCount(cart);
             cartDAO.update(cart, manager);
             return cart;
         });
@@ -125,6 +123,7 @@ public class CartServiceImpl implements CartService {
                 }
                 //TODO: count and summary
             }
+            updateSummaryCount(cart);
             return cart;
         });
     }
@@ -135,14 +134,28 @@ public class CartServiceImpl implements CartService {
         return serviceHelper.loadInTransaction(manager -> {
             cartDAO.removeFromCart(productId, cartId, manager);
             //TODO: count and summary
-            return cartDAO.getById(cartId, manager);
+            CartEntity cart = cartDAO.getById(cartId, manager);
+            updateSummaryCount(cart);
+            return cart;
 
         });
     }
 
-    private CartEntity calculateSummary(CartEntity cart) {
+    /**
+     * Update summary and count of cart.
+     *
+     * @param cart the cart
+     */
+    private void updateSummaryCount(final CartEntity cart) {
 
-        return cart;
+        int count = 0;
+        int summary = 0;
+        for (CartProductEntity item : cart.getItems()) {
+            count += item.getQuantity();
+            summary += item.getQuantity() * item.getProduct().getPrice();
+        }
+        cart.setCount(count);
+        cart.setSummary(summary);
     }
 }
 

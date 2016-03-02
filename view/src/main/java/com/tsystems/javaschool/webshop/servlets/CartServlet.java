@@ -5,6 +5,7 @@ import com.tsystems.javaschool.webshop.services.api.CartService;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import com.tsystems.javaschool.webshop.services.impl.CartServiceImpl;
 import com.tsystems.javaschool.webshop.servlets.utils.ServletUtils;
+import flexjson.JSONSerializer;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -30,12 +31,17 @@ public class CartServlet extends HttpServlet {
      * The Cart service.
      */
     private CartService cartService;
+    /**
+     * The Json serializer.
+     */
+    private JSONSerializer jsonSerializer;
 
     /**
      * Instantiates a new Cart servlet.
      */
     public CartServlet() {
         cartService = new CartServiceImpl();
+        jsonSerializer = new JSONSerializer();
     }
 
     @Override
@@ -53,34 +59,36 @@ public class CartServlet extends HttpServlet {
 
         String productIdStr = req.getParameter("product_id");
         String quantityStr = req.getParameter("quantity");
-        Integer quantity;
-        Integer productId;
-        try {
-            productId = Integer.parseInt(productIdStr);
-            quantity = Integer.parseInt(quantityStr);
-        } catch (NumberFormatException e) {
-            LOGGER.warn("invalid data format", e);
-            //TODO: error JSON?
-            return;
-        }
+
+
+
+
+
+
         createCartIfNone(req, resp);
         CartEntity cart = (CartEntity) req.getSession()
                 .getAttribute("cart");
 
 
             if (req.getParameter("action").equals("add")) {
-
+                Integer  quantity = Integer.parseInt(quantityStr);
+                Integer  productId = Integer.parseInt(productIdStr);
                 CartEntity newCart = cartService.addToCart(productId, quantity, cart.getId());
                 req.getSession().setAttribute("cart", newCart);
+                resp.getWriter().println(jsonSerializer.serialize(newCart));
             } else if (req.getParameter("action").equals("edit")) {
+                Integer  quantity = Integer.parseInt(quantityStr);
+                Integer  productId = Integer.parseInt(productIdStr);
+                CartEntity newCart = cartService.editCartProduct(productId, quantity, cart.getId());
+                req.getSession().setAttribute("cart", newCart);
+                resp.getWriter().println(jsonSerializer.deepSerialize(newCart));
 
-                    CartEntity newCart = cartService.editCartProduct(productId, quantity, cart.getId());
-                    req.getSession().setAttribute("cart", newCart);
-                    //TODO: error JSON?
+
             } else if (req.getParameter("action").equals("remove")) {
-
+                    Integer  productId = Integer.parseInt(productIdStr);
                     CartEntity newCart = cartService.removeFromCart(productId, cart.getId());
                     req.getSession().setAttribute("cart", newCart);
+                    resp.getWriter().println(jsonSerializer.serialize(newCart));
             }
 
     }
@@ -91,7 +99,7 @@ public class CartServlet extends HttpServlet {
      * @param req  the request object
      * @param resp the response object
      */
-    public final void createCartIfNone(final HttpServletRequest req,
+    private void createCartIfNone(final HttpServletRequest req,
                                  final HttpServletResponse resp) {
 
         //check if cart exists in session or create it

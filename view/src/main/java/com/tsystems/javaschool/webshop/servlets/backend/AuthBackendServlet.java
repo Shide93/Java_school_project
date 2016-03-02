@@ -1,16 +1,13 @@
-package com.tsystems.javaschool.webshop.servlets;
+package com.tsystems.javaschool.webshop.servlets.backend;
 
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
 import com.tsystems.javaschool.webshop.services.exceptions.AccountServiceException;
 import com.tsystems.javaschool.webshop.services.impl.AccountServiceImpl;
-import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
-import com.tsystems.javaschool.webshop.services.util.ServiceHelper;
 import com.tsystems.javaschool.webshop.servlets.utils.ServletUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -19,61 +16,63 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet user to sign in users.
+ * Auth backend servlet.
  */
-public class SignInServlet extends HttpServlet {
-
-
+public class AuthBackendServlet extends HttpServlet {
     /**
      * The constant LOGGER.
      */
     private static final Logger LOGGER =
-            LogManager.getLogger(SignInServlet.class);
-
+            LogManager.getLogger(AuthBackendServlet.class);
     /**
      * The Account service.
      */
     private AccountService accountService;
 
     /**
-     * Instantiates a new Sign in servlet.
+     * Instantiates a new Auth backend servlet.
      */
-    public SignInServlet() {
-        this.accountService =
-                new AccountServiceImpl();
+    public AuthBackendServlet() {
+        this.accountService = new AccountServiceImpl();
     }
 
     @Override
-    protected final void doGet(final HttpServletRequest req,
+    protected void doGet(final HttpServletRequest req,
                          final HttpServletResponse resp)
             throws ServletException, IOException {
-        RequestDispatcher rd = req.getRequestDispatcher("signin.jsp");
-        rd.forward(req, resp);
+
+        req.getRequestDispatcher("/backend/auth.jsp").forward(req, resp);
     }
 
     @Override
-    protected final void doPost(final HttpServletRequest req,
-                                final HttpServletResponse resp)
+    protected void doPost(final HttpServletRequest req,
+                          final HttpServletResponse resp)
             throws ServletException, IOException {
-
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         String isRemember = req.getParameter("remember");
+
         try {
             UserEntity user = accountService.signInUser(email, password);
+
+            if (!user.getIsAdmin()) {        //if non-admin user trying to enter backend
+               throw new AccountServiceException(
+                       "You don't have permission to enter admin panel");
+            }
+
             if (isRemember != null && isRemember.equals("on")) {
                 Cookie cookie = ServletUtils.createCookie("userID",
                         String.valueOf(user.getId()));
                 resp.addCookie(cookie);
             }
             req.getSession().setAttribute("user", user);
-            resp.setStatus(HttpServletResponse.SC_OK);
-            resp.sendRedirect(resp.encodeRedirectURL("/"));
+            resp.sendRedirect(resp.encodeRedirectURL("/backend"));
+
         } catch (AccountServiceException e) {
             LOGGER.warn("Login failed: "
                     + e.getMessage(), e);
             req.setAttribute("errMsg", e.getMessage());
-            req.getRequestDispatcher("/signin.jsp")
+            req.getRequestDispatcher("/backend/auth.jsp")
                     .forward(req, resp);
         }
     }

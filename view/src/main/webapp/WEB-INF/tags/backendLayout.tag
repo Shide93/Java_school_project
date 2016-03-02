@@ -7,7 +7,7 @@
 
 <t:mainLayout>
     <jsp:attribute name="header">
-        <jsp:include page="backendHeader.jsp"/>
+        <jsp:include page="/backend/backendHeader.jsp"/>
     </jsp:attribute>
     <jsp:attribute name="sidebar">
           <jsp:invoke fragment="sidebar"/>

@@ -86,7 +86,7 @@
                             function(JData) {
                         console.log(JData);
                         //TODO: add new line in table
-                    });
+                    }, "json");
                 });
 
                 $(".save_feature").on('click', function(e) {
@@ -99,7 +99,7 @@
                             function(JData) {
                                 console.log(JData);
                                 //TODO: add new line in table, clear fields
-                            });
+                            }, "json");
                 });
 
                 $(".delete_feature").on('click', function(e) {
@@ -110,7 +110,7 @@
                             function(JData) {
                                 console.log(JData);
                                 //TODO: add new line in table
-                            });
+                            }, "json");
                 });
 
             });

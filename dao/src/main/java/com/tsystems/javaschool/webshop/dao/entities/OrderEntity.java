@@ -3,6 +3,7 @@ package com.tsystems.javaschool.webshop.dao.entities;
 import com.tsystems.javaschool.webshop.dao.entities.enums.OrderStatus;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -10,46 +11,32 @@ import java.util.Set;
  * Created by Shide on 18.02.2016.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "OrderEntity.getByUser", query = "select o from OrderEntity o where user.id = :id")
+})
 @Table(name = "ordr", schema = "web_shop")
 public class OrderEntity {
     /**
      * The Id.
      */
     private int id;
-    /**
-     * The User.
-     */
+
     private UserEntity user;
-    /**
-     * The Address.
-     */
+
     private AddressEntity address;
-    /**
-     * The Payment method.
-     */
+
     private PaymentEntity payment;
-    /**
-     * The Shipping method.
-     */
+
     private ShippingEntity shipping;
-    /**
-     * The Order status.
-     */
+
     private OrderStatus orderStatus;
 
-    /**
-     * The Comment.
-     */
     private String comment;
 
-    /**
-     * The Total.
-     */
     private int total;
-    /**
-     * The Products.
-     */
+
     private Set<OrderProductEntity> products;
+    private Date orderDate;
 
     /**
      * Instantiates a new Order entity.
@@ -237,6 +224,16 @@ public class OrderEntity {
      */
     public void setTotal(final int total) {
         this.total = total;
+    }
+    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "order_date")
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(final Date orderDate) {
+        this.orderDate = orderDate;
     }
 
     @Override

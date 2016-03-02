@@ -53,10 +53,6 @@ public class RedirectFilter implements Filter {
             }
 
         }
-
-
-        //TODO: redirect to adminLogin when user enters backend
-
         chain.doFilter(request, response);
     }
 

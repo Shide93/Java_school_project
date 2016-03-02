@@ -1,6 +1,7 @@
 package com.tsystems.javaschool.webshop.servlets.backend;
 
 import com.tsystems.javaschool.webshop.dao.entities.OrderEntity;
+import com.tsystems.javaschool.webshop.dao.entities.enums.OrderStatus;
 import com.tsystems.javaschool.webshop.services.api.OrderService;
 import com.tsystems.javaschool.webshop.services.impl.OrderServiceImpl;
 
@@ -45,11 +46,21 @@ public class OrderBackendServlet extends HttpServlet {
             }
         }
         req.setAttribute("orders", orders);
+        req.setAttribute("orderStatuses", OrderStatus.values());
         req.getRequestDispatcher("/backend/orders.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+        String action = req.getParameter("action");
+        String idStr = req.getParameter("id");
+        String statusStr = req.getParameter("status");
 
+        if (action.equals("changeStatus")) {
+            Integer id = Integer.parseInt(idStr);
+            OrderStatus status = OrderStatus.valueOf(statusStr);
+            orderService.changeStatus(id, status);
+            resp.sendRedirect("/backend/orders?orderId=" + id);
+        }
     }
 }

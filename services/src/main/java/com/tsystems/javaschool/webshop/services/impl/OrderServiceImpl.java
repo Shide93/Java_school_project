@@ -2,6 +2,7 @@ package com.tsystems.javaschool.webshop.services.impl;
 
 import com.tsystems.javaschool.webshop.dao.api.OrderDAO;
 import com.tsystems.javaschool.webshop.dao.entities.OrderEntity;
+import com.tsystems.javaschool.webshop.dao.entities.enums.OrderStatus;
 import com.tsystems.javaschool.webshop.dao.impl.OrderDAOImpl;
 import com.tsystems.javaschool.webshop.services.api.OrderService;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
@@ -64,5 +65,19 @@ public class OrderServiceImpl implements OrderService {
 
             return orderDAO.getAll(manager);
         });
+    }
+
+    @Override
+    public void changeStatus(final int id, final OrderStatus status) {
+        serviceHelper.executeInTransaction(manager -> {
+            OrderEntity order = orderDAO.getById(id, manager);
+            order.setOrderStatus(status);
+        });
+    }
+
+    @Override
+    public List<OrderEntity> getAllByUser(final int userId) {
+        return serviceHelper.loadInTransaction(manager ->
+                orderDAO.getByUser(userId, manager));
     }
 }

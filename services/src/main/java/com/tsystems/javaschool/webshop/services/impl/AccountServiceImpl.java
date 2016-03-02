@@ -10,6 +10,8 @@ import com.tsystems.javaschool.webshop.services.util.ServiceHelperImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import java.util.List;
+
 /**
  * The type Account service.
  */
@@ -72,14 +74,10 @@ public class AccountServiceImpl implements AccountService {
         return serviceHelper.loadInTransaction(manager -> {
             UserEntity user = usersDAO.getUserByEmail(email, manager);
 
-            if (user == null) {
-                throw new AccountServiceException(
-                        "User with this email not found");
-            }
             //TODO: hash password
-
-            if (!user.getPassword().equals(password)) {
-                throw new AccountServiceException("Wrong password");
+            if (user == null || !user.getPassword().equals(password)) {
+                throw new AccountServiceException(
+                        "Wrong password or email");
             }
             return user;
         });
@@ -94,8 +92,22 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public final UserEntity saveProfile(final UserEntity user) {
         return serviceHelper.loadInTransaction(manager -> {
+
                 usersDAO.update(user, manager);
                 return user;
         });
+    }
+
+    @Override
+    public final List<UserEntity> getAll() {
+        return serviceHelper.loadInTransaction(manager ->
+                usersDAO.getAll(manager));
+    }
+
+    @Override
+    public final void setUserRights(final int userId, final boolean isAdmin) {
+         serviceHelper.executeInTransaction(manager ->
+                 usersDAO.getById(userId, manager)
+                 .setIsAdmin(isAdmin));
     }
 }

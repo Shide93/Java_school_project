@@ -61,9 +61,6 @@ public class CookieCheckFilter implements Filter {
         HttpSession session = req.getSession();
         Cookie[] cookies = req.getCookies();
 
-        LOGGER.debug("AUTHER AAAA = "
-                + ((HttpServletRequest) request).getRequestURL());
-
         // user authorisation flag
         boolean userFlag = false;
         // cart presence flag
@@ -75,7 +72,6 @@ public class CookieCheckFilter implements Filter {
         }
         // if user already have cart
         if (session.getAttribute("cart") != null) {
-            //TODO: cookie maxage refresh
             cartFlag = true;
         }
         // if user already have cart and authorized - pass through
@@ -97,13 +93,11 @@ public class CookieCheckFilter implements Filter {
 
             //if user enters site with cart cookie - add cart to session
             if (cookie.getName().equals("cartID") && !cartFlag) {
-
                 CartEntity cart = cartService.
                         get(Integer.parseInt(cookie.getValue()));
                 if (cart != null) {
                     req.getSession().setAttribute("cart", cart);
                 }
-
             }
         }
         chain.doFilter(req, resp);

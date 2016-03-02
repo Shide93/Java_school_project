@@ -24,16 +24,18 @@
 
                 <tbody>
                     <c:forEach var="item" items="${sessionScope.cart.items}">
-                        <tr>
+                        <tr product-id="${item.product.id}">
                             <td>${item.product.name}</td>
-                            <td>${item.product.price} $</td>
+                            <td><span class="product_price">${item.product.price}</span> $</td>
                             <td>
                                 <label>
-                                    <input type="text" value="${item.quantity}">
+                                    <input type="text" class="cart_product_quantity" name="cart_quantity" value="${item.quantity}">
                                 </label>
                             </td>
-                            <td>${item.product.price * item.quantity}</td>
-                            <td><input type="button" class="" value="X"> </td>
+                            <td>
+                                <span class="product_cost">${item.product.price * item.quantity}</span> $
+                            </td>
+                            <td><input type="button" class="cart_product_remove" value="X"> </td>
                         </tr>
                     </c:forEach>
 
@@ -43,11 +45,11 @@
                         <td></td>
                         <td></td>
                         <td>Total cost:</td>
-                        <td colspan="2">${sessionScope.cart.summary}</td>
+                        <td colspan="2"><span class="cart_summary">${sessionScope.cart.summary}</span></td>
                     </tr>
                 <tr>
                     <td>
-                        <a href="/checkout">Proceed to checkout</a>
+                        <a href="<c:url value="/checkout"/>">Proceed to checkout</a>
                     </td>
                 </tr>
                 </tfoot>

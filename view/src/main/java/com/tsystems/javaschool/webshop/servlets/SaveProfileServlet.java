@@ -1,10 +1,13 @@
 package com.tsystems.javaschool.webshop.servlets;
 
 import com.tsystems.javaschool.webshop.dao.entities.AddressEntity;
+import com.tsystems.javaschool.webshop.dao.entities.OrderEntity;
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
+import com.tsystems.javaschool.webshop.services.api.OrderService;
 import com.tsystems.javaschool.webshop.services.impl.AccountServiceImpl;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
+import com.tsystems.javaschool.webshop.services.impl.OrderServiceImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -17,6 +20,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Saves user profile.
@@ -33,6 +37,10 @@ public class SaveProfileServlet extends HttpServlet {
      * The Account service.
      */
     private AccountService accountService;
+    /**
+     * The Order service.
+     */
+    private OrderService orderService;
 
     /**
      * Instantiates a new Save profile servlet.
@@ -40,12 +48,18 @@ public class SaveProfileServlet extends HttpServlet {
     public SaveProfileServlet() {
         accountService =
                 new AccountServiceImpl();
+        orderService = new OrderServiceImpl();
     }
 
     @Override
     protected final void doGet(final HttpServletRequest req,
                                final HttpServletResponse resp)
             throws ServletException, IOException {
+
+        //get all orders for user
+        UserEntity user = (UserEntity) req.getSession().getAttribute("user");
+        List<OrderEntity> orders = orderService.getAllByUser(user.getId());
+        req.setAttribute("orders", orders);
         RequestDispatcher rd = req.getRequestDispatcher("profile.jsp");
         rd.forward(req, resp);
     }
@@ -116,7 +130,7 @@ public class SaveProfileServlet extends HttpServlet {
         newUser.setBirthDate(birthDate);
         newUser.setEmail(email);
         newUser.setPassword(password);
-        newUser.setIsAdmin(false);
+        newUser.setIsAdmin(user.getIsAdmin());
 
         AddressEntity address = new AddressEntity();
         newUser.setAddress(address);
@@ -133,14 +147,12 @@ public class SaveProfileServlet extends HttpServlet {
         address.setBuilding(building);
         address.setFlat(flat);
         if (hasErrors) {
-            RequestDispatcher rd = req.getRequestDispatcher("profile.jsp");
-            rd.forward(req, resp);
+            req.getRequestDispatcher("profile.jsp").forward(req, resp);
         } else {
             newUser = accountService.saveProfile(newUser);
             req.getSession().setAttribute("user", newUser);
             req.setAttribute("profileSaved", "Profile saved!");
-            RequestDispatcher rd = req.getRequestDispatcher("profile.jsp");
-            rd.forward(req, resp);
+            req.getRequestDispatcher("profile.jsp").forward(req, resp);
         }
     }
 }

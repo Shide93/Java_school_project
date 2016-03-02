@@ -108,8 +108,7 @@
                     </table>
                     <div class="">
                         <span>Comment:</span>
-                        <textarea class="comment" name="comment" placeholder="Add your comment to order here">
-                        </textarea>
+                        <textarea class="comment" name="comment" placeholder="Add your comment to order here"></textarea>
                         <br>
                         <input type="submit" value="Buy">
                     </div>
