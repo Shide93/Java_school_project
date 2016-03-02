@@ -55,7 +55,30 @@
                         </label>
                     </div>
                     <div class="features">
-                        Features here
+                        Features
+                        <c:forEach var="feature" items="${requestScope.selectedProduct.features}">
+                            <div class="row">
+                                <div class="col-lg-4">${feature.feature.name}</div>
+                                <div class="col-lg-4">
+                                    <c:choose>
+                                        <c:when test="${feature.feature.type eq 'TEXT'}">
+                                            <label>
+                                                <input type="text" class=""
+                                                       value="${feature.value}" name="prod_features[value]">
+                                            </label>
+                                        </c:when>
+                                        <c:when test="${feature.feature.type eq 'NUMBER'}">
+                                            <label>
+                                                <input type="number" class=""
+                                                       value="${feature.value}" name="prod_features[value]">
+                                            </label>
+                                        </c:when>
+                                    </c:choose>
+                                    <input type="hidden" class=""
+                                           value="${feature.featureId}" name="prod_features[id]">
+                                </div>
+                            </div>
+                        </c:forEach>
                     </div>
                     <div class="image">
                         Image Upload?

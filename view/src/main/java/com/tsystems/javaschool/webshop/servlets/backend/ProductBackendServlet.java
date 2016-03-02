@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Shide on 28.02.2016.
@@ -59,6 +60,8 @@ public class ProductBackendServlet extends HttpServlet {
         String priceStr = req.getParameter("price");
         String stockStr = req.getParameter("stock");
         String categoryIdStr = req.getParameter("category");
+        String[] featureIds = req.getParameterValues("prod_features[id]");
+        String[] featureValues = req.getParameterValues("prod_features[value]");
 
         if (action.equals("add")) {
             Integer price = Integer.parseInt(priceStr);
