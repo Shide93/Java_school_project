@@ -1,6 +1,7 @@
 package com.tsystems.javaschool.webshop.services.api;
 
 import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
+import com.tsystems.javaschool.webshop.dao.entities.ProductFeatureEntity;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 
 import java.util.List;
@@ -14,8 +15,15 @@ public interface ProductService extends GenericService<ProductEntity> {
      *
      * @param searchQuery query to search
      * @return list of products that satisfacts query
-     * @throws ServiceException if something wrong
      */
     List<ProductEntity> searchProducts(String searchQuery);
+
+    /**
+     * Searches products by specified feature values.
+     *
+     * @param selectedFeatures array of feature values in format - id|value
+     * @return the list of products
+     */
+    List<ProductEntity> searchByFeature(String[] selectedFeatures);
 
 }

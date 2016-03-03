@@ -12,7 +12,17 @@ import java.util.Set;
  */
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "OrderEntity.getByUser", query = "select o from OrderEntity o where user.id = :id")
+        @NamedQuery(name = "OrderEntity.getByUser",
+                query = "select o from OrderEntity o where user.id = :id"),
+        @NamedQuery(name = "OrderEntity.getWithStatus",
+                query = "select o from OrderEntity o where o.orderStatus = :orderStatus"),
+        @NamedQuery(name = "OrderEntity.totalSales",
+                query = "select sum(o.total) from OrderEntity o"),
+        @NamedQuery(name = "OrderEntity.periodSales",
+                query = "select sum(o.total) from OrderEntity o where o.orderDate > :date"),
+        @NamedQuery(name = "OrderEntity.getTopCustomers",
+                query = "select o.user from OrderEntity o " +
+                        "group by o.user order by sum(o.total) desc")
 })
 @Table(name = "ordr", schema = "web_shop")
 public class OrderEntity {

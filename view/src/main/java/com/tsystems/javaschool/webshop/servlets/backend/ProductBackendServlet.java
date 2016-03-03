@@ -1,8 +1,12 @@
 package com.tsystems.javaschool.webshop.servlets.backend;
 
 import com.tsystems.javaschool.webshop.dao.entities.CategoryEntity;
+import com.tsystems.javaschool.webshop.dao.entities.FeatureEntity;
 import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
+import com.tsystems.javaschool.webshop.dao.entities.ProductFeatureEntity;
+import com.tsystems.javaschool.webshop.services.api.FeatureService;
 import com.tsystems.javaschool.webshop.services.api.ProductService;
+import com.tsystems.javaschool.webshop.services.impl.FeatureServiceImpl;
 import com.tsystems.javaschool.webshop.services.impl.ProductServiceImpl;
 
 import javax.servlet.ServletException;
@@ -21,12 +25,17 @@ public class ProductBackendServlet extends HttpServlet {
      * The Product service.
      */
     private ProductService productService;
+    /**
+     * The Feature service.
+     */
+    private FeatureService featureService;
 
     /**
      * Instantiates a new Product backend servlet.
      */
     public ProductBackendServlet() {
         productService = new ProductServiceImpl();
+        featureService = new FeatureServiceImpl();
     }
     @Override
     protected void doGet(final HttpServletRequest req,
@@ -35,6 +44,7 @@ public class ProductBackendServlet extends HttpServlet {
         String productIdStr = req.getParameter("productId");
         //get all products
         List<ProductEntity> products = productService.getAll();
+        List<FeatureEntity> features = featureService.getAll();
 
         if (productIdStr == null) {        //when enter page without params
             req.setAttribute("selectedProduct", products.get(0));
@@ -46,6 +56,7 @@ public class ProductBackendServlet extends HttpServlet {
             }
         }
         req.setAttribute("products", products);
+        req.setAttribute("features", features);
         req.getRequestDispatcher("/backend/products.jsp").forward(req, resp);
     }
 
@@ -60,8 +71,10 @@ public class ProductBackendServlet extends HttpServlet {
         String priceStr = req.getParameter("price");
         String stockStr = req.getParameter("stock");
         String categoryIdStr = req.getParameter("category");
+        Map<String, String[]> map = req.getParameterMap();
         String[] featureIds = req.getParameterValues("prod_features[id]");
         String[] featureValues = req.getParameterValues("prod_features[value]");
+
 
         if (action.equals("add")) {
             Integer price = Integer.parseInt(priceStr);
@@ -72,11 +85,18 @@ public class ProductBackendServlet extends HttpServlet {
             product.setDescription(description);
             product.setPrice(price);
             product.setStock(stock);
-            //TODO: may be change signature of method instead of this?
             CategoryEntity cat = new CategoryEntity();
             cat.setId(categoryId);
             product.setCategory(cat);
-
+            for (int i = 0; i < featureIds.length; i++) {
+                Integer fId = Integer.parseInt(featureIds[i]);
+                ProductFeatureEntity feature = new ProductFeatureEntity();
+                feature.setProductId(product.getId());
+                feature.setProduct(product);
+                feature.setFeatureId(fId);
+                feature.setValue(featureValues[i]);
+                product.getFeatures().add(feature);
+            }
             productService.add(product);
             resp.sendRedirect(resp.encodeRedirectURL(
                     "/backend/products?productId="
@@ -92,10 +112,18 @@ public class ProductBackendServlet extends HttpServlet {
             product.setDescription(description);
             product.setPrice(price);
             product.setStock(stock);
-            //TODO: may be change signature of method instead of this?
             CategoryEntity cat = new CategoryEntity();
             cat.setId(categoryId);
             product.setCategory(cat);
+            for (int i = 0; i < featureIds.length; i++) {
+                Integer fId = Integer.parseInt(featureIds[i]);
+                ProductFeatureEntity feature = new ProductFeatureEntity();
+                feature.setProductId(product.getId());
+                feature.setProduct(product);
+                feature.setFeatureId(fId);
+                feature.setValue(featureValues[i]);
+                product.getFeatures().add(feature);
+            }
             productService.update(product);
             resp.sendRedirect(resp.encodeRedirectURL(
                     "/backend/products?productId="

@@ -22,7 +22,7 @@ public final class ServletUtils {
     /**
      * Max age of cookies.
      */
-    public static final int COOKIE_MAX_AGE = 60 * 2;
+    public static final int COOKIE_MAX_AGE = 60 * 60;
 
     /**
      * Creates a cookie with specified name and value

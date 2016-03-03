@@ -7,13 +7,17 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
  * Created by Shide on 22.02.2016.
  */
 @Entity
-@Table(name = "order_product", schema = "web_shop", catalog = "")
+@NamedQuery(name = "OrderProductEntity.getTopProducts",
+        query = "select p.product from OrderProductEntity p " +
+                "group by p.productId order by sum(p.quantity) desc")
+@Table(name = "order_product", schema = "web_shop")
 @IdClass(OrderProductEntityPK.class)
 public class OrderProductEntity {
     /**

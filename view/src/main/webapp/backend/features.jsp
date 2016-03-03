@@ -16,7 +16,6 @@
                 <thead>
                 <tr>
                     <th>Feature name</th>
-                    <th>Type</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -60,15 +59,6 @@
                             <input type="text" name="add_name" value="" placeholder="feature name">
                         </label>
                     </td>
-                    <td>
-                        <select class="" name="add_type" title="assaaa">
-                            <c:forEach var="type" items="${requestScope.feature_types}">
-                                <option class="" value="${type}">
-                                        ${type}
-                                </option>
-                            </c:forEach>
-                        </select>
-                    </td>
                     <td colspan="2">
                         <input type="button" class="add_feature" value="Add new feature">
                     </td>
@@ -81,8 +71,7 @@
                 $(".add_feature").on('click', function(e) {
                     console.log("clicked");
                     var name = $("input[name=add_name]");
-                    var type = $("select[name=add_type]");
-                    $.post("?action=add", "name=" + name.val() + "&type=" + type.val(),
+                    $.post("?action=add", "name=" + name.val(),
                             function(JData) {
                         console.log(JData);
                         //TODO: add new line in table
@@ -94,8 +83,7 @@
                     var row = $(this).parents("[feature-id]");
                     var id = row.attr("feature-id");
                     var name = row.find("input[name=feature_name]");
-                    var type = row.find("select[name=feature_type]");
-                    $.post("?action=save", "id=" + id + "&name=" + name.val() + "&type=" + type.val(),
+                    $.post("?action=save", "id=" + id + "&name=" + name.val(),
                             function(JData) {
                                 console.log(JData);
                                 //TODO: add new line in table, clear fields

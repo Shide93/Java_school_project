@@ -1,9 +1,12 @@
 package com.tsystems.javaschool.webshop.servlets;
 
 import com.tsystems.javaschool.webshop.dao.entities.CategoryEntity;
+import com.tsystems.javaschool.webshop.dao.entities.FeatureEntity;
+import com.tsystems.javaschool.webshop.dao.entities.ProductFeatureEntity;
 import com.tsystems.javaschool.webshop.services.api.CategoryService;
-import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
+import com.tsystems.javaschool.webshop.services.api.FeatureService;
 import com.tsystems.javaschool.webshop.services.impl.CategoryServiceImpl;
+import com.tsystems.javaschool.webshop.services.impl.FeatureServiceImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -13,7 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Shide on 23.02.2016.
@@ -60,8 +63,6 @@ public class CategoryServlet extends HttpServlet {
                 }
             }
         }
-        //retrieve category data by id and send to view
-
         CategoryEntity category = categoryService.get(categoryId);
         req.setAttribute("category", category);
 

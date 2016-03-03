@@ -53,13 +53,15 @@
                 </div>
                 <div class = "shipping">
                     <c:forEach var="shippingType" items="${requestScope.shippingTypes}">
-                        <label>
-                            <input type="radio" name="shipping_id" value="${shippingType.id}">
-                                ${shippingType.name}
-                        </label>
-                        <span class="cost">${shippingType.cost} $</span>
-                        <div class="description">
-                                ${shippingType.description}
+                        <div>
+                            <label>
+                                <input type="radio" name="shipping_id" shipping-cost="${shippingType.cost}" value="${shippingType.id}">
+                                    ${shippingType.name}
+                            </label>
+                            <span class="cost"><span class="shipping_cost">${shippingType.cost}</span>$</span>
+                            <div class="description">
+                                    ${shippingType.description}
+                            </div>
                         </div>
                     </c:forEach>
                 </div>
@@ -101,8 +103,14 @@
                         <tr>
                             <td></td>
                             <td></td>
+                            <td>Shipping:</td>
+                            <td colspan="2"><span class="shipping_total">0</span></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
                             <td>Total cost:</td>
-                            <td colspan="2">${sessionScope.cart.summary}</td>
+                            <td colspan="2"><span class="order_total">${sessionScope.cart.summary}</span></td>
                         </tr>
                         </tfoot>
                     </table>
@@ -115,6 +123,17 @@
                 </div>
             </form>
         </div>
+        <script>
+            $(document).ready( function(){
+                $("input[name=shipping_id]").on('change', function(e) {
+                    var shippingCost = parseInt($("input[name=shipping_id]:checked")
+                            .attr("shipping-cost"));
+                    var total = parseInt(${sessionScope.cart.summary});
+                    $('.shipping_total').text(shippingCost);
+                    $('.order_total').text(total + shippingCost);
+                });
+            });
+        </script>
     </jsp:attribute>
 
 </t:frontendLayout>

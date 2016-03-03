@@ -1,7 +1,6 @@
 package com.tsystems.javaschool.webshop.servlets.backend;
 
 import com.tsystems.javaschool.webshop.dao.entities.FeatureEntity;
-import com.tsystems.javaschool.webshop.dao.entities.enums.FeatureType;
 import com.tsystems.javaschool.webshop.services.api.FeatureService;
 import com.tsystems.javaschool.webshop.services.impl.FeatureServiceImpl;
 import flexjson.JSONSerializer;
@@ -29,7 +28,7 @@ public class FeaturesBackendServlet extends HttpServlet {
             throws ServletException, IOException {
         //get all features
         req.setAttribute("features", featureService.getAll());
-        req.setAttribute("feature_types", FeatureType.values());
+       // req.setAttribute("feature_types", FeatureType.values());
         req.getRequestDispatcher("/backend/features.jsp").forward(req, resp);
     }
 
@@ -41,12 +40,10 @@ public class FeaturesBackendServlet extends HttpServlet {
         String idStr = req.getParameter("id");
 
         String name = req.getParameter("name");
-        String type = req.getParameter("type");
 
         if (action.equals("add")) {
             FeatureEntity feature= new FeatureEntity();
             feature.setName(name);
-            feature.setType(FeatureType.valueOf(type));
             featureService.add(feature);
             resp.getWriter().println(jsonSerializer.serialize(feature));
         } else if (action.equals("save")) {
@@ -54,7 +51,6 @@ public class FeaturesBackendServlet extends HttpServlet {
             FeatureEntity feature = new FeatureEntity();
             feature.setId(id);
             feature.setName(name);
-            feature.setType(FeatureType.valueOf(type));
             featureService.update(feature);
             resp.getWriter().println(jsonSerializer.serialize(feature));
 

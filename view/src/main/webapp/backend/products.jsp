@@ -56,33 +56,34 @@
                     </div>
                     <div class="features">
                         Features
-                        <c:forEach var="feature" items="${requestScope.selectedProduct.features}">
-                            <div class="row">
-                                <div class="col-lg-4">${feature.feature.name}</div>
+                        <div class="row prod-feature"></div>
+                        <c:forEach var="prodFeature" items="${requestScope.selectedProduct.features}">
+                            <div class="row prod-feature">
                                 <div class="col-lg-4">
-                                    <c:choose>
-                                        <c:when test="${feature.feature.type eq 'TEXT'}">
-                                            <label>
-                                                <input type="text" class=""
-                                                       value="${feature.value}" name="prod_features[value]">
-                                            </label>
-                                        </c:when>
-                                        <c:when test="${feature.feature.type eq 'NUMBER'}">
-                                            <label>
-                                                <input type="number" class=""
-                                                       value="${feature.value}" name="prod_features[value]">
-                                            </label>
-                                        </c:when>
-                                    </c:choose>
-                                    <input type="hidden" class=""
-                                           value="${feature.featureId}" name="prod_features[id]">
+                                    <label>
+                                        <select class="" name="prod_features[id]">
+                                            <c:forEach var="feature" items="${requestScope.features}">
+                                                <option <c:if test="${prodFeature.featureId == feature.id}">selected</c:if>
+                                                        class="" value="${feature.id}">
+                                                        ${feature.name}
+                                                </option>
+                                            </c:forEach>
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="col-lg-4">
+                                    <label>
+                                        <input type="text" class=""
+                                               value="${prodFeature.value}" name="prod_features[value]">
+                                    </label>
                                 </div>
                             </div>
                         </c:forEach>
+                        <div class="row">
+                            <input class="add_product_feature" type="button" value="Add feature">
+                        </div>
                     </div>
-                    <div class="image">
-                        Image Upload?
-                    </div>
+
                     <div>
                         <input type="hidden" name="id" value="${requestScope.selectedProduct.id}">
                         <input class="save" type="submit" value="Save category">
@@ -132,10 +133,11 @@
                         </label>
                     </div>
                     <div class="features">
-                        Features here
-                    </div>
-                    <div class="image">
-                        Img upload?
+                        Features
+                            <div class="row prod-feature"></div>
+                        <div class="row">
+                            <input class="add_product_feature" type="button" value="Add feature">
+                        </div>
                     </div>
                     <div>
                         <input class="add" type="submit" value="Add new product">
@@ -145,6 +147,31 @@
 
         </c:if>
 
+        <script>
+            $(document).ready( function() {
+                $(".add_product_feature").on('click', function(e) {
+                    $('.prod-feature:last').after(
+                        '<div class="row prod-feature">'
+                            + '<div class="col-lg-4">'
+                                    + '<label>'
+                                        + '<select class="" name="prod_features[id]">'
+                                           + '<c:forEach var="feature" items="${requestScope.features}">'
+                                               + '<option class="" value="${feature.id}">'
+                                                    + '${feature.name}'
+                                                + '</option>'
+                                           + '</c:forEach>'
+                                       + '</select>'
+                                    + '</label>'
+                            + '</div>'
+                            + '<div class="col-lg-4">'
+                                + '<label>'
+                                    + '<input type="text" class="" value="" name="prod_features[value]">'
+                                + '</label>'
+                            + '</div>'
+                       + '</div>');
+                });
+            });
+        </script>
     </jsp:attribute>
 
 </t:backendLayout>

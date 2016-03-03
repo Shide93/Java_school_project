@@ -78,6 +78,14 @@
         <servlet-name>CheckoutServlet</servlet-name>
         <url-pattern>/checkout</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>SearchServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.webshop.servlets.SearchServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SearchServlet</servlet-name>
+        <url-pattern>/search</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>MainBackenServlet</servlet-name>
@@ -132,6 +140,16 @@
         <servlet-name>UsersBackendServlet</servlet-name>
         <url-pattern>/backend/users</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StatisticsServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.webshop.servlets.backend.StatisticsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StatisticsServlet</servlet-name>
+        <url-pattern>/backend/statistics</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
         <servlet-name>AuthBackendServlet</servlet-name>

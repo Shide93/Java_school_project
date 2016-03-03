@@ -1,19 +1,17 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
-import com.tsystems.javaschool.webshop.dao.entities.enums.FeatureType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
  * Created by Shide on 22.02.2016.
  */
 @Entity
+
 @Table(name = "feature", schema = "web_shop")
 public class FeatureEntity {
     /**
@@ -24,10 +22,6 @@ public class FeatureEntity {
      * The Name.
      */
     private String name;
-    /**
-     * The Type.
-     */
-    private FeatureType type;
     /**
      * The Products.
      */
@@ -80,27 +74,6 @@ public class FeatureEntity {
     }
 
     /**
-     * Gets type.
-     *
-     * @return the type
-     */
-    @Basic
-    @Column(name = "type")
-    @Enumerated(EnumType.STRING)
-    public FeatureType getType() {
-        return type;
-    }
-
-    /**
-     * Sets type.
-     *
-     * @param type the type
-     */
-    public void setType(final FeatureType type) {
-        this.type = type;
-    }
-
-    /**
      * Gets products.
      *
      * @return the products
@@ -126,7 +99,6 @@ public class FeatureEntity {
         return "FeatureEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
                 '}';
     }
 }

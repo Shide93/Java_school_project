@@ -177,7 +177,7 @@ public class ProductEntity {
      *
      * @return the features
      */
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
     @OrderBy(value = "featureId")
     public Set<ProductFeatureEntity> getFeatures() {

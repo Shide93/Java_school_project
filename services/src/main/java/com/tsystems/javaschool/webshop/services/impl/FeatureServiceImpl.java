@@ -2,6 +2,7 @@ package com.tsystems.javaschool.webshop.services.impl;
 
 import com.tsystems.javaschool.webshop.dao.api.FeatureDAO;
 import com.tsystems.javaschool.webshop.dao.entities.FeatureEntity;
+import com.tsystems.javaschool.webshop.dao.entities.ProductFeatureEntity;
 import com.tsystems.javaschool.webshop.dao.impl.FeatureDAOImpl;
 import com.tsystems.javaschool.webshop.services.api.FeatureService;
 import com.tsystems.javaschool.webshop.services.util.ServiceHelper;
@@ -67,5 +68,11 @@ public class FeatureServiceImpl implements FeatureService {
     public final List<FeatureEntity> getAll() {
         return serviceHelper.loadInTransaction(manager ->
                 featureDAO.getAll(manager));
+    }
+
+    @Override
+    public List<ProductFeatureEntity> getAllCategoryValues() {
+        return serviceHelper.loadInTransaction(manager ->
+                featureDAO.getAllValues(manager));
     }
 }

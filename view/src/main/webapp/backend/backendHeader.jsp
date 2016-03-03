@@ -25,10 +25,6 @@
             <a href="<c:url value="/"/>">To storefront</a>
         </li>
 
-        <li class="inline-block">
-            <a href="<c:url value="/logout"/>">Logout</a>
-        </li>
-
     </ul>
 
 </div>

@@ -7,12 +7,20 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
  * Created by Shide on 22.02.2016.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "ProductFeatureEntity.getAllValues",
+                query = "select distinct "
+                       + "new ProductFeatureEntity(pf.value, pf.featureId)"
+                       + "from ProductFeatureEntity pf")
+})
 @Table(name = "product_feature", schema = "web_shop")
 @IdClass(ProductFeatureEntityPK.class)
 public class ProductFeatureEntity {
@@ -36,6 +44,23 @@ public class ProductFeatureEntity {
      * The Feature.
      */
     private FeatureEntity feature;
+
+    /**
+     * Instantiates a new Product feature entity.
+     */
+    public ProductFeatureEntity() {
+    }
+
+    /**
+     * Instantiates a new Product feature entity.
+     *
+     * @param value     the value
+     * @param featureId the feature id
+     */
+    public ProductFeatureEntity(final String value, final int featureId) {
+        this.value = value;
+        this.featureId = featureId;
+    }
 
     /**
      * Gets product id.
