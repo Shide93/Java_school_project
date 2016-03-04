@@ -34,8 +34,6 @@ public class AbstractGenericDAO<T> implements GenericDAO<T> {
         this.type = pType;
         this.typedLogger = logger;
     }
-
-
     @Override
     public final void create(final T newObj, final EntityManager manager) {
         manager.persist(newObj);

@@ -67,6 +67,7 @@ public class CartServlet extends HttpServlet {
         String quantityStr = req.getParameter("quantity");
 
         createCartIfNone(req, resp);
+
         CartEntity cart = (CartEntity) req.getSession()
                 .getAttribute("cart");
 

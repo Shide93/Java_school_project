@@ -90,9 +90,13 @@ public class SaveProfileServlet extends HttpServlet {
 
         try {
             email = validationService.getValidEmail(req.getParameter("email"));
-            password = validationService.getValidPassword(
-                    req.getParameter("password"),
-                    req.getParameter("password2"));
+            if (!req.getParameter("password2").equals("")) {
+                password = validationService.getValidPassword(
+                        req.getParameter("password"),
+                        req.getParameter("password2"));
+            } else {
+                password = req.getParameter("password");
+            }
             birthDate = validationService.getValidDate(
                     req.getParameter("birth_date"), "dd-MM-yyyy");
             zip = validationService.getValidInt(

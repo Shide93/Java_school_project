@@ -7,18 +7,25 @@ import javax.persistence.Persistence;
  * A singleton wrapper about EntityManagerFactory.
  */
 public final class EntityManagerFactorySingleton {
-    /** Singleton instance.*/
+    /**
+     * Singleton instance.
+     */
     private static EntityManagerFactorySingleton instance = null;
 
-    /***/
+    /**
+     * The Factory.
+     */
     private final EntityManagerFactory factory;
 
-    /***/
+    /**
+     * Instantiates a new Entity manager factory singleton.
+     */
     private EntityManagerFactorySingleton() {
         factory = Persistence.createEntityManagerFactory("webShopDB");
     }
 
     /**
+     * Gets instance.
      *
      * @return instance of a singleton
      */
@@ -37,7 +44,9 @@ public final class EntityManagerFactorySingleton {
             instance.factory.close();
         }
     }
+
     /**
+     * Gets factory.
      *
      * @return factory to provide EntityManagers
      */
