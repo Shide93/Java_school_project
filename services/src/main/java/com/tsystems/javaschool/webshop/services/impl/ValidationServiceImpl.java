@@ -6,42 +6,59 @@ import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Pattern;
+
 
 /**
  * Service for validating request variables.
  */
 public class ValidationServiceImpl implements ValidationService {
 
+    /**
+     * Email validation RegExp.
+     */
+    private static final String EMAIL_PATTERN =
+            "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     @Override
-    public String getValidPassword(final String password, final String pasword2) throws ServiceException {
-        return password;
-    }
-
-    @Override
-    public Date getValidDate(final String date, final String pattern)
+    public final String getValidPassword(final String password,
+                                         final String password2)
             throws ServiceException {
-        return null;
-//        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-//        Date birthDate = null;
-//        try {
-//            birthDate = format.parse(req.getParameter("birth_date"));
-//        } catch (ParseException e) {
-//            //wrong date
-//            LOGGER.info("user entered wrong date");
-//            req.setAttribute("wrongBirth", "Wrong birth date format");
-//            req.getRequestDispatcher("profile.jsp").forward(req, resp);
-//        }
+        if (password.equals(password2)) {
+            return password;
+        } else {
+            throw new ServiceException("passwords are not equals");
+        }
     }
 
     @Override
-    public String getValidEmail(final String email) throws ServiceException {
-
-        return email;
-    }
-
-    @Override
-    public int getValidInt(final String intStr, final String fieldName)
+    public final Date getValidDate(final String date, final String pattern)
             throws ServiceException {
-        return 0;
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        try {
+            return format.parse(date);
+        } catch (ParseException e) {
+           throw new ServiceException("Birth date is not valid");
+        }
+    }
+
+    @Override
+    public final String getValidEmail(final String email)
+            throws ServiceException {
+        if (Pattern.compile(EMAIL_PATTERN).matcher(email).matches()) {
+            return email;
+        } else {
+            throw new ServiceException("Email is not valid");
+        }
+    }
+
+    @Override
+    public final int getValidInt(final String intStr, final String fieldName)
+            throws ServiceException {
+        try {
+            return Integer.parseInt(intStr);
+        } catch (NumberFormatException e) {
+            throw new ServiceException(fieldName + " is not valid", e);
+        }
     }
 }
