@@ -4,56 +4,55 @@
 <t:frontendLayout>
     <jsp:attribute name="content">
         <div class="checkout">
-            <form class="" action="<c:url value="/checkout"/>" method="post">
+            <form class="" role="form" action="<c:url value="/checkout"/>" method="post">
                 <div class = "contact-info">
-                    <div class="general">
-                        <div class="">Name</div>
-                        <label>
-                            <input class="" type="text" name="name" value="${sessionScope.user.name}">
+                    <div class="general form-group">
+                        <label>Name
+                            <input class="form-control" type="text" name="name" value="${sessionScope.user.name}">
                         </label><br>
                         <label>Last name
-                            <input class="" type="text" name="last_name" value="${sessionScope.user.lastName}">
+                            <input class="form-control" type="text" name="last_name" value="${sessionScope.user.lastName}">
                         </label><br>
                         <label>Phone
-                            <input class="" type="text" name="phone" value="${sessionScope.user.phone}">
+                            <input class="form-control" type="text" name="phone" value="${sessionScope.user.phone}">
                         </label><br>
                     </div>
-                    <div class="address">
+                    <div class="address form-group">
                         <h6>Shipping address</h6>
                         <label>Country
-                            <input class="" type="text" name="country" value="${sessionScope.user.address.country}">
+                            <input class="form-control" type="text" name="country" value="${sessionScope.user.address.country}">
                         </label><br>
 
                         <label>Region
-                            <input class="" type="text" name="region" value="${sessionScope.user.address.region}">
+                            <input class="form-control" type="text" name="region" value="${sessionScope.user.address.region}">
                         </label><br>
 
                         <label>City
-                            <input class="" type="text" name="city" value="${sessionScope.user.address.city}">
+                            <input class="form-control" type="text" name="city" value="${sessionScope.user.address.city}">
                         </label><br>
 
                         <label>Zip
-                            <input class="" type="text" name="zip" value="${sessionScope.user.address.zip}">
-                            <span class = "">${requestScope.wrongZip}</span>
-                        </label><br>
+                            <input class="form-control" type="text" name="zip" value="${sessionScope.user.address.zip}">
+                        </label>
+                        <span class = "form-control">${requestScope.wrongZip}</span><br>
 
                         <label>Street
-                            <input class="" type="text" name="street" value="${sessionScope.user.address.street}">
+                            <input class="form-control" type="text" name="street" value="${sessionScope.user.address.street}">
                         </label><br>
 
                         <label>Building
-                            <input class="" type="text" name="building" value="${sessionScope.user.address.building}">
+                            <input class="form-control" type="text" name="building" value="${sessionScope.user.address.building}">
                         </label><br>
 
                         <label>Flat
-                            <input class="" type="text" name="flat" value="${sessionScope.user.address.flat}">
+                            <input class="form-control" type="text" name="flat" value="${sessionScope.user.address.flat}">
                         </label><br>
 
                     </div>
                 </div>
-                <div class = "shipping">
+                <div class = "shipping form-group">
                     <c:forEach var="shippingType" items="${requestScope.shippingTypes}">
-                        <div>
+                        <div class="radio">
                             <label>
                                 <input type="radio" name="shipping_id" shipping-cost="${shippingType.cost}" value="${shippingType.id}">
                                     ${shippingType.name}
@@ -65,20 +64,22 @@
                         </div>
                     </c:forEach>
                 </div>
-                <div class = "payment">
+                <div class = "payment form-group">
                     <c:forEach var="paymentType" items="${requestScope.paymentTypes}">
-                        <label>
-                            <input type="radio" name="payment_id" value="${paymentType.id}">
-                                ${paymentType.name}
-                        </label>
-                        <div class="description">
-                                ${paymentType.description}
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="payment_id" value="${paymentType.id}">
+                                    ${paymentType.name}
+                            </label>
+                            <div class="description">
+                                    ${paymentType.description}
+                            </div>
                         </div>
                     </c:forEach>
                 </div>
-                <div class = "confirmation">
+                <div class = "confirmation form-group">
 
-                    <table>
+                    <table class="table table-striped">
                         <thead>
                         <tr>
                             <th>Product name</th>
@@ -114,9 +115,9 @@
                         </tr>
                         </tfoot>
                     </table>
-                    <div class="">
+                    <div class="form-group">
                         <span>Comment:</span>
-                        <textarea class="comment" name="comment" placeholder="Add your comment to order here"></textarea>
+                        <textarea class="comment form-control" name="comment" placeholder="Add your comment to order here"></textarea>
                         <br>
                         <input type="submit" value="Buy">
                     </div>

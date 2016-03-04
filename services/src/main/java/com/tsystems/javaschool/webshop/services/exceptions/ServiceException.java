@@ -3,7 +3,7 @@ package com.tsystems.javaschool.webshop.services.exceptions;
 /**
  * Exception of service layer.
  */
-public class ServiceException extends Exception {
+public class ServiceException extends RuntimeException {
     /**
      * Instantiates a new Service exception.
      */

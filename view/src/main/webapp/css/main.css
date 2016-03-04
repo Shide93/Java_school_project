@@ -3,18 +3,13 @@
 /****/
 
 header {
-    background-color: #acd6dd;
 }
 aside {
-    background-color: #d2d0cf;
 }
-article {
-    background-color: #ddbdb8;
 
+article {
 }
 footer {
-
-    background-color: #c9ddbb;
 }
 .inline-block {
     display: inline-block;

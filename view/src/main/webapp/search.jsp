@@ -7,17 +7,19 @@
         <div class="row">
                 <form action="<c:url value="/search"/>" method="post">
                     <c:forEach var="feature" items="${requestScope.features}">
-                        <h5>${feature.name}</h5>
+                        <h3>${feature.name}</h3>
                         <c:forEach var="fValue" items="${requestScope.featureValues}">
                             <c:if test="${fValue.featureId eq feature.id}">
-                                <label>
-                                    <input type="checkbox" name="features" value="${feature.id}/${fValue.value}">
-                                    ${fValue.value}
-                                </label>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="features" value="${feature.id}/${fValue.value}">
+                                        ${fValue.value}
+                                    </label>
+                                </div>
                             </c:if>
                         </c:forEach>
                     </c:forEach>
-                    <input type="submit" class="" value="Search">
+                    <input type="submit" class="btn btn-primary" value="Search">
                 </form>
         </div>
     </jsp:attribute>

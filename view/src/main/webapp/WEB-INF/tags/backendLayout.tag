@@ -16,6 +16,6 @@
        <jsp:invoke fragment="content"/>
     </jsp:attribute>
     <jsp:attribute name="footer">
-        <div>this is footer</div>
+        <div class="pull-right">@T-systems JavaSchool #16</div>
     </jsp:attribute>
 </t:mainLayout>

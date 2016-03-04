@@ -8,10 +8,12 @@ import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
 import com.tsystems.javaschool.webshop.dao.impl.CartDAOImpl;
 import com.tsystems.javaschool.webshop.dao.impl.ProductDAOImpl;
 import com.tsystems.javaschool.webshop.services.api.CartService;
+import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import com.tsystems.javaschool.webshop.services.util.ServiceHelper;
 import com.tsystems.javaschool.webshop.services.util.ServiceHelperImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.hibernate.DuplicateMappingException;
 
 import java.util.List;
 
@@ -94,6 +96,7 @@ public class CartServiceImpl implements CartService {
         return serviceHelper.loadInTransaction(manager -> {
             CartEntity cart = cartDAO.getById(cartId, manager);
             ProductEntity product = productDAO.getById(productId, manager);
+
             CartProductEntity item = new CartProductEntity();
 
             item.setQuantity(quantity);
@@ -101,10 +104,11 @@ public class CartServiceImpl implements CartService {
             item.setCart(cart);
             item.setProductId(productId);
             item.setCartId(cart.getId());
-
+            if (cart.getItems().contains(item)) {
+                throw new ServiceException("Product already in cart");
+            }
             cart.getItems().add(item);
             updateSummaryCount(cart);
-            cartDAO.update(cart, manager);
             return cart;
         });
     }
@@ -121,7 +125,6 @@ public class CartServiceImpl implements CartService {
                     cartProduct.setQuantity(quantity);
                     break;
                 }
-                //TODO: count and summary
             }
             updateSummaryCount(cart);
             return cart;
@@ -133,7 +136,6 @@ public class CartServiceImpl implements CartService {
                                            final Integer cartId) {
         return serviceHelper.loadInTransaction(manager -> {
             cartDAO.removeFromCart(productId, cartId, manager);
-            //TODO: count and summary
             CartEntity cart = cartDAO.getById(cartId, manager);
             updateSummaryCount(cart);
             return cart;

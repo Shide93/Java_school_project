@@ -76,7 +76,7 @@ public class SignUpServlet extends HttpServlet {
             resp.addCookie(cookie);
             req.getSession().setAttribute("user", user);
             resp.setStatus(HttpServletResponse.SC_OK);
-            resp.sendRedirect("/welcome.jsp");
+            resp.sendRedirect("/");
         } catch (AccountServiceException e) {
             LOGGER.warn("create user failed");
             // TODO: redirect to form with msg

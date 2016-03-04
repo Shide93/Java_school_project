@@ -11,7 +11,7 @@
             </div>
         </c:if>
         <c:if test="${sessionScope.cart != null}">
-            <table>
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>Product name</th>
@@ -35,7 +35,7 @@
                             <td>
                                 <span class="product_cost">${item.product.price * item.quantity}</span> $
                             </td>
-                            <td><input type="button" class="cart_product_remove" value="X"> </td>
+                            <td><button type="button" class="cart_product_remove"><span class="glyphicon glyphicon-trash"></span></button></td>
                         </tr>
                     </c:forEach>
 
@@ -45,11 +45,11 @@
                         <td></td>
                         <td></td>
                         <td>Total cost:</td>
-                        <td colspan="2"><span class="cart_summary">${sessionScope.cart.summary}</span></td>
+                        <td colspan="2"><span class="cart_summary">${sessionScope.cart.summary}</span> $</td>
                     </tr>
                 <tr>
                     <td>
-                        <a href="<c:url value="/checkout"/>">Proceed to checkout</a>
+                        <a class="btn btn-primary" href="<c:url value="/checkout"/>">Proceed to checkout</a>
                     </td>
                 </tr>
                 </tfoot>

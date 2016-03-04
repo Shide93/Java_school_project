@@ -5,46 +5,42 @@
 
     <jsp:attribute name="sidebar">
        <div class="">
-           <ul class="">
+           <div class="list-group">
                <c:forEach var="product" items="${requestScope.products}">
-                   <li class="">
-                       <a href="<c:url value="/backend/products?productId=${product.id}"/>">${product.name}</a>
-                   </li>
+                   <a class="list-group-item" href="<c:url value="/backend/products?productId=${product.id}"/>">${product.name}</a>
                </c:forEach>
-               <li class="add_category">
-                   <a href="<c:url value="/backend/products?productId=0"/>">Add category</a>
-               </li>
-           </ul>
+               <a class="add_product list-group-item" href="<c:url value="/backend/products?productId=0"/>">Add product</a>
+           </div>
        </div>
     </jsp:attribute>
     <jsp:attribute name="content">
         <c:if test="${requestScope.selectedProduct != null}">
             <div class="">
                 <h1 class="">Product ${requestScope.selectedProduct.name}</h1>
-                <form class="" action="<c:url value="/backend/products?action=save"/>" method="post">
-                    <div class="name">
+                <form class="" role="form" action="<c:url value="/backend/products?action=save"/>" method="post">
+                    <div class="name form-group">
                         <label>Product name:
-                            <input type="text" name="name" value="${requestScope.selectedProduct.name}">
+                            <input class="form-control" type="text" name="name" value="${requestScope.selectedProduct.name}">
                         </label>
                     </div>
-                    <div class="description">
+                    <div class="description form-group">
                         <label>Product description
-                            <textarea name="description">${requestScope.selectedProduct.description}</textarea>
+                            <textarea class="form-control" name="description">${requestScope.selectedProduct.description}</textarea>
                         </label>
                     </div>
-                    <div class="price">
+                    <div class="price form-group">
                         <label>Price:
-                            <input type="text" name="price" value="${requestScope.selectedProduct.price}">
+                            <input class="form-control" type="text" name="price" value="${requestScope.selectedProduct.price}">
                         </label>
                     </div>
-                    <div class="stock">
+                    <div class="stock form-group">
                         <label>Stock:
-                            <input type="text" name="stock" value="${requestScope.selectedProduct.stock}">
+                            <input class="form-control" type="text" name="stock" value="${requestScope.selectedProduct.stock}">
                         </label>
                     </div>
-                    <div class="category">
+                    <div class="category form-group">
                         <label>Category:
-                            <select class="" name="category">
+                            <select class="form-control" name="category">
                                 <c:forEach var="category" items="${applicationScope.categoryList}">
                                     <option <c:if test="${requestScope.selectedProduct.category.id == category.id}">selected</c:if>
                                             class="" value="${category.id}">
@@ -61,7 +57,7 @@
                             <div class="row prod-feature">
                                 <div class="col-lg-4">
                                     <label>
-                                        <select class="" name="prod_features[id]">
+                                        <select class="form-control" name="prod_features[id]">
                                             <c:forEach var="feature" items="${requestScope.features}">
                                                 <option <c:if test="${prodFeature.featureId == feature.id}">selected</c:if>
                                                         class="" value="${feature.id}">
@@ -73,25 +69,25 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <label>
-                                        <input type="text" class=""
+                                        <input type="text" class="form-control"
                                                value="${prodFeature.value}" name="prod_features[value]">
                                     </label>
                                 </div>
                             </div>
                         </c:forEach>
-                        <div class="row">
-                            <input class="add_product_feature" type="button" value="Add feature">
+                        <div class="">
+                            <input class="add_product_feature btn btn-default" type="button" value="Add feature">
                         </div>
                     </div>
 
                     <div>
-                        <input type="hidden" name="id" value="${requestScope.selectedProduct.id}">
-                        <input class="save" type="submit" value="Save category">
+                        <input class=""type="hidden" name="id" value="${requestScope.selectedProduct.id}">
+                        <input class="save btn btn-primary" type="submit" value="Save product">
                     </div>
                 </form>
                 <form action="<c:url value="/backend/products?action=remove"/>" method="post">
                     <input type="hidden" name="id" value="${requestScope.selectedProduct.id}">
-                    <input class="delete" type="submit" value="Remove category">
+                    <input class="delete btn btn-primary" type="submit" value="Remove product">
                 </form>
             </div>
 
@@ -136,7 +132,7 @@
                         Features
                             <div class="row prod-feature"></div>
                         <div class="row">
-                            <input class="add_product_feature" type="button" value="Add feature">
+                            <input class="add_product_feature btn btn-default" type="button" value="Add feature">
                         </div>
                     </div>
                     <div>
@@ -154,7 +150,7 @@
                         '<div class="row prod-feature">'
                             + '<div class="col-lg-4">'
                                     + '<label>'
-                                        + '<select class="" name="prod_features[id]">'
+                                        + '<select class="form-control" name="prod_features[id]">'
                                            + '<c:forEach var="feature" items="${requestScope.features}">'
                                                + '<option class="" value="${feature.id}">'
                                                     + '${feature.name}'
@@ -165,7 +161,7 @@
                             + '</div>'
                             + '<div class="col-lg-4">'
                                 + '<label>'
-                                    + '<input type="text" class="" value="" name="prod_features[value]">'
+                                    + '<input type="text" class="form-control" value="" name="prod_features[value]">'
                                 + '</label>'
                             + '</div>'
                        + '</div>');

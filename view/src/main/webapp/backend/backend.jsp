@@ -5,8 +5,7 @@
 
     <jsp:attribute name="sidebar">
         <div>
-            Daily sales:
-            1 000 000 $
+
         </div>
     </jsp:attribute>
     <jsp:attribute name="content">

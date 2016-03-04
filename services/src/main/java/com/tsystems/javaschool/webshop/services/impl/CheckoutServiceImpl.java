@@ -96,7 +96,6 @@ public class CheckoutServiceImpl implements CheckoutService {
             order.setAddress(address);
             order.setComment(comment);
             order.setOrderDate(new Date());
-            //TODO: total calculation
             order.setTotal(cart.getSummary());
             orderDAO.create(order, manager);
             Set<OrderProductEntity> orderItems = order.getProducts();

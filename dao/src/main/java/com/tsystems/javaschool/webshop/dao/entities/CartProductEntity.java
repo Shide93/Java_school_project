@@ -155,4 +155,22 @@ public class CartProductEntity {
                 ", product=" + product +
                 '}';
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        final CartProductEntity that = (CartProductEntity) o;
+
+        if (cartId != that.cartId) return false;
+        return productId == that.productId;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = cartId;
+        result = 31 * result + productId;
+        return result;
+    }
 }

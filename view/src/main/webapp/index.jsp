@@ -4,7 +4,8 @@
 <t:frontendLayout>
     <jsp:attribute name="content">
 
-        <h1>Hello World!</h1>
+        <h1 class="">Welcome to the shop!</h1>
+
     </jsp:attribute>
 
 </t:frontendLayout>

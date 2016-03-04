@@ -5,14 +5,13 @@
 
     <jsp:attribute name="sidebar">
         <div>
-            Daily sales:
-            1 000 000 $
+
         </div>
     </jsp:attribute>
     <jsp:attribute name="content">
         <h2>Product features</h2>
 
-            <table>
+            <table class="table">
                 <thead>
                 <tr>
                     <th>Feature name</th>
@@ -26,27 +25,16 @@
                     <tr feature-id="${feature.id}">
                         <td>
                             <label>
-                                <input type="text" name="feature_name" value="${feature.name}">
+                                <input class="form-control" type="text" name="feature_name" value="${feature.name}">
                             </label>
                         </td>
-                        <td>
-                            <label>
-                                <select class="" name="feature_type">
-                                    <c:forEach var="type" items="${requestScope.feature_types}">
-                                        <option <c:if test="${feature.type == type}">selected</c:if>
-                                                class="" value="${type}">
-                                            ${type}
-                                        </option>
-                                    </c:forEach>
-                                </select>
-                            </label>
-                        </td>
+
                         <td>
                             <input type="hidden" value="${feature.id}">
-                            <input type="button" class="save_feature" value="Save">
+                            <input type="button" class="save_feature btn btn-default" value="Save">
                         </td>
                         <td>
-                            <input type="button" class="delete_feature" value="Remove">
+                            <input type="button" class="delete_feature btn btn-default" value="Remove">
                         </td>
                     </tr>
                 </c:forEach>
@@ -56,11 +44,11 @@
                 <tr>
                     <td>
                         <label>
-                            <input type="text" name="add_name" value="" placeholder="feature name">
+                            <input type="text" class="form-control" name="add_name" value="" placeholder="feature name">
                         </label>
                     </td>
                     <td colspan="2">
-                        <input type="button" class="add_feature" value="Add new feature">
+                        <input type="button" class="add_feature btn btn-default" value="Add new feature">
                     </td>
                 </tr>
                 </tfoot>
@@ -74,7 +62,22 @@
                     $.post("?action=add", "name=" + name.val(),
                             function(JData) {
                         console.log(JData);
-                        //TODO: add new line in table
+                        $("tbody").append(
+                                '<tr feature-id="'+JData.id+'">'
+                                + '<td>'
+                                + '<label>'
+                                + '<input class="form-control" type="text" name="feature_name" value="'+JData.name+'">'
+                                + '</label>'
+                                + '</td>'
+                                + '<td>'
+                                + '<input type="hidden" value="'+JData.id+'">'
+                                + '<input type="button" class="save_feature btn btn-default" value="Save">'
+                                + '</td>'
+                                + '<td>'
+                                + '<input type="button" class="delete_feature btn btn-default" value="Remove">'
+                                + '</td>'
+                                + '</tr>');
+                        name.val("");
                     }, "json");
                 });
 
@@ -86,7 +89,7 @@
                     $.post("?action=save", "id=" + id + "&name=" + name.val(),
                             function(JData) {
                                 console.log(JData);
-                                //TODO: add new line in table, clear fields
+
                             }, "json");
                 });
 
@@ -96,8 +99,7 @@
                     var id = row.attr("feature-id");
                     $.post("?action=remove", "id=" + id,
                             function(JData) {
-                                console.log(JData);
-                                //TODO: add new line in table
+                                row.remove();
                             }, "json");
                 });
 

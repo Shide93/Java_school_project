@@ -3,8 +3,13 @@ $(document).ready( function() {
         e.preventDefault();
         $.post("/cart?action=add", $(this).serialize(),
             function (JData) {
-               $(".cart_count").text(JData.count);
-               $(".cart_summary").text(JData.summary);
+                console.log(JData);
+                if (JData.error === "duplicate") {
+                    alert("You already have this product in your cart");
+                    return;
+                }
+                $(".cart_count").text(JData.count);
+                $(".cart_summary").text(JData.summary);
             }, "json");
     });
 

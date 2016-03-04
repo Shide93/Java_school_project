@@ -45,41 +45,12 @@ public class ErrorHandlerServlet extends HttpServlet {
                 req.getAttribute("javax.servlet.error.message");
 
         if (statusCode.equals(HttpServletResponse.SC_NOT_FOUND)) {
-            RequestDispatcher rd = req.getRequestDispatcher("notFound.jsp");
+            RequestDispatcher rd = req.getRequestDispatcher("/notFound.jsp");
             rd.forward(req, resp);
         } else {
-            PrintWriter out = resp.getWriter();
-            String title = "Error/Exception Information";
-            String docType =
-                    "<!doctype html public \"-//w3c//dtd html 4.0 " +
-                            "transitional//en\">\n";
-            out.println(docType +
-                    "<html>\n" +
-                    "<head><title>" + title + "</title></head>\n" +
-                    "<body bgcolor=\"#f0f0f0\">\n");
-
-            if (throwable == null && statusCode == null){
-                out.println("<h2>Error information is missing</h2>");
-                out.println("Please return to the <a href=\"" +
-                        resp.encodeURL("http://localhost:8080/") +
-                        "\">Home Page</a>.");
-            } else{
-                out.println("<h2>Error information</h2>");
-                out.println("Servlet Name : " + servletName +
-                        "</br></br>");
-                out.println("Exception Type : " +
-                        throwable.getClass().getName() +
-                        "</br></br>");
-                out.println("The request URI: " + requestUri +
-                        "<br><br>");
-                out.println("The exception message: " +
-                        throwable.getMessage());
-            }
-            out.println("</body>");
-            out.println("</html>");
-//            LOGGER.error();
-//            RequestDispatcher rd = req.getRequestDispatcher("error.jsp");
-//            rd.forward(req, resp);
+            LOGGER.error(message, throwable);
+            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
+            rd.forward(req, resp);
         }
     }
 

@@ -6,30 +6,41 @@
 
 <t:mainLayout>
     <jsp:attribute name="header">
-        <div class="">abc</div>
-    <!--login -->
-        <c:if test="${sessionScope.user != null}">
-            <div class="">
-                <a href="<c:url value="/profile"/>">Привет ${sessionScope.user.name}</a>
-                /
-                <a href="<c:url value="/logout"/>">Выход</a>
-            </div>
-        </c:if>
-        <c:if test="${sessionScope.user == null}">
-            <div class="">
-                <a href="<c:url value="/signin"/>">Вход</a>
-                /
-                <a href="<c:url value="/signup"/>">Регистрация</a>
-            </div>
-        </c:if>
-    <!--cart -->
-        <div class="cart">
-            <div>
-                <a href="<c:url value="/cart"/>">Your cart:</a>
-            </div>
-            <div class=""><span class="cart_count">${sessionScope.cart.count}</span> items - <span class="cart_summary">${sessionScope.cart.summary}</span>$ </div>
-        </div>
+        <div class="navbar navbar-default" role="navigation">
 
+            <a class="navbar-brand" href="<c:url value="/"/>">WebShop</a>
+            <div class="row">
+                <!--cart -->
+                <div class="cart col-lg-2 col-lg-offset-4">
+                    <div>
+
+                        <a class="btn btn-default navbar-btn" href="<c:url value="/cart"/>"><span class="glyphicon glyphicon-shopping-cart"></span> Your cart:</a>
+                    </div>
+                    <div class="">
+                        <span class="cart_count">
+                            <c:out value="${sessionScope.cart.count}" default="0"/>
+                        </span>
+                        items /
+                        <span class="cart_summary">
+                            <c:out value="${sessionScope.cart.summary}" default="0"/>
+                        </span> $
+                    </div>
+                </div>
+                <!--login -->
+                <div class="col-lg-4 pull-right">
+                    <div class="pull-right">
+                        <c:if test="${sessionScope.user != null}">
+                            <a class="btn btn-default navbar-btn" href="<c:url value="/profile"/>">Hello, ${sessionScope.user.name}!</a>
+                            <a class="btn btn-default navbar-btn" href="<c:url value="/logout"/>">Logout</a>
+                        </c:if>
+                        <c:if test="${sessionScope.user == null}">
+                            <a class="btn btn-default navbar-btn" href="<c:url value="/signin"/>">Sign in</a>
+                            <a class="btn btn-default navbar-btn" href="<c:url value="/signup"/>">Sign up</a>
+                        </c:if>
+                    </div>
+                </div>
+            </div>
+        </div>
     </jsp:attribute>
     <jsp:attribute name="sidebar">
        <jsp:include page="sidebar.jsp"/>
@@ -38,6 +49,6 @@
        <jsp:invoke fragment="content"/>
     </jsp:attribute>
     <jsp:attribute name="footer">
-        <div>this is footer</div>
+        <div class="pull-right">@T-systems JavaSchool #16</div>
     </jsp:attribute>
 </t:mainLayout>

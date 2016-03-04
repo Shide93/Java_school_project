@@ -6,6 +6,7 @@ import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import com.tsystems.javaschool.webshop.services.impl.CartServiceImpl;
 import com.tsystems.javaschool.webshop.servlets.utils.ServletUtils;
 import flexjson.JSONSerializer;
+import flexjson.transformer.StringTransformer;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -60,11 +61,6 @@ public class CartServlet extends HttpServlet {
         String productIdStr = req.getParameter("product_id");
         String quantityStr = req.getParameter("quantity");
 
-
-
-
-
-
         createCartIfNone(req, resp);
         CartEntity cart = (CartEntity) req.getSession()
                 .getAttribute("cart");
@@ -73,7 +69,14 @@ public class CartServlet extends HttpServlet {
             if (req.getParameter("action").equals("add")) {
                 Integer  quantity = Integer.parseInt(quantityStr);
                 Integer  productId = Integer.parseInt(productIdStr);
-                CartEntity newCart = cartService.addToCart(productId, quantity, cart.getId());
+                CartEntity newCart = null;
+                try {
+                    newCart = cartService.addToCart(productId, quantity, cart.getId());
+                } catch (ServiceException e) {
+                    LOGGER.error(e.getMessage(), e);
+                    resp.getWriter().println("{\"error\": \"duplicate\"}");
+                    return;
+                }
                 req.getSession().setAttribute("cart", newCart);
                 resp.getWriter().println(jsonSerializer.serialize(newCart));
             } else if (req.getParameter("action").equals("edit")) {
@@ -109,11 +112,9 @@ public class CartServlet extends HttpServlet {
         if (cart == null) {
 
             cart = new CartEntity();
-            //TODO: cookie creation function, based on hashing  something
 
             cartService.add(cart);
             req.getSession().setAttribute("cart", cart);
-            //TODO: cookie create function
 
             resp.addCookie(ServletUtils.createCookie("cartID", "" + cart.getId()));
         }

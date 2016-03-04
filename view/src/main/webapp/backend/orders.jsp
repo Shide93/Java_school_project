@@ -6,13 +6,11 @@
 
     <jsp:attribute name="sidebar">
         <div>
-            <ul class="">
+            <div class="list-group">
                 <c:forEach var="order" items="${requestScope.orders}">
-                    <li class="">
-                        <a href="<c:url value="/backend/orders?orderId=${order.id}"/>">Order: ${order.id}</a>
-                    </li>
+                    <a class="list-group-item" href="<c:url value="/backend/orders?orderId=${order.id}"/>">Order: ${order.id}</a>
                 </c:forEach>
-            </ul>
+            </div>
         </div>
     </jsp:attribute>
     <jsp:attribute name="content">
@@ -36,7 +34,7 @@
             </c:forEach>
         </div>
        <div class="order-date">
-           Placed: <fmt:formatDate value="${order.orderDate}"
+           Placed: <fmt:formatDate value="${requestScope.selectedOrder.orderDate}"
                                    type="BOTH" dateStyle="short" timeStyle="short"/>
        </div>
         <div class="order_user">
@@ -47,7 +45,7 @@
         </div>
 
         <div class="order_products">
-            <table class="">
+            <table class="table">
                 <thead>
                 <tr>
                     <th>Product name</th>
@@ -103,33 +101,29 @@
         <div class="order_address">
             <h6>Shipping address</h6>
 
-            <span>Country: </span>
-            <span>${requestScope.selectedOrder.address.country}"</span>
-            <br>
+            <dl class="dl-horizontal">
+                <dt>Country: </dt>
+                <dd>${requestScope.selectedOrder.address.country}"</dd>
 
-            <span>Region: </span>
-            <span class="">${requestScope.selectedOrder.address.region}</span>
-            <br>
+                <dt>Region: </dt>
+                <dd class="">${requestScope.selectedOrder.address.region}</dd>
 
-            <span>City</span>
-                <span class="">${requestScope.selectedOrder.address.city}</span>
-            <br>
+                <dt>City</dt>
+                <dd class="">${requestScope.selectedOrder.address.city}</dd>
 
-            <span>Zip</span>
-            <span class="">${requestScope.selectedOrder.address.zip}</span>
-            <br>
+                <dt>Zip</dt>
+                <dd class="">${requestScope.selectedOrder.address.zip}</dd>
 
-            <span>Street</span>
-            <span class="">${requestScope.selectedOrder.address.street}</span>
-            <br>
+                <dt>Street</dt>
+                <dd class="">${requestScope.selectedOrder.address.street}</dd>
 
-            <span>Building</span>
-            <span class="">${requestScope.selectedOrder.address.building}</span>
-            <br>
+                <dt>Building</dt>
+                <dd class="">${requestScope.selectedOrder.address.building}</dd>
 
-            <span>Flat </span>
-            <span class="">${requestScope.selectedOrder.address.flat}</span>
-            <br>
+                <dt>Flat </dt>
+                <dd class="">${requestScope.selectedOrder.address.flat}</dd>
+
+            </dl>
 
         </div>
 
