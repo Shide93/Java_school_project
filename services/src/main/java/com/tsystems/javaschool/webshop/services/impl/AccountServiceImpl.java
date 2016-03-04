@@ -48,7 +48,6 @@ public class AccountServiceImpl implements AccountService {
                                        final String password)
             throws AccountServiceException {
         return serviceHelper.loadInTransaction(manager -> {
-            //TODO: validate email, hash password
             if (usersDAO.getUserByEmail(email, manager) != null) {
                 throw new AccountServiceException("email already registered");
             }

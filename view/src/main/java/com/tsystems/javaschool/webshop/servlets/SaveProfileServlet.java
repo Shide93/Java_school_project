@@ -5,9 +5,11 @@ import com.tsystems.javaschool.webshop.dao.entities.OrderEntity;
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
 import com.tsystems.javaschool.webshop.services.api.OrderService;
+import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.impl.AccountServiceImpl;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import com.tsystems.javaschool.webshop.services.impl.OrderServiceImpl;
+import com.tsystems.javaschool.webshop.services.impl.ValidationServiceImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -17,8 +19,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +41,10 @@ public class SaveProfileServlet extends HttpServlet {
      * The Order service.
      */
     private OrderService orderService;
+    /**
+     * The Validation service.
+     */
+    private ValidationService validationService;
 
     /**
      * Instantiates a new Save profile servlet.
@@ -49,6 +53,7 @@ public class SaveProfileServlet extends HttpServlet {
         accountService =
                 new AccountServiceImpl();
         orderService = new OrderServiceImpl();
+        validationService = new ValidationServiceImpl();
     }
 
     @Override
@@ -69,56 +74,40 @@ public class SaveProfileServlet extends HttpServlet {
                                 final HttpServletResponse resp)
             throws ServletException, IOException {
 
-        boolean hasErrors = false;
-
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
-        String password2 = req.getParameter("password2");
-        if (!password2.equals("") && !password.equals(password2)) {
-            LOGGER.info("passwords are not equal"); // TODO: am i need log this?
-            req.setAttribute("passNotEq", "Passwords are not equal");
-            hasErrors = true;
-        }
+        String email;
+        String password;
         String name = req.getParameter("name");
         String lastName = req.getParameter("last_name");
         String phone = req.getParameter("phone");
-
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-        Date birthDate = null;
-        try {
-            birthDate = format.parse(req.getParameter("birth_date"));
-        } catch (ParseException e) {
-            //wrong date
-            LOGGER.info("user entered wrong date"); // TODO: am i need log this?
-            req.setAttribute("wrongBirth", "Wrong birth date format");
-            hasErrors = true;
-            //TODO: logic with exceptions not good
-        }
-
+        Date birthDate;
         String country = req.getParameter("country");
         String region = req.getParameter("region");
         String city = req.getParameter("city");
-
-        String zipString = req.getParameter("zip");
-
-        Integer zip = null;
-        try {
-            if (zipString != null) {
-                zip = Integer.parseInt(zipString);
-            }
-        } catch (NumberFormatException e) {
-            //wrong zip
-            LOGGER.info("user entered wrong zip"); // TODO: am i need log this?
-            req.setAttribute("wrongZip", "Wrong zip code format");
-            hasErrors = true;
-        }
+        Integer zip;
         String street = req.getParameter("street");
+        Integer building;
+        Integer flat;
 
-        String buildingString = req.getParameter("building");
-        String flatString = req.getParameter("flat");
-        //TODO: validate
-        Integer building = Integer.parseInt(buildingString);
-        Integer flat = Integer.parseInt(flatString);
+        try {
+            email = validationService.getValidEmail(req.getParameter("email"));
+            password = validationService.getValidPassword(
+                    req.getParameter("password"),
+                    req.getParameter("password2"));
+            birthDate = validationService.getValidDate(
+                    req.getParameter("birth_date"), "dd-MM-yyyy");
+            zip = validationService.getValidInt(
+                    req.getParameter("zip"), "zip");
+            building = validationService.getValidInt(
+                    req.getParameter("building"), "building");
+            flat = validationService.getValidInt(
+                    req.getParameter("flat"), "flat");
+        } catch (ServiceException e) {
+            LOGGER.warn(e.getMessage(), e);
+            req.setAttribute("notValid", e.getMessage());
+            req.getRequestDispatcher("/profile.jsp")
+                    .forward(req, resp);
+                        return;
+        }
 
         UserEntity user = (UserEntity) req.getSession().getAttribute("user");
         UserEntity newUser = new UserEntity();
@@ -140,19 +129,15 @@ public class SaveProfileServlet extends HttpServlet {
         address.setCountry(country);
         address.setRegion(region);
         address.setCity(city);
-        if (zip != null) {
-            address.setZip(zip);
-        }
+        address.setZip(zip);
         address.setStreet(street);
         address.setBuilding(building);
         address.setFlat(flat);
-        if (hasErrors) {
-            req.getRequestDispatcher("profile.jsp").forward(req, resp);
-        } else {
-            newUser = accountService.saveProfile(newUser);
-            req.getSession().setAttribute("user", newUser);
-            req.setAttribute("profileSaved", "Profile saved!");
-            req.getRequestDispatcher("profile.jsp").forward(req, resp);
-        }
+
+        newUser = accountService.saveProfile(newUser);
+        req.getSession().setAttribute("user", newUser);
+        req.setAttribute("profileSaved", "Profile saved!");
+        req.getRequestDispatcher("profile.jsp").forward(req, resp);
+
     }
 }

@@ -2,8 +2,10 @@ package com.tsystems.javaschool.webshop.servlets;
 
 import com.tsystems.javaschool.webshop.dao.entities.CartEntity;
 import com.tsystems.javaschool.webshop.services.api.CartService;
+import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import com.tsystems.javaschool.webshop.services.impl.CartServiceImpl;
+import com.tsystems.javaschool.webshop.services.impl.ValidationServiceImpl;
 import com.tsystems.javaschool.webshop.servlets.utils.ServletUtils;
 import flexjson.JSONSerializer;
 import flexjson.transformer.StringTransformer;
@@ -36,13 +38,17 @@ public class CartServlet extends HttpServlet {
      * The Json serializer.
      */
     private JSONSerializer jsonSerializer;
-
+    /**
+     * The Validation service.
+     */
+    private ValidationService validationService;
     /**
      * Instantiates a new Cart servlet.
      */
     public CartServlet() {
         cartService = new CartServiceImpl();
         jsonSerializer = new JSONSerializer();
+        validationService = new ValidationServiceImpl();
     }
 
     @Override

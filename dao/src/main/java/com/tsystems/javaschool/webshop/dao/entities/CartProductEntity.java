@@ -163,8 +163,7 @@ public class CartProductEntity {
 
         final CartProductEntity that = (CartProductEntity) o;
 
-        if (cartId != that.cartId) return false;
-        return productId == that.productId;
+        return cartId == that.cartId && productId == that.productId;
     }
 
     @Override

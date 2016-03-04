@@ -1,9 +1,18 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
-import javax.persistence.*;
-import java.util.ArrayList;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -120,13 +129,4 @@ public class CartEntity {
         this.items = products;
     }
 
-    @Override
-    public String toString() {
-        return "CartEntity{" +
-                "id=" + id +
-                ", count=" + count +
-                ", summary=" + summary +
-                ", items=" + items +
-                '}';
-    }
 }

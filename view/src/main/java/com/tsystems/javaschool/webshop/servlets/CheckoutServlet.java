@@ -2,15 +2,18 @@ package com.tsystems.javaschool.webshop.servlets;
 
 import com.tsystems.javaschool.webshop.dao.entities.AddressEntity;
 import com.tsystems.javaschool.webshop.dao.entities.CartEntity;
-import com.tsystems.javaschool.webshop.dao.entities.OrderEntity;
 import com.tsystems.javaschool.webshop.dao.entities.PaymentEntity;
 import com.tsystems.javaschool.webshop.dao.entities.ShippingEntity;
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
-import com.tsystems.javaschool.webshop.dao.entities.enums.OrderStatus;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
 import com.tsystems.javaschool.webshop.services.api.CheckoutService;
+import com.tsystems.javaschool.webshop.services.api.ValidationService;
+import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import com.tsystems.javaschool.webshop.services.impl.AccountServiceImpl;
 import com.tsystems.javaschool.webshop.services.impl.CheckoutServiceImpl;
+import com.tsystems.javaschool.webshop.services.impl.ValidationServiceImpl;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,19 +24,38 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Shide on 27.02.2016.
+ * Checkout servlet.
  */
 public class CheckoutServlet extends HttpServlet {
+    /**
+     * The constant LOGGER.
+     */
+    private static final Logger LOGGER =
+            LogManager.getLogger(SaveProfileServlet.class);
+    /**
+     * The Checkout service.
+     */
     private CheckoutService checkoutService;
+    /**
+     * The Account service.
+     */
     private AccountService accountService;
+    /**
+     * The Validation service.
+     */
+    private ValidationService validationService;
 
+    /**
+     * Instantiates a new Checkout servlet.
+     */
     public CheckoutServlet() {
         this.checkoutService = new CheckoutServiceImpl();
         this.accountService = new AccountServiceImpl();
+        validationService = new ValidationServiceImpl();
     }
 
     @Override
-    protected void doGet(final HttpServletRequest req,
+    protected final void doGet(final HttpServletRequest req,
                          final HttpServletResponse resp)
             throws ServletException, IOException {
 
@@ -47,7 +69,7 @@ public class CheckoutServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(final HttpServletRequest req,
+    protected final void doPost(final HttpServletRequest req,
                           final HttpServletResponse resp)
             throws ServletException, IOException {
         //contact information params
@@ -58,25 +80,35 @@ public class CheckoutServlet extends HttpServlet {
         String country = req.getParameter("country");
         String region = req.getParameter("region");
         String city = req.getParameter("city");
-        String zipString = req.getParameter("zip");
-        Integer zip = Integer.parseInt(zipString);
+        Integer zip;
         String street = req.getParameter("street");
-        String buildingString = req.getParameter("building");
-        String flatString = req.getParameter("flat");
-        //TODO: validate
-        Integer building = Integer.parseInt(buildingString);
-        Integer flat = Integer.parseInt(flatString);
+        Integer building;
+        Integer flat;
         //shipping
-        String shippingIdString = req.getParameter("shipping_id");
-        //TODO: validate
-        Integer shippingId = Integer.parseInt(shippingIdString);
+        Integer shippingId;
         //payment
-        String paymentIdString = req.getParameter("payment_id");
-        //TODO: validate
-        Integer paymentId = Integer.parseInt(paymentIdString);
+        Integer paymentId;
         //comment
         String comment = req.getParameter("comment");
 
+        try {
+            zip = validationService.getValidInt(
+                    req.getParameter("zip"), "zip");
+            building = validationService.getValidInt(
+                    req.getParameter("building"), "building");
+            flat = validationService.getValidInt(
+                    req.getParameter("flat"), "flat");
+            shippingId = validationService.getValidInt(
+                    req.getParameter("shipping_id"), "shipping_id");
+            paymentId = validationService.getValidInt(
+                    req.getParameter("payment_id"), "payment_id");
+        } catch (ServiceException e) {
+            LOGGER.warn(e.getMessage(), e);
+            req.setAttribute("notValid", e.getMessage());
+            req.getRequestDispatcher("/checkout.jsp")
+                    .forward(req, resp);
+            return;
+        }
         //save user info to profile
         UserEntity user = (UserEntity) req.getSession().getAttribute("user");
         UserEntity newUser = new UserEntity();

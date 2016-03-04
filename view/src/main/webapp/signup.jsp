@@ -6,6 +6,7 @@
 
          <div class="">
              <h2>Sign up</h2>
+             <p>${requestScope.notValid}</p>
              <form class="" role="form" action="<c:url value="/signup"/>" method="post">
                  <div class="form-group">
                      <label>Name

@@ -35,7 +35,6 @@ public class RedirectFilter implements Filter {
         if (session.getAttribute("user") == null) {
 
             if (req.getRequestURI().equals("/checkout")) {
-                //TODO: send some variable with text: Sign in before buying
                 resp.sendRedirect("/signin.jsp");
                 return;
             }

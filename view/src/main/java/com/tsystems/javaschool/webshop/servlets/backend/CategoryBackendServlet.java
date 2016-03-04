@@ -2,7 +2,9 @@ package com.tsystems.javaschool.webshop.servlets.backend;
 
 import com.tsystems.javaschool.webshop.dao.entities.CategoryEntity;
 import com.tsystems.javaschool.webshop.services.api.CategoryService;
+import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.impl.CategoryServiceImpl;
+import com.tsystems.javaschool.webshop.services.impl.ValidationServiceImpl;
 import com.tsystems.javaschool.webshop.servlets.utils.ServletUtils;
 import flexjson.JSONSerializer;
 
@@ -22,12 +24,17 @@ public class CategoryBackendServlet extends HttpServlet {
      * The Category service.
      */
     private CategoryService categoryService;
+    /**
+     * The Validation service.
+     */
+    private ValidationService validationService;
 
     /**
      * Instantiates a new Category backend servlet.
      */
     public CategoryBackendServlet() {
         categoryService = new CategoryServiceImpl();
+        validationService = new ValidationServiceImpl();
     }
     @Override
     protected void doGet(final HttpServletRequest req,

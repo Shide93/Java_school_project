@@ -1,7 +1,9 @@
 package com.tsystems.javaschool.webshop.servlets.backend;
 
 import com.tsystems.javaschool.webshop.services.api.StatisticsService;
+import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.impl.StatisticsServiceImpl;
+import com.tsystems.javaschool.webshop.services.impl.ValidationServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,12 +19,16 @@ public class StatisticsServlet extends HttpServlet {
      * The Statistics service.
      */
     private StatisticsService statisticsService;
-
+    /**
+     * The Validation service.
+     */
+    private ValidationService validationService;
     /**
      * Instantiates a new Statistics servlet.
      */
     public StatisticsServlet() {
         statisticsService = new StatisticsServiceImpl();
+        validationService = new ValidationServiceImpl();
     }
 
     @Override

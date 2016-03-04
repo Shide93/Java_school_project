@@ -6,8 +6,10 @@ import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
 import com.tsystems.javaschool.webshop.dao.entities.ProductFeatureEntity;
 import com.tsystems.javaschool.webshop.services.api.FeatureService;
 import com.tsystems.javaschool.webshop.services.api.ProductService;
+import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.impl.FeatureServiceImpl;
 import com.tsystems.javaschool.webshop.services.impl.ProductServiceImpl;
+import com.tsystems.javaschool.webshop.services.impl.ValidationServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,13 +31,17 @@ public class ProductBackendServlet extends HttpServlet {
      * The Feature service.
      */
     private FeatureService featureService;
-
+    /**
+     * The Validation service.
+     */
+    private ValidationService validationService;
     /**
      * Instantiates a new Product backend servlet.
      */
     public ProductBackendServlet() {
         productService = new ProductServiceImpl();
         featureService = new FeatureServiceImpl();
+        validationService = new ValidationServiceImpl();
     }
     @Override
     protected void doGet(final HttpServletRequest req,

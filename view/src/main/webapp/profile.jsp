@@ -11,6 +11,7 @@
         <div class="tab-content">
             <div id="profile" class="tab-pane fade in active">
                 <h2>Your Profile, ${sessionScope.user.name}!</h2>
+                <p>${requestScope.notValid}</p>
                 <form class="" role="form" action="<c:url value="/profile"/>" method="post">
                     <div class="form-group">
                         <h6>Change email:</h6>
@@ -23,7 +24,7 @@
 
                         <label>Password
                             <input class="form-control" type="password" name="password" value="${sessionScope.user.password}">
-                        </label><span class = "">${requestScope.passNotEq}</span><br>
+                        </label>
 
                         <label>Re-type password
                             <input class="form-control" type="password" name="password2">
@@ -48,7 +49,7 @@
                                    value="<fmt:formatDate value="${sessionScope.user.birthDate}"
                                                 type="DATE" pattern="dd-MM-yyyy"/>">
 
-                        </label><span class = "">${requestScope.wrongBirth}</span><br>
+                        </label>
                     </div>
                     <div class="form-group">
                         <h6>Shipping address</h6>
@@ -67,7 +68,7 @@
                         <label>Zip
                             <input class="form-control" type="text" name="zip" value="${sessionScope.user.address.zip}">
 
-                        </label><span class = "">${requestScope.wrongZip}</span><br>
+                        </label>
 
                         <label>Street
                             <input class="form-control" type="text" name="street" value="${sessionScope.user.address.street}">

@@ -4,6 +4,7 @@
 <t:frontendLayout>
     <jsp:attribute name="content">
         <div class="checkout">
+            <p>${requestScope.notValid}</p>
             <form class="" role="form" action="<c:url value="/checkout"/>" method="post">
                 <div class = "contact-info">
                     <div class="general form-group">
@@ -119,7 +120,7 @@
                         <span>Comment:</span>
                         <textarea class="comment form-control" name="comment" placeholder="Add your comment to order here"></textarea>
                         <br>
-                        <input type="submit" value="Buy">
+                        <input class="btn btn-primary" type="submit" value="Buy">
                     </div>
                 </div>
             </form>

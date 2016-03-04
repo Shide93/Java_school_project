@@ -32,8 +32,6 @@
                     var isAdmin = $(this).prop('checked');
                     $.post("?action=setRights", "id=" + id + "&isAdmin=" + isAdmin,
                             function(JData) {
-                        console.log(JData);
-                        //TODO: add new line in table
                     });
                 });
         });

@@ -49,7 +49,6 @@ public class ProductServiceImpl implements ProductService {
             CategoryEntity category =
                 categoryDAO.getById(product.getCategory().getId(), manager);
             product.setCategory(category);
-            //TODO: add product features
             productDAO.create(product, manager);
         });
     }
@@ -64,7 +63,6 @@ public class ProductServiceImpl implements ProductService {
                 prodFeature.setFeature(featureDAO.getById(
                         prodFeature.getFeatureId(), manager));
             }
-            //TODO: save product features
             productDAO.update(product, manager);
         });
     }

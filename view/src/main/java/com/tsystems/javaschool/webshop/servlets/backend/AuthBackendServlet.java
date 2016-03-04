@@ -2,8 +2,10 @@ package com.tsystems.javaschool.webshop.servlets.backend;
 
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
+import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.exceptions.AccountServiceException;
 import com.tsystems.javaschool.webshop.services.impl.AccountServiceImpl;
+import com.tsystems.javaschool.webshop.services.impl.ValidationServiceImpl;
 import com.tsystems.javaschool.webshop.servlets.utils.ServletUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -30,10 +32,16 @@ public class AuthBackendServlet extends HttpServlet {
     private AccountService accountService;
 
     /**
+     * The Validation service.
+     */
+    private ValidationService validationService;
+
+    /**
      * Instantiates a new Auth backend servlet.
      */
     public AuthBackendServlet() {
         this.accountService = new AccountServiceImpl();
+        validationService = new ValidationServiceImpl();
     }
 
     @Override

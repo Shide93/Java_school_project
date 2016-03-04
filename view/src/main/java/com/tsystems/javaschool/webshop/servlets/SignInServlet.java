@@ -2,10 +2,11 @@ package com.tsystems.javaschool.webshop.servlets;
 
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
+import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.exceptions.AccountServiceException;
 import com.tsystems.javaschool.webshop.services.impl.AccountServiceImpl;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
-import com.tsystems.javaschool.webshop.services.util.ServiceHelper;
+import com.tsystems.javaschool.webshop.services.impl.ValidationServiceImpl;
 import com.tsystems.javaschool.webshop.servlets.utils.ServletUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -34,6 +35,10 @@ public class SignInServlet extends HttpServlet {
      * The Account service.
      */
     private AccountService accountService;
+    /**
+     * The Validation service.
+     */
+    private ValidationService validationService;
 
     /**
      * Instantiates a new Sign in servlet.
@@ -41,6 +46,7 @@ public class SignInServlet extends HttpServlet {
     public SignInServlet() {
         this.accountService =
                 new AccountServiceImpl();
+        validationService = new ValidationServiceImpl();
     }
 
     @Override
@@ -56,9 +62,18 @@ public class SignInServlet extends HttpServlet {
                                 final HttpServletResponse resp)
             throws ServletException, IOException {
 
-        String email = req.getParameter("email");
+        String email = null;
         String password = req.getParameter("password");
         String isRemember = req.getParameter("remember");
+        try {
+            email = validationService.getValidEmail(
+                    req.getParameter("email"));
+        } catch (ServiceException e) {
+            LOGGER.warn(e.getMessage(), e);
+            req.setAttribute("notValid", e.getMessage());
+            req.getRequestDispatcher("/signin.jsp").forward(req, resp);
+            return;
+        }
         try {
             UserEntity user = accountService.signInUser(email, password);
             if (isRemember != null && isRemember.equals("on")) {

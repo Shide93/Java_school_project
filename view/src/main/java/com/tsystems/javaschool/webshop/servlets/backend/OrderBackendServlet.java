@@ -3,7 +3,9 @@ package com.tsystems.javaschool.webshop.servlets.backend;
 import com.tsystems.javaschool.webshop.dao.entities.OrderEntity;
 import com.tsystems.javaschool.webshop.dao.entities.enums.OrderStatus;
 import com.tsystems.javaschool.webshop.services.api.OrderService;
+import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.impl.OrderServiceImpl;
+import com.tsystems.javaschool.webshop.services.impl.ValidationServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,7 +28,12 @@ public class OrderBackendServlet extends HttpServlet {
      */
     public OrderBackendServlet() {
         orderService = new OrderServiceImpl();
+        validationService = new ValidationServiceImpl();
     }
+    /**
+     * The Validation service.
+     */
+    private ValidationService validationService;
 
     @Override
     protected void doGet(final HttpServletRequest req,

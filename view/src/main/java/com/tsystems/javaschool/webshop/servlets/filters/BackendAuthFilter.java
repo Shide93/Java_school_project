@@ -9,7 +9,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Created by Shide on 01.03.2016.
+ *  Backend auth filter.
+ *
+ *  Show auth form when non-admin tries to enter backend.
  */
 public class BackendAuthFilter implements Filter {
     @Override
@@ -18,7 +20,10 @@ public class BackendAuthFilter implements Filter {
     }
 
     @Override
-    public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
+    public final void doFilter(final ServletRequest request,
+                         final ServletResponse response,
+                         final FilterChain chain)
+            throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession();

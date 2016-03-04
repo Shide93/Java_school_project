@@ -2,8 +2,9 @@ package com.tsystems.javaschool.webshop.servlets;
 
 import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
 import com.tsystems.javaschool.webshop.services.api.ProductService;
-import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
+import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.impl.ProductServiceImpl;
+import com.tsystems.javaschool.webshop.services.impl.ValidationServiceImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -29,6 +30,10 @@ public class ProductPageServlet extends HttpServlet {
      * The Product service.
      */
     private final ProductService productService;
+    /**
+     * The Validation service.
+     */
+    private ValidationService validationService;
 
     /**
      * Instantiates a new Product page servlet.
@@ -36,6 +41,7 @@ public class ProductPageServlet extends HttpServlet {
     public ProductPageServlet() {
         this.productService =
                 new ProductServiceImpl();
+        validationService = new ValidationServiceImpl();
     }
 
     @Override

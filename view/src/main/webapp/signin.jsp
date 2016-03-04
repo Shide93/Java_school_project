@@ -7,6 +7,7 @@
         <div class="">
             <h2>Sign in</h2>
             <div>Please sign in using the form below or <a href="<c:url value="/signup"/>">singn up.</a> </div>
+            <p>${requestScope.notValid}</p>
             <form class="" role="form" action="<c:url value="/signin"/>" method="post">
                 <div class="form-group">
                     <label>Email

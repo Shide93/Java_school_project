@@ -5,8 +5,10 @@ import com.tsystems.javaschool.webshop.dao.entities.FeatureEntity;
 import com.tsystems.javaschool.webshop.dao.entities.ProductFeatureEntity;
 import com.tsystems.javaschool.webshop.services.api.CategoryService;
 import com.tsystems.javaschool.webshop.services.api.FeatureService;
+import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.impl.CategoryServiceImpl;
 import com.tsystems.javaschool.webshop.services.impl.FeatureServiceImpl;
+import com.tsystems.javaschool.webshop.services.impl.ValidationServiceImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -33,18 +35,21 @@ public class CategoryServlet extends HttpServlet {
      * The Category service.
      */
     private CategoryService categoryService;
-
+    /**
+     * The Validation service.
+     */
+    private ValidationService validationService;
     /**
      * Instantiates a new Category servlet.
      */
     public CategoryServlet() {
         this.categoryService =
         new CategoryServiceImpl();
+        validationService = new ValidationServiceImpl();
     }
     @Override
     protected final void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
 
-        //TODO: here is code duplication, need to create Frontend Controller
         //parse request and extract categoryId
         String path = req.getRequestURI();
         LOGGER.warn(path);

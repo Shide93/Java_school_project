@@ -2,7 +2,9 @@ package com.tsystems.javaschool.webshop.servlets.backend;
 
 import com.tsystems.javaschool.webshop.dao.entities.FeatureEntity;
 import com.tsystems.javaschool.webshop.services.api.FeatureService;
+import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.impl.FeatureServiceImpl;
+import com.tsystems.javaschool.webshop.services.impl.ValidationServiceImpl;
 import flexjson.JSONSerializer;
 
 import javax.servlet.ServletException;
@@ -15,11 +17,25 @@ import java.io.IOException;
  * Created by Shide on 28.02.2016.
  */
 public class FeaturesBackendServlet extends HttpServlet {
+    /**
+     * The Feature service.
+     */
     private FeatureService featureService;
+    /**
+     * The Json serializer.
+     */
     private JSONSerializer jsonSerializer;
+    /**
+     * The Validation service.
+     */
+    private ValidationService validationService;
+    /**
+     * Instantiates a new Features backend servlet.
+     */
     public FeaturesBackendServlet() {
         featureService = new FeatureServiceImpl();
         jsonSerializer = new JSONSerializer();
+        validationService = new ValidationServiceImpl();
     }
 
     @Override

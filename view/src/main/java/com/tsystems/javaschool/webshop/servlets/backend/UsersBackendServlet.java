@@ -2,7 +2,9 @@ package com.tsystems.javaschool.webshop.servlets.backend;
 
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
+import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.impl.AccountServiceImpl;
+import com.tsystems.javaschool.webshop.services.impl.ValidationServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,12 +22,16 @@ public class UsersBackendServlet extends HttpServlet {
      * The Account service.
      */
     private AccountService accountService;
-
+    /**
+     * The Validation service.
+     */
+    private ValidationService validationService;
     /**
      * Instantiates a new Users backend servlet.
      */
     public UsersBackendServlet() {
         accountService = new AccountServiceImpl();
+        validationService = new ValidationServiceImpl();
     }
 
     @Override
