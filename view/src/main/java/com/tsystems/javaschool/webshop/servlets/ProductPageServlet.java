@@ -33,7 +33,7 @@ public class ProductPageServlet extends HttpServlet {
     /**
      * The Validation service.
      */
-    private ValidationService validationService;
+    private final ValidationService validationService;
 
     /**
      * Instantiates a new Product page servlet.

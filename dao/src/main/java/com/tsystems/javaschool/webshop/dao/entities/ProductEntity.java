@@ -3,16 +3,27 @@ package com.tsystems.javaschool.webshop.dao.entities;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
-import java.util.ArrayList;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
  * The type Product entity.
  */
 @Entity
+@SuppressWarnings("CheckStyle")
 @Table(name = "product", schema = "web_shop")
 public class ProductEntity {
     /**
@@ -193,15 +204,4 @@ public class ProductEntity {
         this.features = features;
     }
 
-    @Override
-    public String toString() {
-        return "ProductEntity{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", stock=" + stock +
-                ", description='" + description + '\'' +
-                ", features=" + features +
-                '}';
-    }
 }

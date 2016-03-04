@@ -1,6 +1,10 @@
 package com.tsystems.javaschool.webshop.services.api;
 
-import com.tsystems.javaschool.webshop.dao.entities.*;
+import com.tsystems.javaschool.webshop.dao.entities.AddressEntity;
+import com.tsystems.javaschool.webshop.dao.entities.CartEntity;
+import com.tsystems.javaschool.webshop.dao.entities.PaymentEntity;
+import com.tsystems.javaschool.webshop.dao.entities.ShippingEntity;
+import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 
 import java.util.List;
 

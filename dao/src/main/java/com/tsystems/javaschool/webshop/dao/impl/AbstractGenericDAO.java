@@ -1,10 +1,8 @@
 package com.tsystems.javaschool.webshop.dao.impl;
 
 import com.tsystems.javaschool.webshop.dao.api.GenericDAO;
-import com.tsystems.javaschool.webshop.dao.exceptions.DaoException;
 import org.apache.log4j.Logger;
 
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -19,12 +17,12 @@ public class AbstractGenericDAO<T> implements GenericDAO<T> {
     /**
      * Typed logger from concrete DAO class.
      */
-    private Logger typedLogger;
+    private final Logger typedLogger;
 
     /**
      * The Type parameter.
      */
-    private Class<T> type;
+    private final Class<T> type;
 
     /**
      * Instantiates a new Abstract generic dao.

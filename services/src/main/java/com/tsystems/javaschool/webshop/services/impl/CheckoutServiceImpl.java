@@ -4,7 +4,14 @@ import com.tsystems.javaschool.webshop.dao.api.CartDAO;
 import com.tsystems.javaschool.webshop.dao.api.OrderDAO;
 import com.tsystems.javaschool.webshop.dao.api.PaymentDAO;
 import com.tsystems.javaschool.webshop.dao.api.ShippingDAO;
-import com.tsystems.javaschool.webshop.dao.entities.*;
+import com.tsystems.javaschool.webshop.dao.entities.AddressEntity;
+import com.tsystems.javaschool.webshop.dao.entities.CartEntity;
+import com.tsystems.javaschool.webshop.dao.entities.CartProductEntity;
+import com.tsystems.javaschool.webshop.dao.entities.OrderEntity;
+import com.tsystems.javaschool.webshop.dao.entities.OrderProductEntity;
+import com.tsystems.javaschool.webshop.dao.entities.PaymentEntity;
+import com.tsystems.javaschool.webshop.dao.entities.ShippingEntity;
+import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.dao.entities.enums.OrderStatus;
 import com.tsystems.javaschool.webshop.dao.impl.CartDAOImpl;
 import com.tsystems.javaschool.webshop.dao.impl.OrderDAOImpl;
@@ -21,35 +28,36 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by Shide on 28.02.2016.
+ * The type Checkout service.
  */
 public class CheckoutServiceImpl implements CheckoutService {
 
     /**
      * The constant LOGGER.
      */
-    private static final Logger LOGGER = LogManager.getLogger(CheckoutService.class);
+    private static final Logger LOGGER =
+            LogManager.getLogger(CheckoutService.class);
 
     /**
      * The Service helper.
      */
-    private ServiceHelper serviceHelper;
+    private final ServiceHelper serviceHelper;
     /**
      * The Payment dao.
      */
-    private PaymentDAO paymentDAO;
+    private final PaymentDAO paymentDAO;
     /**
      * The Shipping dao.
      */
-    private ShippingDAO shippingDAO;
+    private final ShippingDAO shippingDAO;
     /**
      * The Order dao.
      */
-    private OrderDAO orderDAO;
+    private final OrderDAO orderDAO;
     /**
      * The Cart dao.
      */
-    private CartDAO cartDAO;
+    private final CartDAO cartDAO;
 
     /**
      * Instantiates a new Checkout service.
@@ -63,21 +71,19 @@ public class CheckoutServiceImpl implements CheckoutService {
     }
 
     @Override
-    public List<PaymentEntity> getPaymentTypes() {
-        return serviceHelper.loadInTransaction(manager -> {
-           return paymentDAO.getAll(manager);
-        });
+    public final List<PaymentEntity> getPaymentTypes() {
+        return serviceHelper.loadInTransaction(manager ->
+                paymentDAO.getAll(manager));
     }
 
     @Override
-    public List<ShippingEntity> getShippingTypes() {
-        return serviceHelper.loadInTransaction(manager -> {
-            return shippingDAO.getAll(manager);
-        });
+    public final List<ShippingEntity> getShippingTypes() {
+        return serviceHelper.loadInTransaction(manager ->
+                shippingDAO.getAll(manager));
     }
 
     @Override
-    public void createOrder(final UserEntity user,
+    public final void createOrder(final UserEntity user,
                             final AddressEntity address,
                             final CartEntity cart,
                             final Integer paymentId,

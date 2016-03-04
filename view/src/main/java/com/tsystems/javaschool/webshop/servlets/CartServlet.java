@@ -8,7 +8,6 @@ import com.tsystems.javaschool.webshop.services.impl.CartServiceImpl;
 import com.tsystems.javaschool.webshop.services.impl.ValidationServiceImpl;
 import com.tsystems.javaschool.webshop.servlets.utils.ServletUtils;
 import flexjson.JSONSerializer;
-import flexjson.transformer.StringTransformer;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -33,15 +32,15 @@ public class CartServlet extends HttpServlet {
     /**
      * The Cart service.
      */
-    private CartService cartService;
+    private final CartService cartService;
     /**
      * The Json serializer.
      */
-    private JSONSerializer jsonSerializer;
+    private final JSONSerializer jsonSerializer;
     /**
      * The Validation service.
      */
-    private ValidationService validationService;
+    private final ValidationService validationService;
     /**
      * Instantiates a new Cart servlet.
      */
@@ -75,9 +74,11 @@ public class CartServlet extends HttpServlet {
             if (req.getParameter("action").equals("add")) {
                 Integer  quantity = Integer.parseInt(quantityStr);
                 Integer  productId = Integer.parseInt(productIdStr);
-                CartEntity newCart = null;
+                CartEntity newCart;
                 try {
-                    newCart = cartService.addToCart(productId, quantity, cart.getId());
+                    newCart = cartService.addToCart(productId,
+                            quantity,
+                            cart.getId());
                 } catch (ServiceException e) {
                     LOGGER.error(e.getMessage(), e);
                     resp.getWriter().println("{\"error\": \"duplicate\"}");
@@ -88,14 +89,17 @@ public class CartServlet extends HttpServlet {
             } else if (req.getParameter("action").equals("edit")) {
                 Integer  quantity = Integer.parseInt(quantityStr);
                 Integer  productId = Integer.parseInt(productIdStr);
-                CartEntity newCart = cartService.editCartProduct(productId, quantity, cart.getId());
+                CartEntity newCart = cartService.editCartProduct(productId,
+                                                                quantity,
+                                                                cart.getId());
                 req.getSession().setAttribute("cart", newCart);
                 resp.getWriter().println(jsonSerializer.deepSerialize(newCart));
 
 
             } else if (req.getParameter("action").equals("remove")) {
                     Integer  productId = Integer.parseInt(productIdStr);
-                    CartEntity newCart = cartService.removeFromCart(productId, cart.getId());
+                    CartEntity newCart = cartService.removeFromCart(productId,
+                            cart.getId());
                     req.getSession().setAttribute("cart", newCart);
                     resp.getWriter().println(jsonSerializer.serialize(newCart));
             }
@@ -103,7 +107,8 @@ public class CartServlet extends HttpServlet {
     }
 
     /**
-     * Checks cart for existing and creates if not exist then adds it to session.
+     * Checks cart for existing and creates
+     * if not exist then adds it to session.
      *
      * @param req  the request object
      * @param resp the response object
@@ -116,13 +121,13 @@ public class CartServlet extends HttpServlet {
                 .getAttribute("cart");
 
         if (cart == null) {
-
             cart = new CartEntity();
 
             cartService.add(cart);
             req.getSession().setAttribute("cart", cart);
 
-            resp.addCookie(ServletUtils.createCookie("cartID", "" + cart.getId()));
+            resp.addCookie(ServletUtils.createCookie("cartID",
+                    "" + cart.getId()));
         }
     }
 }

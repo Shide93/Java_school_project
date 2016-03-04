@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * Servlet that catches and process all exceptions of application.
@@ -23,7 +22,7 @@ public class ErrorHandlerServlet extends HttpServlet {
             LogManager.getLogger(ErrorHandlerServlet.class);
 
     @Override
-    protected void doGet(final HttpServletRequest req,
+    protected final void doGet(final HttpServletRequest req,
                          final HttpServletResponse resp)
             throws ServletException, IOException {
         // Analyze the servlet exception
@@ -33,12 +32,12 @@ public class ErrorHandlerServlet extends HttpServlet {
                 req.getAttribute("javax.servlet.error.status_code");
         String servletName = (String)
                 req.getAttribute("javax.servlet.error.servlet_name");
-        if (servletName == null){
+        if (servletName == null) {
             servletName = "Unknown";
         }
         String requestUri = (String)
                 req.getAttribute("javax.servlet.error.request_uri");
-        if (requestUri == null){
+        if (requestUri == null) {
             requestUri = "Unknown";
         }
         String message = (String)
@@ -53,9 +52,10 @@ public class ErrorHandlerServlet extends HttpServlet {
             rd.forward(req, resp);
         }
     }
-
     @Override
-    protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+    protected final void doPost(final HttpServletRequest req,
+                          final HttpServletResponse resp)
+            throws ServletException, IOException {
         doGet(req, resp);
     }
 }

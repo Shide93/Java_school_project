@@ -29,12 +29,12 @@ public class AuthBackendServlet extends HttpServlet {
     /**
      * The Account service.
      */
-    private AccountService accountService;
+    private final AccountService accountService;
 
     /**
      * The Validation service.
      */
-    private ValidationService validationService;
+    private final ValidationService validationService;
 
     /**
      * Instantiates a new Auth backend servlet.
@@ -45,7 +45,7 @@ public class AuthBackendServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(final HttpServletRequest req,
+    protected final void doGet(final HttpServletRequest req,
                          final HttpServletResponse resp)
             throws ServletException, IOException {
 
@@ -53,7 +53,7 @@ public class AuthBackendServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(final HttpServletRequest req,
+    protected final void doPost(final HttpServletRequest req,
                           final HttpServletResponse resp)
             throws ServletException, IOException {
         String email = req.getParameter("email");
@@ -62,12 +62,11 @@ public class AuthBackendServlet extends HttpServlet {
 
         try {
             UserEntity user = accountService.signInUser(email, password);
-
-            if (!user.getIsAdmin()) {        //if non-admin user trying to enter backend
+            //if non-admin user trying to enter backend
+            if (!user.getIsAdmin()) {
                throw new AccountServiceException(
                        "You don't have permission to enter admin panel");
             }
-
             if (isRemember != null && isRemember.equals("on")) {
                 Cookie cookie = ServletUtils.createCookie("userID",
                         String.valueOf(user.getId()));

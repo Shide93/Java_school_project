@@ -2,27 +2,49 @@ package com.tsystems.javaschool.webshop.dao.entities;
 
 import com.tsystems.javaschool.webshop.dao.entities.enums.OrderStatus;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Created by Shide on 18.02.2016.
+ * The type Order entity.
  */
 @Entity
+@SuppressWarnings("CheckStyle")
 @NamedQueries({
         @NamedQuery(name = "OrderEntity.getByUser",
                 query = "select o from OrderEntity o where user.id = :id"),
         @NamedQuery(name = "OrderEntity.getWithStatus",
-                query = "select o from OrderEntity o where o.orderStatus = :orderStatus"),
+                query = "select o from OrderEntity o "
+                        + "where o.orderStatus = :orderStatus"),
         @NamedQuery(name = "OrderEntity.totalSales",
                 query = "select sum(o.total) from OrderEntity o"),
         @NamedQuery(name = "OrderEntity.periodSales",
-                query = "select sum(o.total) from OrderEntity o where o.orderDate > :date"),
+                query = "select sum(o.total) from OrderEntity o"
+                        + " where o.orderDate > :date"),
         @NamedQuery(name = "OrderEntity.getTopCustomers",
-                query = "select o.user from OrderEntity o " +
-                        "group by o.user order by sum(o.total) desc")
+                query = "select o.user from OrderEntity o "
+                       + "group by o.user order by sum(o.total) desc")
 })
 @Table(name = "ordr", schema = "web_shop")
 public class OrderEntity {
@@ -31,21 +53,48 @@ public class OrderEntity {
      */
     private int id;
 
+    /**
+     * The User.
+     */
     private UserEntity user;
 
+    /**
+     * The Address.
+     */
     private AddressEntity address;
 
+    /**
+     * The Payment.
+     */
     private PaymentEntity payment;
 
+    /**
+     * The Shipping.
+     */
     private ShippingEntity shipping;
 
+    /**
+     * The Order status.
+     */
     private OrderStatus orderStatus;
 
+    /**
+     * The Comment.
+     */
     private String comment;
 
+    /**
+     * The Total.
+     */
     private int total;
 
+    /**
+     * The Products.
+     */
     private Set<OrderProductEntity> products;
+    /**
+     * The Order date.
+     */
     private Date orderDate;
 
     /**
@@ -183,6 +232,7 @@ public class OrderEntity {
      * @return the products
      */
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OrderBy(value = "productId")
     public Set<OrderProductEntity> getProducts() {
         return products;
     }
@@ -235,6 +285,12 @@ public class OrderEntity {
     public void setTotal(final int total) {
         this.total = total;
     }
+
+    /**
+     * Gets order date.
+     *
+     * @return the order date
+     */
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "order_date")
@@ -242,22 +298,14 @@ public class OrderEntity {
         return orderDate;
     }
 
+    /**
+     * Sets order date.
+     *
+     * @param orderDate the order date
+     */
     public void setOrderDate(final Date orderDate) {
         this.orderDate = orderDate;
     }
 
-    @Override
-    public String toString() {
-        return "OrderEntity{" +
-                "id=" + id +
-                ", user=" + user +
-                ", address=" + address +
-                ", payment=" + payment +
-                ", shipping=" + shipping +
-                ", orderStatus=" + orderStatus +
-                ", comment='" + comment + '\'' +
-                ", products=" + products +
-                '}';
-    }
 }
 

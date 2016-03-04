@@ -36,15 +36,15 @@ public class SaveProfileServlet extends HttpServlet {
     /**
      * The Account service.
      */
-    private AccountService accountService;
+    private final AccountService accountService;
     /**
      * The Order service.
      */
-    private OrderService orderService;
+    private final OrderService orderService;
     /**
      * The Validation service.
      */
-    private ValidationService validationService;
+    private final ValidationService validationService;
 
     /**
      * Instantiates a new Save profile servlet.

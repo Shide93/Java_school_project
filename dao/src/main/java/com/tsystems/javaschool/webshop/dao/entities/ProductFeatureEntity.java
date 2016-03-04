@@ -12,9 +12,10 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
- * Created by Shide on 22.02.2016.
+ * The type Product feature entity.
  */
 @Entity
+@SuppressWarnings("CheckStyle")
 @NamedQueries({
         @NamedQuery(name = "ProductFeatureEntity.getAllValues",
                 query = "select distinct "
@@ -162,12 +163,4 @@ public class ProductFeatureEntity {
         this.feature = feature;
     }
 
-    @Override
-    public String toString() {
-        return "ProductFeatureEntity{" +
-                "productId=" + productId +
-                ", featureId=" + featureId +
-                ", value='" + value + '\'' +
-                '}';
-    }
 }

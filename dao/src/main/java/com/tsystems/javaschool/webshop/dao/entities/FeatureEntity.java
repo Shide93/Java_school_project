@@ -3,15 +3,23 @@ package com.tsystems.javaschool.webshop.dao.entities;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Created by Shide on 22.02.2016.
+ * The type Feature entity.
  */
 @Entity
-
+@SuppressWarnings("CheckStyle")
 @Table(name = "feature", schema = "web_shop")
 public class FeatureEntity {
     /**
@@ -27,6 +35,9 @@ public class FeatureEntity {
      */
     private Set<ProductFeatureEntity> products;
 
+    /**
+     * Instantiates a new Feature entity.
+     */
     public FeatureEntity() {
         products = new LinkedHashSet<>();
     }
@@ -94,11 +105,4 @@ public class FeatureEntity {
         this.products = products;
     }
 
-    @Override
-    public String toString() {
-        return "FeatureEntity{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
 }

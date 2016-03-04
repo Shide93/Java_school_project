@@ -24,11 +24,11 @@ public class CategoryServiceImpl implements CategoryService {
     /**
      * The Category dao.
      */
-    private CategoryDAO categoryDAO;
+    private final CategoryDAO categoryDAO;
     /**
      * The Service helper.
      */
-    private ServiceHelper serviceHelper;
+    private final ServiceHelper serviceHelper;
 
     /**
      * Instantiates a new Category service.

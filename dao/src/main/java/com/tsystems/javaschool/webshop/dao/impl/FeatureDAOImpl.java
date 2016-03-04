@@ -7,7 +7,6 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -29,7 +28,8 @@ public class FeatureDAOImpl extends AbstractGenericDAO<FeatureEntity>
     }
 
     @Override
-    public List<ProductFeatureEntity> getAllValues(final EntityManager manager) {
+    public final List<ProductFeatureEntity> getAllValues(
+            final EntityManager manager) {
         TypedQuery<ProductFeatureEntity> query =
                 manager.createNamedQuery("ProductFeatureEntity.getAllValues",
                         ProductFeatureEntity.class);

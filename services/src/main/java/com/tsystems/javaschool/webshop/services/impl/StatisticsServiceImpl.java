@@ -30,19 +30,19 @@ public class StatisticsServiceImpl implements StatisticsService {
     /**
      * The Service helper.
      */
-    private ServiceHelper serviceHelper;
+    private final ServiceHelper serviceHelper;
     /**
      * The Order dao.
      */
-    private OrderDAO orderDAO;
+    private final OrderDAO orderDAO;
     /**
      * The Product dao.
      */
-    private ProductDAO productDAO;
+    private final ProductDAO productDAO;
     /**
      * The Users dao.
      */
-    private UsersDAO usersDAO;
+    private final UsersDAO usersDAO;
 
     /**
      * Instantiates a new Statistics service.

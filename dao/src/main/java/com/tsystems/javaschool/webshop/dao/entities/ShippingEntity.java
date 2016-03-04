@@ -1,10 +1,17 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
- * Created by Shide on 28.02.2016.
+ * The type Shipping entity.
  */
+@SuppressWarnings("CheckStyle")
 @Entity
 @Table(name = "shipping", schema = "web_shop")
 public class ShippingEntity {

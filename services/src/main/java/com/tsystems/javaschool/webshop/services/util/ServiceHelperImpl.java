@@ -20,7 +20,7 @@ public class ServiceHelperImpl implements ServiceHelper {
     /**
      * The EntityManager factory.
      */
-    private EntityManagerFactory entMgrFactory;
+    private final EntityManagerFactory entMgrFactory;
 
     /**
      * Instantiates a new Service helper.

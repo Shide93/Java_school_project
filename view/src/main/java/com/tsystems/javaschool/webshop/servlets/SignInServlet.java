@@ -34,11 +34,11 @@ public class SignInServlet extends HttpServlet {
     /**
      * The Account service.
      */
-    private AccountService accountService;
+    private final AccountService accountService;
     /**
      * The Validation service.
      */
-    private ValidationService validationService;
+    private final ValidationService validationService;
 
     /**
      * Instantiates a new Sign in servlet.

@@ -28,8 +28,10 @@ public class CategoryDAOImpl  extends AbstractGenericDAO<CategoryEntity>
     }
 
     @Override
-    public final List<CategoryEntity> getAllIdNames(final EntityManager manager) {
-        TypedQuery<CategoryEntity> q = manager.createNamedQuery("CategoryEntity.getAllIdNames",
+    public final List<CategoryEntity> getAllIdNames(
+            final EntityManager manager) {
+        TypedQuery<CategoryEntity> q =
+                manager.createNamedQuery("CategoryEntity.getAllIdNames",
                 CategoryEntity.class);
         return q.getResultList();
     }

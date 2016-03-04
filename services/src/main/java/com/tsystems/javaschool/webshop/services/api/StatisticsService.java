@@ -6,7 +6,7 @@ import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import java.util.List;
 
 /**
- * Created by Shide on 03.03.2016.
+ * The interface Statistics service.
  */
 public interface StatisticsService {
 
@@ -18,7 +18,7 @@ public interface StatisticsService {
     int newOrders();
 
     /**
-     * total shop sales
+     * total shop sales.
      *
      * @return total sales
      */

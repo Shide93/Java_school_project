@@ -26,12 +26,12 @@ public class AccountServiceImpl implements AccountService {
     /**
      * The Users dao.
      */
-    private UsersDAO usersDAO;
+    private final UsersDAO usersDAO;
 
     /**
      * The Service helper.
      */
-    private ServiceHelper serviceHelper;
+    private final ServiceHelper serviceHelper;
 
     /**
      * Instantiates a new Account service.
@@ -73,7 +73,6 @@ public class AccountServiceImpl implements AccountService {
         return serviceHelper.loadInTransaction(manager -> {
             UserEntity user = usersDAO.getUserByEmail(email, manager);
 
-            //TODO: hash password
             if (user == null || !user.getPassword().equals(password)) {
                 throw new AccountServiceException(
                         "Wrong password or email");

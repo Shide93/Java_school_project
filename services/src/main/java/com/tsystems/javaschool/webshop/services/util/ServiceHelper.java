@@ -1,7 +1,5 @@
 package com.tsystems.javaschool.webshop.services.util;
 
-import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
-
 /**
  * Provides methods that encapsulate all transaction managing work.
  *

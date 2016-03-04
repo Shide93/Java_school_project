@@ -2,7 +2,12 @@ package com.tsystems.javaschool.webshop.servlets.filters;
 
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,7 +33,8 @@ public class BackendAuthFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession();
         UserEntity user = (UserEntity) session.getAttribute("user");
-        if (req.getMethod().equals("GET") && (user == null || !user.getIsAdmin())) {
+        if (req.getMethod().equals("GET") && (user == null
+                || !user.getIsAdmin())) {
             req.getRequestDispatcher("/backend/auth.jsp").forward(req, resp);
             return;
         }

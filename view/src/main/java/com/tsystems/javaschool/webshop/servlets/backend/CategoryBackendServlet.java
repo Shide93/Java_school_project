@@ -5,11 +5,12 @@ import com.tsystems.javaschool.webshop.services.api.CategoryService;
 import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.impl.CategoryServiceImpl;
 import com.tsystems.javaschool.webshop.services.impl.ValidationServiceImpl;
+import com.tsystems.javaschool.webshop.servlets.SaveProfileServlet;
 import com.tsystems.javaschool.webshop.servlets.utils.ServletUtils;
-import flexjson.JSONSerializer;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,13 +22,18 @@ import java.util.List;
  */
 public class CategoryBackendServlet extends HttpServlet {
     /**
+     * The constant LOGGER.
+     */
+    private static final Logger LOGGER =
+            LogManager.getLogger(SaveProfileServlet.class);
+    /**
      * The Category service.
      */
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
     /**
      * The Validation service.
      */
-    private ValidationService validationService;
+    private final ValidationService validationService;
 
     /**
      * Instantiates a new Category backend servlet.
@@ -37,7 +43,7 @@ public class CategoryBackendServlet extends HttpServlet {
         validationService = new ValidationServiceImpl();
     }
     @Override
-    protected void doGet(final HttpServletRequest req,
+    protected final void doGet(final HttpServletRequest req,
                          final HttpServletResponse resp)
             throws ServletException, IOException {
         String categoryIdStr = req.getParameter("categoryId");
@@ -46,9 +52,12 @@ public class CategoryBackendServlet extends HttpServlet {
             List<CategoryEntity> categories =
                     (List<CategoryEntity>) getServletContext()
                             .getAttribute("categoryList");
-            Integer categoryId = categories.get(0).getId();
-            req.setAttribute("selectedCategory",
-                    categoryService.get(categoryId));
+            if (categories != null && categories.size() > 0) {
+                Integer categoryId = categories.get(0).getId();
+                req.setAttribute("selectedCategory",
+                        categoryService.get(categoryId));
+            }
+
         } else {
             Integer categoryId = Integer.parseInt(categoryIdStr);
             if (categoryId > 0) {                       //when choose category in sidebar
@@ -56,11 +65,12 @@ public class CategoryBackendServlet extends HttpServlet {
                         categoryService.get(categoryId));
             }
         }
-        req.getRequestDispatcher("/backend/categories.jsp").forward(req, resp);
+        req.getRequestDispatcher("/backend/categories.jsp")
+                .forward(req, resp);
     }
 
     @Override
-    protected void doPost(final HttpServletRequest req,
+    protected final void doPost(final HttpServletRequest req,
                           final HttpServletResponse resp)
             throws ServletException, IOException {
         String action = req.getParameter("action");
@@ -69,7 +79,7 @@ public class CategoryBackendServlet extends HttpServlet {
         String description = req.getParameter("description");
 
         if (action.equals("add")) {
-            CategoryEntity category= new CategoryEntity();
+            CategoryEntity category = new CategoryEntity();
             category.setName(name);
             category.setDescription(description);
             categoryService.add(category);
@@ -88,8 +98,16 @@ public class CategoryBackendServlet extends HttpServlet {
                             + category.getId()));
         } else if (action.equals("remove")) {
             Integer id = Integer.parseInt(idStr);
-
-            categoryService.delete(id);
+            try {
+                categoryService.delete(id);
+            } catch (Exception e) {
+                LOGGER.warn(e.getMessage(), e);
+                req.setAttribute("cantRemove",
+                        "Can't remove category: Category has products");
+                req.getRequestDispatcher("/backend/cantRemove.jsp")
+                        .forward(req, resp);
+                return;
+            }
             resp.sendRedirect(resp.encodeRedirectURL("/backend/categories"));
         }
         //refresh category list in sidebar

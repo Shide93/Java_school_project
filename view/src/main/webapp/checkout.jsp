@@ -5,6 +5,7 @@
     <jsp:attribute name="content">
         <div class="checkout">
             <p>${requestScope.notValid}</p>
+            <p>${requestScope.required}</p>
             <form class="" role="form" action="<c:url value="/checkout"/>" method="post">
                 <div class = "contact-info">
                     <div class="general form-group">
@@ -34,8 +35,7 @@
 
                         <label>Zip
                             <input class="form-control" type="text" name="zip" value="${sessionScope.user.address.zip}">
-                        </label>
-                        <span class = "form-control">${requestScope.wrongZip}</span><br>
+                        </label><br>
 
                         <label>Street
                             <input class="form-control" type="text" name="street" value="${sessionScope.user.address.street}">

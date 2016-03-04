@@ -71,7 +71,8 @@ public class OrderDAOImpl extends AbstractGenericDAO<OrderEntity>
     }
 
     @Override
-    public final List<UserEntity> topCustomers(final int count, final EntityManager manager) {
+    public final List<UserEntity> topCustomers(final int count,
+                                               final EntityManager manager) {
         TypedQuery<UserEntity> query =
                 manager.createNamedQuery("OrderEntity.getTopCustomers",
                         UserEntity.class);

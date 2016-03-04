@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public class MainBackendServlet extends HttpServlet {
     @Override
-    protected void doGet(final HttpServletRequest req,
+    protected final void doGet(final HttpServletRequest req,
                          final HttpServletResponse resp)
             throws ServletException, IOException {
         req.getRequestDispatcher("/backend/backend.jsp").forward(req, resp);

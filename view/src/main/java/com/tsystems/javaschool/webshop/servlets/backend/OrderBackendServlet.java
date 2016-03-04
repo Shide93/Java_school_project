@@ -15,13 +15,13 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Shide on 29.02.2016.
+ * The type Order backend servlet.
  */
 public class OrderBackendServlet extends HttpServlet {
     /**
      * The Order service.
      */
-    private OrderService orderService;
+    private final OrderService orderService;
 
     /**
      * Instantiates a new Order backend servlet.
@@ -30,24 +30,27 @@ public class OrderBackendServlet extends HttpServlet {
         orderService = new OrderServiceImpl();
         validationService = new ValidationServiceImpl();
     }
+
     /**
      * The Validation service.
      */
-    private ValidationService validationService;
+    private final ValidationService validationService;
 
     @Override
-    protected void doGet(final HttpServletRequest req,
+    protected final void doGet(final HttpServletRequest req,
                          final HttpServletResponse resp)
             throws ServletException, IOException {
         String orderIdStr = req.getParameter("orderId");
         //get all products
         List<OrderEntity> orders = orderService.getAll();
 
-        if (orderIdStr == null) {        //when enter page without params
-            req.setAttribute("selectedOrder", orders.get(0));
+        if (orderIdStr == null) {       //when enter page without params
+            if (orders != null && orders.size() > 0) {
+                req.setAttribute("selectedOrder", orders.get(0));
+            }
         } else {
             Integer orderId = Integer.parseInt(orderIdStr);
-            if (orderId > 0) {                            //when choose order in sidebar
+            if (orderId > 0) {    //when choose order in sidebar
                 req.setAttribute("selectedOrder",
                         orderService.get(orderId));
             }
@@ -58,7 +61,9 @@ public class OrderBackendServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+    protected final void doPost(final HttpServletRequest req,
+                          final HttpServletResponse resp)
+            throws ServletException, IOException {
         String action = req.getParameter("action");
         String idStr = req.getParameter("id");
         String statusStr = req.getParameter("status");

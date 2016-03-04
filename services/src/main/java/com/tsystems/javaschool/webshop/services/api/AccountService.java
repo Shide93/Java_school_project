@@ -2,7 +2,6 @@ package com.tsystems.javaschool.webshop.services.api;
 
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import com.tsystems.javaschool.webshop.services.exceptions.AccountServiceException;
-import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 
 import java.util.List;
 

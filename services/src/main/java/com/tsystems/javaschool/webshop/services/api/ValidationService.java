@@ -17,7 +17,8 @@ public interface ValidationService {
      * @return valid password
      * @throws ServiceException if passwords not equal
      */
-    String getValidPassword(String password, String password2) throws ServiceException;
+    String getValidPassword(String password, String password2)
+            throws ServiceException;
 
     /**
      * Validate email and return if it is valid or throw exception.

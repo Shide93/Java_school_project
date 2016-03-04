@@ -1,8 +1,5 @@
 package com.tsystems.javaschool.webshop.services.util;
 
-import com.tsystems.javaschool.webshop.dao.exceptions.DaoException;
-import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
-
 import javax.persistence.EntityManager;
 
 /**

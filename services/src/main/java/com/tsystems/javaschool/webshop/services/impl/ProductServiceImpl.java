@@ -10,10 +10,8 @@ import com.tsystems.javaschool.webshop.dao.impl.CategoryDAOImpl;
 import com.tsystems.javaschool.webshop.dao.impl.FeatureDAOImpl;
 import com.tsystems.javaschool.webshop.dao.impl.ProductDAOImpl;
 import com.tsystems.javaschool.webshop.services.api.ProductService;
-import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import com.tsystems.javaschool.webshop.services.util.ServiceHelper;
 import com.tsystems.javaschool.webshop.services.util.ServiceHelperImpl;
-import com.tsystems.javaschool.webshop.services.util.ServiceLoadAction;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -23,18 +21,35 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Shide on 21.02.2016.
+ * The type Product service.
  */
 public class ProductServiceImpl implements ProductService {
 
     /**
      * The constant LOGGER.
      */
-    private static final Logger LOGGER = LogManager.getLogger(ProductServiceImpl.class);
-    private ProductDAO productDAO;
-    private CategoryDAO categoryDAO;
-    private FeatureDAO featureDAO;
-    private ServiceHelper serviceHelper;
+    private static final Logger LOGGER =
+            LogManager.getLogger(ProductServiceImpl.class);
+    /**
+     * The Product dao.
+     */
+    private final ProductDAO productDAO;
+    /**
+     * The Category dao.
+     */
+    private final CategoryDAO categoryDAO;
+    /**
+     * The Feature dao.
+     */
+    private final FeatureDAO featureDAO;
+    /**
+     * The Service helper.
+     */
+    private final ServiceHelper serviceHelper;
+
+    /**
+     * Instantiates a new Product service.
+     */
     public ProductServiceImpl() {
         productDAO = new ProductDAOImpl();
         categoryDAO = new CategoryDAOImpl();
@@ -43,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void add(ProductEntity product) {
+    public final void add(final ProductEntity product) {
 
         serviceHelper.executeInTransaction(manager -> {
             CategoryEntity category =
@@ -54,7 +69,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void update(ProductEntity product) {
+    public final void update(final ProductEntity product) {
         serviceHelper.executeInTransaction(manager -> {
             CategoryEntity category =
                 categoryDAO.getById(product.getCategory().getId(), manager);
@@ -68,7 +83,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void delete(Integer productId) {
+    public final void delete(final Integer productId) {
         serviceHelper.executeInTransaction(manager -> {
 
             productDAO.delete(productId, manager);
@@ -76,7 +91,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductEntity get(int productId) {
+    public final ProductEntity get(final int productId) {
         return serviceHelper.load(manager -> {
 
             return productDAO.getById(productId, manager);
@@ -86,7 +101,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductEntity> getAll() {
+    public final List<ProductEntity> getAll() {
         return serviceHelper.loadInTransaction(manager -> {
 
             return productDAO.getAll(manager);
@@ -94,7 +109,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductEntity> searchProducts(String searchQuery){
+    public final List<ProductEntity> searchProducts(final String searchQuery) {
         return  serviceHelper.loadInTransaction(manager -> {
 
             return null;
@@ -102,7 +117,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductEntity> searchByFeature(final String[] selectedFeatures) {
+    public final List<ProductEntity> searchByFeature(
+            final String[] selectedFeatures) {
         return  serviceHelper.loadInTransaction(manager -> {
             Map<Integer, List<String>> map = new HashMap<>();
 

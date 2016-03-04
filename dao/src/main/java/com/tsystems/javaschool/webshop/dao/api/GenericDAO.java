@@ -1,8 +1,5 @@
 package com.tsystems.javaschool.webshop.dao.api;
 
-import com.tsystems.javaschool.webshop.dao.exceptions.DaoException;
-
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import java.util.List;
 

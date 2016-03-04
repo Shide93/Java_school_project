@@ -7,9 +7,11 @@
     <jsp:attribute name="sidebar">
         <div>
             <div class="list-group">
-                <c:forEach var="order" items="${requestScope.orders}">
-                    <a class="list-group-item" href="<c:url value="/backend/orders?orderId=${order.id}"/>">Order: ${order.id}</a>
-                </c:forEach>
+                <c:if test="${requestScope.orders != null}">
+                    <c:forEach var="order" items="${requestScope.orders}">
+                        <a class="list-group-item" href="<c:url value="/backend/orders?orderId=${order.id}"/>">Order: ${order.id}</a>
+                    </c:forEach>
+                </c:if>
             </div>
         </div>
     </jsp:attribute>

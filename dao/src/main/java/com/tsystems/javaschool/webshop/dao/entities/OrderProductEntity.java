@@ -11,12 +11,13 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
- * Created by Shide on 22.02.2016.
+ * The type Order product entity.
  */
 @Entity
+@SuppressWarnings("CheckStyle")
 @NamedQuery(name = "OrderProductEntity.getTopProducts",
-        query = "select p.product from OrderProductEntity p " +
-                "group by p.productId order by sum(p.quantity) desc")
+        query = "select p.product from OrderProductEntity p "
+                + "group by p.productId order by sum(p.quantity) desc")
 @Table(name = "order_product", schema = "web_shop")
 @IdClass(OrderProductEntityPK.class)
 public class OrderProductEntity {
@@ -139,14 +140,5 @@ public class OrderProductEntity {
      */
     public void setProduct(final ProductEntity product) {
         this.product = product;
-    }
-
-    @Override
-    public String toString() {
-        return "OrderProductEntity{" +
-                "orderId=" + orderId +
-                ", productId=" + productId +
-                ", quantity=" + quantity +
-                '}';
     }
 }

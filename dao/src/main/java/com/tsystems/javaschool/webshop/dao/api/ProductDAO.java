@@ -12,15 +12,17 @@ import java.util.Map;
 public interface ProductDAO extends GenericDAO<ProductEntity> {
 
     /**
-     * Searches products that have specified feature values
+     * Searches products that have specified feature values.
      *
-     * @param featureValues map of search values where key                      is feature id and value is                      an array of feature values to search with
+     * @param featureValues map of search values where key
+     *                      is feature id and value is
+     *                      an array of feature values to search with
      * @param manager       the manager
      * @return the list of products that satisfy selected features
      */
-    List<ProductEntity> findByFeatures(Map<Integer, List<String>> featureValues, EntityManager manager);
-
-
+    List<ProductEntity> findByFeatures(
+            Map<Integer, List<String>> featureValues,
+            EntityManager manager);
     /**
      * Top of the best selling products.
      *

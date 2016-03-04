@@ -7,29 +7,45 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
-import static org.junit.Assert.*;
-
 /**
- * Created by Shide on 04.03.2016.
+ * The type Validation service impl test.
  */
+@SuppressWarnings("CheckStyle")
 public class ValidationServiceImplTest {
 
-    ValidationService validationService;
+    /**
+     * The Validation service.
+     */
+    private ValidationService validationService;
+
+    /**
+     * Sets up.
+     *
+     * @throws Exception the exception
+     */
     @Before
     public void setUp() throws Exception {
         validationService = new ValidationServiceImpl();
     }
 
+    /**
+     * Tear down.
+     *
+     * @throws Exception the exception
+     */
     @After
     public void tearDown() throws Exception {
 
     }
 
+    /**
+     * Test get valid password.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testGetValidPassword() throws Exception {
         String password = "password";
@@ -37,17 +53,27 @@ public class ValidationServiceImplTest {
         Assert.assertEquals(password, validPass);
     }
 
+    /**
+     * Test get valid date.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testGetValidDate() throws Exception {
         String pattern = "dd-MM-yyyy";
-        Date today = Calendar.getInstance().getTime();
-        DateFormat df = new SimpleDateFormat(pattern);
-        String dateStr = df.format(today);
+        String dateStr = "12-11-1290";
         Date validDate = validationService.getValidDate(dateStr, pattern);
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
 
-        Assert.assertEquals(today, validDate);
+        String reportDate = format.format(validDate);
+        Assert.assertEquals(dateStr, reportDate);
     }
 
+    /**
+     * Test get valid email.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testGetValidEmail() throws Exception {
         String email = "abc@mail.ru";
@@ -55,6 +81,11 @@ public class ValidationServiceImplTest {
         Assert.assertEquals(email, validEmail);
     }
 
+    /**
+     * Test get valid int.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testGetValidInt() throws Exception {
         int i = 123;
@@ -62,6 +93,11 @@ public class ValidationServiceImplTest {
         Assert.assertEquals(i, validInt);
     }
 
+    /**
+     * Test get exception password.
+     *
+     * @throws Exception the exception
+     */
     @Test(expected = ServiceException.class)
     public void testGetExceptionPassword() throws Exception {
         String password = "password";
@@ -69,20 +105,35 @@ public class ValidationServiceImplTest {
         String validPass = validationService.getValidPassword(password, password2);
     }
 
+    /**
+     * Test get exception date.
+     *
+     * @throws Exception the exception
+     */
     @Test(expected = ServiceException.class)
     public void testGetExceptionDate() throws Exception {
         String pattern = "dd-MM-yyyy";
-        String dateStr = "1993-11-02";
+        String dateStr = "1993/11/02";
         validationService.getValidDate(dateStr, pattern);
 
     }
 
+    /**
+     * Test get exception email.
+     *
+     * @throws Exception the exception
+     */
     @Test(expected = ServiceException.class)
     public void testGetExceptionEmail() throws Exception {
         String email = "abcmail.ru";
         validationService.getValidEmail(email);
     }
 
+    /**
+     * Test get exception int.
+     *
+     * @throws Exception the exception
+     */
     @Test(expected = ServiceException.class)
     public void testGetExceptionInt() throws Exception {
         validationService.getValidInt("q123", "q");

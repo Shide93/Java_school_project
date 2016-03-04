@@ -5,7 +5,10 @@ import com.tsystems.javaschool.webshop.services.api.FeatureService;
 import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.impl.FeatureServiceImpl;
 import com.tsystems.javaschool.webshop.services.impl.ValidationServiceImpl;
+import com.tsystems.javaschool.webshop.servlets.SaveProfileServlet;
 import flexjson.JSONSerializer;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,17 +21,22 @@ import java.io.IOException;
  */
 public class FeaturesBackendServlet extends HttpServlet {
     /**
+     * The constant LOGGER.
+     */
+    private static final Logger LOGGER =
+            LogManager.getLogger(SaveProfileServlet.class);
+    /**
      * The Feature service.
      */
-    private FeatureService featureService;
+    private final FeatureService featureService;
     /**
      * The Json serializer.
      */
-    private JSONSerializer jsonSerializer;
+    private final JSONSerializer jsonSerializer;
     /**
      * The Validation service.
      */
-    private ValidationService validationService;
+    private final ValidationService validationService;
     /**
      * Instantiates a new Features backend servlet.
      */
@@ -39,7 +47,7 @@ public class FeaturesBackendServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(final HttpServletRequest req,
+    protected final void doGet(final HttpServletRequest req,
                          final HttpServletResponse resp)
             throws ServletException, IOException {
         //get all features
@@ -49,7 +57,7 @@ public class FeaturesBackendServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(final HttpServletRequest req,
+    protected final void doPost(final HttpServletRequest req,
                           final HttpServletResponse resp)
             throws ServletException, IOException {
         String action = req.getParameter("action");
@@ -58,7 +66,7 @@ public class FeaturesBackendServlet extends HttpServlet {
         String name = req.getParameter("name");
 
         if (action.equals("add")) {
-            FeatureEntity feature= new FeatureEntity();
+            FeatureEntity feature = new FeatureEntity();
             feature.setName(name);
             featureService.add(feature);
             resp.getWriter().println(jsonSerializer.serialize(feature));
@@ -72,8 +80,16 @@ public class FeaturesBackendServlet extends HttpServlet {
 
         } else if (action.equals("remove")) {
             Integer id = Integer.parseInt(idStr);
+            try {
+                featureService.delete(id);
+            } catch (Exception e) {
+                LOGGER.warn("Can't remove feature", e);
+                resp.getWriter().println(
+                        "{\"cantRemove\": \"Can't remove feature: "
+                                + "it is already assigned to product\"}");
 
-            featureService.delete(id);
+                return;
+            }
             resp.getWriter().println(jsonSerializer.serialize(id));
 
         }

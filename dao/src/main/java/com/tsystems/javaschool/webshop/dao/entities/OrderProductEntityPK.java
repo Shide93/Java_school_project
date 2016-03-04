@@ -5,8 +5,9 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by Shide on 22.02.2016.
+ * The type Order product entity pk.
  */
+@SuppressWarnings("CheckStyle")
 public class OrderProductEntityPK implements Serializable {
     /**
      * The Order id.

@@ -3,15 +3,11 @@ package com.tsystems.javaschool.webshop.dao.impl;
 
 import com.tsystems.javaschool.webshop.dao.api.ProductDAO;
 import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
-
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -74,21 +70,11 @@ public class ProductDAOImpl extends AbstractGenericDAO<ProductEntity>
     }
 
     @Override
-    public List<ProductEntity> topProducts(final int count,
+    public final List<ProductEntity> topProducts(final int count,
                                            final EntityManager manager) {
         TypedQuery<ProductEntity> query =
                 manager.createNamedQuery("OrderProductEntity.getTopProducts",
                         ProductEntity.class);
         return query.setMaxResults(count).getResultList();
-    }
-
-    public static void main(String[] args) {
-        ProductDAOImpl p = new ProductDAOImpl();
-        Map<Integer, List<String>> map = new HashMap<>();
-        map.put(3, new ArrayList<String>());
-        map.get(3).add("123");
-        List<ProductEntity> pr = p.findByFeatures(map,
-                Persistence.createEntityManagerFactory("webShopDB").createEntityManager());
-        pr.size();
     }
 }

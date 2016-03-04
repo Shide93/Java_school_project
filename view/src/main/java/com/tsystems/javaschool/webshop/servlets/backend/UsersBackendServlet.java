@@ -14,18 +14,19 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Shide on 01.03.2016.
+ * The type Users backend servlet.
  */
 public class UsersBackendServlet extends HttpServlet {
 
     /**
      * The Account service.
      */
-    private AccountService accountService;
+    private final AccountService accountService;
     /**
      * The Validation service.
      */
-    private ValidationService validationService;
+    private final ValidationService validationService;
+
     /**
      * Instantiates a new Users backend servlet.
      */
@@ -35,7 +36,9 @@ public class UsersBackendServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+    protected final void doGet(final HttpServletRequest req,
+                               final HttpServletResponse resp)
+            throws ServletException, IOException {
         List<UserEntity> users = accountService.getAll();
 
         req.setAttribute("users", users);
@@ -43,7 +46,9 @@ public class UsersBackendServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+    protected final void doPost(final HttpServletRequest req,
+                                final HttpServletResponse resp)
+            throws ServletException, IOException {
         String action = req.getParameter("action");
         String idStr = req.getParameter("id");
         String isAdmin = req.getParameter("isAdmin");

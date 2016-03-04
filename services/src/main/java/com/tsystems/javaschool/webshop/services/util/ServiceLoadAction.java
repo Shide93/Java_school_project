@@ -1,10 +1,6 @@
 package com.tsystems.javaschool.webshop.services.util;
 
-import com.tsystems.javaschool.webshop.dao.exceptions.DaoException;
-import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
-
 import javax.persistence.EntityManager;
-import javax.security.auth.login.AccountException;
 
 /**
  * Loads data from DAO.

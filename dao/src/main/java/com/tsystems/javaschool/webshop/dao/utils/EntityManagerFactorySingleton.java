@@ -11,7 +11,7 @@ public final class EntityManagerFactorySingleton {
     private static EntityManagerFactorySingleton instance = null;
 
     /***/
-    private EntityManagerFactory factory;
+    private final EntityManagerFactory factory;
 
     /***/
     private EntityManagerFactorySingleton() {

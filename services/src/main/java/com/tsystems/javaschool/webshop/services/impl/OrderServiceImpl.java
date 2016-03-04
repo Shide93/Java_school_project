@@ -5,7 +5,6 @@ import com.tsystems.javaschool.webshop.dao.entities.OrderEntity;
 import com.tsystems.javaschool.webshop.dao.entities.enums.OrderStatus;
 import com.tsystems.javaschool.webshop.dao.impl.OrderDAOImpl;
 import com.tsystems.javaschool.webshop.services.api.OrderService;
-import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import com.tsystems.javaschool.webshop.services.util.ServiceHelper;
 import com.tsystems.javaschool.webshop.services.util.ServiceHelperImpl;
 import org.apache.log4j.LogManager;
@@ -14,53 +13,63 @@ import org.apache.log4j.Logger;
 import java.util.List;
 
 /**
- * Created by Shide on 23.02.2016.
+ * The type Order service.
  */
 public class OrderServiceImpl implements OrderService {
 
     /**
      * The constant LOGGER.
      */
-    private static final Logger LOGGER = LogManager.getLogger(OrderServiceImpl.class);
+    private static final Logger LOGGER =
+            LogManager.getLogger(OrderServiceImpl.class);
 
-    private OrderDAO orderDAO;
-    private ServiceHelper serviceHelper;
+    /**
+     * The Order dao.
+     */
+    private final OrderDAO orderDAO;
+    /**
+     * The Service helper.
+     */
+    private final ServiceHelper serviceHelper;
 
+    /**
+     * Instantiates a new Order service.
+     */
     public OrderServiceImpl() {
         orderDAO = new OrderDAOImpl();
         serviceHelper = new ServiceHelperImpl(LOGGER);
     }
 
     @Override
-    public void add(OrderEntity order) {
+    public final void add(final OrderEntity order) {
         serviceHelper.executeInTransaction(manager -> {
             orderDAO.create(order, manager);
         });
     }
 
     @Override
-    public void update(OrderEntity order) {
+    public final void update(final OrderEntity order) {
         serviceHelper.executeInTransaction(manager -> {
             orderDAO.update(order, manager);
         });
     }
 
     @Override
-    public void delete(Integer orderId) {
+    public final void delete(final Integer orderId) {
         serviceHelper.executeInTransaction(manager -> {
             orderDAO.delete(orderId, manager);
         });
     }
 
     @Override
-    public OrderEntity get(int orderId) {
+    public final OrderEntity get(final int orderId) {
         return serviceHelper.load(manager -> {
             return orderDAO.getById(orderId, manager);
         });
     }
 
     @Override
-    public List<OrderEntity> getAll() {
+    public final List<OrderEntity> getAll() {
         return serviceHelper.loadInTransaction(manager -> {
 
             return orderDAO.getAll(manager);
@@ -68,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void changeStatus(final int id, final OrderStatus status) {
+    public final void changeStatus(final int id, final OrderStatus status) {
         serviceHelper.executeInTransaction(manager -> {
             OrderEntity order = orderDAO.getById(id, manager);
             order.setOrderStatus(status);
@@ -76,7 +85,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderEntity> getAllByUser(final int userId) {
+    public final List<OrderEntity> getAllByUser(final int userId) {
         return serviceHelper.loadInTransaction(manager ->
                 orderDAO.getByUser(userId, manager));
     }

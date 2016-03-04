@@ -24,15 +24,15 @@ public class SearchServlet extends HttpServlet {
     /**
      * The Feature service.
      */
-    private FeatureService featureService;
+    private final FeatureService featureService;
     /**
      * The Product service.
      */
-    private ProductService productService;
+    private final ProductService productService;
     /**
      * The Validation service.
      */
-    private ValidationService validationService;
+    private final ValidationService validationService;
 
     /**
      * Instantiates a new Search servlet.

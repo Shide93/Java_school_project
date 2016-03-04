@@ -30,15 +30,15 @@ public class CartServiceImpl implements CartService {
     /**
      * The Cart dao.
      */
-    private CartDAO cartDAO;
+    private final CartDAO cartDAO;
     /**
      * The Product dao.
      */
-    private ProductDAO productDAO;
+    private final ProductDAO productDAO;
     /**
      * The Service helper.
      */
-    private ServiceHelper serviceHelper;
+    private final ServiceHelper serviceHelper;
 
     /**
      * Instantiates a new Cart service.

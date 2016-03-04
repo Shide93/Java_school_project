@@ -35,15 +35,15 @@ public class CheckoutServlet extends HttpServlet {
     /**
      * The Checkout service.
      */
-    private CheckoutService checkoutService;
+    private final CheckoutService checkoutService;
     /**
      * The Account service.
      */
-    private AccountService accountService;
+    private final AccountService accountService;
     /**
      * The Validation service.
      */
-    private ValidationService validationService;
+    private final ValidationService validationService;
 
     /**
      * Instantiates a new Checkout servlet.
@@ -91,6 +91,25 @@ public class CheckoutServlet extends HttpServlet {
         //comment
         String comment = req.getParameter("comment");
 
+        //check required fields
+        if (phone.equals("")
+                || name.equals("")
+                || country.equals("")
+                || city.equals("")
+                || street.equals("")) {
+            List<PaymentEntity> paymentTypes =
+                    checkoutService.getPaymentTypes();
+            List<ShippingEntity> shippingTypes =
+                    checkoutService.getShippingTypes();
+            req.setAttribute("paymentTypes", paymentTypes);
+            req.setAttribute("shippingTypes", shippingTypes);
+
+            LOGGER.warn("some required fields are empty");
+            req.setAttribute("required", "some required fields are empty");
+            req.getRequestDispatcher("/checkout.jsp")
+                    .forward(req, resp);
+            return;
+        }
         try {
             zip = validationService.getValidInt(
                     req.getParameter("zip"), "zip");
@@ -103,12 +122,20 @@ public class CheckoutServlet extends HttpServlet {
             paymentId = validationService.getValidInt(
                     req.getParameter("payment_id"), "payment_id");
         } catch (ServiceException e) {
+            List<PaymentEntity> paymentTypes =
+                    checkoutService.getPaymentTypes();
+            List<ShippingEntity> shippingTypes =
+                    checkoutService.getShippingTypes();
+            req.setAttribute("paymentTypes", paymentTypes);
+            req.setAttribute("shippingTypes", shippingTypes);
+
             LOGGER.warn(e.getMessage(), e);
             req.setAttribute("notValid", e.getMessage());
             req.getRequestDispatcher("/checkout.jsp")
                     .forward(req, resp);
             return;
         }
+
         //save user info to profile
         UserEntity user = (UserEntity) req.getSession().getAttribute("user");
         UserEntity newUser = new UserEntity();

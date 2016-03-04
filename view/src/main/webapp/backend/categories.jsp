@@ -4,12 +4,14 @@
 <t:backendLayout>
     <jsp:attribute name="sidebar">
        <div class="">
-           <div class="list-group">
-               <c:forEach var="category" items="${applicationScope.categoryList}">
-                   <a class="list-group-item" href="<c:url value="/backend/categories?categoryId=${category.id}"/>">${category.name}</a>
-               </c:forEach>
+            <div class="list-group">
+                <c:if test="${applicationScope.categoryList != null}">
+                   <c:forEach var="category" items="${applicationScope.categoryList}">
+                       <a class="list-group-item" href="<c:url value="/backend/categories?categoryId=${category.id}"/>">${category.name}</a>
+                   </c:forEach>
+                </c:if>
                <a class="add_category list-group-item" href="<c:url value="/backend/categories?categoryId=0"/>">Add category</a>
-           <div class="list-group">
+            </div>
        </div>
     </jsp:attribute>
 
@@ -51,19 +53,19 @@
         <c:if test="${requestScope.selectedCategory == null}">
             <div class="">
                 <h1 class="">New category</h1>
-                <form class="" action="<c:url value="/backend/categories?action=add"/>" method="post">
+                <form class="" role="form" action="<c:url value="/backend/categories?action=add"/>" method="post">
                     <div class="">
                         <label>Category name:
-                            <input type="text" name="name" value="">
+                            <input class="form-control" type="text" name="name" value="">
                         </label>
                     </div>
-                    <div class="">
+                    <div class="form-group">
                         <label>Category description
-                        <textarea name="description"></textarea>
+                        <textarea class="form-control" name="description"></textarea>
                         </label>
                     </div>
                     <div>
-                        <input class="add" type="submit" value="Add new category">
+                        <input class="add btn btn-default" type="submit" value="Add new category">
                     </div>
                 </form>
             </div>

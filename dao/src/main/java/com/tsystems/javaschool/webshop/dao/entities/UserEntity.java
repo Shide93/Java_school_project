@@ -24,9 +24,11 @@ import java.util.Set;
 /**
  * The type User entity.
  */
+@SuppressWarnings("CheckStyle")
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "UserEntity.getByEmail", query = "SELECT u FROM UserEntity u WHERE u.email = :email")
+        @NamedQuery(name = "UserEntity.getByEmail",
+                query = "SELECT u FROM UserEntity u WHERE u.email = :email")
 })
 @Table(name = "user", schema = "web_shop")
 public class UserEntity {

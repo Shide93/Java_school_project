@@ -26,11 +26,11 @@ public class FeatureServiceImpl implements FeatureService {
     /**
      * The Feature dao.
      */
-    private FeatureDAO featureDAO;
+    private final FeatureDAO featureDAO;
     /**
      * The Service helper.
      */
-    private ServiceHelper serviceHelper;
+    private final ServiceHelper serviceHelper;
 
     /**
      * Instantiates a new Feature service.
@@ -71,7 +71,7 @@ public class FeatureServiceImpl implements FeatureService {
     }
 
     @Override
-    public List<ProductFeatureEntity> getAllCategoryValues() {
+    public final List<ProductFeatureEntity> getAllCategoryValues() {
         return serviceHelper.loadInTransaction(manager ->
                 featureDAO.getAllValues(manager));
     }

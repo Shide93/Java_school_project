@@ -11,25 +11,30 @@
     <jsp:attribute name="content">
         <div class="row">
             <div class="col-lg-4">
-                <p class="newOrders">New orders: <b>${requestScope.newOrders}</b></p>
-                <p class="totalSales">Total sales: <b>${requestScope.totalSales}</b></p>
-                <p class="monthSales">Month sales: <b>${requestScope.monthSales}</b></p>
+                <p class="newOrders">New orders: <b><c:out value="${requestScope.newOrders}" default="0"/></b></p>
+                <p class="totalSales">Total sales: <b><c:out value="${requestScope.totalSales}" default="0"/></b></p>
+                <p class="monthSales">Month sales: <b><c:out value="${requestScope.monthSales}" default="0"/></b></p>
             </div>
             <div class="topCustomers col-lg-4">
                 Top cusotmers:
-                <c:forEach var="customer" items="${requestScope.topCustomers}" >
-                    <div>
-                        ${customer.name} ${customer.lastName}
-                    </div>
-                </c:forEach>
+                <c:if test="${requestScope.topCustomers != null}">
+                    <c:forEach var="customer" items="${requestScope.topCustomers}"  >
+                        <div>
+                            ${customer.name} ${customer.lastName}
+                        </div>
+                    </c:forEach>
+                </c:if>
             </div>
+
             <div class="topProducts col-lg-4">
                 Top products:
-                <c:forEach var="product" items="${requestScope.topProducts}" >
-                    <div>
-                        <a href="<c:url value="/backend/products?productId=${product.id}"/>">${product.name}</a>
-                    </div>
-                </c:forEach>
+                <c:if test="${requestScope.topProducts != null}">
+                    <c:forEach var="product" items="${requestScope.topProducts}" >
+                        <div>
+                            <a href="<c:url value="/backend/products?productId=${product.id}"/>">${product.name}</a>
+                        </div>
+                    </c:forEach>
+                </c:if>
             </div>
         </div>
     </jsp:attribute>

@@ -6,9 +6,11 @@
     <jsp:attribute name="sidebar">
        <div class="">
            <div class="list-group">
-               <c:forEach var="product" items="${requestScope.products}">
-                   <a class="list-group-item" href="<c:url value="/backend/products?productId=${product.id}"/>">${product.name}</a>
-               </c:forEach>
+               <c:if test="${requestScope.products != null}">
+                   <c:forEach var="product" items="${requestScope.products}">
+                       <a class="list-group-item" href="<c:url value="/backend/products?productId=${product.id}"/>">${product.name}</a>
+                   </c:forEach>
+               </c:if>
                <a class="add_product list-group-item" href="<c:url value="/backend/products?productId=0"/>">Add product</a>
            </div>
        </div>
@@ -96,30 +98,30 @@
 
             <div class="">
                 <h1 class="">New product</h1>
-                <form class="" action="<c:url value="/backend/products?action=add"/>" method="post">
+                <form class="" role="form" action="<c:url value="/backend/products?action=add"/>" method="post">
                     <div class="name">
                         <label>Product name:
-                            <input type="text" name="name" value="">
+                            <input class="form-control" type="text" name="name" value="">
                         </label>
                     </div>
                     <div class="description">
                         <label>Product description
-                            <textarea name="description"></textarea>
+                            <textarea class="form-control" name="description"></textarea>
                         </label>
                     </div>
                     <div class="price">
                         <label>Price:
-                            <input type="text" name="price" value="">
+                            <input class="form-control" type="text" name="price" value="">
                         </label>
                     </div>
                     <div class="stock">
                         <label>Stock:
-                            <input type="text" name="stock" value="">
+                            <input class="form-control" type="text" name="stock" value="">
                         </label>
                     </div>
                     <div class="category">
                         <label>Category:
-                            <select class="" name="category">
+                            <select class="form-control" class="" name="category">
                                 <c:forEach var="category" items="${applicationScope.categoryList}">
                                     <option class="" value="${category.id}">
                                             ${category.name}
@@ -136,7 +138,7 @@
                         </div>
                     </div>
                     <div>
-                        <input class="add" type="submit" value="Add new product">
+                        <input class="add btn btn-primary" type="submit" value="Add new product">
                     </div>
                 </form>
             </div>
