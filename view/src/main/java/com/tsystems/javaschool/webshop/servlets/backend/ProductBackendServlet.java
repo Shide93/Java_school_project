@@ -52,6 +52,22 @@ public class ProductBackendServlet extends HttpServlet {
         featureService = new FeatureServiceImpl();
         validationService = new ValidationServiceImpl();
     }
+
+    /**
+     * Instantiates a new Product backend servlet.
+     *
+     * @param productSrv    the product service
+     * @param featureSrv    the feature service
+     * @param validationSrv the validation service
+     */
+    public ProductBackendServlet(final ProductService productSrv,
+                                 final FeatureService featureSrv,
+                                 final ValidationService validationSrv) {
+        this.productService = productSrv;
+        this.featureService = featureSrv;
+        this.validationService = validationSrv;
+    }
+
     @Override
     protected final void doGet(final HttpServletRequest req,
                          final HttpServletResponse resp)

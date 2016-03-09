@@ -44,6 +44,18 @@ public class ProductPageServlet extends HttpServlet {
         validationService = new ValidationServiceImpl();
     }
 
+    /**
+     * Instantiates a new Product page servlet.
+     *
+     * @param productSrv    the product service
+     * @param validationSrv the validation service
+     */
+    public ProductPageServlet(final ProductService productSrv,
+                              final ValidationService validationSrv) {
+        this.productService = productSrv;
+        this.validationService = validationSrv;
+    }
+
     @Override
     protected final void doGet(final HttpServletRequest req,
                                final HttpServletResponse resp)

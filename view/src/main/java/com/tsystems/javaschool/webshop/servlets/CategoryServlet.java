@@ -34,6 +34,7 @@ public class CategoryServlet extends HttpServlet {
      * The Validation service.
      */
     private final ValidationService validationService;
+
     /**
      * Instantiates a new Category servlet.
      */
@@ -42,6 +43,19 @@ public class CategoryServlet extends HttpServlet {
         new CategoryServiceImpl();
         validationService = new ValidationServiceImpl();
     }
+
+    /**
+     * Instantiates a new Category servlet.
+     *
+     * @param categorySrv   the category service
+     * @param validationSrv the validation service
+     */
+    public CategoryServlet(final CategoryService categorySrv,
+                           final ValidationService validationSrv) {
+        this.categoryService = categorySrv;
+        this.validationService = validationSrv;
+    }
+
     @Override
     protected final void doGet(final HttpServletRequest req,
                                final HttpServletResponse resp)

@@ -54,6 +54,24 @@ public class StatisticsServiceImpl implements StatisticsService {
         usersDAO = new UsersDAOImpl();
     }
 
+    /**
+     * Instantiates a new Statistics service.
+     *
+     * @param serviceHelper the service helper
+     * @param orderDAO      the order dao
+     * @param productDAO    the product dao
+     * @param usersDAO      the users dao
+     */
+    public StatisticsServiceImpl(final ServiceHelper serviceHelper,
+                                 final OrderDAO orderDAO,
+                                 final ProductDAO productDAO,
+                                 final UsersDAO usersDAO) {
+        this.serviceHelper = serviceHelper;
+        this.orderDAO = orderDAO;
+        this.productDAO = productDAO;
+        this.usersDAO = usersDAO;
+    }
+
     @Override
     public final int newOrders() {
         return serviceHelper.loadInTransaction(manager ->

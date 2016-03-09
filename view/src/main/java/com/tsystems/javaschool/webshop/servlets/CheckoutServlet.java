@@ -54,6 +54,21 @@ public class CheckoutServlet extends HttpServlet {
         validationService = new ValidationServiceImpl();
     }
 
+    /**
+     * Instantiates a new Checkout servlet.
+     *
+     * @param checkoutSrv   the checkout service
+     * @param accountSrv    the account service
+     * @param validationSrv the validation service
+     */
+    public CheckoutServlet(final CheckoutService checkoutSrv,
+                           final AccountService accountSrv,
+                           final ValidationService validationSrv) {
+        this.checkoutService = checkoutSrv;
+        this.accountService = accountSrv;
+        this.validationService = validationSrv;
+    }
+
     @Override
     protected final void doGet(final HttpServletRequest req,
                          final HttpServletResponse resp)

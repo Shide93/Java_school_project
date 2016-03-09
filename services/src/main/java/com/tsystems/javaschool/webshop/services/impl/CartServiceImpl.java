@@ -49,6 +49,21 @@ public class CartServiceImpl implements CartService {
         serviceHelper = new ServiceHelperImpl(LOGGER);
     }
 
+    /**
+     * Instantiates a new Cart service.
+     *
+     * @param cartDAO       the cart dao
+     * @param productDAO    the product dao
+     * @param serviceHelper the service helper
+     */
+    public CartServiceImpl(final CartDAO cartDAO,
+                           final ProductDAO productDAO,
+                           final ServiceHelper serviceHelper) {
+        this.cartDAO = cartDAO;
+        this.productDAO = productDAO;
+        this.serviceHelper = serviceHelper;
+    }
+
     @Override
     public final void add(final CartEntity cart) {
         serviceHelper.executeInTransaction(manager -> {

@@ -49,6 +49,18 @@ public class SignInServlet extends HttpServlet {
         validationService = new ValidationServiceImpl();
     }
 
+    /**
+     * Instantiates a new Sign in servlet.
+     *
+     * @param accountSrv    the account service
+     * @param validationSrv the validation service
+     */
+    public SignInServlet(final AccountService accountSrv,
+                         final ValidationService validationSrv) {
+        this.accountService = accountSrv;
+        this.validationService = validationSrv;
+    }
+
     @Override
     protected final void doGet(final HttpServletRequest req,
                          final HttpServletResponse resp)

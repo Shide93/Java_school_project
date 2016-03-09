@@ -56,6 +56,21 @@ public class SaveProfileServlet extends HttpServlet {
         validationService = new ValidationServiceImpl();
     }
 
+    /**
+     * Instantiates a new Save profile servlet.
+     *
+     * @param accountSrv    the account service
+     * @param orderSrv      the order service
+     * @param validationSrv the validation service
+     */
+    public SaveProfileServlet(final AccountService accountSrv,
+                              final OrderService orderSrv,
+                              final ValidationService validationSrv) {
+        this.accountService = accountSrv;
+        this.orderService = orderSrv;
+        this.validationService = validationSrv;
+    }
+
     @Override
     protected final void doGet(final HttpServletRequest req,
                                final HttpServletResponse resp)

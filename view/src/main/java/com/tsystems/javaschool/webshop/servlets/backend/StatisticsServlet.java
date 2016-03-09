@@ -32,6 +32,18 @@ public class StatisticsServlet extends HttpServlet {
         validationService = new ValidationServiceImpl();
     }
 
+    /**
+     * Instantiates a new Statistics servlet.
+     *
+     * @param statisticsSrv the statistics service
+     * @param validationSrv the validation service
+     */
+    public StatisticsServlet(final StatisticsService statisticsSrv,
+                             final ValidationService validationSrv) {
+        this.statisticsService = statisticsSrv;
+        this.validationService = validationSrv;
+    }
+
     @Override
     protected final void doGet(final HttpServletRequest req,
                          final HttpServletResponse resp)

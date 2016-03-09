@@ -40,6 +40,18 @@ public class OrderServiceImpl implements OrderService {
         serviceHelper = new ServiceHelperImpl(LOGGER);
     }
 
+    /**
+     * Instantiates a new Order service.
+     *
+     * @param orderDAO      the order dao
+     * @param serviceHelper the service helper
+     */
+    public OrderServiceImpl(final OrderDAO orderDAO,
+                            final ServiceHelper serviceHelper) {
+        this.orderDAO = orderDAO;
+        this.serviceHelper = serviceHelper;
+    }
+
     @Override
     public final void add(final OrderEntity order) {
         serviceHelper.executeInTransaction(manager -> {

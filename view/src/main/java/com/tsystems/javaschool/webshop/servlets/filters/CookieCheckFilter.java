@@ -24,7 +24,7 @@ import java.io.IOException;
 /**
  * Servlet filter that checks user cookies
  * and writes to session information about user.
- * <p>
+ * <p/>
  * Checks is the user have authorized cookie and associates session with user.
  * Checks is the user have cart cookie and add cart data to session.
  */
@@ -42,6 +42,17 @@ public class CookieCheckFilter implements Filter {
      * The Cart service.
      */
     private CartService cartService;
+    /**
+     * Instantiates a new Cookie check filter.
+     *
+     * @param accountSrv the account service
+     * @param cartSrv    the cart service
+     */
+    public CookieCheckFilter(final AccountService accountSrv,
+                             final CartService cartSrv) {
+        this.accountService = accountSrv;
+        this.cartService = cartSrv;
+    }
 
     @Override
     public final void init(final FilterConfig filterConfig)

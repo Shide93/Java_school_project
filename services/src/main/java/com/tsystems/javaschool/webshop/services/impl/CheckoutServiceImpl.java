@@ -70,6 +70,27 @@ public class CheckoutServiceImpl implements CheckoutService {
         cartDAO = new CartDAOImpl();
     }
 
+    /**
+     * Instantiates a new Checkout service.
+     *
+     * @param serviceHelper the service helper
+     * @param paymentDAO    the payment dao
+     * @param shippingDAO   the shipping dao
+     * @param orderDAO      the order dao
+     * @param cartDAO       the cart dao
+     */
+    public CheckoutServiceImpl(final ServiceHelper serviceHelper,
+                               final PaymentDAO paymentDAO,
+                               final ShippingDAO shippingDAO,
+                               final OrderDAO orderDAO,
+                               final CartDAO cartDAO) {
+        this.serviceHelper = serviceHelper;
+        this.paymentDAO = paymentDAO;
+        this.shippingDAO = shippingDAO;
+        this.orderDAO = orderDAO;
+        this.cartDAO = cartDAO;
+    }
+
     @Override
     public final List<PaymentEntity> getPaymentTypes() {
         return serviceHelper.loadInTransaction(manager ->

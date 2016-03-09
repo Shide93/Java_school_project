@@ -57,6 +57,24 @@ public class ProductServiceImpl implements ProductService {
         serviceHelper = new ServiceHelperImpl(LOGGER);
     }
 
+    /**
+     * Instantiates a new Product service.
+     *
+     * @param productDAO    the product dao
+     * @param categoryDAO   the category dao
+     * @param featureDAO    the feature dao
+     * @param serviceHelper the service helper
+     */
+    public ProductServiceImpl(final ProductDAO productDAO,
+                              final CategoryDAO categoryDAO,
+                              final FeatureDAO featureDAO,
+                              final ServiceHelper serviceHelper) {
+        this.productDAO = productDAO;
+        this.categoryDAO = categoryDAO;
+        this.featureDAO = featureDAO;
+        this.serviceHelper = serviceHelper;
+    }
+
     @Override
     public final void add(final ProductEntity product) {
 

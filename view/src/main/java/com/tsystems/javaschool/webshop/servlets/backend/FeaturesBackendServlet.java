@@ -37,6 +37,7 @@ public class FeaturesBackendServlet extends HttpServlet {
      * The Validation service.
      */
     private final ValidationService validationService;
+
     /**
      * Instantiates a new Features backend servlet.
      */
@@ -44,6 +45,21 @@ public class FeaturesBackendServlet extends HttpServlet {
         featureService = new FeatureServiceImpl();
         jsonSerializer = new JSONSerializer();
         validationService = new ValidationServiceImpl();
+    }
+
+    /**
+     * Instantiates a new Features backend servlet.
+     *
+     * @param featureSrv    the feature service
+     * @param jsonSerialzr  the json serializer
+     * @param validationSrv the validation service
+     */
+    public FeaturesBackendServlet(final FeatureService featureSrv,
+                                  final JSONSerializer jsonSerialzr,
+                                  final ValidationService validationSrv) {
+        this.featureService = featureSrv;
+        this.jsonSerializer = jsonSerialzr;
+        this.validationService = validationSrv;
     }
 
     @Override

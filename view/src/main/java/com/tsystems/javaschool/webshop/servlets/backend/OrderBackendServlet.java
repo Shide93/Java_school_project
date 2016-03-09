@@ -22,6 +22,10 @@ public class OrderBackendServlet extends HttpServlet {
      * The Order service.
      */
     private final OrderService orderService;
+    /**
+     * The Validation service.
+     */
+    private final ValidationService validationService;
 
     /**
      * Instantiates a new Order backend servlet.
@@ -32,9 +36,16 @@ public class OrderBackendServlet extends HttpServlet {
     }
 
     /**
-     * The Validation service.
+     * Instantiates a new Order backend servlet.
+     *
+     * @param orderSrv      the order service
+     * @param validationSrv the validation service
      */
-    private final ValidationService validationService;
+    public OrderBackendServlet(final OrderService orderSrv,
+                               final ValidationService validationSrv) {
+        this.orderService = orderSrv;
+        this.validationService = validationSrv;
+    }
 
     @Override
     protected final void doGet(final HttpServletRequest req,

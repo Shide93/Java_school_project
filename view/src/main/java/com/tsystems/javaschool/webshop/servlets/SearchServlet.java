@@ -43,6 +43,21 @@ public class SearchServlet extends HttpServlet {
         validationService = new ValidationServiceImpl();
     }
 
+    /**
+     * Instantiates a new Search servlet.
+     *
+     * @param featureSrv    the feature service
+     * @param productSrv    the product service
+     * @param validationSrv the validation service
+     */
+    public SearchServlet(final FeatureService featureSrv,
+                         final ProductService productSrv,
+                         final ValidationService validationSrv) {
+        this.featureService = featureSrv;
+        this.productService = productSrv;
+        this.validationService = validationSrv;
+    }
+
     @Override
     protected final void doGet(final HttpServletRequest req,
                          final HttpServletResponse resp)

@@ -41,6 +41,7 @@ public class CartServlet extends HttpServlet {
      * The Validation service.
      */
     private final ValidationService validationService;
+
     /**
      * Instantiates a new Cart servlet.
      */
@@ -48,6 +49,21 @@ public class CartServlet extends HttpServlet {
         cartService = new CartServiceImpl();
         jsonSerializer = new JSONSerializer();
         validationService = new ValidationServiceImpl();
+    }
+
+    /**
+     * Instantiates a new Cart servlet.
+     *
+     * @param cartSrv       the cart service
+     * @param jsonSerialzr    the json serializer
+     * @param validationSrv the validation service
+     */
+    public CartServlet(final CartService cartSrv,
+                       final JSONSerializer jsonSerialzr,
+                       final ValidationService validationSrv) {
+        this.cartService = cartSrv;
+        this.jsonSerializer = jsonSerialzr;
+        this.validationService = validationSrv;
     }
 
     @Override

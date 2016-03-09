@@ -35,6 +35,18 @@ public class UsersBackendServlet extends HttpServlet {
         validationService = new ValidationServiceImpl();
     }
 
+    /**
+     * Instantiates a new Users backend servlet.
+     *
+     * @param accountSrv    the account service
+     * @param validationSrv the validation service
+     */
+    public UsersBackendServlet(final AccountService accountSrv,
+                               final ValidationService validationSrv) {
+        this.accountService = accountSrv;
+        this.validationService = validationSrv;
+    }
+
     @Override
     protected final void doGet(final HttpServletRequest req,
                                final HttpServletResponse resp)

@@ -42,6 +42,19 @@ public class CategoryBackendServlet extends HttpServlet {
         categoryService = new CategoryServiceImpl();
         validationService = new ValidationServiceImpl();
     }
+
+    /**
+     * Instantiates a new Category backend servlet.
+     *
+     * @param categorySrv   the category service
+     * @param validationSrv the validation service
+     */
+    public CategoryBackendServlet(final CategoryService categorySrv,
+                                  final ValidationService validationSrv) {
+        this.categoryService = categorySrv;
+        this.validationService = validationSrv;
+    }
+
     @Override
     protected final void doGet(final HttpServletRequest req,
                          final HttpServletResponse resp)

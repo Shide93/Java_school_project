@@ -41,6 +41,18 @@ public class AccountServiceImpl implements AccountService {
         this.serviceHelper = new ServiceHelperImpl(LOGGER);
     }
 
+    /**
+     * Instantiates a new Account service.
+     *
+     * @param usersDAO      the users dao
+     * @param serviceHelper the service helper
+     */
+    public AccountServiceImpl(final UsersDAO usersDAO,
+                              final ServiceHelper serviceHelper) {
+        this.usersDAO = usersDAO;
+        this.serviceHelper = serviceHelper;
+    }
+
     @Override
     public final UserEntity signUpUser(final String name,
                                        final String lastName,

@@ -38,6 +38,18 @@ public class CategoryServiceImpl implements CategoryService {
         serviceHelper = new ServiceHelperImpl(LOGGER);
     }
 
+    /**
+     * Instantiates a new Category service.
+     *
+     * @param categoryDAO   the category dao
+     * @param serviceHelper the service helper
+     */
+    public CategoryServiceImpl(final CategoryDAO categoryDAO,
+                               final ServiceHelper serviceHelper) {
+        this.categoryDAO = categoryDAO;
+        this.serviceHelper = serviceHelper;
+    }
+
     @Override
     public final void add(final CategoryEntity category) {
         serviceHelper.executeInTransaction(manager ->

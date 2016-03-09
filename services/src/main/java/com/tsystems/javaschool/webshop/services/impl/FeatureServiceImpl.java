@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 import java.util.List;
 
 /**
- *
+ * The type Feature service.
  */
 public class FeatureServiceImpl implements FeatureService {
 
@@ -39,6 +39,19 @@ public class FeatureServiceImpl implements FeatureService {
         featureDAO = new FeatureDAOImpl();
         serviceHelper = new ServiceHelperImpl(LOGGER);
     }
+
+    /**
+     * Instantiates a new Feature service.
+     *
+     * @param featureDAO    the feature dao
+     * @param serviceHelper the service helper
+     */
+    public FeatureServiceImpl(final FeatureDAO featureDAO,
+                              final ServiceHelper serviceHelper) {
+        this.featureDAO = featureDAO;
+        this.serviceHelper = serviceHelper;
+    }
+
     @Override
     public final void add(final FeatureEntity feature) {
         serviceHelper.executeInTransaction(manager -> {

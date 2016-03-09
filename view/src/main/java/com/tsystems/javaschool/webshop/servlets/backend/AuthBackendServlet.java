@@ -44,6 +44,18 @@ public class AuthBackendServlet extends HttpServlet {
         validationService = new ValidationServiceImpl();
     }
 
+    /**
+     * Instantiates a new Auth backend servlet.
+     *
+     * @param accountSrv    the account service
+     * @param validationSrv the validation service
+     */
+    public AuthBackendServlet(final AccountService accountSrv,
+                              final ValidationService validationSrv) {
+        this.accountService = accountSrv;
+        this.validationService = validationSrv;
+    }
+
     @Override
     protected final void doGet(final HttpServletRequest req,
                          final HttpServletResponse resp)
