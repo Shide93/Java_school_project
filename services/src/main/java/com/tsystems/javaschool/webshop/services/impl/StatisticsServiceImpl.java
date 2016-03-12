@@ -5,100 +5,65 @@ import com.tsystems.javaschool.webshop.dao.api.ProductDAO;
 import com.tsystems.javaschool.webshop.dao.api.UsersDAO;
 import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
-import com.tsystems.javaschool.webshop.dao.impl.OrderDAOImpl;
-import com.tsystems.javaschool.webshop.dao.impl.ProductDAOImpl;
-import com.tsystems.javaschool.webshop.dao.impl.UsersDAOImpl;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
 import com.tsystems.javaschool.webshop.services.api.StatisticsService;
-import com.tsystems.javaschool.webshop.services.util.ServiceHelper;
-import com.tsystems.javaschool.webshop.services.util.ServiceHelperImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
  * Created by Shide on 03.03.2016.
  */
+@Service
+@Transactional
 public class StatisticsServiceImpl implements StatisticsService {
     /**
      * The constant LOGGER.
      */
     private static final Logger LOGGER =
             LogManager.getLogger(AccountService.class);
-
-    /**
-     * The Service helper.
-     */
-    private final ServiceHelper serviceHelper;
     /**
      * The Order dao.
      */
-    private final OrderDAO orderDAO;
+    @Autowired
+    private OrderDAO orderDAO;
     /**
      * The Product dao.
      */
-    private final ProductDAO productDAO;
+    @Autowired
+    private ProductDAO productDAO;
     /**
      * The Users dao.
      */
-    private final UsersDAO usersDAO;
-
-    /**
-     * Instantiates a new Statistics service.
-     */
-    public StatisticsServiceImpl() {
-        serviceHelper = new ServiceHelperImpl(LOGGER);
-        orderDAO = new OrderDAOImpl();
-        productDAO = new ProductDAOImpl();
-        usersDAO = new UsersDAOImpl();
-    }
-
-    /**
-     * Instantiates a new Statistics service.
-     *
-     * @param serviceHelper the service helper
-     * @param orderDAO      the order dao
-     * @param productDAO    the product dao
-     * @param usersDAO      the users dao
-     */
-    public StatisticsServiceImpl(final ServiceHelper serviceHelper,
-                                 final OrderDAO orderDAO,
-                                 final ProductDAO productDAO,
-                                 final UsersDAO usersDAO) {
-        this.serviceHelper = serviceHelper;
-        this.orderDAO = orderDAO;
-        this.productDAO = productDAO;
-        this.usersDAO = usersDAO;
-    }
+    @Autowired
+    private UsersDAO usersDAO;
 
     @Override
     public final int newOrders() {
-        return serviceHelper.loadInTransaction(manager ->
-                orderDAO.newOrders(manager));
+        return orderDAO.newOrders();
     }
 
     @Override
     public final long totalSales() {
-        return serviceHelper.loadInTransaction(manager ->
-                orderDAO.totalSales(manager));
+        return orderDAO.totalSales();
     }
 
     @Override
     public final long monthSales() {
-        return serviceHelper.loadInTransaction(manager ->
-                orderDAO.monthSales(manager));
+        return orderDAO.monthSales();
     }
 
     @Override
     public final List<ProductEntity> topProducts(final int count) {
-        return serviceHelper.loadInTransaction(manager ->
-                productDAO.topProducts(count, manager));
+        return productDAO.topProducts(count);
     }
 
     @Override
     public final List<UserEntity> topCustomers(final int count) {
-        return serviceHelper.loadInTransaction(manager ->
-                orderDAO.topCustomers(count, manager));
+        return orderDAO.topCustomers(count);
     }
 }

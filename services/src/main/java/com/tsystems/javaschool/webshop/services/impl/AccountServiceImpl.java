@@ -2,19 +2,21 @@ package com.tsystems.javaschool.webshop.services.impl;
 
 import com.tsystems.javaschool.webshop.dao.api.UsersDAO;
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
-import com.tsystems.javaschool.webshop.dao.impl.UsersDAOImpl;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
 import com.tsystems.javaschool.webshop.services.exceptions.AccountServiceException;
-import com.tsystems.javaschool.webshop.services.util.ServiceHelper;
-import com.tsystems.javaschool.webshop.services.util.ServiceHelperImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
  * The type Account service.
  */
+@Service
+@Transactional
 public class AccountServiceImpl implements AccountService {
 
     /**
@@ -26,32 +28,8 @@ public class AccountServiceImpl implements AccountService {
     /**
      * The Users dao.
      */
-    private final UsersDAO usersDAO;
-
-    /**
-     * The Service helper.
-     */
-    private final ServiceHelper serviceHelper;
-
-    /**
-     * Instantiates a new Account service.
-     */
-    public AccountServiceImpl() {
-        this.usersDAO = new UsersDAOImpl();
-        this.serviceHelper = new ServiceHelperImpl(LOGGER);
-    }
-
-    /**
-     * Instantiates a new Account service.
-     *
-     * @param usersDAO      the users dao
-     * @param serviceHelper the service helper
-     */
-    public AccountServiceImpl(final UsersDAO usersDAO,
-                              final ServiceHelper serviceHelper) {
-        this.usersDAO = usersDAO;
-        this.serviceHelper = serviceHelper;
-    }
+    @Autowired
+    private UsersDAO usersDAO;
 
     @Override
     public final UserEntity signUpUser(final String name,
@@ -59,8 +37,8 @@ public class AccountServiceImpl implements AccountService {
                                        final String email,
                                        final String password)
             throws AccountServiceException {
-        return serviceHelper.loadInTransaction(manager -> {
-            if (usersDAO.getUserByEmail(email, manager) != null) {
+
+            if (usersDAO.getUserByEmail(email) != null) {
                 throw new AccountServiceException("email already registered");
             }
             UserEntity newUser = new UserEntity();
@@ -70,11 +48,8 @@ public class AccountServiceImpl implements AccountService {
             newUser.setLastName(lastName);
             newUser.setIsAdmin(false);
 
-            usersDAO.create(newUser, manager);
+            usersDAO.create(newUser);
             return newUser;
-        });
-
-
     }
 
 
@@ -82,42 +57,34 @@ public class AccountServiceImpl implements AccountService {
     public final UserEntity signInUser(final String email,
                                        final String password)
             throws AccountServiceException {
-        return serviceHelper.loadInTransaction(manager -> {
-            UserEntity user = usersDAO.getUserByEmail(email, manager);
 
-            if (user == null || !user.getPassword().equals(password)) {
-                throw new AccountServiceException(
-                        "Wrong password or email");
-            }
-            return user;
-        });
+        UserEntity user = usersDAO.getUserByEmail(email);
 
+        if (user == null || !user.getPassword().equals(password)) {
+            throw new AccountServiceException(
+                    "Wrong password or email");
+        }
+        return user;
     }
     @Override
     public final UserEntity getUser(final int userID) {
-        return serviceHelper.load(manager -> {
-            return usersDAO.getById(userID, manager);
-        });
+        return usersDAO.getById(userID);
     }
+
     @Override
     public final UserEntity saveProfile(final UserEntity user) {
-        return serviceHelper.loadInTransaction(manager -> {
-
-                usersDAO.update(user, manager);
-                return user;
-        });
+        usersDAO.update(user);
+        return user;
     }
 
     @Override
     public final List<UserEntity> getAll() {
-        return serviceHelper.loadInTransaction(manager ->
-                usersDAO.getAll(manager));
+        return usersDAO.getAll();
     }
 
     @Override
     public final void setUserRights(final int userId, final boolean isAdmin) {
-         serviceHelper.executeInTransaction(manager ->
-                 usersDAO.getById(userId, manager)
-                 .setIsAdmin(isAdmin));
+        usersDAO.getById(userId)
+        .setIsAdmin(isAdmin);
     }
 }

@@ -4,6 +4,7 @@ import com.tsystems.javaschool.webshop.dao.api.UsersDAO;
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -11,6 +12,7 @@ import javax.persistence.Query;
 /**
  * The type Users dao.
  */
+@Repository
 public class UsersDAOImpl extends AbstractGenericDAO<UserEntity>
         implements UsersDAO {
 

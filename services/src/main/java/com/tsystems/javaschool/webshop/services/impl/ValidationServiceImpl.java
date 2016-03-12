@@ -2,6 +2,7 @@ package com.tsystems.javaschool.webshop.services.impl;
 
 import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
+import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,6 +13,7 @@ import java.util.regex.Pattern;
 /**
  * Service for validating request variables.
  */
+@Service
 public class ValidationServiceImpl implements ValidationService {
 
     /**
