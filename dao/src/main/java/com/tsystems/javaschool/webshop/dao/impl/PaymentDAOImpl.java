@@ -4,10 +4,12 @@ import com.tsystems.javaschool.webshop.dao.api.PaymentDAO;
 import com.tsystems.javaschool.webshop.dao.entities.PaymentEntity;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
 
 /**
  * The type Payment dao.
  */
+@Repository
 public class PaymentDAOImpl extends AbstractGenericDAO<PaymentEntity>
         implements PaymentDAO {
     /**
@@ -15,11 +17,4 @@ public class PaymentDAOImpl extends AbstractGenericDAO<PaymentEntity>
      */
     private static final Logger LOGGER =
             LogManager.getLogger(CartDAOImpl.class);
-
-    /**
-     * Instantiates a new Payment dao.
-     */
-    public PaymentDAOImpl() {
-        super(PaymentEntity.class, LOGGER);
-    }
 }

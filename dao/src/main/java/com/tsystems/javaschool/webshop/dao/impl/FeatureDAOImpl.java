@@ -5,14 +5,15 @@ import com.tsystems.javaschool.webshop.dao.entities.FeatureEntity;
 import com.tsystems.javaschool.webshop.dao.entities.ProductFeatureEntity;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
  * Feature dao implementation.
  */
+@Repository
 public class FeatureDAOImpl extends AbstractGenericDAO<FeatureEntity>
         implements FeatureDAO {
     /**
@@ -20,16 +21,9 @@ public class FeatureDAOImpl extends AbstractGenericDAO<FeatureEntity>
      */
     private static final Logger LOGGER =
             LogManager.getLogger(FeatureDAOImpl.class);
-    /**
-     * Instantiates a new Feature dao.
-     */
-    public FeatureDAOImpl() {
-        super(FeatureEntity.class, LOGGER);
-    }
 
     @Override
-    public final List<ProductFeatureEntity> getAllValues(
-            final EntityManager manager) {
+    public final List<ProductFeatureEntity> getAllValues() {
         TypedQuery<ProductFeatureEntity> query =
                 manager.createNamedQuery("ProductFeatureEntity.getAllValues",
                         ProductFeatureEntity.class);

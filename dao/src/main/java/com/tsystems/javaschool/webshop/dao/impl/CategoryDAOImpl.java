@@ -4,14 +4,15 @@ import com.tsystems.javaschool.webshop.dao.api.CategoryDAO;
 import com.tsystems.javaschool.webshop.dao.entities.CategoryEntity;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
  * Category dao implementation.
  */
+@Repository
 public class CategoryDAOImpl  extends AbstractGenericDAO<CategoryEntity>
         implements CategoryDAO {
 
@@ -20,16 +21,9 @@ public class CategoryDAOImpl  extends AbstractGenericDAO<CategoryEntity>
      */
     private static final Logger LOGGER =
             LogManager.getLogger(CategoryDAOImpl.class);
-    /**
-     * Instantiates a new Category dao.
-     */
-    public CategoryDAOImpl() {
-        super(CategoryEntity.class, LOGGER);
-    }
 
     @Override
-    public final List<CategoryEntity> getAllIdNames(
-            final EntityManager manager) {
+    public final List<CategoryEntity> getAllIdNames() {
         TypedQuery<CategoryEntity> q =
                 manager.createNamedQuery("CategoryEntity.getAllIdNames",
                 CategoryEntity.class);

@@ -5,8 +5,8 @@ import com.tsystems.javaschool.webshop.dao.api.ProductDAO;
 import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +15,7 @@ import java.util.Map;
 /**
  * Product dao implementation.
  */
+@Repository
 public class ProductDAOImpl extends AbstractGenericDAO<ProductEntity>
         implements ProductDAO {
 
@@ -23,17 +24,9 @@ public class ProductDAOImpl extends AbstractGenericDAO<ProductEntity>
      */
     private static final Logger LOGGER =
             LogManager.getLogger(ProductDAOImpl.class);
-    /**
-     * Instantiates a new Product dao.
-     */
-    public ProductDAOImpl() {
-        super(ProductEntity.class, LOGGER);
-    }
-
     @Override
     public final List<ProductEntity> findByFeatures(
-            final Map<Integer, List<String>> featureValues,
-            final EntityManager manager) {
+            final Map<Integer, List<String>> featureValues) {
         StringBuilder queryString = new StringBuilder();
         queryString.append("select p from ProductEntity p ");
         queryString.append("inner join p.features f where f.id in ");
@@ -70,8 +63,7 @@ public class ProductDAOImpl extends AbstractGenericDAO<ProductEntity>
     }
 
     @Override
-    public final List<ProductEntity> topProducts(final int count,
-                                           final EntityManager manager) {
+    public final List<ProductEntity> topProducts(final int count) {
         TypedQuery<ProductEntity> query =
                 manager.createNamedQuery("OrderProductEntity.getTopProducts",
                         ProductEntity.class);

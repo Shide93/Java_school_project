@@ -5,13 +5,14 @@ import com.tsystems.javaschool.webshop.dao.entities.CartEntity;
 import com.tsystems.javaschool.webshop.dao.exceptions.DaoException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 /**
  * Cart dao implementation.
  */
+@Repository
 public class CartDAOImpl extends AbstractGenericDAO<CartEntity>
         implements CartDAO {
 
@@ -21,18 +22,10 @@ public class CartDAOImpl extends AbstractGenericDAO<CartEntity>
     private static final Logger LOGGER =
             LogManager.getLogger(CartDAOImpl.class);
 
-    /**
-     * Instantiates a new Cart dao.
-     */
-    public CartDAOImpl() {
-        super(CartEntity.class, LOGGER);
-    }
-
 
     @Override
     public final void removeFromCart(final Integer productId,
-                               final Integer cartId,
-                               final EntityManager manager)
+                               final Integer cartId)
             throws DaoException {
         Query q = manager.
                 createNamedQuery("CartProductEntity.removeFromCart");

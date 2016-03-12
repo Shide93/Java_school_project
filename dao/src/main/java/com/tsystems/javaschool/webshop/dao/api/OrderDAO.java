@@ -3,7 +3,6 @@ package com.tsystems.javaschool.webshop.dao.api;
 import com.tsystems.javaschool.webshop.dao.entities.OrderEntity;
 import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 /**
@@ -15,41 +14,36 @@ public interface OrderDAO extends GenericDAO<OrderEntity> {
      * Gets orders by user.
      *
      * @param userId  the user id
-     * @param manager the manager
      * @return user 's orders
      */
-    List<OrderEntity> getByUser(int userId, EntityManager manager);
+    List<OrderEntity> getByUser(int userId);
 
     /**
      * count of order with NEW status.
      *
-     * @param manager the manager
      * @return count of new orders
      */
-    int newOrders(EntityManager manager);
+    int newOrders();
 
     /**
      * total shop sales.
      *
-     * @param manager the manager
      * @return total sales
      */
-    long totalSales(EntityManager manager);
+    long totalSales();
 
     /**
      * Month shop sales.
      *
-     * @param manager the manager
      * @return month sales
      */
-    long monthSales(EntityManager manager);
+    long monthSales();
 
     /**
      * Top of the best customers.
      *
      * @param count   count of users in top
-     * @param manager the manager
      * @return the list
      */
-    List<UserEntity> topCustomers(int count, EntityManager manager);
+    List<UserEntity> topCustomers(int count);
 }

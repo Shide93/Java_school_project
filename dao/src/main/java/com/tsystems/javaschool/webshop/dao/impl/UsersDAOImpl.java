@@ -5,8 +5,6 @@ import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-
-import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
@@ -22,16 +20,8 @@ public class UsersDAOImpl extends AbstractGenericDAO<UserEntity>
     private static final Logger LOGGER =
             LogManager.getLogger(UsersDAOImpl.class);
 
-    /**
-     * Instantiates a new Users dao.
-     */
-    public UsersDAOImpl() {
-      super(UserEntity.class, LOGGER);
-    }
-
     @Override
-    public final UserEntity getUserByEmail(final String email,
-                                           final EntityManager manager) {
+    public final UserEntity getUserByEmail(final String email) {
         try {
             Query query = manager.createNamedQuery("UserEntity.getByEmail");
             query.setParameter("email", email);

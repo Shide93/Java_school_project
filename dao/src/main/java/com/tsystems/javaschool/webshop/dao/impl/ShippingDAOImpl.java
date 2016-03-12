@@ -15,12 +15,5 @@ public class ShippingDAOImpl extends AbstractGenericDAO<ShippingEntity>
      */
     private static final Logger LOGGER =
             LogManager.getLogger(CartDAOImpl.class);
-
-    /**
-     * Instantiates a new Payment dao.
-     */
-    public ShippingDAOImpl() {
-        super(ShippingEntity.class, LOGGER);
-    }
 }
 
