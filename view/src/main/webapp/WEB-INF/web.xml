@@ -5,7 +5,13 @@
          version="2.4">
 
   <display-name>Archetype Created Web Application</display-name>
-
+    <context-param>
+        <param-name>applicationContext</param-name>
+        <param-value>/WEB-INF/spring/applicationContext.xml</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
     <!--Servlets-->
     <servlet>
         <servlet-name>SignUpServlet</servlet-name>
