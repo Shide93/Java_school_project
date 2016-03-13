@@ -8,6 +8,7 @@ import com.tsystems.javaschool.webshop.services.impl.AccountServiceImpl;
 import com.tsystems.javaschool.webshop.services.impl.CartServiceImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -37,28 +38,17 @@ public class CookieCheckFilter implements Filter {
     /**
      * AccountService instance.
      */
+    @Autowired
     private AccountService accountService;
     /**
      * The Cart service.
      */
+    @Autowired
     private CartService cartService;
-    /**
-     * Instantiates a new Cookie check filter.
-     *
-     * @param accountSrv the account service
-     * @param cartSrv    the cart service
-     */
-    public CookieCheckFilter(final AccountService accountSrv,
-                             final CartService cartSrv) {
-        this.accountService = accountSrv;
-        this.cartService = cartSrv;
-    }
 
     @Override
     public final void init(final FilterConfig filterConfig)
             throws ServletException {
-        accountService = new AccountServiceImpl();
-        cartService = new CartServiceImpl();
     }
 
     @Override

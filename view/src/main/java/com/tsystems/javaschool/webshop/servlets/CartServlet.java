@@ -10,6 +10,8 @@ import com.tsystems.javaschool.webshop.servlets.utils.ServletUtils;
 import flexjson.JSONSerializer;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,6 +23,7 @@ import java.io.IOException;
 /**
  * Cart servlet that manages all cart manipulations.
  */
+@Controller
 public class CartServlet extends HttpServlet {
 
     /**
@@ -32,39 +35,19 @@ public class CartServlet extends HttpServlet {
     /**
      * The Cart service.
      */
-    private final CartService cartService;
+    @Autowired
+    private CartService cartService;
     /**
      * The Json serializer.
      */
-    private final JSONSerializer jsonSerializer;
+    private JSONSerializer jsonSerializer = new JSONSerializer();
     /**
      * The Validation service.
      */
-    private final ValidationService validationService;
+    @Autowired
+    private ValidationService validationService;
 
-    /**
-     * Instantiates a new Cart servlet.
-     */
-    public CartServlet() {
-        cartService = new CartServiceImpl();
-        jsonSerializer = new JSONSerializer();
-        validationService = new ValidationServiceImpl();
-    }
 
-    /**
-     * Instantiates a new Cart servlet.
-     *
-     * @param cartSrv       the cart service
-     * @param jsonSerialzr    the json serializer
-     * @param validationSrv the validation service
-     */
-    public CartServlet(final CartService cartSrv,
-                       final JSONSerializer jsonSerialzr,
-                       final ValidationService validationSrv) {
-        this.cartService = cartSrv;
-        this.jsonSerializer = jsonSerialzr;
-        this.validationService = validationSrv;
-    }
 
     @Override
     protected final void doGet(final HttpServletRequest req,

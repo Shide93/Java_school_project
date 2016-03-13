@@ -10,17 +10,28 @@
 <html>
     <head>
         <title>${title}</title>
-        <link rel="stylesheet" href="<c:url value="/css/bootstrap.min.css"/>"type="text/css"/>
-        <link rel="stylesheet" href="<c:url value="/css/main.css"/>"type="text/css"/>
-        <script type="text/javascript" src="<c:url value="/js/jquery-1.12.1.min.js"/>"></script>
-        <script type="text/javascript" src="<c:url value="/js/main.js"/>"></script>
-        <script src="<c:url value="/js/bootstrap.min.js"/>"></script>
+        <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/>" type="text/css"/>
+        <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" type="text/css"/>
+        <script type="text/javascript" src="<c:url value="/resources/js/jquery-1.12.1.min.js"/>"></script>
+        <script type="text/javascript" src="<c:url value="/resources/js/main.js"/>"></script>
+        <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
         <header>
+
             <div class="container">
+                Session: ${sessionScope}
+                <br>
+                Cookies:  ${cookie}
+                <br>
+                Page: ${pageContext}
+                <br>
+                InitParam: ${initParam}
+                <br>
+                Param: ${param}
+
                 <jsp:invoke fragment="header"/>
             </div>
         </header>
