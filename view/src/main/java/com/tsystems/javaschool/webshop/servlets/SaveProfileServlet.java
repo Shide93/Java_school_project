@@ -131,7 +131,7 @@ public class SaveProfileServlet extends HttpServlet {
         UserEntity user = (UserEntity) req.getSession().getAttribute("user");
         UserEntity newUser = new UserEntity();
 
-        newUser.setId(user.getId());
+        newUser.setId(usger.getId());
         newUser.setName(name);
         newUser.setLastName(lastName);
         newUser.setPhone(phone);

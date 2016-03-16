@@ -1,6 +1,11 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
 
+import com.tsystems.javaschool.webshop.dao.validation.Phone;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,6 +22,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -39,10 +47,14 @@ public class UserEntity {
     /**
      * The Email.
      */
+    @Email
+    @NotEmpty
     private String email;
     /**
      * The Password.
      */
+    @NotEmpty
+    @Size(min = 8, max = 20)
     private String password;
     /**
      * The Name.
@@ -55,14 +67,18 @@ public class UserEntity {
     /**
      * The Phone.
      */
+    @Phone
     private String phone;
     /**
      * The Birth date.
      */
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @Past
     private Date birthDate;
     /**
      * The Is admin.
      */
+    @NotNull
     private Boolean isAdmin;
     /**
      * The Address.
