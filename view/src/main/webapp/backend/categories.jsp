@@ -5,8 +5,8 @@
     <jsp:attribute name="sidebar">
        <div class="">
             <div class="list-group">
-                <c:if test="${applicationScope.categoryList != null}">
-                   <c:forEach var="category" items="${applicationScope.categoryList}">
+                <c:if test="${requestScope.categoryList != null}">
+                   <c:forEach var="category" items="${requestScope.categoryList}">
                        <a class="list-group-item" href="<c:url value="/backend/categories?categoryId=${category.id}"/>">${category.name}</a>
                    </c:forEach>
                 </c:if>
