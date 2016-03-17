@@ -16,11 +16,11 @@ import javax.persistence.Table;
 @Entity
 @SuppressWarnings("CheckStyle")
 @NamedQuery(name = "OrderProductEntity.getTopProducts",
-        query = "select p.product from OrderProductEntity p "
+        query = "select p.product from OrderProduct p "
                 + "group by p.productId order by sum(p.quantity) desc")
 @Table(name = "order_product", schema = "web_shop")
-@IdClass(OrderProductEntityPK.class)
-public class OrderProductEntity {
+@IdClass(OrderProductPK.class)
+public class OrderProduct {
     /**
      * The Order id.
      */
@@ -36,11 +36,11 @@ public class OrderProductEntity {
     /**
      * The Order.
      */
-    private OrderEntity order;
+    private Order order;
     /**
      * The Product.
      */
-    private ProductEntity product;
+    private Product product;
 
     /**
      * Gets order id.
@@ -109,7 +109,7 @@ public class OrderProductEntity {
      */
     @ManyToOne
     @JoinColumn(name = "order_id", updatable = false, insertable = false)
-    public OrderEntity getOrder() {
+    public Order getOrder() {
         return order;
     }
 
@@ -118,7 +118,7 @@ public class OrderProductEntity {
      *
      * @param order the order
      */
-    public void setOrder(final OrderEntity order) {
+    public void setOrder(final Order order) {
         this.order = order;
     }
 
@@ -129,7 +129,7 @@ public class OrderProductEntity {
      */
     @ManyToOne
     @JoinColumn(name = "product_id", updatable = false, insertable = false)
-    public ProductEntity getProduct() {
+    public Product getProduct() {
         return product;
     }
 
@@ -138,7 +138,7 @@ public class OrderProductEntity {
      *
      * @param product the product
      */
-    public void setProduct(final ProductEntity product) {
+    public void setProduct(final Product product) {
         this.product = product;
     }
 }

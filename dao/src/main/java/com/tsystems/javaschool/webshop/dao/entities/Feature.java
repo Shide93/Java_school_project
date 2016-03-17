@@ -1,20 +1,27 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
- * The type Payment entity.
+ * The type Feature entity.
  */
 @Entity
 @SuppressWarnings("CheckStyle")
-@Table(name = "payment", schema = "web_shop")
-public class PaymentEntity {
+@Table(name = "feature", schema = "web_shop")
+public class Feature {
     /**
      * The Id.
      */
@@ -24,9 +31,16 @@ public class PaymentEntity {
      */
     private String name;
     /**
-     * The Description.
+     * The Products.
      */
-    private String description;
+    private Set<ProductFeature> products;
+
+    /**
+     * Instantiates a new Feature entity.
+     */
+    public Feature() {
+        products = new LinkedHashSet<>();
+    }
 
     /**
      * Gets id.
@@ -56,6 +70,7 @@ public class PaymentEntity {
      */
     @Basic
     @Column(name = "name")
+
     public String getName() {
         return name;
     }
@@ -70,23 +85,24 @@ public class PaymentEntity {
     }
 
     /**
-     * Gets description.
+     * Gets products.
      *
-     * @return the description
+     * @return the products
      */
-    @Basic
-    @Column(name = "description")
-    public String getDescription() {
-        return description;
+    @OneToMany(mappedBy = "feature")
+    @Fetch(FetchMode.JOIN)
+    @OrderBy(value = "productId")
+    public Set<ProductFeature> getProducts() {
+        return products;
     }
 
     /**
-     * Sets description.
+     * Sets products.
      *
-     * @param description the description
+     * @param products the products
      */
-    public void setDescription(final String description) {
-        this.description = description;
+    public void setProducts(final Set<ProductFeature> products) {
+        this.products = products;
     }
 
 }

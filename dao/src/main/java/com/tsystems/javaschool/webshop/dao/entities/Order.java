@@ -33,21 +33,21 @@ import java.util.Set;
 @SuppressWarnings("CheckStyle")
 @NamedQueries({
         @NamedQuery(name = "OrderEntity.getByUser",
-                query = "select o from OrderEntity o where user.id = :id"),
+                query = "select o from Order o where user.id = :id"),
         @NamedQuery(name = "OrderEntity.getWithStatus",
-                query = "select o from OrderEntity o "
+                query = "select o from Order o "
                         + "where o.orderStatus = :orderStatus"),
         @NamedQuery(name = "OrderEntity.totalSales",
-                query = "select sum(o.total) from OrderEntity o"),
+                query = "select sum(o.total) from Order o"),
         @NamedQuery(name = "OrderEntity.periodSales",
-                query = "select sum(o.total) from OrderEntity o"
+                query = "select sum(o.total) from Order o"
                         + " where o.orderDate > :date"),
         @NamedQuery(name = "OrderEntity.getTopCustomers",
-                query = "select o.user from OrderEntity o "
+                query = "select o.user from Order o "
                        + "group by o.user order by sum(o.total) desc")
 })
 @Table(name = "ordr", schema = "web_shop")
-public class OrderEntity {
+public class Order {
     /**
      * The Id.
      */
@@ -56,22 +56,22 @@ public class OrderEntity {
     /**
      * The User.
      */
-    private UserEntity user;
+    private User user;
 
     /**
      * The Address.
      */
-    private AddressEntity address;
+    private Address address;
 
     /**
      * The Payment.
      */
-    private PaymentEntity payment;
+    private Payment payment;
 
     /**
      * The Shipping.
      */
-    private ShippingEntity shipping;
+    private Shipping shipping;
 
     /**
      * The Order status.
@@ -91,7 +91,7 @@ public class OrderEntity {
     /**
      * The Products.
      */
-    private Set<OrderProductEntity> products;
+    private Set<OrderProduct> products;
     /**
      * The Order date.
      */
@@ -100,7 +100,7 @@ public class OrderEntity {
     /**
      * Instantiates a new Order entity.
      */
-    public OrderEntity() {
+    public Order() {
         products = new LinkedHashSet<>();
     }
 
@@ -132,7 +132,7 @@ public class OrderEntity {
      */
     @ManyToOne
     @JoinColumn(name = "user_id")
-    public UserEntity getUser() {
+    public User getUser() {
         return user;
     }
 
@@ -141,7 +141,7 @@ public class OrderEntity {
      *
      * @param user the user
      */
-    public void setUser(final UserEntity user) {
+    public void setUser(final User user) {
         this.user = user;
     }
 
@@ -152,7 +152,7 @@ public class OrderEntity {
      */
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
-    public AddressEntity getAddress() {
+    public Address getAddress() {
         return address;
     }
 
@@ -161,7 +161,7 @@ public class OrderEntity {
      *
      * @param address the address
      */
-    public void setAddress(final AddressEntity address) {
+    public void setAddress(final Address address) {
         this.address = address;
     }
 
@@ -172,7 +172,7 @@ public class OrderEntity {
      */
     @OneToOne
     @JoinColumn(name = "payment_id")
-    public PaymentEntity getPayment() {
+    public Payment getPayment() {
         return payment;
     }
 
@@ -181,7 +181,7 @@ public class OrderEntity {
      *
      * @param payment the payment method
      */
-    public void setPayment(final PaymentEntity payment) {
+    public void setPayment(final Payment payment) {
         this.payment = payment;
     }
 
@@ -192,7 +192,7 @@ public class OrderEntity {
      */
     @OneToOne
     @JoinColumn(name = "shipping_id")
-    public ShippingEntity getShipping() {
+    public Shipping getShipping() {
         return shipping;
     }
 
@@ -201,7 +201,7 @@ public class OrderEntity {
      *
      * @param shipping the shipping method
      */
-    public void setShipping(final ShippingEntity shipping) {
+    public void setShipping(final Shipping shipping) {
         this.shipping = shipping;
     }
 
@@ -233,7 +233,7 @@ public class OrderEntity {
      */
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @OrderBy(value = "productId")
-    public Set<OrderProductEntity> getProducts() {
+    public Set<OrderProduct> getProducts() {
         return products;
     }
 
@@ -242,7 +242,7 @@ public class OrderEntity {
      *
      * @param products the products
      */
-    public void setProducts(final Set<OrderProductEntity> products) {
+    public void setProducts(final Set<OrderProduct> products) {
         this.products = products;
     }
 

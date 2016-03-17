@@ -4,14 +4,8 @@ import com.tsystems.javaschool.webshop.dao.api.CartDAO;
 import com.tsystems.javaschool.webshop.dao.api.OrderDAO;
 import com.tsystems.javaschool.webshop.dao.api.PaymentDAO;
 import com.tsystems.javaschool.webshop.dao.api.ShippingDAO;
-import com.tsystems.javaschool.webshop.dao.entities.AddressEntity;
-import com.tsystems.javaschool.webshop.dao.entities.CartEntity;
-import com.tsystems.javaschool.webshop.dao.entities.CartProductEntity;
-import com.tsystems.javaschool.webshop.dao.entities.OrderEntity;
-import com.tsystems.javaschool.webshop.dao.entities.OrderProductEntity;
-import com.tsystems.javaschool.webshop.dao.entities.PaymentEntity;
-import com.tsystems.javaschool.webshop.dao.entities.ShippingEntity;
-import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
+import com.tsystems.javaschool.webshop.dao.entities.*;
+import com.tsystems.javaschool.webshop.dao.entities.Address;
 import com.tsystems.javaschool.webshop.dao.entities.enums.OrderStatus;
 import com.tsystems.javaschool.webshop.services.api.CheckoutService;
 import org.apache.log4j.LogManager;
@@ -60,28 +54,28 @@ public class CheckoutServiceImpl implements CheckoutService {
 
 
     @Override
-    public final List<PaymentEntity> getPaymentTypes() {
+    public final List<Payment> getPaymentTypes() {
 
         return paymentDAO.getAll();
     }
 
     @Override
-    public final List<ShippingEntity> getShippingTypes() {
+    public final List<Shipping> getShippingTypes() {
         return shippingDAO.getAll();
     }
 
     @Override
-    public final void createOrder(final UserEntity user,
-                                  final AddressEntity address,
-                                  final CartEntity cart,
+    public final void createOrder(final User user,
+                                  final Address address,
+                                  final Cart cart,
                                   final Integer paymentId,
                                   final Integer shippingId,
                                   final String comment) {
 
-        PaymentEntity payment = paymentDAO.getById(paymentId);
-        ShippingEntity shipping = shippingDAO.getById(shippingId);
+        Payment payment = paymentDAO.getById(paymentId);
+        Shipping shipping = shippingDAO.getById(shippingId);
         address.setId(0);       //to save new instance of address
-        OrderEntity order = new OrderEntity();
+        Order order = new Order();
         order.setOrderStatus(OrderStatus.NEW);
         order.setPayment(payment);
         order.setShipping(shipping);
@@ -91,9 +85,9 @@ public class CheckoutServiceImpl implements CheckoutService {
         order.setOrderDate(new Date());
         order.setTotal(cart.getSummary());
         orderDAO.create(order);
-        Set<OrderProductEntity> orderItems = order.getProducts();
-        for (CartProductEntity cartItem : cart.getItems()) {
-            OrderProductEntity orderItem = new OrderProductEntity();
+        Set<OrderProduct> orderItems = order.getProducts();
+        for (CartProduct cartItem : cart.getItems()) {
+            OrderProduct orderItem = new OrderProduct();
             orderItem.setProduct(cartItem.getProduct());
             orderItem.setProductId(cartItem.getProductId());
             orderItem.setOrder(order);

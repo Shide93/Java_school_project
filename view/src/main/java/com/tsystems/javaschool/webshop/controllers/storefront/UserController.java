@@ -1,4 +1,4 @@
-package com.tsystems.javaschool.webshop.controllers;
+package com.tsystems.javaschool.webshop.controllers.storefront;
 
 import org.springframework.stereotype.Controller;
 

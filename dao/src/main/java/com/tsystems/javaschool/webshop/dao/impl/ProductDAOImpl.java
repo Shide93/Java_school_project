@@ -2,7 +2,7 @@ package com.tsystems.javaschool.webshop.dao.impl;
 
 
 import com.tsystems.javaschool.webshop.dao.api.ProductDAO;
-import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
+import com.tsystems.javaschool.webshop.dao.entities.Product;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
@@ -16,7 +16,7 @@ import java.util.Map;
  * Product dao implementation.
  */
 @Repository
-public class ProductDAOImpl extends AbstractGenericDAO<ProductEntity>
+public class ProductDAOImpl extends AbstractGenericDAO<Product>
         implements ProductDAO {
 
     /**
@@ -25,12 +25,12 @@ public class ProductDAOImpl extends AbstractGenericDAO<ProductEntity>
     private static final Logger LOGGER =
             LogManager.getLogger(ProductDAOImpl.class);
     @Override
-    public final List<ProductEntity> findByFeatures(
+    public final List<Product> findByFeatures(
             final Map<Integer, List<String>> featureValues) {
         StringBuilder queryString = new StringBuilder();
-        queryString.append("select p from ProductEntity p ");
+        queryString.append("select p from Product p ");
         queryString.append("inner join p.features f where f.id in ");
-        queryString.append("(select pf.id from ProductFeatureEntity pf where ");
+        queryString.append("(select pf.id from ProductFeature pf where ");
 
         Iterator<Map.Entry<Integer, List<String>>> entries =
                 featureValues.entrySet().iterator();
@@ -57,16 +57,16 @@ public class ProductDAOImpl extends AbstractGenericDAO<ProductEntity>
         queryString.append(") group by p.id having count(p) = ");
         queryString.append(featureValues.size());
 
-        TypedQuery<ProductEntity> query =
-            manager.createQuery(queryString.toString(), ProductEntity.class);
+        TypedQuery<Product> query =
+            manager.createQuery(queryString.toString(), Product.class);
         return query.getResultList();
     }
 
     @Override
-    public final List<ProductEntity> topProducts(final int count) {
-        TypedQuery<ProductEntity> query =
+    public final List<Product> topProducts(final int count) {
+        TypedQuery<Product> query =
                 manager.createNamedQuery("OrderProductEntity.getTopProducts",
-                        ProductEntity.class);
+                        Product.class);
         return query.setMaxResults(count).getResultList();
     }
 }

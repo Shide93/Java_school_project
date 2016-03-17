@@ -5,36 +5,37 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Primary key for caertProductEntity.
+ * The type Order product entity pk.
  */
-public class CartProductEntityPK implements Serializable {
+@SuppressWarnings("CheckStyle")
+public class OrderProductPK implements Serializable {
     /**
-     * The Cart id.
+     * The Order id.
      */
-    private int cartId;
+    private int orderId;
     /**
      * The Product id.
      */
     private int productId;
 
     /**
-     * Gets cart id.
+     * Gets order id.
      *
-     * @return the cart id
+     * @return the order id
      */
-    @Column(name = "cart_id")
+    @Column(name = "order_id")
     @Id
-    public int getCartId() {
-        return cartId;
+    public int getOrderId() {
+        return orderId;
     }
 
     /**
-     * Sets cart id.
+     * Sets order id.
      *
-     * @param cartId the cart id
+     * @param orderId the order id
      */
-    public void setCartId(final int cartId) {
-        this.cartId = cartId;
+    public void setOrderId(final int orderId) {
+        this.orderId = orderId;
     }
 
     /**
@@ -62,16 +63,16 @@ public class CartProductEntityPK implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CartProductEntityPK that = (CartProductEntityPK) o;
+        OrderProductPK that = (OrderProductPK) o;
 
-        if (cartId != that.cartId) return false;
+        if (orderId != that.orderId) return false;
         return productId == that.productId;
 
     }
 
     @Override
     public int hashCode() {
-        int result = cartId;
+        int result = orderId;
         result = 31 * result + productId;
         return result;
     }

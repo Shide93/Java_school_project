@@ -1,11 +1,11 @@
 package com.tsystems.javaschool.webshop.services.api;
 
-import com.tsystems.javaschool.webshop.dao.entities.CartEntity;
+import com.tsystems.javaschool.webshop.dao.entities.Cart;
 
 /**
  * The interface Cart service.
  */
-public interface CartService extends GenericService<CartEntity> {
+public interface CartService extends GenericService<Cart> {
     /**
      * Method adds product with it's quantity to cart.
      *
@@ -14,8 +14,8 @@ public interface CartService extends GenericService<CartEntity> {
      * @param cartId      user's cart
      * @return updated cart
      */
-    CartEntity addToCart(Integer productId,
-                         Integer quantity, Integer cartId);
+    Cart addToCart(Integer productId,
+                   Integer quantity, Integer cartId);
 
     /**
      * Method edits product quantity in cart.
@@ -25,7 +25,7 @@ public interface CartService extends GenericService<CartEntity> {
      * @param cartId      user's cart
      * @return updated cart
      */
-    CartEntity editCartProduct(Integer productId,
+    Cart editCartProduct(Integer productId,
                          Integer quantity, Integer cartId);
 
     /**
@@ -35,5 +35,5 @@ public interface CartService extends GenericService<CartEntity> {
      * @param cartId      user's cart
      * @return updated cart
      */
-    CartEntity removeFromCart(Integer productId, Integer cartId);
+    Cart removeFromCart(Integer productId, Integer cartId);
 }

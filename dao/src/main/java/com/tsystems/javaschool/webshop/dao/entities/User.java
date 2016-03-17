@@ -36,10 +36,10 @@ import java.util.Set;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "UserEntity.getByEmail",
-                query = "SELECT u FROM UserEntity u WHERE u.email = :email")
+                query = "SELECT u FROM User u WHERE u.email = :email")
 })
 @Table(name = "user", schema = "web_shop")
-public class UserEntity {
+public class User {
     /**
      * The Id.
      */
@@ -83,16 +83,16 @@ public class UserEntity {
     /**
      * The Address.
      */
-    private AddressEntity address;
+    private Address address;
     /**
      * The Orders.
      */
-    private Set<OrderEntity> orders;
+    private Set<Order> orders;
 
     /**
      * Instantiates a new User entity.
      */
-    public UserEntity() {
+    public User() {
         orders = new LinkedHashSet<>();
     }
 
@@ -265,7 +265,7 @@ public class UserEntity {
      */
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinColumn(name = "address_id")
-    public AddressEntity getAddress() {
+    public Address getAddress() {
         return address;
     }
 
@@ -274,7 +274,7 @@ public class UserEntity {
      *
      * @param address the address
      */
-    public void setAddress(final AddressEntity address) {
+    public void setAddress(final Address address) {
         this.address = address;
     }
 
@@ -284,7 +284,7 @@ public class UserEntity {
      * @return the orders
      */
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    public Set<OrderEntity> getOrders() {
+    public Set<Order> getOrders() {
         return orders;
     }
 
@@ -293,7 +293,7 @@ public class UserEntity {
      *
      * @param orders the orders
      */
-    public void setOrders(final Set<OrderEntity> orders) {
+    public void setOrders(final Set<Order> orders) {
         this.orders = orders;
     }
 }

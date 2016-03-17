@@ -1,10 +1,10 @@
 package com.tsystems.javaschool.webshop.servlets;
 
-import com.tsystems.javaschool.webshop.dao.entities.AddressEntity;
-import com.tsystems.javaschool.webshop.dao.entities.CartEntity;
-import com.tsystems.javaschool.webshop.dao.entities.PaymentEntity;
-import com.tsystems.javaschool.webshop.dao.entities.ShippingEntity;
-import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
+import com.tsystems.javaschool.webshop.dao.entities.Address;
+import com.tsystems.javaschool.webshop.dao.entities.Cart;
+import com.tsystems.javaschool.webshop.dao.entities.Payment;
+import com.tsystems.javaschool.webshop.dao.entities.Shipping;
+import com.tsystems.javaschool.webshop.dao.entities.User;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
 import com.tsystems.javaschool.webshop.services.api.CheckoutService;
 import com.tsystems.javaschool.webshop.services.api.ValidationService;
@@ -74,8 +74,8 @@ public class CheckoutServlet extends HttpServlet {
                          final HttpServletResponse resp)
             throws ServletException, IOException {
 
-        List<PaymentEntity> paymentTypes = checkoutService.getPaymentTypes();
-        List<ShippingEntity> shippingTypes = checkoutService.getShippingTypes();
+        List<Payment> paymentTypes = checkoutService.getPaymentTypes();
+        List<Shipping> shippingTypes = checkoutService.getShippingTypes();
         req.setAttribute("paymentTypes", paymentTypes);
         req.setAttribute("shippingTypes", shippingTypes);
 
@@ -112,9 +112,9 @@ public class CheckoutServlet extends HttpServlet {
                 || country.equals("")
                 || city.equals("")
                 || street.equals("")) {
-            List<PaymentEntity> paymentTypes =
+            List<Payment> paymentTypes =
                     checkoutService.getPaymentTypes();
-            List<ShippingEntity> shippingTypes =
+            List<Shipping> shippingTypes =
                     checkoutService.getShippingTypes();
             req.setAttribute("paymentTypes", paymentTypes);
             req.setAttribute("shippingTypes", shippingTypes);
@@ -137,9 +137,9 @@ public class CheckoutServlet extends HttpServlet {
             paymentId = validationService.getValidInt(
                     req.getParameter("payment_id"), "payment_id");
         } catch (ServiceException e) {
-            List<PaymentEntity> paymentTypes =
+            List<Payment> paymentTypes =
                     checkoutService.getPaymentTypes();
-            List<ShippingEntity> shippingTypes =
+            List<Shipping> shippingTypes =
                     checkoutService.getShippingTypes();
             req.setAttribute("paymentTypes", paymentTypes);
             req.setAttribute("shippingTypes", shippingTypes);
@@ -152,8 +152,8 @@ public class CheckoutServlet extends HttpServlet {
         }
 
         //save user info to profile
-        UserEntity user = (UserEntity) req.getSession().getAttribute("user");
-        UserEntity newUser = new UserEntity();
+        User user = (User) req.getSession().getAttribute("user");
+        User newUser = new User();
 
         newUser.setId(user.getId());
         newUser.setEmail(user.getEmail());
@@ -163,7 +163,7 @@ public class CheckoutServlet extends HttpServlet {
         newUser.setLastName(lastName);
         newUser.setPhone(phone);
 
-        AddressEntity address = new AddressEntity();
+        Address address = new Address();
 
         if (user.getAddress() != null) {
             address.setId(user.getAddress().getId());
@@ -181,7 +181,7 @@ public class CheckoutServlet extends HttpServlet {
         req.getSession().setAttribute("user", newUser);
 
         //create order
-        CartEntity cart = (CartEntity) req.getSession().getAttribute("cart");
+        Cart cart = (Cart) req.getSession().getAttribute("cart");
 
         checkoutService.createOrder(newUser, address, cart,
                                     paymentId, shippingId, comment);

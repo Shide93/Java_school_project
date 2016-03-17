@@ -1,13 +1,13 @@
 package com.tsystems.javaschool.webshop.dao.api;
 
-import com.tsystems.javaschool.webshop.dao.entities.CartEntity;
+import com.tsystems.javaschool.webshop.dao.entities.Cart;
 import com.tsystems.javaschool.webshop.dao.exceptions.DaoException;
 
 
 /**
  * DAO class to interact with Cart Entity.
  */
-public interface CartDAO extends GenericDAO<CartEntity> {
+public interface CartDAO extends GenericDAO<Cart> {
 
     /**
      * Removes product from cart.

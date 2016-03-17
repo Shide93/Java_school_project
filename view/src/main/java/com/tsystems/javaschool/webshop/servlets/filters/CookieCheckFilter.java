@@ -1,11 +1,9 @@
 package com.tsystems.javaschool.webshop.servlets.filters;
 
-import com.tsystems.javaschool.webshop.dao.entities.CartEntity;
-import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
+import com.tsystems.javaschool.webshop.dao.entities.Cart;
+import com.tsystems.javaschool.webshop.dao.entities.User;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
 import com.tsystems.javaschool.webshop.services.api.CartService;
-import com.tsystems.javaschool.webshop.services.impl.AccountServiceImpl;
-import com.tsystems.javaschool.webshop.services.impl.CartServiceImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +82,7 @@ public class CookieCheckFilter implements Filter {
         for (Cookie cookie : cookies) {
             //if user enters site with user cookie - add user to session
             if (cookie.getName().equals("userID") && !userFlag) {
-                UserEntity user = accountService.
+                User user = accountService.
                         getUser(Integer.parseInt(cookie.getValue()));
                 if (user != null) {
                     req.getSession().setAttribute("user", user);
@@ -94,7 +92,7 @@ public class CookieCheckFilter implements Filter {
 
             //if user enters site with cart cookie - add cart to session
             if (cookie.getName().equals("cartID") && !cartFlag) {
-                CartEntity cart = cartService.
+                Cart cart = cartService.
                         get(Integer.parseInt(cookie.getValue()));
                 if (cart != null) {
                     req.getSession().setAttribute("cart", cart);

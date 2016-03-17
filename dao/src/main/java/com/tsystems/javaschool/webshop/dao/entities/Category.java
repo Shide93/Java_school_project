@@ -1,6 +1,20 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
-import javax.persistence.*;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -10,10 +24,10 @@ import java.util.Set;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "CategoryEntity.getAllIdNames",
-                query = "select new CategoryEntity(c.id, c.name) from CategoryEntity c")
+                query = "select new Category(c.id, c.name) from Category c")
 })
 @Table(name = "category", schema = "web_shop")
-public class CategoryEntity {
+public class Category {
     /**
      * The Id.
      */
@@ -21,6 +35,7 @@ public class CategoryEntity {
     /**
      * The Name.
      */
+    @NotBlank
     private String name;
     /**
      * The Description.
@@ -29,15 +44,26 @@ public class CategoryEntity {
     /**
      * The Products.
      */
-    private Set<ProductEntity> products;
+    private Set<Product> products;
 
-    public CategoryEntity() {
+    /**
+     * Instantiates a new Category.
+     */
+    public Category() {
         products = new LinkedHashSet<>();
     }
-    public CategoryEntity(final int id, final String name) {
+
+    /**
+     * Instantiates a new Category.
+     *
+     * @param id   the id
+     * @param name the name
+     */
+    public Category(final int id, final String name) {
         this.id = id;
         this.name = name;
     }
+
     /**
      * Gets id.
      *
@@ -106,7 +132,7 @@ public class CategoryEntity {
      */
     @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
     @OrderBy(value = "id")
-    public Set<ProductEntity> getProducts() {
+    public Set<Product> getProducts() {
         return products;
     }
 
@@ -115,17 +141,8 @@ public class CategoryEntity {
      *
      * @param products the products
      */
-    public void setProducts(final Set<ProductEntity> products) {
+    public void setProducts(final Set<Product> products) {
         this.products = products;
     }
 
-    @Override
-    public String toString() {
-        return "CategoryEntity{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", products=" + products +
-                '}';
-    }
 }

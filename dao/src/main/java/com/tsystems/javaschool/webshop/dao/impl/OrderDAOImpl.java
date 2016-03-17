@@ -1,8 +1,8 @@
 package com.tsystems.javaschool.webshop.dao.impl;
 
 import com.tsystems.javaschool.webshop.dao.api.OrderDAO;
-import com.tsystems.javaschool.webshop.dao.entities.OrderEntity;
-import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
+import com.tsystems.javaschool.webshop.dao.entities.Order;
+import com.tsystems.javaschool.webshop.dao.entities.User;
 import com.tsystems.javaschool.webshop.dao.entities.enums.OrderStatus;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -19,7 +19,7 @@ import java.util.List;
  * Order dao implementation.
  */
 @Repository
-public class OrderDAOImpl extends AbstractGenericDAO<OrderEntity>
+public class OrderDAOImpl extends AbstractGenericDAO<Order>
         implements OrderDAO {
     /**
      * The constant LOGGER.
@@ -28,10 +28,10 @@ public class OrderDAOImpl extends AbstractGenericDAO<OrderEntity>
             LogManager.getLogger(OrderDAOImpl.class);
 
     @Override
-    public final List<OrderEntity> getByUser(final int userId) {
-        TypedQuery<OrderEntity> q =
+    public final List<Order> getByUser(final int userId) {
+        TypedQuery<Order> q =
             manager.createNamedQuery("OrderEntity.getByUser",
-                    OrderEntity.class);
+                    Order.class);
         q.setParameter("id", userId);
         return q.getResultList();
     }
@@ -65,10 +65,10 @@ public class OrderDAOImpl extends AbstractGenericDAO<OrderEntity>
     }
 
     @Override
-    public final List<UserEntity> topCustomers(final int count) {
-        TypedQuery<UserEntity> query =
+    public final List<User> topCustomers(final int count) {
+        TypedQuery<User> query =
                 manager.createNamedQuery("OrderEntity.getTopCustomers",
-                        UserEntity.class);
+                        User.class);
         return query.setMaxResults(count).getResultList();
     }
 }

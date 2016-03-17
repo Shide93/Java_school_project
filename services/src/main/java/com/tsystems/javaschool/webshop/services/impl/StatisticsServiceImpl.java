@@ -3,8 +3,8 @@ package com.tsystems.javaschool.webshop.services.impl;
 import com.tsystems.javaschool.webshop.dao.api.OrderDAO;
 import com.tsystems.javaschool.webshop.dao.api.ProductDAO;
 import com.tsystems.javaschool.webshop.dao.api.UsersDAO;
-import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
-import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
+import com.tsystems.javaschool.webshop.dao.entities.Product;
+import com.tsystems.javaschool.webshop.dao.entities.User;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
 import com.tsystems.javaschool.webshop.services.api.StatisticsService;
 import org.apache.log4j.LogManager;
@@ -58,12 +58,12 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public final List<ProductEntity> topProducts(final int count) {
+    public final List<Product> topProducts(final int count) {
         return productDAO.topProducts(count);
     }
 
     @Override
-    public final List<UserEntity> topCustomers(final int count) {
+    public final List<User> topCustomers(final int count) {
         return orderDAO.topCustomers(count);
     }
 }

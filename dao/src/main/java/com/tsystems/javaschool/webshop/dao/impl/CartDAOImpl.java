@@ -1,7 +1,7 @@
 package com.tsystems.javaschool.webshop.dao.impl;
 
 import com.tsystems.javaschool.webshop.dao.api.CartDAO;
-import com.tsystems.javaschool.webshop.dao.entities.CartEntity;
+import com.tsystems.javaschool.webshop.dao.entities.Cart;
 import com.tsystems.javaschool.webshop.dao.exceptions.DaoException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -13,7 +13,7 @@ import javax.persistence.Query;
  * Cart dao implementation.
  */
 @Repository
-public class CartDAOImpl extends AbstractGenericDAO<CartEntity>
+public class CartDAOImpl extends AbstractGenericDAO<Cart>
         implements CartDAO {
 
     /**

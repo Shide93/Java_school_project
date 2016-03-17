@@ -1,10 +1,7 @@
 package com.tsystems.javaschool.webshop.services.api;
 
-import com.tsystems.javaschool.webshop.dao.entities.AddressEntity;
-import com.tsystems.javaschool.webshop.dao.entities.CartEntity;
-import com.tsystems.javaschool.webshop.dao.entities.PaymentEntity;
-import com.tsystems.javaschool.webshop.dao.entities.ShippingEntity;
-import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
+import com.tsystems.javaschool.webshop.dao.entities.*;
+import com.tsystems.javaschool.webshop.dao.entities.Address;
 
 import java.util.List;
 
@@ -18,14 +15,14 @@ public interface CheckoutService {
      *
      * @return the payment types
      */
-    List<PaymentEntity> getPaymentTypes();
+    List<Payment> getPaymentTypes();
 
     /**
      * Gets shipping types.
      *
      * @return the shipping types
      */
-    List<ShippingEntity> getShippingTypes();
+    List<Shipping> getShippingTypes();
 
     /**
      * Create order.
@@ -37,9 +34,9 @@ public interface CheckoutService {
      * @param shippingId the shipping id
      * @param comment    the comment
      */
-    void createOrder(UserEntity user,
-                     AddressEntity address,
-                     CartEntity cart,
+    void createOrder(User user,
+                     Address address,
+                     Cart cart,
                      Integer paymentId,
                      Integer shippingId,
                      String comment);

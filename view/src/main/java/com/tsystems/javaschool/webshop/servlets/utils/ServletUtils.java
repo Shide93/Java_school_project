@@ -1,6 +1,6 @@
 package com.tsystems.javaschool.webshop.servlets.utils;
 
-import com.tsystems.javaschool.webshop.dao.entities.CategoryEntity;
+import com.tsystems.javaschool.webshop.dao.entities.Category;
 import com.tsystems.javaschool.webshop.services.api.CategoryService;
 import com.tsystems.javaschool.webshop.services.impl.CategoryServiceImpl;
 
@@ -47,7 +47,7 @@ public final class ServletUtils {
      */
     public static void setCategoryListToContext(final ServletContext context) {
         CategoryService categoryService = new CategoryServiceImpl();
-        List<CategoryEntity> categories = categoryService.getAllIdNames();
+        List<Category> categories = categoryService.getAllIdNames();
         context.setAttribute("categoryList", categories);
     }
 }

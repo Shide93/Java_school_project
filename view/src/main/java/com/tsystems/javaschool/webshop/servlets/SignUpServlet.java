@@ -1,6 +1,6 @@
 package com.tsystems.javaschool.webshop.servlets;
 
-import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
+import com.tsystems.javaschool.webshop.dao.entities.User;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
 import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.exceptions.AccountServiceException;
@@ -96,7 +96,7 @@ public class SignUpServlet extends HttpServlet {
         //create user
         try {
 
-            UserEntity user = accountService.signUpUser(name,
+            User user = accountService.signUpUser(name,
                     lastName,
                     email,
                     password);

@@ -16,8 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The type Product entity.
@@ -25,7 +25,7 @@ import java.util.Set;
 @Entity
 @SuppressWarnings("CheckStyle")
 @Table(name = "product", schema = "web_shop")
-public class ProductEntity {
+public class Product {
     /**
      * The Id.
      */
@@ -49,17 +49,17 @@ public class ProductEntity {
     /**
      * The Categories.
      */
-    private CategoryEntity category;
+    private Category category;
     /**
      * The Features.
      */
-    private Set<ProductFeatureEntity> features;
+    private List<ProductFeature> features;
 
     /**
      * Instantiates a new Product entity.
      */
-    public ProductEntity() {
-        features = new LinkedHashSet<>();
+    public Product() {
+        features = new ArrayList<>();
     }
 
     /**
@@ -170,7 +170,7 @@ public class ProductEntity {
      */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
-    public CategoryEntity getCategory() {
+    public Category getCategory() {
         return category;
     }
 
@@ -179,7 +179,7 @@ public class ProductEntity {
      *
      * @param category the category
      */
-    public void setCategory(final CategoryEntity category) {
+    public void setCategory(final Category category) {
         this.category = category;
     }
 
@@ -191,7 +191,7 @@ public class ProductEntity {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
     @OrderBy(value = "featureId")
-    public Set<ProductFeatureEntity> getFeatures() {
+    public List<ProductFeature> getFeatures() {
         return features;
     }
 
@@ -200,7 +200,7 @@ public class ProductEntity {
      *
      * @param features the features
      */
-    public void setFeatures(final Set<ProductFeatureEntity> features) {
+    public void setFeatures(final List<ProductFeature> features) {
         this.features = features;
     }
 

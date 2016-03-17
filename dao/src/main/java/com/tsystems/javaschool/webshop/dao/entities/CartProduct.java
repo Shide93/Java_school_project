@@ -18,13 +18,13 @@ import javax.persistence.Table;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "CartProductEntity.removeFromCart",
-                query = "delete from CartProductEntity cpe "
+                query = "delete from CartProduct cpe "
                         + "where cpe.cartId = :cartId "
                         + "and cpe.productId = :productId")
 })
 @Table(name = "cart_product", schema = "web_shop")
-@IdClass(CartProductEntityPK.class)
-public class CartProductEntity {
+@IdClass(CartProductPK.class)
+public class CartProduct {
     /**
      * The Cart id.
      */
@@ -40,11 +40,11 @@ public class CartProductEntity {
     /**
      * The Cart.
      */
-    private CartEntity cart;
+    private Cart cart;
     /**
      * The Product.
      */
-    private ProductEntity product;
+    private Product product;
 
     /**
      * Gets cart id.
@@ -113,7 +113,7 @@ public class CartProductEntity {
      */
     @ManyToOne
     @JoinColumn(name = "cart_id", insertable = false, updatable = false)
-    public CartEntity getCart() {
+    public Cart getCart() {
         return cart;
     }
 
@@ -122,7 +122,7 @@ public class CartProductEntity {
      *
      * @param cart the cart
      */
-    public void setCart(final CartEntity cart) {
+    public void setCart(final Cart cart) {
         this.cart = cart;
     }
 
@@ -133,7 +133,7 @@ public class CartProductEntity {
      */
     @ManyToOne
     @JoinColumn(name = "product_id", insertable = false, updatable = false)
-    public ProductEntity getProduct() {
+    public Product getProduct() {
         return product;
     }
 
@@ -142,13 +142,13 @@ public class CartProductEntity {
      *
      * @param product the product
      */
-    public void setProduct(final ProductEntity product) {
+    public void setProduct(final Product product) {
         this.product = product;
     }
 
     @Override
     public String toString() {
-        return "CartProductEntity{" +
+        return "CartProduct{" +
                 "cartId=" + cartId +
                 ", productId=" + productId +
                 ", quantity=" + quantity +
@@ -161,7 +161,7 @@ public class CartProductEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        final CartProductEntity that = (CartProductEntity) o;
+        final CartProduct that = (CartProduct) o;
 
         return cartId == that.cartId && productId == that.productId;
     }

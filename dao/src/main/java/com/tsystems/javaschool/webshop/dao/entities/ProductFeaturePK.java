@@ -8,7 +8,7 @@ import java.io.Serializable;
  * The type Product feature entity pk.
  */
 @SuppressWarnings("CheckStyle")
-public class ProductFeatureEntityPK implements Serializable {
+public class ProductFeaturePK implements Serializable {
     /**
      * The Product id.
      */
@@ -63,7 +63,7 @@ public class ProductFeatureEntityPK implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ProductFeatureEntityPK that = (ProductFeatureEntityPK) o;
+        ProductFeaturePK that = (ProductFeaturePK) o;
 
         if (productId != that.productId) return false;
         return featureId == that.featureId;

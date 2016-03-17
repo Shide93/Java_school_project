@@ -1,5 +1,7 @@
 <%@page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <t:backendLayout>
     <jsp:attribute name="sidebar">
@@ -16,29 +18,34 @@
     </jsp:attribute>
 
     <jsp:attribute name="content">
-        <c:if test="${requestScope.selectedCategory != null}">
+        <c:if test="${requestScope.selectedCategory.id != 0}">
             <div class="">
                 <h1 class="">Category ${requestScope.selectedCategory.name}</h1>
-                <form class="" role="form" action="<c:url value="/backend/categories?action=save"/>" method="post">
-                <div class="form-group">
-                    <label>Category name:
-                        <input class="form-control" type="text" name="name" value="${requestScope.selectedCategory.name}">
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label>Category description
-                        <textarea class="form-control" name="description">${requestScope.selectedCategory.description}</textarea>
-                    </label>
-                </div>
-                <div>
-                    <input type="hidden" name="id" value="${requestScope.selectedCategory.id}">
-                    <input class="save btn btn-default"  type="submit" value="Save category">
-                </div>
-                </form>
+                <form:form class="" role="form" action="/backend/categories?action=save" method="post" modelAttribute="selectedCategory">
+                    <div class="form-group">
+                        <label>Category name:
+                            <form:input class="form-control" type="text" path="name"/>
+                        </label>
+                        <form:errors path="name" cssClass="error" />
+                    </div>
+                    <div class="form-group">
+                        <label>Category description
+                            <form:textarea class="form-control" path="description"/>
+                        </label>
+                        <form:errors path="description" cssClass="error" />
+                    </div>
+                    <div>
+                        <form:input type="hidden" path="id" value="${requestScope.selectedCategory.id}"/>
+                        <input class="save btn btn-default"  type="submit" value="Save category">
+                    </div>
+
+                </form:form>
+
                 <form action="<c:url value="/backend/categories?action=remove"/>" method="post">
-                    <input type="hidden" name="id" value="${requestScope.selectedCategory.id}">
+                    <input type="hidden" name="id" value="${requestScope.selectedCategory.id}"/>
                     <input class="delete btn btn-default" type="submit" value="Remove category">
                 </form>
+
                 <div class="">
                     <c:forEach var="product" items="${requestScope.selectedCategory.products}">
                         <div>
@@ -50,24 +57,27 @@
                 </div>
             </div>
         </c:if>
-        <c:if test="${requestScope.selectedCategory == null}">
+
+        <c:if test="${requestScope.selectedCategory.id == 0}">
             <div class="">
                 <h1 class="">New category</h1>
-                <form class="" role="form" action="<c:url value="/backend/categories?action=add"/>" method="post">
+                <form:form class="" role="form" action="/backend/categories?action=add" method="post" modelAttribute="selectedCategory">
                     <div class="">
                         <label>Category name:
-                            <input class="form-control" type="text" name="name" value="">
+                            <form:input class="form-control" type="text" path="name"/>
                         </label>
+                        <form:errors path="name" cssClass="error" />
                     </div>
                     <div class="form-group">
                         <label>Category description
-                        <textarea class="form-control" name="description"></textarea>
+                        <form:textarea class="form-control" path="description"/>
                         </label>
+                        <form:errors path="description" cssClass="error" />
                     </div>
                     <div>
                         <input class="add btn btn-default" type="submit" value="Add new category">
                     </div>
-                </form>
+                </form:form>
             </div>
         </c:if>
     </jsp:attribute>

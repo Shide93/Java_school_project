@@ -1,11 +1,9 @@
 package com.tsystems.javaschool.webshop.servlets;
 
-import com.tsystems.javaschool.webshop.dao.entities.CartEntity;
+import com.tsystems.javaschool.webshop.dao.entities.Cart;
 import com.tsystems.javaschool.webshop.services.api.CartService;
 import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
-import com.tsystems.javaschool.webshop.services.impl.CartServiceImpl;
-import com.tsystems.javaschool.webshop.services.impl.ValidationServiceImpl;
 import com.tsystems.javaschool.webshop.servlets.utils.ServletUtils;
 import flexjson.JSONSerializer;
 import org.apache.log4j.LogManager;
@@ -67,14 +65,14 @@ public class CartServlet extends HttpServlet {
 
         createCartIfNone(req, resp);
 
-        CartEntity cart = (CartEntity) req.getSession()
+        Cart cart = (Cart) req.getSession()
                 .getAttribute("cart");
 
 
             if (req.getParameter("action").equals("add")) {
                 Integer  quantity = Integer.parseInt(quantityStr);
                 Integer  productId = Integer.parseInt(productIdStr);
-                CartEntity newCart;
+                Cart newCart;
                 try {
                     newCart = cartService.addToCart(productId,
                             quantity,
@@ -89,7 +87,7 @@ public class CartServlet extends HttpServlet {
             } else if (req.getParameter("action").equals("edit")) {
                 Integer  quantity = Integer.parseInt(quantityStr);
                 Integer  productId = Integer.parseInt(productIdStr);
-                CartEntity newCart = cartService.editCartProduct(productId,
+                Cart newCart = cartService.editCartProduct(productId,
                                                                 quantity,
                                                                 cart.getId());
                 req.getSession().setAttribute("cart", newCart);
@@ -98,7 +96,7 @@ public class CartServlet extends HttpServlet {
 
             } else if (req.getParameter("action").equals("remove")) {
                     Integer  productId = Integer.parseInt(productIdStr);
-                    CartEntity newCart = cartService.removeFromCart(productId,
+                    Cart newCart = cartService.removeFromCart(productId,
                             cart.getId());
                     req.getSession().setAttribute("cart", newCart);
                     resp.getWriter().println(jsonSerializer.serialize(newCart));
@@ -117,11 +115,11 @@ public class CartServlet extends HttpServlet {
                                  final HttpServletResponse resp) {
 
         //check if cart exists in session or create it
-        CartEntity cart = (CartEntity) req.getSession()
+        Cart cart = (Cart) req.getSession()
                 .getAttribute("cart");
 
         if (cart == null) {
-            cart = new CartEntity();
+            cart = new Cart();
 
             cartService.add(cart);
             req.getSession().setAttribute("cart", cart);

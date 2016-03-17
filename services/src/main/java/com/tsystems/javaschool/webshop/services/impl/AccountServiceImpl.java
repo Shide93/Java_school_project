@@ -1,7 +1,7 @@
 package com.tsystems.javaschool.webshop.services.impl;
 
 import com.tsystems.javaschool.webshop.dao.api.UsersDAO;
-import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
+import com.tsystems.javaschool.webshop.dao.entities.User;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
 import com.tsystems.javaschool.webshop.services.exceptions.AccountServiceException;
 import org.apache.log4j.LogManager;
@@ -32,16 +32,16 @@ public class AccountServiceImpl implements AccountService {
     private UsersDAO usersDAO;
 
     @Override
-    public final UserEntity signUpUser(final String name,
-                                       final String lastName,
-                                       final String email,
-                                       final String password)
+    public final User signUpUser(final String name,
+                                 final String lastName,
+                                 final String email,
+                                 final String password)
             throws AccountServiceException {
 
             if (usersDAO.getUserByEmail(email) != null) {
                 throw new AccountServiceException("email already registered");
             }
-            UserEntity newUser = new UserEntity();
+            User newUser = new User();
             newUser.setEmail(email);
             newUser.setPassword(password);
             newUser.setName(name);
@@ -54,11 +54,11 @@ public class AccountServiceImpl implements AccountService {
 
 
     @Override
-    public final UserEntity signInUser(final String email,
-                                       final String password)
+    public final User signInUser(final String email,
+                                 final String password)
             throws AccountServiceException {
 
-        UserEntity user = usersDAO.getUserByEmail(email);
+        User user = usersDAO.getUserByEmail(email);
 
         if (user == null || !user.getPassword().equals(password)) {
             throw new AccountServiceException(
@@ -67,18 +67,18 @@ public class AccountServiceImpl implements AccountService {
         return user;
     }
     @Override
-    public final UserEntity getUser(final int userID) {
+    public final User getUser(final int userID) {
         return usersDAO.getById(userID);
     }
 
     @Override
-    public final UserEntity saveProfile(final UserEntity user) {
+    public final User saveProfile(final User user) {
         usersDAO.update(user);
         return user;
     }
 
     @Override
-    public final List<UserEntity> getAll() {
+    public final List<User> getAll() {
         return usersDAO.getAll();
     }
 

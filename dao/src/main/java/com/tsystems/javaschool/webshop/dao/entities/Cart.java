@@ -23,7 +23,7 @@ import java.util.Set;
 
 })
 @Table(name = "cart", schema = "web_shop")
-public class CartEntity {
+public class Cart {
     /**
      * The Id in table.
      */
@@ -39,12 +39,12 @@ public class CartEntity {
     /**
      * The Items in cart.
      */
-    private Set<CartProductEntity> items;
+    private Set<CartProduct> items;
 
     /**
      * Instantiates a new Cart entity.
      */
-    public CartEntity() {
+    public Cart() {
         items = new LinkedHashSet<>();
     }
 
@@ -116,7 +116,7 @@ public class CartEntity {
      */
     @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy(value = "productId")
-    public Set<CartProductEntity> getItems() {
+    public Set<CartProduct> getItems() {
         return items;
     }
 
@@ -125,7 +125,7 @@ public class CartEntity {
      *
      * @param products the products
      */
-    public void setItems(final Set<CartProductEntity> products) {
+    public void setItems(final Set<CartProduct> products) {
         this.items = products;
     }
 

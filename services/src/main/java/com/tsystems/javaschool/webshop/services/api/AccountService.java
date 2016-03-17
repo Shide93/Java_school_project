@@ -1,6 +1,6 @@
 package com.tsystems.javaschool.webshop.services.api;
 
-import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
+import com.tsystems.javaschool.webshop.dao.entities.User;
 import com.tsystems.javaschool.webshop.services.exceptions.AccountServiceException;
 
 import java.util.List;
@@ -21,10 +21,10 @@ public interface AccountService {
      * @return user id
      * @throws AccountServiceException if email already registered
      */
-    UserEntity signUpUser(String name,
-                          String lastName,
-                          String email,
-                          String password)
+    User signUpUser(String name,
+                    String lastName,
+                    String email,
+                    String password)
             throws AccountServiceException;
 
     /**
@@ -35,7 +35,7 @@ public interface AccountService {
      * @return user object if found
      * @throws AccountServiceException if password wrong or user not found
      */
-    UserEntity signInUser(String email, String password)
+    User signInUser(String email, String password)
             throws AccountServiceException;
 
     /**
@@ -44,7 +44,7 @@ public interface AccountService {
      * @param userID user id
      * @return user object
      */
-    UserEntity getUser(int userID);
+    User getUser(int userID);
 
     /**
      * Saves user profile.
@@ -52,14 +52,14 @@ public interface AccountService {
      * @param user user with new values
      * @return user that saved to db
      */
-    UserEntity saveProfile(UserEntity user);
+    User saveProfile(User user);
 
     /**
      * Gets all users.
      *
      * @return all users
      */
-    List<UserEntity> getAll();
+    List<User> getAll();
 
     /**
      * Sets user rights.

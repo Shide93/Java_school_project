@@ -1,7 +1,7 @@
 package com.tsystems.javaschool.webshop.services.impl;
 
 import com.tsystems.javaschool.webshop.dao.api.CategoryDAO;
-import com.tsystems.javaschool.webshop.dao.entities.CategoryEntity;
+import com.tsystems.javaschool.webshop.dao.entities.Category;
 import com.tsystems.javaschool.webshop.services.api.CategoryService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -30,15 +30,15 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryDAO categoryDAO;
 
     @Override
-    public final void add(final CategoryEntity category) {
+    public final void add(final Category category) {
 
         categoryDAO.create(category);
     }
 
     @Override
-    public final void update(final CategoryEntity category) {
+    public final void update(final Category category) {
 
-        CategoryEntity persistedCategory =
+        Category persistedCategory =
                 categoryDAO.getById(category.getId());
         persistedCategory.setName(category.getName());
         persistedCategory.setDescription(category.getDescription());
@@ -51,19 +51,19 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public final CategoryEntity get(final int categoryId) {
+    public final Category get(final int categoryId) {
 
         return categoryDAO.getById(categoryId);
     }
 
     @Override
-    public final List<CategoryEntity> getAll() {
+    public final List<Category> getAll() {
 
         return categoryDAO.getAll();
     }
 
     @Override
-    public final List<CategoryEntity> getAllIdNames() {
+    public final List<Category> getAllIdNames() {
 
         return categoryDAO.getAllIdNames();
     }

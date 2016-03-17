@@ -1,8 +1,8 @@
 package com.tsystems.javaschool.webshop.servlets;
 
-import com.tsystems.javaschool.webshop.dao.entities.AddressEntity;
-import com.tsystems.javaschool.webshop.dao.entities.OrderEntity;
-import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
+import com.tsystems.javaschool.webshop.dao.entities.Address;
+import com.tsystems.javaschool.webshop.dao.entities.Order;
+import com.tsystems.javaschool.webshop.dao.entities.User;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
 import com.tsystems.javaschool.webshop.services.api.OrderService;
 import com.tsystems.javaschool.webshop.services.api.ValidationService;
@@ -77,8 +77,8 @@ public class SaveProfileServlet extends HttpServlet {
             throws ServletException, IOException {
 
         //get all orders for user
-        UserEntity user = (UserEntity) req.getSession().getAttribute("user");
-        List<OrderEntity> orders = orderService.getAllByUser(user.getId());
+        User user = (User) req.getSession().getAttribute("user");
+        List<Order> orders = orderService.getAllByUser(user.getId());
         req.setAttribute("orders", orders);
         RequestDispatcher rd = req.getRequestDispatcher("profile.jsp");
         rd.forward(req, resp);
@@ -128,10 +128,10 @@ public class SaveProfileServlet extends HttpServlet {
                         return;
         }
 
-        UserEntity user = (UserEntity) req.getSession().getAttribute("user");
-        UserEntity newUser = new UserEntity();
+        User user = (User) req.getSession().getAttribute("user");
+        User newUser = new User();
 
-        newUser.setId(usger.getId());
+        newUser.setId(user.getId());
         newUser.setName(name);
         newUser.setLastName(lastName);
         newUser.setPhone(phone);
@@ -140,7 +140,7 @@ public class SaveProfileServlet extends HttpServlet {
         newUser.setPassword(password);
         newUser.setIsAdmin(user.getIsAdmin());
 
-        AddressEntity address = new AddressEntity();
+        Address address = new Address();
         newUser.setAddress(address);
         if (user.getAddress() != null) {
             address.setId(user.getAddress().getId());

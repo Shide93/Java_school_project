@@ -1,4 +1,4 @@
-package com.tsystems.javaschool.webshop.controllers;
+package com.tsystems.javaschool.webshop.controllers.storefront;
 
 import com.tsystems.javaschool.webshop.services.api.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;

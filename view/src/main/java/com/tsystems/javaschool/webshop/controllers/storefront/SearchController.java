@@ -1,8 +1,8 @@
-package com.tsystems.javaschool.webshop.controllers;
+package com.tsystems.javaschool.webshop.controllers.storefront;
 
-import com.tsystems.javaschool.webshop.dao.entities.FeatureEntity;
-import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
-import com.tsystems.javaschool.webshop.dao.entities.ProductFeatureEntity;
+import com.tsystems.javaschool.webshop.dao.entities.Feature;
+import com.tsystems.javaschool.webshop.dao.entities.Product;
+import com.tsystems.javaschool.webshop.dao.entities.ProductFeature;
 import com.tsystems.javaschool.webshop.services.api.FeatureService;
 import com.tsystems.javaschool.webshop.services.api.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class SearchController {
      * @return the feature list
      */
     @ModelAttribute("features")
-    public final List<FeatureEntity> getFeatureList() {
+    public final List<Feature> getFeatureList() {
         return this.featureService.getAll();
     }
 
@@ -48,7 +48,7 @@ public class SearchController {
      * @return the feature values list
      */
     @ModelAttribute("featureValues")
-    public final List<ProductFeatureEntity> getFeatureValuesList() {
+    public final List<ProductFeature> getFeatureValuesList() {
         return this.featureService.getAllCategoryValues();
     }
 
@@ -75,7 +75,7 @@ public class SearchController {
                                          final String[] selectedFeatures) {
 
         //TODO: try to accept 2d array from form
-        List<ProductEntity> products =
+        List<Product> products =
                 productService.searchByFeature(selectedFeatures);
         model.addAttribute("products", products);
         return "searchResult";

@@ -7,30 +7,30 @@ http://www.springframework.org/schema/beans/spring-beans.xsd
 http://www.springframework.org/schema/security
 http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <http >
-        <access-denied-handler error-page="/error403.jsp"/>
+    <!--<http >-->
+        <!--<access-denied-handler error-page="/error403.jsp"/>-->
 
-        <intercept-url pattern="/checkout*" access="ROLE_USER"/>
-        <intercept-url pattern="/add*" access="ROLE_USER"/>
-        <intercept-url pattern="/backend/*" access="ROLE_ADMIN"/>
+        <!--<intercept-url pattern="/checkout*" access="ROLE_USER"/>-->
+        <!--<intercept-url pattern="/add*" access="ROLE_USER"/>-->
+        <!--<intercept-url pattern="/backend/*" access="ROLE_ADMIN"/>-->
 
-        <form-login login-page="/signin.jsp" default-target-url="/index"
-                    authentication-failure-url="/signin.jsp?error=true"/>
+        <!--<form-login login-page="/signin.jsp" default-target-url="/index"-->
+                    <!--authentication-failure-url="/signin.jsp?error=true"/>-->
 
-        <anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>
-        <remember-me/>
+        <!--<anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>-->
+        <!--<remember-me/>-->
 
-    </http>
+    <!--</http>-->
 
-    <authentication-manager >
+    <!--<authentication-manager >-->
 
-        <authentication-provider>
-            <user-service>
-                <user name="admin" password="123" authorities="ROLE_ADMIN, ROLE_USER"/>
-                <user name="user1" password="123" authorities="ROLE_USER"/>
-                <user name="user2" password="123" disabled="true" authorities="ROLE_USER"/>
+        <!--<authentication-provider>-->
+            <!--<user-service>-->
+                <!--<user name="admin" password="123" authorities="ROLE_ADMIN, ROLE_USER"/>-->
+                <!--<user name="user1" password="123" authorities="ROLE_USER"/>-->
+                <!--<user name="user2" password="123" disabled="true" authorities="ROLE_USER"/>-->
 
-            </user-service>
-        </authentication-provider>
-    </authentication-manager>
+            <!--</user-service>-->
+        <!--</authentication-provider>-->
+    <!--</authentication-manager>-->
 </beans:beans>

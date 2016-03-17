@@ -1,8 +1,8 @@
 package com.tsystems.javaschool.webshop.dao.impl;
 
 import com.tsystems.javaschool.webshop.dao.api.FeatureDAO;
-import com.tsystems.javaschool.webshop.dao.entities.FeatureEntity;
-import com.tsystems.javaschool.webshop.dao.entities.ProductFeatureEntity;
+import com.tsystems.javaschool.webshop.dao.entities.Feature;
+import com.tsystems.javaschool.webshop.dao.entities.ProductFeature;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
@@ -14,7 +14,7 @@ import java.util.List;
  * Feature dao implementation.
  */
 @Repository
-public class FeatureDAOImpl extends AbstractGenericDAO<FeatureEntity>
+public class FeatureDAOImpl extends AbstractGenericDAO<Feature>
         implements FeatureDAO {
     /**
      * The constant LOGGER.
@@ -23,10 +23,10 @@ public class FeatureDAOImpl extends AbstractGenericDAO<FeatureEntity>
             LogManager.getLogger(FeatureDAOImpl.class);
 
     @Override
-    public final List<ProductFeatureEntity> getAllValues() {
-        TypedQuery<ProductFeatureEntity> query =
+    public final List<ProductFeature> getAllValues() {
+        TypedQuery<ProductFeature> query =
                 manager.createNamedQuery("ProductFeatureEntity.getAllValues",
-                        ProductFeatureEntity.class);
+                        ProductFeature.class);
 
         return query.getResultList();
     }

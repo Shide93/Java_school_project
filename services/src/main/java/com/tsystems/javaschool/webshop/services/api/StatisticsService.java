@@ -1,7 +1,7 @@
 package com.tsystems.javaschool.webshop.services.api;
 
-import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
-import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
+import com.tsystems.javaschool.webshop.dao.entities.Product;
+import com.tsystems.javaschool.webshop.dao.entities.User;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public interface StatisticsService {
      * @param count count of products in top
      * @return the list
      */
-    List<ProductEntity> topProducts(int count);
+    List<Product> topProducts(int count);
 
     /**
      * Top of the best customers.
@@ -45,5 +45,5 @@ public interface StatisticsService {
      * @param count count of users in top
      * @return the list
      */
-    List<UserEntity> topCustomers(int count);
+    List<User> topCustomers(int count);
 }

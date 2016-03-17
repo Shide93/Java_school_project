@@ -1,27 +1,20 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 /**
- * The type Feature entity.
+ * The type Shipping entity.
  */
-@Entity
 @SuppressWarnings("CheckStyle")
-@Table(name = "feature", schema = "web_shop")
-public class FeatureEntity {
+@Entity
+@Table(name = "shipping", schema = "web_shop")
+public class Shipping {
     /**
      * The Id.
      */
@@ -31,16 +24,13 @@ public class FeatureEntity {
      */
     private String name;
     /**
-     * The Products.
+     * The Description.
      */
-    private Set<ProductFeatureEntity> products;
-
+    private String description;
     /**
-     * Instantiates a new Feature entity.
+     * The Cost.
      */
-    public FeatureEntity() {
-        products = new LinkedHashSet<>();
-    }
+    private Integer cost;
 
     /**
      * Gets id.
@@ -70,7 +60,6 @@ public class FeatureEntity {
      */
     @Basic
     @Column(name = "name")
-
     public String getName() {
         return name;
     }
@@ -85,24 +74,43 @@ public class FeatureEntity {
     }
 
     /**
-     * Gets products.
+     * Gets description.
      *
-     * @return the products
+     * @return the description
      */
-    @OneToMany(mappedBy = "feature")
-    @Fetch(FetchMode.JOIN)
-    @OrderBy(value = "productId")
-    public Set<ProductFeatureEntity> getProducts() {
-        return products;
+    @Basic
+    @Column(name = "description")
+    public String getDescription() {
+        return description;
     }
 
     /**
-     * Sets products.
+     * Sets description.
      *
-     * @param products the products
+     * @param description the description
      */
-    public void setProducts(final Set<ProductFeatureEntity> products) {
-        this.products = products;
+    public void setDescription(final String description) {
+        this.description = description;
+    }
+
+    /**
+     * Gets cost.
+     *
+     * @return the cost
+     */
+    @Basic
+    @Column(name = "cost")
+    public Integer getCost() {
+        return cost;
+    }
+
+    /**
+     * Sets cost.
+     *
+     * @param cost the cost
+     */
+    public void setCost(final Integer cost) {
+        this.cost = cost;
     }
 
 }

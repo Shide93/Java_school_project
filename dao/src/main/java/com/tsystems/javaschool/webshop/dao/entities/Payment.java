@@ -9,12 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * The type Shipping entity.
+ * The type Payment entity.
  */
-@SuppressWarnings("CheckStyle")
 @Entity
-@Table(name = "shipping", schema = "web_shop")
-public class ShippingEntity {
+@SuppressWarnings("CheckStyle")
+@Table(name = "payment", schema = "web_shop")
+public class Payment {
     /**
      * The Id.
      */
@@ -27,10 +27,6 @@ public class ShippingEntity {
      * The Description.
      */
     private String description;
-    /**
-     * The Cost.
-     */
-    private Integer cost;
 
     /**
      * Gets id.
@@ -91,26 +87,6 @@ public class ShippingEntity {
      */
     public void setDescription(final String description) {
         this.description = description;
-    }
-
-    /**
-     * Gets cost.
-     *
-     * @return the cost
-     */
-    @Basic
-    @Column(name = "cost")
-    public Integer getCost() {
-        return cost;
-    }
-
-    /**
-     * Sets cost.
-     *
-     * @param cost the cost
-     */
-    public void setCost(final Integer cost) {
-        this.cost = cost;
     }
 
 }

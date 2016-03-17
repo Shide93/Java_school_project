@@ -2,9 +2,9 @@ package com.tsystems.javaschool.webshop.services.impl;
 
 import com.tsystems.javaschool.webshop.dao.api.CartDAO;
 import com.tsystems.javaschool.webshop.dao.api.ProductDAO;
-import com.tsystems.javaschool.webshop.dao.entities.CartEntity;
-import com.tsystems.javaschool.webshop.dao.entities.CartProductEntity;
-import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
+import com.tsystems.javaschool.webshop.dao.entities.Cart;
+import com.tsystems.javaschool.webshop.dao.entities.CartProduct;
+import com.tsystems.javaschool.webshop.dao.entities.Product;
 import com.tsystems.javaschool.webshop.services.api.CartService;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import org.apache.log4j.LogManager;
@@ -39,12 +39,12 @@ public class CartServiceImpl implements CartService {
     private ProductDAO productDAO;
 
     @Override
-    public final void add(final CartEntity cart) {
+    public final void add(final Cart cart) {
         cartDAO.create(cart);
     }
 
     @Override
-    public final void update(final CartEntity cart) {
+    public final void update(final Cart cart) {
         cartDAO.update(cart);
     }
 
@@ -54,23 +54,23 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public final CartEntity get(final int cartId) {
+    public final Cart get(final int cartId) {
         return cartDAO.getById(cartId);
     }
 
     @Override
-    public final List<CartEntity> getAll() {
+    public final List<Cart> getAll() {
         return cartDAO.getAll();
     }
 
     @Override
-    public final CartEntity addToCart(final Integer productId,
-                                      final Integer quantity,
-                                      final Integer cartId) {
-        CartEntity cart = cartDAO.getById(cartId);
-        ProductEntity product = productDAO.getById(productId);
+    public final Cart addToCart(final Integer productId,
+                                final Integer quantity,
+                                final Integer cartId) {
+        Cart cart = cartDAO.getById(cartId);
+        Product product = productDAO.getById(productId);
 
-        CartProductEntity item = new CartProductEntity();
+        CartProduct item = new CartProduct();
 
         item.setQuantity(quantity);
         item.setProduct(product);
@@ -87,13 +87,13 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public final CartEntity editCartProduct(final Integer productId,
-                                            final Integer quantity,
-                                            final Integer cartId) {
+    public final Cart editCartProduct(final Integer productId,
+                                      final Integer quantity,
+                                      final Integer cartId) {
 
-        CartEntity cart = cartDAO.getById(cartId);
+        Cart cart = cartDAO.getById(cartId);
 
-        for (CartProductEntity cartProduct : cart.getItems()) {
+        for (CartProduct cartProduct : cart.getItems()) {
             if (productId.equals(cartProduct.getProductId())) {
                 cartProduct.setQuantity(quantity);
                 break;
@@ -104,11 +104,11 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public final CartEntity removeFromCart(final Integer productId,
-                                           final Integer cartId) {
+    public final Cart removeFromCart(final Integer productId,
+                                     final Integer cartId) {
 
         cartDAO.removeFromCart(productId, cartId);
-        CartEntity cart = cartDAO.getById(cartId);
+        Cart cart = cartDAO.getById(cartId);
         updateSummaryCount(cart);
         return cart;
     }
@@ -118,11 +118,11 @@ public class CartServiceImpl implements CartService {
      *
      * @param cart the cart
      */
-    private void updateSummaryCount(final CartEntity cart) {
+    private void updateSummaryCount(final Cart cart) {
 
         int count = 0;
         int summary = 0;
-        for (CartProductEntity item : cart.getItems()) {
+        for (CartProduct item : cart.getItems()) {
             count += item.getQuantity();
             summary += item.getQuantity() * item.getProduct().getPrice();
         }

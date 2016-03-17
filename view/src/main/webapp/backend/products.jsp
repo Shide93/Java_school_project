@@ -55,11 +55,13 @@
                     <div class="features">
                         Features
                         <div class="row prod-feature"></div>
-                        <c:forEach var="prodFeature" items="${requestScope.selectedProduct.features}">
+                        <c:forEach var="prodFeature" items="${requestScope.selectedProduct.features}"  varStatus="status">
                             <div class="row prod-feature">
                                 <div class="col-lg-4">
+                                    <input type="hidden" class="form-control"
+                                           value="${requestScope.selectedProduct.id}" name="features[${status.index}].productId">
                                     <label>
-                                        <select class="form-control" name="prod_features[id]">
+                                        <select class="form-control" name="features[${status.index}].featureId">
                                             <c:forEach var="feature" items="${requestScope.features}">
                                                 <option <c:if test="${prodFeature.featureId == feature.id}">selected</c:if>
                                                         class="" value="${feature.id}">
@@ -72,8 +74,9 @@
                                 <div class="col-lg-4">
                                     <label>
                                         <input type="text" class="form-control"
-                                               value="${prodFeature.value}" name="prod_features[value]">
+                                               value="${prodFeature.value}" name="features[${status.index}].value">
                                     </label>
+
                                 </div>
                             </div>
                         </c:forEach>

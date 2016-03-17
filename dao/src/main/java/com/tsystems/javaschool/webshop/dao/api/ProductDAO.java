@@ -1,6 +1,6 @@
 package com.tsystems.javaschool.webshop.dao.api;
 
-import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
+import com.tsystems.javaschool.webshop.dao.entities.Product;
 
 import java.util.List;
 import java.util.Map;
@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * DAO class to interact with Product Entity.
  */
-public interface ProductDAO extends GenericDAO<ProductEntity> {
+public interface ProductDAO extends GenericDAO<Product> {
 
     /**
      * Searches products that have specified feature values.
@@ -18,7 +18,7 @@ public interface ProductDAO extends GenericDAO<ProductEntity> {
      *                      an array of feature values to search with
      * @return the list of products that satisfy selected features
      */
-    List<ProductEntity> findByFeatures(
+    List<Product> findByFeatures(
             Map<Integer, List<String>> featureValues);
     /**
      * Top of the best selling products.
@@ -26,5 +26,5 @@ public interface ProductDAO extends GenericDAO<ProductEntity> {
      * @param count   count of products in top
      * @return the list
      */
-    List<ProductEntity> topProducts(int count);
+    List<Product> topProducts(int count);
 }

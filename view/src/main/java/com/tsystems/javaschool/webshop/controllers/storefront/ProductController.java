@@ -1,13 +1,15 @@
-package com.tsystems.javaschool.webshop.controllers;
+package com.tsystems.javaschool.webshop.controllers.storefront;
 
-import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
+import com.tsystems.javaschool.webshop.dao.entities.Feature;
+import com.tsystems.javaschool.webshop.dao.entities.Product;
+import com.tsystems.javaschool.webshop.services.api.FeatureService;
 import com.tsystems.javaschool.webshop.services.api.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by Shide on 13.03.2016.
@@ -22,6 +24,12 @@ public class ProductController {
     private ProductService productService;
 
     /**
+     * The Feature service.
+     */
+    @Autowired
+    private FeatureService featureService;
+
+    /**
      * Gets product by id in path.
      * <p/>
      * if product doesn't exist, assigns null to product param
@@ -34,7 +42,7 @@ public class ProductController {
     public final String getProduct(@PathVariable final int productId,
                                     final Model model) {
 
-        ProductEntity product = productService.get(productId);
+        Product product = productService.get(productId);
         model.addAttribute("product", product);
         return "product";
     }
@@ -50,4 +58,5 @@ public class ProductController {
         model.addAttribute("product", null);
         return "product";
     }
+
 }

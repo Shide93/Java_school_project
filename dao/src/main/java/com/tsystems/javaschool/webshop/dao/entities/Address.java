@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @SuppressWarnings("CheckStyle")
 @Entity
 @Table(name = "address", schema = "web_shop")
-public class AddressEntity {
+public class Address {
     /**
      * id in table.
      */
@@ -212,7 +212,7 @@ public class AddressEntity {
 
     @Override
     public String toString() {
-        return "AddressEntity{" +
+        return "Address{" +
                 "id=" + id +
                 ", country='" + country + '\'' +
                 ", region='" + region + '\'' +

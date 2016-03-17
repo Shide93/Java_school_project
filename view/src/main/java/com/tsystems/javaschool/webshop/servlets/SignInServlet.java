@@ -1,6 +1,6 @@
 package com.tsystems.javaschool.webshop.servlets;
 
-import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
+import com.tsystems.javaschool.webshop.dao.entities.User;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
 import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.exceptions.AccountServiceException;
@@ -87,7 +87,7 @@ public class SignInServlet extends HttpServlet {
             return;
         }
         try {
-            UserEntity user = accountService.signInUser(email, password);
+            User user = accountService.signInUser(email, password);
             if (isRemember != null && isRemember.equals("on")) {
                 Cookie cookie = ServletUtils.createCookie("userID",
                         String.valueOf(user.getId()));

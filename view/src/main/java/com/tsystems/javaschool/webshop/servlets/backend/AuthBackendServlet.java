@@ -1,6 +1,6 @@
 package com.tsystems.javaschool.webshop.servlets.backend;
 
-import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
+import com.tsystems.javaschool.webshop.dao.entities.User;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
 import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.exceptions.AccountServiceException;
@@ -73,7 +73,7 @@ public class AuthBackendServlet extends HttpServlet {
         String isRemember = req.getParameter("remember");
 
         try {
-            UserEntity user = accountService.signInUser(email, password);
+            User user = accountService.signInUser(email, password);
             //if non-admin user trying to enter backend
             if (!user.getIsAdmin()) {
                throw new AccountServiceException(

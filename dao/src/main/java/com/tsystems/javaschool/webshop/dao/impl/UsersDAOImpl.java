@@ -1,7 +1,7 @@
 package com.tsystems.javaschool.webshop.dao.impl;
 
 import com.tsystems.javaschool.webshop.dao.api.UsersDAO;
-import com.tsystems.javaschool.webshop.dao.entities.UserEntity;
+import com.tsystems.javaschool.webshop.dao.entities.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
@@ -13,7 +13,7 @@ import javax.persistence.Query;
  * The type Users dao.
  */
 @Repository
-public class UsersDAOImpl extends AbstractGenericDAO<UserEntity>
+public class UsersDAOImpl extends AbstractGenericDAO<User>
         implements UsersDAO {
 
     /**
@@ -23,11 +23,11 @@ public class UsersDAOImpl extends AbstractGenericDAO<UserEntity>
             LogManager.getLogger(UsersDAOImpl.class);
 
     @Override
-    public final UserEntity getUserByEmail(final String email) {
+    public final User getUserByEmail(final String email) {
         try {
             Query query = manager.createNamedQuery("UserEntity.getByEmail");
             query.setParameter("email", email);
-            return (UserEntity) query.getSingleResult();
+            return (User) query.getSingleResult();
         } catch (NoResultException e) {
             /*because in SingUp I need check
             that there is no user with this email

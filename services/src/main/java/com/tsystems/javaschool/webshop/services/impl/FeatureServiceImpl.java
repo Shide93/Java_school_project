@@ -1,8 +1,8 @@
 package com.tsystems.javaschool.webshop.services.impl;
 
 import com.tsystems.javaschool.webshop.dao.api.FeatureDAO;
-import com.tsystems.javaschool.webshop.dao.entities.FeatureEntity;
-import com.tsystems.javaschool.webshop.dao.entities.ProductFeatureEntity;
+import com.tsystems.javaschool.webshop.dao.entities.Feature;
+import com.tsystems.javaschool.webshop.dao.entities.ProductFeature;
 import com.tsystems.javaschool.webshop.services.api.FeatureService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -32,13 +32,13 @@ public class FeatureServiceImpl implements FeatureService {
     private FeatureDAO featureDAO;
 
     @Override
-    public final void add(final FeatureEntity feature) {
+    public final void add(final Feature feature) {
 
         featureDAO.create(feature);
     }
 
     @Override
-    public final void update(final FeatureEntity feature) {
+    public final void update(final Feature feature) {
         featureDAO.update(feature);
     }
 
@@ -49,16 +49,16 @@ public class FeatureServiceImpl implements FeatureService {
 
     }
     @Override
-    public final FeatureEntity get(final int featureId) {
+    public final Feature get(final int featureId) {
         return featureDAO.getById(featureId);
     }
     @Override
-    public final List<FeatureEntity> getAll() {
+    public final List<Feature> getAll() {
         return featureDAO.getAll();
     }
 
     @Override
-    public final List<ProductFeatureEntity> getAllCategoryValues() {
+    public final List<ProductFeature> getAllCategoryValues() {
         return featureDAO.getAllValues();
     }
 }

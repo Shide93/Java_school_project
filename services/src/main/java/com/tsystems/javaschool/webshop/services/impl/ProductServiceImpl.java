@@ -3,9 +3,9 @@ package com.tsystems.javaschool.webshop.services.impl;
 import com.tsystems.javaschool.webshop.dao.api.CategoryDAO;
 import com.tsystems.javaschool.webshop.dao.api.FeatureDAO;
 import com.tsystems.javaschool.webshop.dao.api.ProductDAO;
-import com.tsystems.javaschool.webshop.dao.entities.CategoryEntity;
-import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
-import com.tsystems.javaschool.webshop.dao.entities.ProductFeatureEntity;
+import com.tsystems.javaschool.webshop.dao.entities.Category;
+import com.tsystems.javaschool.webshop.dao.entities.Product;
+import com.tsystems.javaschool.webshop.dao.entities.ProductFeature;
 import com.tsystems.javaschool.webshop.services.api.ProductService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -47,10 +47,10 @@ public class ProductServiceImpl implements ProductService {
     private FeatureDAO featureDAO;
 
     @Override
-    public final void add(final ProductEntity product) {
+    public final void add(final Product product) {
 
 
-        CategoryEntity category =
+        Category category =
                 categoryDAO.getById(product.getCategory().getId());
         product.setCategory(category);
         productDAO.create(product);
@@ -58,12 +58,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public final void update(final ProductEntity product) {
+    public final void update(final Product product) {
 
-        CategoryEntity category =
+        Category category =
                 categoryDAO.getById(product.getCategory().getId());
         product.setCategory(category);
-        for (ProductFeatureEntity prodFeature : product.getFeatures()) {
+        for (ProductFeature prodFeature : product.getFeatures()) {
             prodFeature.setFeature(featureDAO.getById(
                     prodFeature.getFeatureId()));
         }
@@ -80,7 +80,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public final ProductEntity get(final int productId) {
+    public final Product get(final int productId) {
 
 
         return productDAO.getById(productId);
@@ -90,14 +90,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public final List<ProductEntity> getAll() {
+    public final List<Product> getAll() {
 
 
         return productDAO.getAll();
     }
 
     @Override
-    public final List<ProductEntity> searchProducts(final String searchQuery) {
+    public final List<Product> searchProducts(final String searchQuery) {
 
 
         return null;
@@ -105,7 +105,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public final List<ProductEntity> searchByFeature(
+    public final List<Product> searchByFeature(
             final String[] selectedFeatures) {
 
         Map<Integer, List<String>> map = new HashMap<>();

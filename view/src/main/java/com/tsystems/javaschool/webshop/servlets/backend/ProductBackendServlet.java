@@ -1,9 +1,9 @@
 package com.tsystems.javaschool.webshop.servlets.backend;
 
-import com.tsystems.javaschool.webshop.dao.entities.CategoryEntity;
-import com.tsystems.javaschool.webshop.dao.entities.FeatureEntity;
-import com.tsystems.javaschool.webshop.dao.entities.ProductEntity;
-import com.tsystems.javaschool.webshop.dao.entities.ProductFeatureEntity;
+import com.tsystems.javaschool.webshop.dao.entities.Category;
+import com.tsystems.javaschool.webshop.dao.entities.Feature;
+import com.tsystems.javaschool.webshop.dao.entities.Product;
+import com.tsystems.javaschool.webshop.dao.entities.ProductFeature;
 import com.tsystems.javaschool.webshop.services.api.FeatureService;
 import com.tsystems.javaschool.webshop.services.api.ProductService;
 import com.tsystems.javaschool.webshop.services.api.ValidationService;
@@ -74,8 +74,8 @@ public class ProductBackendServlet extends HttpServlet {
             throws ServletException, IOException {
         String productIdStr = req.getParameter("productId");
         //get all products
-        List<ProductEntity> products = productService.getAll();
-        List<FeatureEntity> features = featureService.getAll();
+        List<Product> products = productService.getAll();
+        List<Feature> features = featureService.getAll();
 
         if (productIdStr == null) {         //when enter page without params
             if (products != null && products.size() > 0) {
@@ -114,12 +114,12 @@ public class ProductBackendServlet extends HttpServlet {
             Integer price = Integer.parseInt(priceStr);
             Integer stock = Integer.parseInt(stockStr);
             Integer categoryId = Integer.parseInt(categoryIdStr);
-            ProductEntity product = new ProductEntity();
+            Product product = new Product();
             product.setName(name);
             product.setDescription(description);
             product.setPrice(price);
             product.setStock(stock);
-            CategoryEntity cat = new CategoryEntity();
+            Category cat = new Category();
             cat.setId(categoryId);
             product.setCategory(cat);
             productService.add(product);
@@ -136,13 +136,13 @@ public class ProductBackendServlet extends HttpServlet {
             Integer price = Integer.parseInt(priceStr);
             Integer stock = Integer.parseInt(stockStr);
             Integer categoryId = Integer.parseInt(categoryIdStr);
-            ProductEntity product = new ProductEntity();
+            Product product = new Product();
             product.setId(id);
             product.setName(name);
             product.setDescription(description);
             product.setPrice(price);
             product.setStock(stock);
-            CategoryEntity cat = new CategoryEntity();
+            Category cat = new Category();
             cat.setId(categoryId);
             product.setCategory(cat);
             setFeaturesToProduct(featureIds, featureValues, product);
@@ -175,10 +175,10 @@ public class ProductBackendServlet extends HttpServlet {
      */
     private void setFeaturesToProduct(final String[] featureIds,
                                       final String[] featureValues,
-                                      final ProductEntity product) {
+                                      final Product product) {
         for (int i = 0; i < featureIds.length; i++) {
             Integer fId = Integer.parseInt(featureIds[i]);
-            ProductFeatureEntity feature = new ProductFeatureEntity();
+            ProductFeature feature = new ProductFeature();
             feature.setProductId(product.getId());
             feature.setProduct(product);
             feature.setFeatureId(fId);

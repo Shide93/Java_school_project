@@ -19,12 +19,12 @@ import javax.persistence.Table;
 @NamedQueries({
         @NamedQuery(name = "ProductFeatureEntity.getAllValues",
                 query = "select distinct "
-                       + "new ProductFeatureEntity(pf.value, pf.featureId)"
-                       + "from ProductFeatureEntity pf")
+                       + "new ProductFeature(pf.value, pf.featureId)"
+                       + "from ProductFeature pf")
 })
 @Table(name = "product_feature", schema = "web_shop")
-@IdClass(ProductFeatureEntityPK.class)
-public class ProductFeatureEntity {
+@IdClass(ProductFeaturePK.class)
+public class ProductFeature {
     /**
      * The Product id.
      */
@@ -40,16 +40,16 @@ public class ProductFeatureEntity {
     /**
      * The Product.
      */
-    private ProductEntity product;
+    private Product product;
     /**
      * The Feature.
      */
-    private FeatureEntity feature;
+    private Feature feature;
 
     /**
      * Instantiates a new Product feature entity.
      */
-    public ProductFeatureEntity() {
+    public ProductFeature() {
     }
 
     /**
@@ -58,7 +58,7 @@ public class ProductFeatureEntity {
      * @param value     the value
      * @param featureId the feature id
      */
-    public ProductFeatureEntity(final String value, final int featureId) {
+    public ProductFeature(final String value, final int featureId) {
         this.value = value;
         this.featureId = featureId;
     }
@@ -130,7 +130,7 @@ public class ProductFeatureEntity {
      */
     @ManyToOne
     @JoinColumn(name = "product_id", updatable = false, insertable = false)
-    public ProductEntity getProduct() {
+    public Product getProduct() {
         return product;
     }
 
@@ -139,7 +139,7 @@ public class ProductFeatureEntity {
      *
      * @param product the product
      */
-    public void setProduct(final ProductEntity product) {
+    public void setProduct(final Product product) {
         this.product = product;
     }
 
@@ -150,7 +150,7 @@ public class ProductFeatureEntity {
      */
     @ManyToOne
     @JoinColumn(name = "feature_id", updatable = false, insertable = false)
-    public FeatureEntity getFeature() {
+    public Feature getFeature() {
         return feature;
     }
 
@@ -159,7 +159,7 @@ public class ProductFeatureEntity {
      *
      * @param feature the feature
      */
-    public void setFeature(final FeatureEntity feature) {
+    public void setFeature(final Feature feature) {
         this.feature = feature;
     }
 
