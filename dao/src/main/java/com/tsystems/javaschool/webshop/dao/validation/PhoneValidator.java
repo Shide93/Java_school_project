@@ -16,7 +16,7 @@ public class PhoneValidator implements ConstraintValidator<Phone, String> {
     public final boolean isValid(final String phoneNo,
                                  final ConstraintValidatorContext ctx) {
         if (phoneNo == null) {
-            return false;
+            return true;
         }
         //validate phone numbers of format "1234567890"
         return phoneNo.matches("\\d{10}")

@@ -15,17 +15,11 @@ public interface AccountService {
     /**
      * Signs up user in shop.
      *
-     * @param name     user name
-     * @param lastName user last name
-     * @param email    user email
-     * @param password user password
+     * @param user new user
      * @return user id
      * @throws AccountServiceException if email already registered
      */
-    User signUpUser(String name,
-                    String lastName,
-                    String email,
-                    String password)
+    User signUpUser(User user)
             throws AccountServiceException;
 
     /**

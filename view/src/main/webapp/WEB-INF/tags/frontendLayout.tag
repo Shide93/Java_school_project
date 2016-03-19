@@ -1,6 +1,7 @@
 <%@tag description="frontend layout" pageEncoding="UTF-8" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <%@attribute name="content" fragment="true" %>
 
@@ -29,15 +30,21 @@
                 <!--login -->
                 <div class="col-lg-4 pull-right">
                     <div class="pull-right">
-                        <c:if test="${sessionScope.user != null}">
-                            <a class="btn btn-default navbar-btn" href="<c:url value="/profile"/>">Hello, ${sessionScope.user.name}!</a>
-                            <c:url value="/lout" var="logoutUrl"/>
-                            <a class="btn btn-default navbar-btn" href="<c:url value="${logoutUrl}"/>">Logout</a>
-                        </c:if>
-                        <c:if test="${sessionScope.user == null}">
+                        <sec:authorize access="isAuthenticated()">
+                            <a class="btn btn-default navbar-btn"
+                               href="<c:url value="/profile"/>">Hello,
+                                <sec:authentication property="principal.username" />!
+                            </a>
+
+                            <form class="pull-right" action="<c:url value="/logout"/>" method="post">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <input class="btn btn-default navbar-btn" value="logout" type="submit">
+                            </form>
+                        </sec:authorize>
+                        <sec:authorize access="isAnonymous()">
                             <a class="btn btn-default navbar-btn" href="<c:url value="/signin"/>">Sign in</a>
                             <a class="btn btn-default navbar-btn" href="<c:url value="/signup"/>">Sign up</a>
-                        </c:if>
+                        </sec:authorize>
                     </div>
                 </div>
             </div>

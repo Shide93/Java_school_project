@@ -96,10 +96,7 @@ public class SignUpServlet extends HttpServlet {
         //create user
         try {
 
-            User user = accountService.signUpUser(name,
-                    lastName,
-                    email,
-                    password);
+            User user = accountService.signUpUser(new User());
 
             Cookie cookie = ServletUtils.createCookie("userID",
                            String.valueOf(user.getId()));

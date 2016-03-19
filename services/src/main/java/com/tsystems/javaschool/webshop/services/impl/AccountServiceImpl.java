@@ -8,10 +8,12 @@ import com.tsystems.javaschool.webshop.services.exceptions.AccountServiceExcepti
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,25 +39,24 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
     @Autowired
     private UsersDAO usersDAO;
 
+    /**
+     * The Password encoder.
+     */
+    @Autowired
+    @Qualifier(value = "encoder")
+    private PasswordEncoder passwordEncoder;
+
     @Override
-    public final User signUpUser(final String name,
-                                 final String lastName,
-                                 final String email,
-                                 final String password)
+    public final User signUpUser(final User user)
             throws AccountServiceException {
 
-            if (usersDAO.getUserByEmail(email) != null) {
+            if (usersDAO.getUserByEmail(user.getEmail()) != null) {
                 throw new AccountServiceException("email already registered");
             }
-            User newUser = new User();
-            newUser.setEmail(email);
-            newUser.setPassword(password);
-            newUser.setName(name);
-            newUser.setLastName(lastName);
-            newUser.setRole(UserRole.ROLE_USER);
-
-            usersDAO.create(newUser);
-            return newUser;
+            //hash password
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            usersDAO.create(user);
+            return user;
     }
 
 
@@ -66,7 +67,8 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
 
         User user = usersDAO.getUserByEmail(email);
 
-        if (user == null || !user.getPassword().equals(password)) {
+        if (user == null
+                || passwordEncoder.matches(password, user.getPassword())) {
             throw new AccountServiceException(
                     "Wrong password or email");
         }
@@ -105,6 +107,9 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
     public final UserDetails loadUserByUsername(final String email)
             throws UsernameNotFoundException {
         User user = usersDAO.getUserByEmail(email);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
         return new org.springframework.security.core.userdetails.

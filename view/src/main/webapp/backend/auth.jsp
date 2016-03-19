@@ -13,11 +13,15 @@
                <div class="">
                    <h2>Admin panel</h2>
                    <div>Please sing in</div>
-                   <div>${requestScope.errMsg}</div>
-                   <form class="" role="form" action="<c:url value="/backend/auth"/>" method="post">
+                   <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
+                       <div class="alert alert-danger">
+                           <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.
+                       </div>
+                   </c:if>
+                   <form class="" role="form" action="<c:url value="/login"/>" method="post">
                        <div class="form-group">
                            <label>Email
-                               <input class="form-control" type="text" name="email">
+                               <input class="form-control" type="text" name="username">
                            </label><br>
 
                            <label>Password
@@ -25,11 +29,11 @@
                            </label><br>
                            <div class="checkbox">
                                <label>
-                                   <input type="checkbox" name="remember" checked> Remember me
+                                   <input type="checkbox" name="remember-me" checked> Remember me
                                </label>
                            </div>
+                           <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                            <input class="btn btn-default" type="submit">
-
                        </div>
                    </form>
                </div>

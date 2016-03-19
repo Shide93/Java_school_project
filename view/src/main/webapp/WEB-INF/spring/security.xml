@@ -10,9 +10,10 @@ http://www.springframework.org/schema/security/spring-security.xsd">
     <http >
         <intercept-url pattern="/checkout*" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <intercept-url pattern="/profile*" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+        <intercept-url pattern="/backend/**" access="hasRole('ROLE_ADMIN')"/>
 
         <form-login login-page="/signin" default-target-url="/"
-                    authentication-failure-url="/signin?error=true" />
+                    authentication-failure-url="/signin" />
 
         <remember-me/>
 
@@ -24,10 +25,12 @@ http://www.springframework.org/schema/security/spring-security.xsd">
     <authentication-manager >
 
         <authentication-provider user-service-ref="userDetailsService">
-            <!--<password-encoder hash="sha-256" >-->
-                <!--<salt-source user-property="username"/>-->
-            <!--</password-encoder>-->
-
+            <password-encoder ref="encoder"/>
         </authentication-provider>
     </authentication-manager>
+
+    <beans:bean id="encoder"
+                class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <beans:constructor-arg name="strength" value="11" />
+    </beans:bean>
 </beans:beans>
