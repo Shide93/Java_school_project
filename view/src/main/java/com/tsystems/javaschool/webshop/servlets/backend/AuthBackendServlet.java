@@ -1,6 +1,7 @@
 package com.tsystems.javaschool.webshop.servlets.backend;
 
 import com.tsystems.javaschool.webshop.dao.entities.User;
+import com.tsystems.javaschool.webshop.dao.entities.enums.UserRole;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
 import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.exceptions.AccountServiceException;
@@ -75,7 +76,7 @@ public class AuthBackendServlet extends HttpServlet {
         try {
             User user = accountService.signInUser(email, password);
             //if non-admin user trying to enter backend
-            if (!user.getIsAdmin()) {
+            if (user.getRole().equals(UserRole.ROLE_USER)) {
                throw new AccountServiceException(
                        "You don't have permission to enter admin panel");
             }

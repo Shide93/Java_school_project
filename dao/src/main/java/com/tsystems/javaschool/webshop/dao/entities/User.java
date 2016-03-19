@@ -1,27 +1,13 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
 
+import com.tsystems.javaschool.webshop.dao.entities.enums.UserRole;
 import com.tsystems.javaschool.webshop.dao.validation.Phone;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
@@ -79,7 +65,7 @@ public class User {
      * The Is admin.
      */
     @NotNull
-    private Boolean isAdmin;
+    private UserRole role;
     /**
      * The Address.
      */
@@ -244,9 +230,10 @@ public class User {
      * @return the is admin
      */
     @Basic
-    @Column(name = "is_admin")
-    public Boolean getIsAdmin() {
-        return isAdmin;
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    public UserRole getRole() {
+        return role;
     }
 
     /**
@@ -254,8 +241,8 @@ public class User {
      *
      * @param userType the user type
      */
-    public void setIsAdmin(final Boolean userType) {
-        this.isAdmin = userType;
+    public void setRole(final UserRole userType) {
+        this.role = userType;
     }
 
     /**

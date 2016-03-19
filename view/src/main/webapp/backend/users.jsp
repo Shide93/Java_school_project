@@ -18,7 +18,7 @@
                 <div class="col-lg-2">
                     <label>Admin
                         <input class="is_admin" user-id="${user.id}" type="checkbox"
-                               <c:if test="${user.isAdmin == true}">checked</c:if> >
+                               <c:if test="${user.role eq 'ROLE_ADMIN'}">checked</c:if> >
                     </label>
                 </div>
             </div>

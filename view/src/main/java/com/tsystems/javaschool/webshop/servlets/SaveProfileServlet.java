@@ -138,7 +138,7 @@ public class SaveProfileServlet extends HttpServlet {
         newUser.setBirthDate(birthDate);
         newUser.setEmail(email);
         newUser.setPassword(password);
-        newUser.setIsAdmin(user.getIsAdmin());
+        newUser.setRole(user.getRole());
 
         Address address = new Address();
         newUser.setAddress(address);

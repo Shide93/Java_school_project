@@ -1,5 +1,6 @@
 package com.tsystems.javaschool.webshop.controllers.backend;
 
+import com.tsystems.javaschool.webshop.dao.entities.enums.UserRole;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,8 +29,14 @@ public class UserRightsController {
 
     @RequestMapping(value = "/backend/users", method = RequestMethod.POST)
     public final void setRights(@RequestParam final int id,
-                                @RequestParam final Boolean isAdmin) {
-       accountService.setUserRights(id, isAdmin);
+                                @RequestParam final boolean isAdmin) {
+        UserRole role;
+        if (isAdmin) {
+            role = UserRole.ROLE_ADMIN;
+        } else {
+            role = UserRole.ROLE_USER;
+        }
+       accountService.setUserRights(id, role);
     }
 
 }

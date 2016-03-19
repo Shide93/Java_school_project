@@ -1,6 +1,7 @@
 package com.tsystems.javaschool.webshop.services.api;
 
 import com.tsystems.javaschool.webshop.dao.entities.User;
+import com.tsystems.javaschool.webshop.dao.entities.enums.UserRole;
 import com.tsystems.javaschool.webshop.services.exceptions.AccountServiceException;
 
 import java.util.List;
@@ -67,6 +68,6 @@ public interface AccountService {
      * @param userId  the user id
      * @param isAdmin is user admin
      */
-    void setUserRights(int userId, boolean isAdmin);
+    void setUserRights(int userId, UserRole isAdmin);
 
 }

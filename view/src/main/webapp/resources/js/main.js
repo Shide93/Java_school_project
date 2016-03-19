@@ -38,8 +38,12 @@ $(document).ready( function() {
             }, "json");
     });
 
-
-
+    //CSRF AJAX protection
+    $(document).ajaxSend(function(e, xhr, options) {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        xhr.setRequestHeader(header, token);
+    });
 
 
 

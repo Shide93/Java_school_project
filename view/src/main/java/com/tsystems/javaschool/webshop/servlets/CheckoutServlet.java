@@ -158,7 +158,7 @@ public class CheckoutServlet extends HttpServlet {
         newUser.setId(user.getId());
         newUser.setEmail(user.getEmail());
         newUser.setPassword(user.getPassword());
-        newUser.setIsAdmin(user.getIsAdmin());
+        newUser.setRole(user.getRole());
         newUser.setName(name);
         newUser.setLastName(lastName);
         newUser.setPhone(phone);

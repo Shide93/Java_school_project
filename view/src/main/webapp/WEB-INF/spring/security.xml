@@ -6,31 +6,28 @@
 http://www.springframework.org/schema/beans/spring-beans.xsd
 http://www.springframework.org/schema/security
 http://www.springframework.org/schema/security/spring-security.xsd">
+    <http pattern="/resources/**" security="none" />
+    <http >
+        <intercept-url pattern="/checkout*" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+        <intercept-url pattern="/profile*" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
 
-    <!--<http >-->
-        <!--<access-denied-handler error-page="/error403.jsp"/>-->
+        <form-login login-page="/signin" default-target-url="/"
+                    authentication-failure-url="/signin?error=true" />
 
-        <!--<intercept-url pattern="/checkout*" access="ROLE_USER"/>-->
-        <!--<intercept-url pattern="/add*" access="ROLE_USER"/>-->
-        <!--<intercept-url pattern="/backend/*" access="ROLE_ADMIN"/>-->
+        <remember-me/>
 
-        <!--<form-login login-page="/signin.jsp" default-target-url="/index"-->
-                    <!--authentication-failure-url="/signin.jsp?error=true"/>-->
+        <logout invalidate-session="true"
+                logout-success-url="/" />
 
-        <!--<anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>-->
-        <!--<remember-me/>-->
+    </http>
 
-    <!--</http>-->
+    <authentication-manager >
 
-    <!--<authentication-manager >-->
+        <authentication-provider user-service-ref="userDetailsService">
+            <!--<password-encoder hash="sha-256" >-->
+                <!--<salt-source user-property="username"/>-->
+            <!--</password-encoder>-->
 
-        <!--<authentication-provider>-->
-            <!--<user-service>-->
-                <!--<user name="admin" password="123" authorities="ROLE_ADMIN, ROLE_USER"/>-->
-                <!--<user name="user1" password="123" authorities="ROLE_USER"/>-->
-                <!--<user name="user2" password="123" disabled="true" authorities="ROLE_USER"/>-->
-
-            <!--</user-service>-->
-        <!--</authentication-provider>-->
-    <!--</authentication-manager>-->
+        </authentication-provider>
+    </authentication-manager>
 </beans:beans>

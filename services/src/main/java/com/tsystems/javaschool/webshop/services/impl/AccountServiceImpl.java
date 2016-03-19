@@ -2,22 +2,28 @@ package com.tsystems.javaschool.webshop.services.impl;
 
 import com.tsystems.javaschool.webshop.dao.api.UsersDAO;
 import com.tsystems.javaschool.webshop.dao.entities.User;
+import com.tsystems.javaschool.webshop.dao.entities.enums.UserRole;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
 import com.tsystems.javaschool.webshop.services.exceptions.AccountServiceException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * The type Account service.
  */
-@Service
+@Service(value = "userDetailsService")
 @Transactional
-public class AccountServiceImpl implements AccountService {
+public class AccountServiceImpl implements AccountService, UserDetailsService {
 
     /**
      * The constant LOGGER.
@@ -46,7 +52,7 @@ public class AccountServiceImpl implements AccountService {
             newUser.setPassword(password);
             newUser.setName(name);
             newUser.setLastName(lastName);
-            newUser.setIsAdmin(false);
+            newUser.setRole(UserRole.ROLE_USER);
 
             usersDAO.create(newUser);
             return newUser;
@@ -83,8 +89,25 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public final void setUserRights(final int userId, final boolean isAdmin) {
+    public final void setUserRights(final int userId, final UserRole isAdmin) {
         usersDAO.getById(userId)
-        .setIsAdmin(isAdmin);
+        .setRole(isAdmin);
+    }
+
+    /**
+     * Custom implementation of {@link UserDetailsService}. <br>
+     * {@inheritDoc}
+     * @param email instead of username using email
+     * @return {@inheritDoc}
+     * @throws UsernameNotFoundException {@inheritDoc}
+     */
+    @Override
+    public final UserDetails loadUserByUsername(final String email)
+            throws UsernameNotFoundException {
+        User user = usersDAO.getUserByEmail(email);
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
+        return new org.springframework.security.core.userdetails.
+                User(user.getEmail(), user.getPassword(), authorities);
     }
 }

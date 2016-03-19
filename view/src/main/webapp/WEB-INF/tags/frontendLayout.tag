@@ -31,7 +31,8 @@
                     <div class="pull-right">
                         <c:if test="${sessionScope.user != null}">
                             <a class="btn btn-default navbar-btn" href="<c:url value="/profile"/>">Hello, ${sessionScope.user.name}!</a>
-                            <a class="btn btn-default navbar-btn" href="<c:url value="/logout"/>">Logout</a>
+                            <c:url value="/lout" var="logoutUrl"/>
+                            <a class="btn btn-default navbar-btn" href="<c:url value="${logoutUrl}"/>">Logout</a>
                         </c:if>
                         <c:if test="${sessionScope.user == null}">
                             <a class="btn btn-default navbar-btn" href="<c:url value="/signin"/>">Sign in</a>
