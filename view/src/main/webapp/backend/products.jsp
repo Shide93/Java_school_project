@@ -20,6 +20,7 @@
             <div class="">
                 <h1 class="">Product ${requestScope.selectedProduct.name}</h1>
                 <form class="" role="form" action="<c:url value="/backend/products?action=save"/>" method="post">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div class="name form-group">
                         <label>Product name:
                             <input class="form-control" type="text" name="name" value="${requestScope.selectedProduct.name}">
@@ -42,8 +43,8 @@
                     </div>
                     <div class="category form-group">
                         <label>Category:
-                            <select class="form-control" name="category">
-                                <c:forEach var="category" items="${applicationScope.categoryList}">
+                            <select class="form-control" name="category.id">
+                                <c:forEach var="category" items="${requestScope.categoryList}">
                                     <option <c:if test="${requestScope.selectedProduct.category.id == category.id}">selected</c:if>
                                             class="" value="${category.id}">
                                             ${category.name}
@@ -91,6 +92,7 @@
                     </div>
                 </form>
                 <form action="<c:url value="/backend/products?action=remove"/>" method="post">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <input type="hidden" name="id" value="${requestScope.selectedProduct.id}">
                     <input class="delete btn btn-primary" type="submit" value="Remove product">
                 </form>
@@ -102,6 +104,7 @@
             <div class="">
                 <h1 class="">New product</h1>
                 <form class="" role="form" action="<c:url value="/backend/products?action=add"/>" method="post">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div class="name">
                         <label>Product name:
                             <input class="form-control" type="text" name="name" value="">
@@ -143,6 +146,7 @@
                     <div>
                         <input class="add btn btn-primary" type="submit" value="Add new product">
                     </div>
+
                 </form>
             </div>
 

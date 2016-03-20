@@ -1,6 +1,7 @@
 package com.tsystems.javaschool.webshop.servlets;
 
 import com.tsystems.javaschool.webshop.dao.entities.Cart;
+import com.tsystems.javaschool.webshop.dao.entities.CartProduct;
 import com.tsystems.javaschool.webshop.services.api.CartService;
 import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
@@ -74,9 +75,7 @@ public class CartServlet extends HttpServlet {
                 Integer  productId = Integer.parseInt(productIdStr);
                 Cart newCart;
                 try {
-                    newCart = cartService.addToCart(productId,
-                            quantity,
-                            cart.getId());
+                    newCart = cartService.addToCart(new CartProduct());
                 } catch (ServiceException e) {
                     LOGGER.error(e.getMessage(), e);
                     resp.getWriter().println("{\"error\": \"duplicate\"}");
@@ -87,17 +86,14 @@ public class CartServlet extends HttpServlet {
             } else if (req.getParameter("action").equals("edit")) {
                 Integer  quantity = Integer.parseInt(quantityStr);
                 Integer  productId = Integer.parseInt(productIdStr);
-                Cart newCart = cartService.editCartProduct(productId,
-                                                                quantity,
-                                                                cart.getId());
+                Cart newCart = cartService.editCartProduct(new CartProduct());
                 req.getSession().setAttribute("cart", newCart);
                 resp.getWriter().println(jsonSerializer.deepSerialize(newCart));
 
 
             } else if (req.getParameter("action").equals("remove")) {
                     Integer  productId = Integer.parseInt(productIdStr);
-                    Cart newCart = cartService.removeFromCart(productId,
-                            cart.getId());
+                    Cart newCart = cartService.removeFromCart(new CartProduct());
                     req.getSession().setAttribute("cart", newCart);
                     resp.getWriter().println(jsonSerializer.serialize(newCart));
             }

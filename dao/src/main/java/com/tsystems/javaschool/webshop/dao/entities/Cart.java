@@ -1,5 +1,7 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,17 +26,26 @@ import java.util.Set;
 })
 @Table(name = "cart", schema = "web_shop")
 public class Cart {
+
+    /**
+     * The interface for JsonView.
+     */
+    public interface JSONCart { };
+
     /**
      * The Id in table.
      */
+    @JsonView(JSONCart.class)
     private int id;
     /**
      * The Count of items in cart.
      */
+    @JsonView(JSONCart.class)
     private int count;
     /**
      * The Summary.
      */
+    @JsonView(JSONCart.class)
     private int summary;
     /**
      * The Items in cart.

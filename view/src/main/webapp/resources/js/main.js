@@ -17,7 +17,7 @@ $(document).ready( function() {
         var row = $(this).parents("[product-id]");
         var id = row.attr("product-id");
         var quantity = $(this).val();
-        $.post("?action=edit", "product_id=" + id + "&quantity=" + quantity,
+        $.post("?action=edit", "productId=" + id + "&quantity=" + quantity,
             function(JData) {
                 console.log(JData);
                 $(".cart_count").text(JData.count);
@@ -30,7 +30,7 @@ $(document).ready( function() {
     $(".cart_product_remove").on('click', function(e) {
         var row = $(this).parents("[product-id]");
         var id = row.attr("product-id");
-        $.post("?action=remove", "product_id=" + id,
+        $.post("?action=remove", "productId=" + id,
             function(JData) {
                 row.hide();
                 $(".cart_count").text(JData.count);

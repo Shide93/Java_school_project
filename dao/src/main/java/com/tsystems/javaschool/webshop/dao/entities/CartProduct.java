@@ -168,8 +168,9 @@ public class CartProduct {
 
     @Override
     public int hashCode() {
+        final int hashInt = 31;
         int result = cartId;
-        result = 31 * result + productId;
+        result = hashInt * result + productId;
         return result;
     }
 }

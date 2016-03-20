@@ -7,6 +7,8 @@ import com.tsystems.javaschool.webshop.services.api.CartService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -27,6 +29,7 @@ import java.io.IOException;
  * Checks is the user have authorized cookie and associates session with user.
  * Checks is the user have cart cookie and add cart data to session.
  */
+@Component
 public class CookieCheckFilter implements Filter {
     /**
      * The constant LOGGER.
@@ -60,38 +63,19 @@ public class CookieCheckFilter implements Filter {
         HttpSession session = req.getSession();
         Cookie[] cookies = req.getCookies();
 
-        // user authorisation flag
-        boolean userFlag = false;
         // cart presence flag
         boolean cartFlag = false;
 
-        // if user already authorised
-        if (session.getAttribute("user") != null) {
-           userFlag = true;
-        }
         // if user already have cart
         if (session.getAttribute("cart") != null) {
-            cartFlag = true;
-        }
-        // if user already have cart and authorized - pass through
-        if (userFlag && cartFlag || cookies == null) {
             chain.doFilter(req, resp);
             return;
         }
 
         for (Cookie cookie : cookies) {
-            //if user enters site with user cookie - add user to session
-            if (cookie.getName().equals("userID") && !userFlag) {
-                User user = accountService.
-                        getUser(Integer.parseInt(cookie.getValue()));
-                if (user != null) {
-                    req.getSession().setAttribute("user", user);
-                    continue;
-                }
-            }
 
             //if user enters site with cart cookie - add cart to session
-            if (cookie.getName().equals("cartID") && !cartFlag) {
+            if (cookie.getName().equals("cartID")) {
                 Cart cart = cartService.
                         get(Integer.parseInt(cookie.getValue()));
                 if (cart != null) {

@@ -64,52 +64,46 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public final Cart addToCart(final Integer productId,
-                                final Integer quantity,
-                                final Integer cartId) {
-        Cart cart = cartDAO.getById(cartId);
-        Product product = productDAO.getById(productId);
+    public final Cart addToCart(final CartProduct item)
+            throws ServiceException {
 
-        CartProduct item = new CartProduct();
-
-        item.setQuantity(quantity);
+        Product product = productDAO.getById(item.getProductId());
+        Cart cart = item.getCart();
         item.setProduct(product);
-        item.setCart(cart);
-        item.setProductId(productId);
-        item.setCartId(cart.getId());
         if (cart.getItems().contains(item)) {
             throw new ServiceException("Product already in cart");
         }
         cart.getItems().add(item);
         updateSummaryCount(cart);
+        cartDAO.update(cart);
         return cart;
 
     }
 
     @Override
-    public final Cart editCartProduct(final Integer productId,
-                                      final Integer quantity,
-                                      final Integer cartId) {
+    public final Cart editCartProduct(final CartProduct item) {
 
-        Cart cart = cartDAO.getById(cartId);
+        Cart cart = item.getCart();
+        Product product = productDAO.getById(item.getProductId());
+        item.setProduct(product);
 
         for (CartProduct cartProduct : cart.getItems()) {
-            if (productId.equals(cartProduct.getProductId())) {
-                cartProduct.setQuantity(quantity);
+            if (item.getProductId() == cartProduct.getProductId()) {
+                cartProduct.setQuantity(item.getQuantity());
                 break;
             }
         }
         updateSummaryCount(cart);
+        cartDAO.update(cart);
         return cart;
     }
 
     @Override
-    public final Cart removeFromCart(final Integer productId,
-                                     final Integer cartId) {
-
-        cartDAO.removeFromCart(productId, cartId);
-        Cart cart = cartDAO.getById(cartId);
+    public final Cart removeFromCart(final CartProduct item) {
+        Cart cart = item.getCart();
+        cart.getItems().remove(item);
         updateSummaryCount(cart);
+        cartDAO.update(cart);
         return cart;
     }
 

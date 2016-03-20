@@ -17,6 +17,7 @@
         <org.springframework-version>4.2.4.RELEASE</org.springframework-version>
         <org.springframework.security-version>4.0.3.RELEASE</org.springframework.security-version>
         <org.hibernate-version>5.0.7.Final</org.hibernate-version>
+        <jackson-version>2.6.5</jackson-version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -74,6 +75,18 @@
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-taglibs</artifactId>
                 <version>${org.springframework.security-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson-version}</version>
             </dependency>
 
             <!--   Validation   -->

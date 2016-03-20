@@ -1,6 +1,8 @@
 package com.tsystems.javaschool.webshop.services.api;
 
 import com.tsystems.javaschool.webshop.dao.entities.Cart;
+import com.tsystems.javaschool.webshop.dao.entities.CartProduct;
+import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 
 /**
  * The interface Cart service.
@@ -8,32 +10,29 @@ import com.tsystems.javaschool.webshop.dao.entities.Cart;
 public interface CartService extends GenericService<Cart> {
     /**
      * Method adds product with it's quantity to cart.
+     * <p/>
+     * Cart object must be already encapsulated in CartProduct
      *
-     * @param productId id of product to add
-     * @param quantity  quantity of product in cart
-     * @param cartId      user's cart
+     * @param cartProduct the cart product
      * @return updated cart
+     * @throws ServiceException the service exception
      */
-    Cart addToCart(Integer productId,
-                   Integer quantity, Integer cartId);
+    Cart addToCart(CartProduct cartProduct)
+            throws ServiceException;
 
     /**
      * Method edits product quantity in cart.
      *
-     * @param productId id of product to edit in cart
-     * @param quantity  new quantity of product in cart
-     * @param cartId      user's cart
+     * @param cartProduct the cart product
      * @return updated cart
      */
-    Cart editCartProduct(Integer productId,
-                         Integer quantity, Integer cartId);
+    Cart editCartProduct(CartProduct cartProduct);
 
     /**
      * Method removes product from cart.
      *
-     * @param productId id of product to remove
-     * @param cartId      user's cart
+     * @param cartProduct the cart product
      * @return updated cart
      */
-    Cart removeFromCart(Integer productId, Integer cartId);
+    Cart removeFromCart(CartProduct cartProduct);
 }

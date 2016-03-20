@@ -13,7 +13,7 @@
                                 <img class="img-responsive img-thumbnail" src="<c:url value="/img/default_product.png"/>">
                             </div>
                             <div class="col-lg-8">
-                                <input type="hidden" name="product_id" value="${product.id}">
+                                <input type="hidden" name="productId" value="${product.id}">
                                 <div class="name">
                                     <a href="/product/${product.id}">${product.name}</a>
                                 </div>

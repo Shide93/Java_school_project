@@ -1,6 +1,7 @@
 package com.tsystems.javaschool.webshop.dao.api;
 
 import com.tsystems.javaschool.webshop.dao.entities.Cart;
+import com.tsystems.javaschool.webshop.dao.entities.CartProduct;
 import com.tsystems.javaschool.webshop.dao.exceptions.DaoException;
 
 
@@ -12,11 +13,9 @@ public interface CartDAO extends GenericDAO<Cart> {
     /**
      * Removes product from cart.
      *
-     * @param productId the product id
-     * @param cartId    the cart id
+     * @param cartProduct the cart product
      * @throws DaoException ifDeleted more than one row
      */
-    void removeFromCart(final Integer productId,
-                        final Integer cartId)
+    void removeFromCart(final CartProduct cartProduct)
             throws DaoException;
 }
