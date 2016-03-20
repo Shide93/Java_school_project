@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  * Entity of address.
@@ -22,6 +23,7 @@ public class Address {
     /**
      * address country.
      */
+    @NotNull
     private String country;
     /**
      * address region.
@@ -30,18 +32,22 @@ public class Address {
     /**
      * address city.
      */
+    @NotNull
     private String city;
     /**
      * address zip.
      */
+    @NotNull
     private int zip;
     /**
      * address street.
      */
+    @NotNull
     private String street;
     /**
      * address building.
      */
+    @NotNull
     private int building;
     /**
      * address flat.

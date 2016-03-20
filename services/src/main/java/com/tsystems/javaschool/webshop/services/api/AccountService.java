@@ -46,8 +46,9 @@ public interface AccountService {
      *
      * @param user user with new values
      * @return user that saved to db
+     * @throws AccountServiceException the account service exception
      */
-    User saveProfile(User user);
+    User saveProfile(User user)  throws AccountServiceException;
 
     /**
      * Gets all users.
@@ -63,5 +64,13 @@ public interface AccountService {
      * @param isAdmin is user admin
      */
     void setUserRights(int userId, UserRole isAdmin);
+
+    /**
+     * Gets user by email.
+     *
+     * @param email the email
+     * @return the user by email
+     */
+    User getUserByEmail(String email);
 
 }

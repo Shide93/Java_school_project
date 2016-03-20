@@ -24,7 +24,7 @@ public @interface Phone {
      *
      * @return the string
      */
-    String message() default "{Phone}";
+    String message() default "Phone is incorrect";
 
     /**
      * Groups class [ ].

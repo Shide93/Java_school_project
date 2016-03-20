@@ -80,7 +80,13 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
     }
 
     @Override
-    public final User saveProfile(final User user) {
+    public final User getUserByEmail(final String email) {
+        return usersDAO.getUserByEmail(email);
+    }
+
+    @Override
+    public final User saveProfile(final User user)
+            throws AccountServiceException {
         usersDAO.update(user);
         return user;
     }

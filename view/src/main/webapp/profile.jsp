@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <t:frontendLayout>
     <jsp:attribute name="content">
         <ul class="nav nav-tabs">
@@ -10,82 +11,76 @@
         </ul>
         <div class="tab-content">
             <div id="profile" class="tab-pane fade in active">
-                <h2>Your Profile, ${sessionScope.user.name}!</h2>
-                <p>${requestScope.notValid}</p>
-                <form class="" role="form" action="<c:url value="/profile"/>" method="post">
-                    <div class="form-group">
-                        <h6>Change email:</h6>
-                        <label>Email
-                            <input class="form-control" type="text" name="email" value="${sessionScope.user.email}">
-                        </label><br>
+                <h2>Your Profile, ${requestScope.user.name}!</h2>
+                <form:form class="" role="form" action="/profile" method="post" modelAttribute="user">
+                    <div class="">
+                        <h6>Your email:</h6>
+                       <div> ${requestScope.user.email}</div>
                     </div>
-                    <div class="form-group">
-                        <h6>Change password:</h6>
 
-                        <label>Password
-                            <input class="form-control" type="password" name="password" value="${sessionScope.user.password}">
-                        </label>
-
-                        <label>Re-type password
-                            <input class="form-control" type="password" name="password2">
-                        </label><br>
-                    </div>
                     <div class="form-group">
                         <h6>Additional info</h6>
                         <label>Name
-                            <input class="form-control" type="text" name="name" value="${sessionScope.user.name}">
-                        </label><br>
-
+                            <form:input class="form-control" type="text" path="name"/>
+                        </label>
+                        <form:errors path="name" cssClass="error" /><br>
 
                         <label>Last name
-                            <input class="form-control" type="text" name="last_name" value="${sessionScope.user.lastName}">
-                        </label><br>
+                            <form:input class="form-control" type="text" path="lastName" />
+                        </label>
+                        <form:errors path="lastName" cssClass="error" /><br>
                         <label>Phone
-                            <input class="form-control" type="text" name="phone" value="${sessionScope.user.phone}">
-                        </label><br>
+                            <form:input class="form-control" type="text" path="phone" />
+                        </label>
+                        <form:errors path="phone" cssClass="error" /><br>
 
                         <label>Birth date
-                            <input class="form-control" type="text" name="birth_date"
-                                   value="<fmt:formatDate value="${sessionScope.user.birthDate}"
-                                                type="DATE" pattern="dd-MM-yyyy"/>">
-
+                            <form:input class="form-control" type="text" path="birthDate" />
                         </label>
+                        <form:errors path="birthDate" cssClass="error" /><br>
                     </div>
+
                     <div class="form-group">
                         <h6>Shipping address</h6>
                         <label>Country
-                            <input class="form-control" type="text" name="country" value="${sessionScope.user.address.country}">
-                        </label><br>
+                            <form:input class="form-control" type="text" path="address.country"  />
+                        </label>
+                        <form:errors path="address.country" cssClass="error" /><br>
 
                         <label>Region
-                            <input class="form-control" type="text" name="region" value="${sessionScope.user.address.region}">
-                        </label><br>
+                            <form:input class="form-control" type="text" path="address.region"  />
+                        </label>
+                        <form:errors path="address.region" cssClass="error" /><br>
 
                         <label>City
-                            <input class="form-control" type="text" name="city" value="${sessionScope.user.address.city}">
-                        </label><br>
+                            <form:input class="form-control" type="text" path="address.city" />
+                        </label>
+                        <form:errors path="address.city" cssClass="error" /><br>
 
                         <label>Zip
-                            <input class="form-control" type="text" name="zip" value="${sessionScope.user.address.zip}">
-
+                            <form:input class="form-control" type="text" path="address.zip"  />
                         </label>
+                        <form:errors path="address.zip" cssClass="error" /><br>
 
                         <label>Street
-                            <input class="form-control" type="text" name="street" value="${sessionScope.user.address.street}">
-                        </label><br>
+                            <form:input class="form-control" type="text" path="address.street"  />
+                        </label>
+                        <form:errors path="address.street" cssClass="error" /><br>
 
                         <label>Building
-                            <input class="form-control" type="text" name="building" value="${sessionScope.user.address.building}">
-                        </label><br>
+                            <form:input class="form-control" type="text" path="address.building"  />
+                        </label>
+                        <form:errors path="address.building" cssClass="error" /><br>
 
                         <label>Flat
-                            <input class="form-control" type="text" name="flat" value="${sessionScope.user.address.flat}">
-                        </label><br>
+                            <form:input class="form-control" type="text" path="address.flat" value="${requestScope.user.address.flat}" />
+                        </label>
+                        <form:errors path="address.flat" cssClass="error" /><br>
 
                     </div>
                     <input class="btn btn-primary" value="Save profile" type="submit">
 
-                </form>
+                </form:form>
             </div>
 
             <div id="myorders" class="tab-pane fade">
