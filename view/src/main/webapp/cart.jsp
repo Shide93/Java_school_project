@@ -1,16 +1,17 @@
 <%@page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <t:frontendLayout>
     <jsp:attribute name="content">
 
-        <h1 class="">This is cart!</h1>
-        <c:if test="${sessionScope.cart == null || sessionScope.cart.items == null}">
+        <h1 class="">Your cart!</h1>
+        <c:if test="${isCartEmpty}">
             <div>
-                Your cart is empty!
+                <spring:message code="cart.empty"/>
             </div>
         </c:if>
-        <c:if test="${sessionScope.cart != null}">
+        <c:if test="${!isCartEmpty}">
             <table class="table table-striped">
                 <thead>
                     <tr>

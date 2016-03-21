@@ -59,7 +59,9 @@ public class CartController {
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
     public final String getCartPage(@ModelAttribute("cart") final Cart cart,
                                     final Model model) {
-
+        if (cart == null || cart.getItems() == null || cart.getItems().isEmpty()) {
+            model.addAttribute("isCartEmpty", true);
+        }
         return "cart";
     }
 
@@ -78,6 +80,7 @@ public class CartController {
     public final Cart addToCart(@ModelAttribute("cart") final Cart cart,
                                   @ModelAttribute final CartProduct cartItem,
                                   final Model model) {
+
         //FIXME: if add to cart double times - exception
         return cartService.addToCart(cartItem);
     }

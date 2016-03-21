@@ -1,53 +1,64 @@
 <%@page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <t:frontendLayout>
     <jsp:attribute name="content">
         <div class="checkout">
             <p>${requestScope.notValid}</p>
             <p>${requestScope.required}</p>
-            <form class="" role="form" action="<c:url value="/checkout"/>" method="post">
+            <form:form class="" role="form" action="/checkout" method="post" modelAttribute="order">
                 <div class = "contact-info">
                     <div class="general form-group">
                         <label>Name
-                            <input class="form-control" type="text" name="name" value="${sessionScope.user.name}">
-                        </label><br>
+                            <form:input class="form-control" type="text" path="user.name"/>
+                        </label>
+                        <form:errors path="user.name" cssClass="error" /><br>
                         <label>Last name
-                            <input class="form-control" type="text" name="last_name" value="${sessionScope.user.lastName}">
-                        </label><br>
+                            <form:input class="form-control" type="text" path="user.lastName"/>
+                        </label>
+                        <form:errors path="user.lastName" cssClass="error" /><br>
                         <label>Phone
-                            <input class="form-control" type="text" name="phone" value="${sessionScope.user.phone}">
-                        </label><br>
+                            <form:input class="form-control" type="text" path="user.phone"/>
+                        </label>
+                        <form:errors path="user.phone" cssClass="error" /><br>
                     </div>
                     <div class="address form-group">
                         <h6>Shipping address</h6>
                         <label>Country
-                            <input class="form-control" type="text" name="country" value="${sessionScope.user.address.country}">
-                        </label><br>
+                            <form:input class="form-control" type="text" path="address.country" />
+                        </label>
+                        <form:errors path="address.country" cssClass="error" /><br>
 
                         <label>Region
-                            <input class="form-control" type="text" name="region" value="${sessionScope.user.address.region}">
-                        </label><br>
+                            <form:input class="form-control" type="text" path="address.region" />
+                        </label>
+                        <form:errors path="address.region" cssClass="error" /><br>
 
                         <label>City
-                            <input class="form-control" type="text" name="city" value="${sessionScope.user.address.city}">
-                        </label><br>
+                            <form:input class="form-control" type="text" path="address.city" />
+                        </label>
+                        <form:errors path="address.city" cssClass="error" /><br>
 
                         <label>Zip
-                            <input class="form-control" type="text" name="zip" value="${sessionScope.user.address.zip}">
-                        </label><br>
+                            <form:input class="form-control" type="text" path="address.zip" />
+                        </label>
+                        <form:errors path="address.zip" cssClass="error" /><br>
 
                         <label>Street
-                            <input class="form-control" type="text" name="street" value="${sessionScope.user.address.street}">
-                        </label><br>
+                            <form:input class="form-control" type="text" path="address.street" />
+                        </label>
+                        <form:errors path="address.street" cssClass="error" /><br>
 
                         <label>Building
-                            <input class="form-control" type="text" name="building" value="${sessionScope.user.address.building}">
-                        </label><br>
+                            <form:input class="form-control" type="text" path="address.building" />
+                        </label>
+                        <form:errors path="address.building" cssClass="error" /><br>
 
                         <label>Flat
-                            <input class="form-control" type="text" name="flat" value="${sessionScope.user.address.flat}">
-                        </label><br>
+                            <form:input class="form-control" type="text" path="address.flat" />
+                        </label>
+                        <form:errors path="address.flat" cssClass="error" /><br>
 
                     </div>
                 </div>
@@ -55,7 +66,7 @@
                     <c:forEach var="shippingType" items="${requestScope.shippingTypes}">
                         <div class="radio">
                             <label>
-                                <input type="radio" name="shipping_id" shipping-cost="${shippingType.cost}" value="${shippingType.id}">
+                                <form:radiobutton path="shipping.id" shipping-cost="${shippingType.cost}" value="${shippingType.id}"/>
                                     ${shippingType.name}
                             </label>
                             <span class="cost"><span class="shipping_cost">${shippingType.cost}</span>$</span>
@@ -64,12 +75,13 @@
                             </div>
                         </div>
                     </c:forEach>
+                    <form:errors path="shipping" cssClass="error" /><br>
                 </div>
                 <div class = "payment form-group">
                     <c:forEach var="paymentType" items="${requestScope.paymentTypes}">
                         <div class="radio">
                             <label>
-                                <input type="radio" name="payment_id" value="${paymentType.id}">
+                                <form:radiobutton path="payment.id" value="${paymentType.id}"/>
                                     ${paymentType.name}
                             </label>
                             <div class="description">
@@ -77,6 +89,7 @@
                             </div>
                         </div>
                     </c:forEach>
+                    <form:errors path="payment" cssClass="error" /><br>
                 </div>
                 <div class = "confirmation form-group">
 
@@ -118,17 +131,17 @@
                     </table>
                     <div class="form-group">
                         <span>Comment:</span>
-                        <textarea class="comment form-control" name="comment" placeholder="Add your comment to order here"></textarea>
+                        <form:textarea class="comment form-control" path="comment" placeholder="Add your comment to order here"/>
                         <br>
                         <input class="btn btn-primary" type="submit" value="Buy">
                     </div>
                 </div>
-            </form>
+            </form:form>
         </div>
         <script>
             $(document).ready( function(){
-                $("input[name=shipping_id]").on('change', function(e) {
-                    var shippingCost = parseInt($("input[name=shipping_id]:checked")
+                $("input[name=shipping]").on('change', function(e) {
+                    var shippingCost = parseInt($("input[name=shipping]:checked")
                             .attr("shipping-cost"));
                     var total = parseInt(${sessionScope.cart.summary});
                     $('.shipping_total').text(shippingCost);

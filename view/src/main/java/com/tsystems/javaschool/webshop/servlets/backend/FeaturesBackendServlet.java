@@ -5,7 +5,6 @@ import com.tsystems.javaschool.webshop.services.api.FeatureService;
 import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.impl.FeatureServiceImpl;
 import com.tsystems.javaschool.webshop.services.impl.ValidationServiceImpl;
-import com.tsystems.javaschool.webshop.servlets.SaveProfileServlet;
 import flexjson.JSONSerializer;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -24,7 +23,7 @@ public class FeaturesBackendServlet extends HttpServlet {
      * The constant LOGGER.
      */
     private static final Logger LOGGER =
-            LogManager.getLogger(SaveProfileServlet.class);
+            LogManager.getLogger(FeaturesBackendServlet.class);
     /**
      * The Feature service.
      */

@@ -65,25 +65,16 @@ public class CheckoutServiceImpl implements CheckoutService {
     }
 
     @Override
-    public final void createOrder(final User user,
-                                  final Address address,
-                                  final Cart cart,
-                                  final Integer paymentId,
-                                  final Integer shippingId,
-                                  final String comment) {
+    public final void createOrder(final Order order,
+                                  final Cart cart) {
 
-        Payment payment = paymentDAO.getById(paymentId);
-        Shipping shipping = shippingDAO.getById(shippingId);
-        address.setId(0);       //to save new instance of address
-        Order order = new Order();
+        Payment payment = paymentDAO.getById(order.getPayment().getId());
+        Shipping shipping = shippingDAO.getById(order.getShipping().getId());
         order.setOrderStatus(OrderStatus.NEW);
         order.setPayment(payment);
         order.setShipping(shipping);
-        order.setUser(user);
-        order.setAddress(address);
-        order.setComment(comment);
         order.setOrderDate(new Date());
-        order.setTotal(cart.getSummary());
+        order.setTotal(cart.getSummary() + shipping.getCost());
         orderDAO.create(order);
         Set<OrderProduct> orderItems = order.getProducts();
         for (CartProduct cartItem : cart.getItems()) {
@@ -97,8 +88,6 @@ public class CheckoutServiceImpl implements CheckoutService {
         }
         order.setProducts(orderItems);
 
-
         cartDAO.delete(cart.getId());
-
     }
 }

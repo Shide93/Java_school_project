@@ -2,18 +2,12 @@ package com.tsystems.javaschool.webshop.controllers.storefront;
 
 import com.tsystems.javaschool.webshop.dao.entities.Category;
 import com.tsystems.javaschool.webshop.services.api.CategoryService;
-import com.tsystems.javaschool.webshop.servlets.SaveProfileServlet;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
-
-import javax.validation.Valid;
-import java.util.List;
 
 /**
  * Shows category in storefront.
@@ -24,7 +18,7 @@ public class CategoryController {
      * The constant LOGGER.
      */
     private static final Logger LOGGER =
-            LogManager.getLogger(SaveProfileServlet.class);
+            LogManager.getLogger(CategoryController.class);
     /**
      * The Category service.
      */

@@ -22,6 +22,8 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -56,21 +58,25 @@ public class Order {
     /**
      * The User.
      */
+    @Valid
     private User user;
 
     /**
      * The Address.
      */
+    @Valid
     private Address address;
 
     /**
      * The Payment.
      */
+    @NotNull(message = "payment.null")
     private Payment payment;
 
     /**
      * The Shipping.
      */
+    @NotNull(message = "shipping.null")
     private Shipping shipping;
 
     /**
@@ -130,7 +136,7 @@ public class Order {
      *
      * @return the user
      */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id")
     public User getUser() {
         return user;

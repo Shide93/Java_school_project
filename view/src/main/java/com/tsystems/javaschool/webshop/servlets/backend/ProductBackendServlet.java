@@ -10,7 +10,6 @@ import com.tsystems.javaschool.webshop.services.api.ValidationService;
 import com.tsystems.javaschool.webshop.services.impl.FeatureServiceImpl;
 import com.tsystems.javaschool.webshop.services.impl.ProductServiceImpl;
 import com.tsystems.javaschool.webshop.services.impl.ValidationServiceImpl;
-import com.tsystems.javaschool.webshop.servlets.SaveProfileServlet;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -30,7 +29,7 @@ public class ProductBackendServlet extends HttpServlet {
      * The constant LOGGER.
      */
     private static final Logger LOGGER =
-            LogManager.getLogger(SaveProfileServlet.class);
+            LogManager.getLogger(ProductBackendServlet.class);
     /**
      * The Product service.
      */
