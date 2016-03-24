@@ -5,6 +5,10 @@ import com.tsystems.javaschool.webshop.dao.api.ProductDAO;
 import com.tsystems.javaschool.webshop.dao.api.UsersDAO;
 import com.tsystems.javaschool.webshop.dao.entities.Product;
 import com.tsystems.javaschool.webshop.dao.entities.User;
+import com.tsystems.javaschool.webshop.dao.entities.dto.ProductDTO;
+import com.tsystems.javaschool.webshop.dao.entities.dto.StatisticsDTO;
+import com.tsystems.javaschool.webshop.dao.entities.dto.UserDTO;
+import com.tsystems.javaschool.webshop.dao.entities.enums.OrderStatus;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
 import com.tsystems.javaschool.webshop.services.api.StatisticsService;
 import org.apache.log4j.LogManager;
@@ -44,7 +48,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public final int newOrders() {
-        return orderDAO.newOrders();
+        return orderDAO.getOrderCountByStatus(OrderStatus.NEW);
     }
 
     @Override
@@ -65,5 +69,38 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Override
     public final List<User> topCustomers(final int count) {
         return orderDAO.topCustomers(count);
+    }
+
+    @Override
+    public final StatisticsDTO getShopReport(final Integer period,
+                                       final Integer topProductsCount,
+                                       final Integer topUsersCount,
+                                       final Integer minStock) {
+        StatisticsDTO report = new StatisticsDTO();
+
+        report.setTotalSales(totalSales());
+
+        report.setPeriodSales(orderDAO.monthSales());
+
+        report.setTotalOrders(orderDAO.getAll().size());
+
+        for (OrderStatus status : OrderStatus.values()) {
+            report.getOrdersPerStatus().put(status,
+                    orderDAO.getOrderCountByStatus(status));
+        }
+
+        for (User user : orderDAO.topCustomers(topUsersCount)) {
+            report.getTopUsers().add(new UserDTO(user));
+        }
+
+        for (Product product : productDAO.topProducts(topProductsCount)) {
+            report.getTopProducts().add(new ProductDTO(product));
+        }
+
+        for (Product product : productDAO.getOutOfStockProducts(minStock)) {
+            report.getOutOfStock().add(new ProductDTO(product));
+        }
+
+        return report;
     }
 }

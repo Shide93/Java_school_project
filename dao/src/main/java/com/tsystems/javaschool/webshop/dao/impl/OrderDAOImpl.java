@@ -37,9 +37,9 @@ public class OrderDAOImpl extends AbstractGenericDAO<Order>
     }
 
     @Override
-    public final int newOrders() {
+    public final int getOrderCountByStatus(final OrderStatus status) {
         Query query = manager.createNamedQuery("OrderEntity.getWithStatus");
-        query.setParameter("orderStatus", OrderStatus.NEW);
+        query.setParameter("orderStatus", status);
         return query.getResultList().size();
     }
 

@@ -2,6 +2,7 @@ package com.tsystems.javaschool.webshop.dao.api;
 
 import com.tsystems.javaschool.webshop.dao.entities.Order;
 import com.tsystems.javaschool.webshop.dao.entities.User;
+import com.tsystems.javaschool.webshop.dao.entities.enums.OrderStatus;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface OrderDAO extends GenericDAO<Order> {
     /**
      * Gets orders by user.
      *
-     * @param userId  the user id
+     * @param userId the user id
      * @return user 's orders
      */
     List<Order> getByUser(int userId);
@@ -21,9 +22,10 @@ public interface OrderDAO extends GenericDAO<Order> {
     /**
      * count of order with NEW status.
      *
+     * @param status the status
      * @return count of new orders
      */
-    int newOrders();
+    int getOrderCountByStatus(OrderStatus status);
 
     /**
      * total shop sales.
@@ -42,7 +44,7 @@ public interface OrderDAO extends GenericDAO<Order> {
     /**
      * Top of the best customers.
      *
-     * @param count   count of users in top
+     * @param count count of users in top
      * @return the list
      */
     List<User> topCustomers(int count);

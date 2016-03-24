@@ -2,6 +2,7 @@ package com.tsystems.javaschool.webshop.services.api;
 
 import com.tsystems.javaschool.webshop.dao.entities.Product;
 import com.tsystems.javaschool.webshop.dao.entities.User;
+import com.tsystems.javaschool.webshop.dao.entities.dto.StatisticsDTO;
 
 import java.util.List;
 
@@ -46,4 +47,18 @@ public interface StatisticsService {
      * @return the list
      */
     List<User> topCustomers(int count);
+
+    /**
+     * Gets report object that sends by webservice.
+     *
+     * @param period           the period of total sales
+     * @param topProductsCount the top products count
+     * @param topUsersCount    the top users count
+     * @param minStock         the min stock
+     * @return report
+     */
+    StatisticsDTO getShopReport(Integer period,
+                                Integer topProductsCount,
+                                Integer topUsersCount,
+                                Integer minStock);
 }

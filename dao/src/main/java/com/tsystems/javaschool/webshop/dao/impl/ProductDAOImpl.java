@@ -69,4 +69,13 @@ public class ProductDAOImpl extends AbstractGenericDAO<Product>
                         Product.class);
         return query.setMaxResults(count).getResultList();
     }
+
+    @Override
+    public final List<Product> getOutOfStockProducts(final int stockConstraint) {
+        TypedQuery<Product> query =
+                manager.createNamedQuery("Product.getOutOfStockProducts",
+                        Product.class);
+        query.setParameter("stockConstraint", stockConstraint);
+        return query.getResultList();
+    }
 }

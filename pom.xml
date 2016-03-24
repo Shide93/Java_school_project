@@ -5,7 +5,8 @@
     <artifactId>webshop</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Top pom</name>
+    <name>Web Shop</name>
+    <description>online shop task for T-systems javaSchool</description>
     <modules>
         <module>view</module>
         <module>services</module>

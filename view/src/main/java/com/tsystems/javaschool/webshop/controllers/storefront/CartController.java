@@ -60,7 +60,7 @@ public class CartController {
     public final String getCartPage(@ModelAttribute("cart") final Cart cart,
                                     final Model model) {
         if (cart == null || cart.getItems() == null || cart.getItems().isEmpty()) {
-            model.addAttribute("isCartEmpty", true);
+                model.addAttribute("isCartEmpty", true);
         }
         return "cart";
     }

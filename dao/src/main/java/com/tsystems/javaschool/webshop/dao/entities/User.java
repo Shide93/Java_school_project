@@ -82,8 +82,9 @@ public class User {
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Past
     private Date birthDate;
+
     /**
-     * The Is admin.
+     * The Role.
      */
     @NotNull
     private UserRole role;
@@ -264,10 +265,11 @@ public class User {
         this.birthDate = birthDate;
     }
 
+
     /**
-     * Gets is admin.
+     * Gets role.
      *
-     * @return the is admin
+     * @return the role
      */
     @Basic
     @Column(name = "role")
@@ -276,8 +278,9 @@ public class User {
         return role;
     }
 
+
     /**
-     * Sets is admin.
+     * Sets role.
      *
      * @param userType the user type
      */
