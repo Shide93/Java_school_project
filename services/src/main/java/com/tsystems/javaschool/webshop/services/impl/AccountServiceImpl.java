@@ -9,11 +9,17 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +44,14 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
      */
     @Autowired
     private UsersDAO usersDAO;
+
+    /**
+     * The Authentication manager.
+     */
+    @Autowired
+    @Qualifier(value = "authenticationManager")
+    private AuthenticationManager authenticationManager;
+
 
     /**
      * The Password encoder.
@@ -120,5 +134,27 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
         authorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
         return new org.springframework.security.core.userdetails.
                 User(user.getEmail(), user.getPassword(), authorities);
+    }
+
+    /**
+     * Do auto login.
+     *
+     * @param username the username
+     * @param password the password
+     * @param details   the detils
+     * @throws AuthenticationException the authentication exception
+     */
+    public final void doAutoLogin(final String username,
+                                  final String password,
+                                  final WebAuthenticationDetails details)
+            throws AuthenticationException {
+
+        UsernamePasswordAuthenticationToken token =
+                new UsernamePasswordAuthenticationToken(username, password);
+        token.setDetails(details);
+        Authentication authentication =
+                authenticationManager.authenticate(token);
+        //LOGGER.debug("Logging in with " + authentication.getPrincipal());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }

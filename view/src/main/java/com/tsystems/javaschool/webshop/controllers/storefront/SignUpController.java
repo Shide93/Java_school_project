@@ -30,6 +30,9 @@ import javax.validation.Valid;
 @Controller
 public class SignUpController {
 
+    /**
+     * The Validator.
+     */
     @Autowired
     @Qualifier("passwordValidator")
     private Validator validator;
@@ -39,10 +42,6 @@ public class SignUpController {
      */
     @Autowired
     private AccountService accountService;
-
-    @Autowired
-    @Qualifier(value = "authenticationManager")
-    private AuthenticationManager authenticationManager;
 
     /**
      * Init binder.
@@ -97,7 +96,8 @@ public class SignUpController {
         try {
             String password = user.getPassword();
             accountService.signUpUser(user);
-            doAutoLogin(user.getEmail(), password, request);
+            accountService.doAutoLogin(user.getEmail(), password,
+                    new WebAuthenticationDetails(request));
         } catch (AccountServiceException e) {
             bindingResult.rejectValue("email", "email.exists");
             //TODO: log and handle exception
@@ -110,25 +110,4 @@ public class SignUpController {
         return "redirect:/";
     }
 
-    /**
-     * Do auto login.
-     *
-     * @param username the username
-     * @param password the password
-     * @param request  the request
-     * @throws AuthenticationException the authentication exception
-     */
-    public final void doAutoLogin(final String username,
-                             final String password,
-                             final HttpServletRequest request)
-            throws AuthenticationException {
-
-        UsernamePasswordAuthenticationToken token =
-                new UsernamePasswordAuthenticationToken(username, password);
-        token.setDetails(new WebAuthenticationDetails(request));
-        Authentication authentication =
-                authenticationManager.authenticate(token);
-        //LOGGER.debug("Logging in with " + authentication.getPrincipal());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-    }
 }

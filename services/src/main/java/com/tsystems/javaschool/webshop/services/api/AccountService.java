@@ -3,6 +3,8 @@ package com.tsystems.javaschool.webshop.services.api;
 import com.tsystems.javaschool.webshop.dao.entities.User;
 import com.tsystems.javaschool.webshop.dao.entities.enums.UserRole;
 import com.tsystems.javaschool.webshop.services.exceptions.AccountServiceException;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
 import java.util.List;
 
@@ -73,4 +75,16 @@ public interface AccountService {
      */
     User getUserByEmail(String email);
 
+    /**
+     * Do auto login.
+     *
+     * @param username the username
+     * @param password the password
+     * @param detils   the detils
+     * @throws AuthenticationException the authentication exception
+     */
+     void doAutoLogin(final String username,
+                                  final String password,
+                                  final WebAuthenticationDetails detils)
+            throws AuthenticationException;
 }
