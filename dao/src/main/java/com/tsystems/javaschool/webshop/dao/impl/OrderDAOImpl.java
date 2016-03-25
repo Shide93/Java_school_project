@@ -52,13 +52,13 @@ public class OrderDAOImpl extends AbstractGenericDAO<Order>
     }
 
     @Override
-    public final long periodSales(int period) {
+    public final long periodSales(final int period) {
         TypedQuery<Long> query =
                 manager.createNamedQuery("OrderEntity.periodSales",
                         Long.class);
         Calendar c = new GregorianCalendar();
         c.setTimeInMillis(System.currentTimeMillis());
-        c.add(period, -1);
+        c.add(Calendar.MONTH, -1);
         Date date = c.getTime();
         query.setParameter("date", date);
         return query.getSingleResult();

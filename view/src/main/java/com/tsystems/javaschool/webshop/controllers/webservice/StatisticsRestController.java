@@ -3,11 +3,10 @@ package com.tsystems.javaschool.webshop.controllers.webservice;
 import com.tsystems.javaschool.webshop.dao.entities.dto.StatisticsDTO;
 import com.tsystems.javaschool.webshop.services.api.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -35,17 +34,24 @@ public class StatisticsRestController {
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public final StatisticsDTO getRestReport(@RequestParam
-                                             final Integer period,
+                                             final String period,
                                              @RequestParam
                                              final Integer topProductsCount,
                                              @RequestParam
                                              final Integer topUsersCount,
                                              @RequestParam
                                              final Integer minStock) {
+        return statisticsService.getShopReport(period,
+                    topProductsCount,
+                    topUsersCount,
+                    minStock);
+    }
 
-       return statisticsService.getShopReport(period,
-                                        topProductsCount,
-                                        topUsersCount,
-                                        minStock);
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseBody
+    public final String handleBadRequest(final HttpServletRequest req,
+                                           final Exception e) {
+        return "Error: " + e.getMessage();
     }
 }

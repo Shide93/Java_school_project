@@ -26,7 +26,13 @@ public interface StatisticsService {
     long totalSales();
 
 
-    long periodSales(int period); //period is a Calendar constant
+    /**
+     * Period sales.
+     *
+     * @param period is a Calendar constant
+     * @return sales for period
+     */
+    long periodSales(int period);
 
     /**
      * Top of the best selling products.
@@ -51,9 +57,9 @@ public interface StatisticsService {
      * @param topProductsCount the top products count
      * @param topUsersCount    the top users count
      * @param minStock         the min stock
-     * @return report
+     * @return report shop report
      */
-    StatisticsDTO getShopReport(Integer period,
+    StatisticsDTO getShopReport(String period,
                                 Integer topProductsCount,
                                 Integer topUsersCount,
                                 Integer minStock);

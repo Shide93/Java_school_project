@@ -58,7 +58,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public final long periodSales(int period) {
+    public final long periodSales(final int period) {
         return orderDAO.periodSales(period);
     }
 
@@ -73,15 +73,18 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public final StatisticsDTO getShopReport(final Integer period,
+    public final StatisticsDTO getShopReport(final String period,
                                        final Integer topProductsCount,
                                        final Integer topUsersCount,
                                        final Integer minStock) {
         StatisticsDTO report = new StatisticsDTO();
 
         report.setTotalSales(totalSales());
-
-        report.setPeriodSales(orderDAO.periodSales(period));
+        int periodValue = getCalendarPeriodValue(period);
+        if (periodValue < 0) {
+            throw new IllegalArgumentException("wrong period value");
+        }
+        report.setPeriodSales(orderDAO.periodSales(periodValue));
 
         report.setTotalOrders(orderDAO.getAll().size());
 
@@ -103,5 +106,26 @@ public class StatisticsServiceImpl implements StatisticsService {
         }
 
         return report;
+    }
+
+    /**
+     * Gets calendar period value from string.
+     *
+     * @param period the period string
+     * @return the calendar period value
+     */
+    private int getCalendarPeriodValue(final String period) {
+        switch (period) {
+            case "day":
+                return Calendar.DAY_OF_YEAR;
+            case "week":
+                return Calendar.WEEK_OF_YEAR;
+            case "month":
+                return Calendar.MONTH;
+            case "year":
+                return Calendar.YEAR;
+            default:
+                return -1;
+        }
     }
 }
