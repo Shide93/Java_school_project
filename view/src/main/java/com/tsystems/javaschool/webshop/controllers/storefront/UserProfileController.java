@@ -157,7 +157,8 @@ public class UserProfileController {
         try {
             String password = credentials.getPassword();
             accountService.saveProfile(credentials);
-            signUpController.doAutoLogin(credentials.getEmail(), password, request);
+            accountService.doAutoLogin(credentials.getEmail(), password,
+                    new WebAuthenticationDetails(request));
         } catch (AccountServiceException e) {
             bindingResult.rejectValue("email", "email.exists");
             //TODO: log and handle exception
