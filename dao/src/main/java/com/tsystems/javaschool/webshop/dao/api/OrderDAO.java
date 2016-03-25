@@ -34,12 +34,7 @@ public interface OrderDAO extends GenericDAO<Order> {
      */
     long totalSales();
 
-    /**
-     * Month shop sales.
-     *
-     * @return month sales
-     */
-    long monthSales();
+    long periodSales(int period); //period is a Calendar constant
 
     /**
      * Top of the best customers.

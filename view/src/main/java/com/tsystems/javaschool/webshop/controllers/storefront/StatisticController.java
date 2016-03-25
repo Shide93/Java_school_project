@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Calendar;
+
 /**
  * Created by Shide on 14.03.2016.
  */
@@ -29,7 +31,7 @@ public class StatisticController {
 
         model.addAttribute("newOrders", statisticsService.newOrders());
         model.addAttribute("totalSales", statisticsService.totalSales());
-        model.addAttribute("monthSales", statisticsService.monthSales());
+        model.addAttribute("monthSales", statisticsService.periodSales(Calendar.MONTH));
         //TODO: count to settings
         final int topCount = 3;
         model.addAttribute("topCustomers", statisticsService

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -24,7 +25,7 @@ public class StatisticsRestController {
     @RequestMapping(value = "/rest", method = RequestMethod.GET)
     public final String restTest() {
         Map<String, String> map = new LinkedHashMap<>();
-        map.put("month", "" + statisticsService.monthSales());
+        map.put("month", "" + statisticsService.periodSales(Calendar.MONTH));
         map.put("all", "" + statisticsService.totalSales());
         map.put("orders", "" + statisticsService.newOrders());
 

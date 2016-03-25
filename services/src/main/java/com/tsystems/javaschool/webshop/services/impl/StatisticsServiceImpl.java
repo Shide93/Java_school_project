@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -57,8 +58,8 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public final long monthSales() {
-        return orderDAO.monthSales();
+    public final long periodSales(int period) {
+        return orderDAO.periodSales(period);
     }
 
     @Override
@@ -80,7 +81,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 
         report.setTotalSales(totalSales());
 
-        report.setPeriodSales(orderDAO.monthSales());
+        report.setPeriodSales(orderDAO.periodSales(period));
 
         report.setTotalOrders(orderDAO.getAll().size());
 
