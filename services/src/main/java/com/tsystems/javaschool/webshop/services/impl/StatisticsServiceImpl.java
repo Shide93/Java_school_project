@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -49,7 +50,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public final int newOrders() {
-        return orderDAO.getOrderCountByStatus(OrderStatus.NEW);
+        return orderDAO.getOrderCountByStatus(OrderStatus.NEW, new Date(0));
     }
 
     @Override
@@ -58,52 +59,50 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public final long periodSales(final int period) {
-        return orderDAO.periodSales(period);
+    public final long periodSales(final Date dateFrom) {
+        return orderDAO.periodSales(dateFrom);
     }
 
     @Override
     public final List<Product> topProducts(final int count) {
-        return productDAO.topProducts(count);
+        return productDAO.topProducts(count, new Date(0));
     }
 
     @Override
     public final List<User> topCustomers(final int count) {
-        return orderDAO.topCustomers(count);
+        return orderDAO.topCustomers(count, new Date(0));
     }
 
     @Override
-    public final StatisticsDTO getShopReport(final String period,
+    public final StatisticsDTO getShopReport(final Date dateFrom,
                                        final Integer topProductsCount,
-                                       final Integer topUsersCount,
-                                       final Integer minStock) {
+                                       final Integer topUsersCount) {
         StatisticsDTO report = new StatisticsDTO();
 
-        report.setTotalSales(totalSales());
-        int periodValue = getCalendarPeriodValue(period);
-        if (periodValue < 0) {
-            throw new IllegalArgumentException("wrong period value");
-        }
-        report.setPeriodSales(orderDAO.periodSales(periodValue));
+        report.setTotalSales(orderDAO.totalSales());
 
-        report.setTotalOrders(orderDAO.getAll().size());
+        report.setPeriodSales(orderDAO.periodSales(dateFrom));
+
+        report.setTotalOrders(orderDAO.totalOrders());
 
         for (OrderStatus status : OrderStatus.values()) {
             report.getOrdersPerStatus().put(status,
-                    orderDAO.getOrderCountByStatus(status));
+                    orderDAO.getOrderCountByStatus(status, dateFrom));
         }
 
-        for (User user : orderDAO.topCustomers(topUsersCount)) {
+        for (User user : orderDAO.topCustomers(topUsersCount, dateFrom)) {
             report.getTopUsers().add(new UserDTO(user));
         }
 
-        for (Product product : productDAO.topProducts(topProductsCount)) {
-            report.getTopProducts().add(new ProductDTO(product));
+        for (Product product : productDAO.topProducts(topProductsCount, dateFrom)) {
+            ProductDTO productDTO = new ProductDTO(product);
+            productDTO.setTotalSales(productDAO.getProductSales(product.getId(), dateFrom));
+            report.getTopProducts().add(productDTO);
         }
 
-        for (Product product : productDAO.getOutOfStockProducts(minStock)) {
-            report.getOutOfStock().add(new ProductDTO(product));
-        }
+//        for (Product product : productDAO.getOutOfStockProducts(minStock)) {
+//            report.getOutOfStock().add(new ProductDTO(product));
+//        }
 
         return report;
     }

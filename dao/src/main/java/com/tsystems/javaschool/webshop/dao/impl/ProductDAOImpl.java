@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -63,19 +64,32 @@ public class ProductDAOImpl extends AbstractGenericDAO<Product>
     }
 
     @Override
-    public final List<Product> topProducts(final int count) {
+    public final List<Product> topProducts(final int count,
+                                           final Date dateFrom) {
         TypedQuery<Product> query =
                 manager.createNamedQuery("OrderProductEntity.getTopProducts",
                         Product.class);
+        query.setParameter("dateFrom", dateFrom);
         return query.setMaxResults(count).getResultList();
     }
 
     @Override
-    public final List<Product> getOutOfStockProducts(final int stockConstraint) {
+    public final List<Product> getOutOfStockProducts(final int stockLimit) {
         TypedQuery<Product> query =
                 manager.createNamedQuery("Product.getOutOfStockProducts",
                         Product.class);
-        query.setParameter("stockConstraint", stockConstraint);
+        query.setParameter("stockLimit", stockLimit);
         return query.getResultList();
+    }
+
+    @Override
+    public final long getProductSales(final int productId,
+                                      final Date dateFrom) {
+        TypedQuery<Long> query =
+                manager.createNamedQuery("OrderProductEntity.getProductTotal",
+                        Long.class);
+        query.setParameter("productId", productId);
+        query.setParameter("dateFrom", dateFrom);
+        return query.getSingleResult();
     }
 }

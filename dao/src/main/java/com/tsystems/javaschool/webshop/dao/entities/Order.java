@@ -35,18 +35,21 @@ import java.util.Set;
 @SuppressWarnings("CheckStyle")
 @NamedQueries({
         @NamedQuery(name = "OrderEntity.getByUser",
-                query = "select o from Order o where user.id = :id"),
+                query = "select o from Order o where o.user.id = :id"),
         @NamedQuery(name = "OrderEntity.getWithStatus",
                 query = "select o from Order o "
-                        + "where o.orderStatus = :orderStatus"),
+                        + "where o.orderStatus = :orderStatus " +
+                        "and o.orderDate > :dateFrom"),
         @NamedQuery(name = "OrderEntity.totalSales",
                 query = "select sum(o.total) from Order o"),
         @NamedQuery(name = "OrderEntity.periodSales",
                 query = "select sum(o.total) from Order o"
-                        + " where o.orderDate > :date"),
+                        + " where o.orderDate > :dateFrom"),
         @NamedQuery(name = "OrderEntity.getTopCustomers",
-                query = "select o.user from Order o "
-                       + "group by o.user order by sum(o.total) desc")
+                query = "select o.user from Order o where o.orderDate > :dateFrom "
+                       + "group by o.user order by sum(o.total) desc"),
+        @NamedQuery(name = "OrderEntity.getOrderTotal",
+                query = "select count(o) from Order o")
 })
 @Table(name = "ordr", schema = "web_shop")
 public class Order {

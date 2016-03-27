@@ -4,6 +4,7 @@ import com.tsystems.javaschool.webshop.dao.entities.Product;
 import com.tsystems.javaschool.webshop.dao.entities.User;
 import com.tsystems.javaschool.webshop.dao.entities.dto.StatisticsDTO;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,10 +30,10 @@ public interface StatisticsService {
     /**
      * Period sales.
      *
-     * @param period is a Calendar constant
+     * @param dateFrom the from date
      * @return sales for period
      */
-    long periodSales(int period);
+    long periodSales(Date dateFrom);
 
     /**
      * Top of the best selling products.
@@ -53,14 +54,12 @@ public interface StatisticsService {
     /**
      * Gets report object that sends by webservice.
      *
-     * @param period           the period of total sales
+     * @param dateFrom         the from date
      * @param topProductsCount the top products count
      * @param topUsersCount    the top users count
-     * @param minStock         the min stock
      * @return report shop report
      */
-    StatisticsDTO getShopReport(String period,
+    StatisticsDTO getShopReport(Date dateFrom,
                                 Integer topProductsCount,
-                                Integer topUsersCount,
-                                Integer minStock);
+                                Integer topUsersCount);
 }

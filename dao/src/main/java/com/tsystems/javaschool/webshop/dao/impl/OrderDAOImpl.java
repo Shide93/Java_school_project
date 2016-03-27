@@ -10,9 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -37,9 +35,11 @@ public class OrderDAOImpl extends AbstractGenericDAO<Order>
     }
 
     @Override
-    public final int getOrderCountByStatus(final OrderStatus status) {
+    public final int getOrderCountByStatus(final OrderStatus status,
+                                           final Date dateFrom) {
         Query query = manager.createNamedQuery("OrderEntity.getWithStatus");
         query.setParameter("orderStatus", status);
+        query.setParameter("dateFrom", dateFrom);
         return query.getResultList().size();
     }
 
@@ -52,23 +52,34 @@ public class OrderDAOImpl extends AbstractGenericDAO<Order>
     }
 
     @Override
-    public final long periodSales(final int period) {
+    public final long periodSales(final Date dateFrom) {
         TypedQuery<Long> query =
                 manager.createNamedQuery("OrderEntity.periodSales",
                         Long.class);
-        Calendar c = new GregorianCalendar();
-        c.setTimeInMillis(System.currentTimeMillis());
-        c.add(Calendar.MONTH, -1);
-        Date date = c.getTime();
-        query.setParameter("date", date);
-        return query.getSingleResult();
+        query.setParameter("dateFrom", dateFrom);
+        Long result =  query.getSingleResult();
+        if (result != null) {
+            return result;
+        } else {
+            return 0L;
+        }
     }
 
     @Override
-    public final List<User> topCustomers(final int count) {
+    public final List<User> topCustomers(final int count,
+                                         final Date dateFrom) {
         TypedQuery<User> query =
                 manager.createNamedQuery("OrderEntity.getTopCustomers",
                         User.class);
+        query.setParameter("dateFrom", dateFrom);
         return query.setMaxResults(count).getResultList();
+    }
+
+    @Override
+    public final long totalOrders() {
+        TypedQuery<Long> query =
+                manager.createNamedQuery("OrderEntity.getOrderTotal",
+                        Long.class);
+        return query.getSingleResult();
     }
 }

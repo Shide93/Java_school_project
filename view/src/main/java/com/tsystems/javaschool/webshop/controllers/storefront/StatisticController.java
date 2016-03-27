@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * Created by Shide on 14.03.2016.
@@ -31,7 +32,10 @@ public class StatisticController {
 
         model.addAttribute("newOrders", statisticsService.newOrders());
         model.addAttribute("totalSales", statisticsService.totalSales());
-        model.addAttribute("monthSales", statisticsService.periodSales(Calendar.MONTH));
+        Calendar c = new GregorianCalendar();
+        c.setTimeInMillis(System.currentTimeMillis());
+        c.add(Calendar.MONTH, -1);
+        model.addAttribute("monthSales", statisticsService.periodSales(c.getTime()));
         //TODO: count to settings
         final int topCount = 3;
         model.addAttribute("topCustomers", statisticsService

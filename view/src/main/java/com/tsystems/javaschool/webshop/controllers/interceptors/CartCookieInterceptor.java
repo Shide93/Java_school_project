@@ -39,13 +39,15 @@ public class CartCookieInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
-        for (Cookie cookie : cookies) {
-            //if user enters site with cart cookie - add cart to session
-            if (cookie.getName().equals("cartID")) {
-                Cart cart = cartService.
-                        get(Integer.parseInt(cookie.getValue()));
-                if (cart != null) {
-                    req.getSession().setAttribute("cart", cart);
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                //if user enters site with cart cookie - add cart to session
+                if (cookie.getName().equals("cartID")) {
+                    Cart cart = cartService.
+                            get(Integer.parseInt(cookie.getValue()));
+                    if (cart != null) {
+                        req.getSession().setAttribute("cart", cart);
+                    }
                 }
             }
         }

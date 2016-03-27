@@ -22,11 +22,11 @@ public class UserDTO {
     /**
      * The Orders count.
      */
-    private int ordersCount;
+    private long ordersCount;
     /**
      * The Order total.
      */
-    private int orderTotal;
+    private long orderTotal;
 
     /**
      * Instantiates a new User dto.
@@ -47,8 +47,8 @@ public class UserDTO {
      * @param user the user
      * @return order total
      */
-    private int calcOrderTotal(final User user) {
-        int total = 0;
+    private long calcOrderTotal(final User user) {
+        long total = 0;
         for (Order order : user.getOrders()) {
             total += order.getTotal();
         }
@@ -96,7 +96,7 @@ public class UserDTO {
      *
      * @return the orders count
      */
-    public int getOrdersCount() {
+    public long getOrdersCount() {
         return ordersCount;
     }
 
@@ -105,7 +105,7 @@ public class UserDTO {
      *
      * @param ordersCount the orders count
      */
-    public void setOrdersCount(final int ordersCount) {
+    public void setOrdersCount(final long ordersCount) {
         this.ordersCount = ordersCount;
     }
 
@@ -114,7 +114,7 @@ public class UserDTO {
      *
      * @return the order total
      */
-    public int getOrderTotal() {
+    public long getOrderTotal() {
         return orderTotal;
     }
 
@@ -123,7 +123,7 @@ public class UserDTO {
      *
      * @param orderTotal the order total
      */
-    public void setOrderTotal(final int orderTotal) {
+    public void setOrderTotal(final long orderTotal) {
         this.orderTotal = orderTotal;
     }
 

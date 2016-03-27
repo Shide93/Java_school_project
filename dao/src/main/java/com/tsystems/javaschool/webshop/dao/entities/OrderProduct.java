@@ -1,23 +1,24 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * The type Order product entity.
  */
 @Entity
 @SuppressWarnings("CheckStyle")
-@NamedQuery(name = "OrderProductEntity.getTopProducts",
-        query = "select p.product from OrderProduct p "
-                + "group by p.productId order by sum(p.quantity) desc")
+@NamedQueries({
+
+    @NamedQuery(name = "OrderProductEntity.getTopProducts",
+        query = "select p.product from OrderProduct p " +
+                "join p.order o where o.orderDate > :dateFrom "
+                + "group by p.productId order by sum(p.quantity) desc"),
+    @NamedQuery(name = "OrderProductEntity.getProductTotal",
+            query = "select sum(op.quantity) from OrderProduct op " +
+                    "join op.order o " +
+                    "where op.productId=:productId and " +
+                    "o.orderDate > :dateFrom ") //TODO: change on orderProduct.price
+})
 @Table(name = "order_product", schema = "web_shop")
 @IdClass(OrderProductPK.class)
 public class OrderProduct {

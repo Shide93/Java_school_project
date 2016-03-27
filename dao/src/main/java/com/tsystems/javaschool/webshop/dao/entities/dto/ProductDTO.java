@@ -17,15 +17,15 @@ public class ProductDTO {
     /**
      * The Price.
      */
-    private int price;
+    private long price;
     /**
      * The Total sales.
      */
-    private int totalSales;
+    private long totalSales;
     /**
      * The Stock.
      */
-    private int stock;
+    private long stock;
 
     /**
      * Instantiates a new Product dto.
@@ -41,6 +41,7 @@ public class ProductDTO {
         this.description = product.getDescription();
         this.price = product.getPrice();
         this.stock = product.getStock();
+
     }
 
     /**
@@ -84,7 +85,7 @@ public class ProductDTO {
      *
      * @return the price
      */
-    public int getPrice() {
+    public long getPrice() {
         return price;
     }
 
@@ -93,7 +94,7 @@ public class ProductDTO {
      *
      * @param price the price
      */
-    public void setPrice(final int price) {
+    public void setPrice(final long price) {
         this.price = price;
     }
 
@@ -102,7 +103,7 @@ public class ProductDTO {
      *
      * @return the total sales
      */
-    public int getTotalSales() {
+    public long getTotalSales() {
         return totalSales;
     }
 
@@ -111,7 +112,7 @@ public class ProductDTO {
      *
      * @param totalSales the total sales
      */
-    public void setTotalSales(final int totalSales) {
+    public void setTotalSales(final long totalSales) {
         this.totalSales = totalSales;
     }
 
@@ -120,7 +121,7 @@ public class ProductDTO {
      *
      * @return the stock
      */
-    public int getStock() {
+    public long getStock() {
         return stock;
     }
 
@@ -129,7 +130,7 @@ public class ProductDTO {
      *
      * @param stock the stock
      */
-    public void setStock(final int stock) {
+    public void setStock(final long stock) {
         this.stock = stock;
     }
 }

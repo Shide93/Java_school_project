@@ -18,7 +18,6 @@ public class StatisticsDTO {
         ordersPerStatus = new HashMap<>();
         topUsers = new ArrayList<>();
         topProducts = new ArrayList<>();
-        outOfStock = new ArrayList<>();
     }
 
     /**
@@ -34,27 +33,22 @@ public class StatisticsDTO {
     /**
      * Shop total orders.
      */
-    private int totalOrders;
+    private long totalOrders;
 
     /**
-     * Orders count per status.
+     * Orders count per status for a specified period.
      */
     private Map<OrderStatus, Integer> ordersPerStatus;
 
     /**
-     * The Top users.
+     * The Top users for a specified period.
      */
     private List<UserDTO> topUsers;
 
     /**
-     * The Top products.
+     * The Top products for a specified period.
      */
     private List<ProductDTO> topProducts;
-
-    /**
-     * The Out of stock.
-     */
-    private List<ProductDTO> outOfStock;
 
     /**
      * Gets total sales.
@@ -97,7 +91,7 @@ public class StatisticsDTO {
      *
      * @return the total orders
      */
-    public int getTotalOrders() {
+    public long getTotalOrders() {
         return totalOrders;
     }
 
@@ -106,7 +100,7 @@ public class StatisticsDTO {
      *
      * @param totalOrders the total orders
      */
-    public void setTotalOrders(final int totalOrders) {
+    public void setTotalOrders(final long totalOrders) {
         this.totalOrders = totalOrders;
     }
 
@@ -162,23 +156,5 @@ public class StatisticsDTO {
      */
     public void setTopProducts(final List<ProductDTO> topProducts) {
         this.topProducts = topProducts;
-    }
-
-    /**
-     * Gets out of stock.
-     *
-     * @return the out of stock
-     */
-    public List<ProductDTO> getOutOfStock() {
-        return outOfStock;
-    }
-
-    /**
-     * Sets out of stock.
-     *
-     * @param outOfStock the out of stock
-     */
-    public void setOutOfStock(final List<ProductDTO> outOfStock) {
-        this.outOfStock = outOfStock;
     }
 }
