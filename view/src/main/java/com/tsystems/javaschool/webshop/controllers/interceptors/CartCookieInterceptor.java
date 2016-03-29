@@ -33,7 +33,7 @@ public class CartCookieInterceptor extends HandlerInterceptorAdapter {
 
         HttpSession session = req.getSession();
         Cookie[] cookies = req.getCookies();
-        LOGGER.info("interceptor works!");
+        LOGGER.debug("interceptor works!");
         // if user already have cart
         if (session.getAttribute("cart") != null) {
             return true;
@@ -47,12 +47,12 @@ public class CartCookieInterceptor extends HandlerInterceptorAdapter {
                             get(Integer.parseInt(cookie.getValue()));
                     if (cart != null) {
                         req.getSession().setAttribute("cart", cart);
+                        LOGGER.debug("cart with id = "
+                                + cart.getId() + " is set to session");
                     }
                 }
             }
         }
-
-        //TODO: check working when logout
         return true;
     }
 }

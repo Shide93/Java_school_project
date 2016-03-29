@@ -10,7 +10,7 @@
             <div class="">
                 <div class="row">
                     <div class="image col-lg-4">
-                        <img src="<c:url value="resources/img/default_product.png"/>">
+                        <img src="<c:url value="/resources/img/default_product.png"/>">
                     </div>
                     <div class="col-lg-8">
                         <h3 class="">Product ${requestScope.product.name}</h3>

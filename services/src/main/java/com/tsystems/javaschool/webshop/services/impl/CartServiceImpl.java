@@ -6,6 +6,8 @@ import com.tsystems.javaschool.webshop.dao.entities.Cart;
 import com.tsystems.javaschool.webshop.dao.entities.CartProduct;
 import com.tsystems.javaschool.webshop.dao.entities.Product;
 import com.tsystems.javaschool.webshop.services.api.CartService;
+import com.tsystems.javaschool.webshop.services.exceptions.ExistsInCartException;
+import com.tsystems.javaschool.webshop.services.exceptions.OutOfStockException;
 import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -65,14 +67,25 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public final Cart addToCart(final CartProduct item)
-            throws ServiceException {
+            throws ServiceException, OutOfStockException, ExistsInCartException {
 
         Product product = productDAO.getById(item.getProductId());
         Cart cart = item.getCart();
         item.setProduct(product);
-        if (cart.getItems().contains(item)) {
-            throw new ServiceException("Product already in cart");
+
+        if (product.getStock() < 1) {
+            throw new OutOfStockException("Product with id="
+                    + item.getProductId() + "is out of stock",
+                    "Sorry, the product is out of stock",
+                    product.getStock());
         }
+
+        if (cart.getItems().contains(item)) {
+            throw new ExistsInCartException("Product with id "
+                    + product.getId() + " is already in cart",
+                    "Product is already in cart");
+        }
+
         cart.getItems().add(item);
         updateSummaryCount(cart);
         cartDAO.update(cart);
@@ -81,11 +94,19 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public final Cart editCartProduct(final CartProduct item) {
+    public final Cart editCartProduct(final CartProduct item) throws OutOfStockException {
 
         Cart cart = item.getCart();
         Product product = productDAO.getById(item.getProductId());
         item.setProduct(product);
+
+        if (product.getStock() < item.getQuantity()) {
+            throw new OutOfStockException("Product with id="
+                    + item.getProductId() + "is out of stock",
+                    "Sorry, there is only " + product.getStock()
+                            + " units in stock",
+                    product.getStock());
+        }
 
         for (CartProduct cartProduct : cart.getItems()) {
             if (item.getProductId() == cartProduct.getProductId()) {

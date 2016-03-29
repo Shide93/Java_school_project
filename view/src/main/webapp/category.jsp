@@ -14,31 +14,7 @@
                 </div>
                 <div class="product_list">
                     <c:forEach var="product" items="${requestScope.category.products}">
-                        <div class="product">
-                            <form class="add_to_cart" action="<c:url value="/cart?action=add"/>" method="post">
-                                <div class="row">
-                                    <div class="image col-lg-2">
-                                        <img class="img-responsive img-thumbnail" src="<c:url value="/resources/img/default_product.png"/>">
-                                    </div>
-                                    <div class="col-lg-8">
-                                        <input type="hidden" name="productId" value="${product.id}">
-                                        <div class="name">
-                                            <a href="/product/${product.id}">${product.name}</a>
-                                        </div>
-                                        <div class="price">
-                                            Price: <span class="">${product.price}</span> $
-                                        </div>
-                                        <div class="stock">
-                                            In stock: ${product.stock}
-                                        </div>
-                                        <input type="hidden" name="quantity" value="1">
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <input class="btn btn-primary" type="submit" value="Add to cart">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                       <t:productThumb product="${product}"/>
                     </c:forEach>
                 </div>
 

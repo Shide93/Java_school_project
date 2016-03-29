@@ -30,13 +30,13 @@
                             <td><span class="product_price">${item.product.price}</span> $</td>
                             <td>
                                 <label>
-                                    <input type="text" class="cart_product_quantity" name="cart_quantity" value="${item.quantity}">
+                                    <input type="number" class="cart_product_quantity" name="cart_quantity" value="${item.quantity}">
                                 </label>
                             </td>
                             <td>
                                 <span class="product_cost">${item.product.price * item.quantity}</span> $
                             </td>
-                            <td><button type="button" class="cart_product_remove"><span class="glyphicon glyphicon-trash"></span></button></td>
+                            <td><button type="button" class="btn btn-default cart_product_remove"><span class="glyphicon glyphicon-trash"></span></button></td>
                         </tr>
                     </c:forEach>
 

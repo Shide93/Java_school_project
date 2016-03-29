@@ -17,7 +17,7 @@ http://www.springframework.org/schema/security/spring-security.xsd">
 
         <remember-me/>
 
-        <logout invalidate-session="true"
+        <logout  invalidate-session="false"
                 logout-success-url="/" />
 
     </http>

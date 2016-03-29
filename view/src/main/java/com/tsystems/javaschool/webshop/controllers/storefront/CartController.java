@@ -4,10 +4,14 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.tsystems.javaschool.webshop.dao.entities.Cart;
 import com.tsystems.javaschool.webshop.dao.entities.CartProduct;
 import com.tsystems.javaschool.webshop.services.api.CartService;
+import com.tsystems.javaschool.webshop.services.exceptions.ExistsInCartException;
+import com.tsystems.javaschool.webshop.services.exceptions.OutOfStockException;
 import com.tsystems.javaschool.webshop.servlets.utils.ServletUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -72,6 +76,8 @@ public class CartController {
      * @param cartItem the cart item with Cart encapsulated
      * @param model    the model
      * @return the string
+     * @throws OutOfStockException   the out of stock exception
+     * @throws ExistsInCartException the exists in cart exception
      */
     @RequestMapping(value = "/cart", params = "action=add",
             method = RequestMethod.POST)
@@ -79,9 +85,11 @@ public class CartController {
     @JsonView(Cart.JSONCart.class)
     public final Cart addToCart(@ModelAttribute("cart") final Cart cart,
                                   @ModelAttribute final CartProduct cartItem,
-                                  final Model model) {
+                                  final Model model)
+            throws OutOfStockException, ExistsInCartException {
 
         //FIXME: if add to cart double times - exception
+
         return cartService.addToCart(cartItem);
     }
 
@@ -91,7 +99,7 @@ public class CartController {
     @JsonView(Cart.JSONCart.class)
     public final Cart editCartItem(@ModelAttribute("cart") final Cart cart,
                                    @ModelAttribute final CartProduct cartItem,
-                                     final Model model) {
+                                     final Model model) throws OutOfStockException {
         return cartService.editCartProduct(cartItem);
     }
 
@@ -103,5 +111,23 @@ public class CartController {
                                      @ModelAttribute final CartProduct cartItem,
                                         final Model model) {
         return cartService.removeFromCart(cartItem);
+    }
+
+    @ExceptionHandler(OutOfStockException.class)
+    @ResponseBody
+    @JsonView(OutOfStockException.class)
+    public final OutOfStockException handleOutOfStockException(
+            final OutOfStockException e) {
+        LOGGER.warn(e.getMessage(), e);
+        return e;
+    }
+
+    @ExceptionHandler(ExistsInCartException.class)
+    @ResponseBody
+    @JsonView(ExistsInCartException.class)
+    public final ExistsInCartException handleExistsInCartException(
+            final ExistsInCartException e) {
+        LOGGER.warn(e.getMessage(), e);
+        return e;
     }
 }

@@ -4,8 +4,8 @@ $(document).ready( function() {
         $.post("/cart?action=add", $(this).serialize(),
             function (JData) {
                 console.log(JData);
-                if (JData.error === "duplicate") {
-                    alert("You already have this product in your cart");
+                if (JData.userMessage !== undefined) {
+                    alert(JData.userMessage);
                     return;
                 }
                 $(".cart_count").text(JData.count);
@@ -14,12 +14,24 @@ $(document).ready( function() {
     });
 
     $(".cart_product_quantity").on('change', function(e) {
+        var quantityField = $(this);
         var row = $(this).parents("[product-id]");
         var id = row.attr("product-id");
         var quantity = $(this).val();
+        if (!quantity.match(/[0-9]/)) {
+            alert("Wrong data? please enter number");
+            quantityField.val("");
+            return;
+        }
         $.post("?action=edit", "productId=" + id + "&quantity=" + quantity,
             function(JData) {
                 console.log(JData);
+                if (JData.userMessage !== undefined) {
+                    quantityField.val(JData.maxStock);
+                    quantityField.change();
+                    alert(JData.userMessage);
+                    return;
+                }
                 $(".cart_count").text(JData.count);
                 $(".cart_summary").text(JData.summary);
                 var cost = parseInt($(row).find(".product_price").html()) * parseInt($(row).find(".cart_product_quantity").val());
