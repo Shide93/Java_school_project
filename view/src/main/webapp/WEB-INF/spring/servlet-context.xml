@@ -20,6 +20,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/*" />
+            <mvc:exclude-mapping path="/backend*"/>
             <bean class="com.tsystems.javaschool.webshop.controllers.interceptors.CartCookieInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

@@ -1,5 +1,6 @@
 package com.tsystems.javaschool.webshop.dao.entities;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -25,10 +26,12 @@ public class Feature {
     /**
      * The Id.
      */
+    @JsonView(Feature.class)
     private int id;
     /**
      * The Name.
      */
+    @JsonView(Feature.class)
     private String name;
     /**
      * The Products.

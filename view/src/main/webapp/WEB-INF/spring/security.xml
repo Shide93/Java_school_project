@@ -10,6 +10,8 @@ http://www.springframework.org/schema/security/spring-security.xsd">
     <http authentication-manager-ref="authenticationManager" >
         <intercept-url pattern="/checkout*" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <intercept-url pattern="/profile*" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+        <intercept-url pattern="/signup*" access="isAnonymous()"/>
+        <intercept-url pattern="/signin*" access="isAnonymous()" />
         <intercept-url pattern="/backend/**" access="hasRole('ROLE_ADMIN')"/>
 
         <form-login login-page="/signin" default-target-url="/"

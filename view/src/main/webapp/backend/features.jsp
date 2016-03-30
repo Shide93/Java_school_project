@@ -81,7 +81,7 @@
                     }, "json");
                 });
 
-                $(".save_feature").on('click', function(e) {
+                $("table").on('click', ".save_feature", function(e) {
                     console.log("clicked");
                     var row = $(this).parents("[feature-id]");
                     var id = row.attr("feature-id");
@@ -93,7 +93,7 @@
                             }, "json");
                 });
 
-                $(".delete_feature").on('click', function(e) {
+                $("table").on('click', ".delete_feature", function(e) {
                     console.log("clicked");
                     var row = $(this).parents("[feature-id]");
                     var id = row.attr("feature-id");
