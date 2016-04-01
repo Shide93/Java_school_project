@@ -67,7 +67,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public final Cart addToCart(final CartProduct item)
-            throws ServiceException, OutOfStockException, ExistsInCartException {
+            throws OutOfStockException, ExistsInCartException {
 
         Product product = productDAO.getById(item.getProductId());
         Cart cart = item.getCart();

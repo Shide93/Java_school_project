@@ -23,16 +23,6 @@
         <header>
 
             <div class="container">
-                Session: ${sessionScope}
-                <br>
-                Cookies:  ${cookie}
-                <br>
-                Page: ${pageContext}
-                <br>
-                InitParam: ${initParam}
-                <br>
-                Param: ${param}
-
                 <jsp:invoke fragment="header"/>
             </div>
         </header>

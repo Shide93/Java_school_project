@@ -12,21 +12,23 @@ import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 public interface CartService extends GenericService<Cart> {
     /**
      * Method adds product with it's quantity to cart.
-     * <p/>
+     * <p>
      * Cart object must be already encapsulated in CartProduct
      *
      * @param cartProduct the cart product
      * @return updated cart
-     * @throws ServiceException the service exception
+     * @throws OutOfStockException   the out of stock exception
+     * @throws ExistsInCartException the exists in cart exception
      */
     Cart addToCart(CartProduct cartProduct)
-            throws ServiceException, OutOfStockException, ExistsInCartException;
+            throws OutOfStockException, ExistsInCartException;
 
     /**
      * Method edits product quantity in cart.
      *
      * @param cartProduct the cart product
      * @return updated cart
+     * @throws OutOfStockException the out of stock exception
      */
     Cart editCartProduct(CartProduct cartProduct) throws OutOfStockException;
 

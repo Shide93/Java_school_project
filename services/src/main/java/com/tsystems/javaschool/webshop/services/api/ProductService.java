@@ -1,6 +1,8 @@
 package com.tsystems.javaschool.webshop.services.api;
 
 import com.tsystems.javaschool.webshop.dao.entities.Product;
+import com.tsystems.javaschool.webshop.dao.entities.ProductFeature;
+import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 
 import java.util.List;
 
@@ -24,4 +26,13 @@ public interface ProductService extends GenericService<Product> {
      */
     List<Product> searchByFeature(String[] selectedFeatures);
 
+    /**
+     * Add product feature product.
+     *
+     * @param productFeature the product feature
+     * @return the product
+     * @throws ServiceException the service exception
+     */
+    Product addNewProductFeature(ProductFeature productFeature)
+            throws ServiceException;
 }

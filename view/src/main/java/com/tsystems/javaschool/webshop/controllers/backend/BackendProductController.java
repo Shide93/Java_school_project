@@ -7,6 +7,9 @@ import com.tsystems.javaschool.webshop.dao.entities.ProductFeature;
 import com.tsystems.javaschool.webshop.services.api.CategoryService;
 import com.tsystems.javaschool.webshop.services.api.FeatureService;
 import com.tsystems.javaschool.webshop.services.api.ProductService;
+import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,17 +18,32 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Shide on 18.03.2016.
  */
 @Controller
 public class BackendProductController {
+
+    private static final String BACKEND_PRODUCT_PAGE = "/backend/products";
+    private static final String SELECTED_PRODUCT = "selectedProduct";
+    private static final String ADD_ACTION = "action=add";
+    private static final String SAVE_ACTION = "action=save";
+    private static final String REMOVE_ACTION = "action=remove";
+    private static final String ADD_FEATURE_ACTION = "action=addFeature";
+    private static final String REMOVE_FEATURE_ACTION = "action=removeFeature";
+    private static final String ADD_FAILED = "addFailed";
+    /**
+     * The constant LOGGER.
+     */
+    private static final Logger LOGGER =
+            LogManager.getLogger(BackendProductController.class);
+
     /**
      * The Product service.
      */
@@ -40,149 +58,93 @@ public class BackendProductController {
     @Autowired
     private FeatureService featureService;
 
-    @RequestMapping(path = "/backend/products", method = RequestMethod.GET)
-    public final String getProductEditPage(@RequestParam(defaultValue = "-1")
-                                           int productId,  Model model) {
-
-        //get all products
+    @ModelAttribute
+    public final void populateModel(final Model model) {
         List<Product> products = productService.getAll();
         List<Feature> features = featureService.getAll();
         List<Category> categories = categoryService.getAllIdNames();
+        ProductFeature productFeature = new ProductFeature();
 
-        if (productId == -1) {         //when enter page without params
-            if (products != null && products.size() > 0) {
-                model.addAttribute("selectedProduct", products.get(0));
-            }
-        } else {                        //when choose product in sidebar
-            if (productId > 0) {        //if productId == 0 - it's new product
-                model.addAttribute("selectedProduct",
-                        productService.get(productId));
-            }
-        }
+
         model.addAttribute("products", products);
         model.addAttribute("features", features);
         model.addAttribute("categoryList", categories);
-        return "backend/products";
+        model.addAttribute("productFeature", productFeature);
     }
 
-    @RequestMapping(path = "/backend/products",
-            params = "action=save", method = RequestMethod.POST)
-    public final String saveProduct(@ModelAttribute Product product,
-                                    final BindingResult bindingResult,
-                                    final Model model) {
+    @RequestMapping(path = BACKEND_PRODUCT_PAGE, method = RequestMethod.GET)
+    public final String getProductEditPage(@RequestParam(defaultValue = "0")
+                                           final int productId,
+                                           @ModelAttribute(value = "products")
+                                           final List<Product> products,
+                                           final Model model) {
+
+
+        if (productId == 0
+                && products != null
+                && products.size() > 0) {         //when enter page without params
+            model.addAttribute(SELECTED_PRODUCT, products.get(0));
+        } else if (productId > 0) {         //when choose product in sidebar
+            model.addAttribute(SELECTED_PRODUCT,
+                        productService.get(productId));
+        }
+        return BACKEND_PRODUCT_PAGE;
+    }
+
+    @RequestMapping(path = BACKEND_PRODUCT_PAGE,
+            params = ADD_ACTION, method = RequestMethod.POST)
+    public final String createProduct(final Model model) {
+        Product product = new Product();
+        product.setName("New product");
+        product.setPrice(0);
+        productService.add(product);
+        return "redirect:" + BACKEND_PRODUCT_PAGE + "?productId="
+                + product.getId();
+
+    }
+
+    @RequestMapping(path = BACKEND_PRODUCT_PAGE,
+            params = SAVE_ACTION, method = RequestMethod.POST)
+    public final String saveProduct(@ModelAttribute(value = "product") final Product product,
+                                    final RedirectAttributes redirectAttributes) {
         productService.update(product);
-        //TODO: accept features
-        return "redirect:/backend/products?productId=" + product.getId();
+        return "redirect:" + BACKEND_PRODUCT_PAGE
+                + "?productId=" + product.getId();
     }
 
-    public final String createProduct() {
-        return "";
+    @RequestMapping(path = BACKEND_PRODUCT_PAGE,
+            params = REMOVE_ACTION, method = RequestMethod.POST)
+    public final String removeProduct(@RequestParam final int id,
+                                      final RedirectAttributes redirectAttributes,
+                                      final Model model) {
+        try {
+            productService.delete(id);
+        } catch (Exception e) {
+            LOGGER.warn("Can't remove product", e);
+
+            return "redirect:" + BACKEND_PRODUCT_PAGE + "?productId=" + id;
+        }
+       //TODO: cant remove exception handle
+        return "redirect:" + BACKEND_PRODUCT_PAGE;
     }
 
-    public final String removeProduct() {
-        return "";
-    }
+    @RequestMapping(path = BACKEND_PRODUCT_PAGE,
+            params = ADD_FEATURE_ACTION, method = RequestMethod.POST)
+    public final String addFeature(@ModelAttribute(value = "productFeature")
+                                       final ProductFeature productFeature,
+                                   final RedirectAttributes redirectAttributes,
+                                   final Model model) {
+        Product product = null;
+        try {
+            product = productService.addNewProductFeature(productFeature);
+            model.addAttribute(SELECTED_PRODUCT, product);
+        } catch (ServiceException e) {
+            LOGGER.warn("Feature creation failed", e);
+            redirectAttributes.addAttribute(ADD_FAILED, "Cannot add feature: "
+                    + e.getMessage());
 
-//    @RequestMapping(path = "/backend/products",
-//            params = "action=save", method = RequestMethod.POST)
-//    public final String saveProduct(final HttpServletRequest req) {
-//
-//        String idStr = req.getParameter("id");
-//        String name = req.getParameter("name");
-//        String description = req.getParameter("description");
-//        String priceStr = req.getParameter("price");
-//        String stockStr = req.getParameter("stock");
-//        String categoryIdStr = req.getParameter("category");
-//        String[] featureIds = req.getParameterValues("prod_features[id]");
-//        String[] featureValues =
-//                req.getParameterValues("prod_features[value]");
-//
-//        Integer id = Integer.parseInt(idStr);
-//        Integer price = Integer.parseInt(priceStr);
-//        Integer stock = Integer.parseInt(stockStr);
-//        Integer categoryId = Integer.parseInt(categoryIdStr);
-//        Product product = new Product();
-//        product.setId(id);
-//        product.setName(name);
-//        product.setDescription(description);
-//        product.setPrice(price);
-//        product.setStock(stock);
-//        Category cat = new Category();
-//        cat.setId(categoryId);
-//        product.setCategory(cat);
-//        setFeaturesToProduct(featureIds, featureValues, product);
-//        productService.update(product);
-//        return "redirect:/backend/products?productId=" + product.getId();
-//
-//
-//    }
-//    @RequestMapping(path = "/backend/products",
-//            params = "action=add", method = RequestMethod.POST)
-//    public final String createProduct(final HttpServletRequest req) {
-//
-//        String name = req.getParameter("name");
-//        String description = req.getParameter("description");
-//        String priceStr = req.getParameter("price");
-//        String stockStr = req.getParameter("stock");
-//        String categoryIdStr = req.getParameter("category");
-//        String[] featureIds = req.getParameterValues("prod_features[id]");
-//        String[] featureValues =
-//                req.getParameterValues("prod_features[value]");
-//
-//        Integer price = Integer.parseInt(priceStr);
-//        Integer stock = Integer.parseInt(stockStr);
-//        Integer categoryId = Integer.parseInt(categoryIdStr);
-//        Product product = new Product();
-//        product.setName(name);
-//        product.setDescription(description);
-//        product.setPrice(price);
-//        product.setStock(stock);
-//        Category cat = new Category();
-//        cat.setId(categoryId);
-//        product.setCategory(cat);
-//        productService.add(product);
-//        if (featureIds != null) {
-//            setFeaturesToProduct(featureIds, featureValues, product);
-//            productService.update(product);
-//        }
-//
-//        return "redirect:/backend/products?productId=" + product.getId();
-//    }
-//    @RequestMapping(path = "/backend/products",
-//            params = "action=remove", method = RequestMethod.POST)
-//    public final String removeProduct(final HttpServletRequest req) {
-//
-//        String idStr = req.getParameter("id");
-//        Integer id = Integer.parseInt(idStr);
-//        try {
-//            productService.delete(id);
-//        } catch (Exception e) {
-//            LOGGER.warn("Can't remove product", e);
-//            req.setAttribute("cantRemove",
-//                    "Can't remove product: it is already assigned to order");
-//            return "/backend/cantRemove";
-//        }
-//        return "redirect:/backend/products";
-//    }
-//
-//    /**
-//     * Sets features to product.
-//     *
-//     * @param featureIds    the feature ids
-//     * @param featureValues the feature values
-//     * @param product       the product
-//     */
-//    private void setFeaturesToProduct(final String[] featureIds,
-//                                      final String[] featureValues,
-//                                      final Product product) {
-//        for (int i = 0; i < featureIds.length; i++) {
-//            Integer fId = Integer.parseInt(featureIds[i]);
-//            ProductFeature feature = new ProductFeature();
-//            feature.setProductId(product.getId());
-//            feature.setProduct(product);
-//            feature.setFeatureId(fId);
-//            feature.setValue(featureValues[i]);
-//            product.getFeatures().add(feature);
-//        }
-//    }
+        }
+        return "redirect:" + BACKEND_PRODUCT_PAGE + "?productId="
+                + productFeature.getProductId();
+    }
 }

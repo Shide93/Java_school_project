@@ -195,7 +195,7 @@ public class Product {
      *
      * @return the features
      */
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(FetchMode.JOIN)
     @OrderBy(value = "featureId")
     public List<ProductFeature> getFeatures() {

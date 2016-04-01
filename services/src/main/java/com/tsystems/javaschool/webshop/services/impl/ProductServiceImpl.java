@@ -4,9 +4,11 @@ import com.tsystems.javaschool.webshop.dao.api.CategoryDAO;
 import com.tsystems.javaschool.webshop.dao.api.FeatureDAO;
 import com.tsystems.javaschool.webshop.dao.api.ProductDAO;
 import com.tsystems.javaschool.webshop.dao.entities.Category;
+import com.tsystems.javaschool.webshop.dao.entities.Feature;
 import com.tsystems.javaschool.webshop.dao.entities.Product;
 import com.tsystems.javaschool.webshop.dao.entities.ProductFeature;
 import com.tsystems.javaschool.webshop.services.api.ProductService;
+import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -50,9 +53,7 @@ public class ProductServiceImpl implements ProductService {
     public final void add(final Product product) {
 
 
-        Category category =
-                categoryDAO.getById(product.getCategory().getId());
-        product.setCategory(category);
+
         productDAO.create(product);
 
     }
@@ -63,9 +64,13 @@ public class ProductServiceImpl implements ProductService {
         Category category =
                 categoryDAO.getById(product.getCategory().getId());
         product.setCategory(category);
-        for (ProductFeature prodFeature : product.getFeatures()) {
-            prodFeature.setFeature(featureDAO.getById(
-                    prodFeature.getFeatureId()));
+       Iterator<ProductFeature> iterator = product.getFeatures().iterator();
+        while (iterator.hasNext()) {
+            ProductFeature productFeature = iterator.next();
+            if (productFeature.getValue() == null
+                    || productFeature.getValue().isEmpty()) {
+                iterator.remove();
+            }
         }
         productDAO.update(product);
 
@@ -73,7 +78,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public final void delete(final Integer productId) {
-
 
         productDAO.delete(productId);
 
@@ -120,5 +124,36 @@ public class ProductServiceImpl implements ProductService {
             map.get(featureId).add(featureVal);
         }
         return productDAO.findByFeatures(map);
+    }
+
+    @Override
+    public final Product addNewProductFeature(
+            final ProductFeature productFeature)
+            throws ServiceException {
+
+        Product product = productDAO.getById(productFeature.getProductId());
+        if (product == null) {
+            throw new ServiceException("Product doesn't exists");
+        }
+
+        Feature feature = featureDAO.getById(productFeature.getFeatureId());
+        if (feature == null) {
+            throw new ServiceException("Feature doesn't exists");
+        }
+
+        if (productFeature.getValue() == null
+                || productFeature.getValue().isEmpty()) {
+            throw new ServiceException("Feature value is empty");
+        }
+
+        productFeature.setFeature(feature);
+        productFeature.setProduct(product);
+
+        if (product.getFeatures().contains(productFeature)) {
+            throw new ServiceException("Feature value already assigned");
+        }
+        product.getFeatures().add(productFeature);
+        productDAO.update(product);
+        return product;
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Shide on 13.03.2016.
@@ -71,13 +72,23 @@ public class SearchController {
      */
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public final String searchByFeatures(final Model model,
-                                         @RequestParam("features")
-                                         final String[] selectedFeatures) {
+                                         @RequestParam(name = "features[]")
+                                         final Map<String, List<String>> selectedFeatures) {
 
         //TODO: try to accept 2d array from form
-        List<Product> products =
-                productService.searchByFeature(selectedFeatures);
-        model.addAttribute("products", products);
+       // List<Product> products =
+            //    productService.searchByFeature(selectedFeatures);
+      //  model.addAttribute("products", products);
         return "searchResult";
     }
+   /* protected final void doPost(final HttpServletRequest req,
+                                final HttpServletResponse resp)
+            throws ServletException, IOException {
+        String[] selectedFeatures = req.getParameterValues("features");
+        List<ProductEntity> products =
+                productService.searchByFeature(selectedFeatures);
+
+        req.setAttribute("products", products);
+        req.getRequestDispatcher("/searchResult.jsp").forward(req, resp);
+    }*/
 }

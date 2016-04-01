@@ -32,6 +32,7 @@
                     <input class="btn ${button}" type="submit" value="${status}">
                     <input type="hidden" name="id" value="${requestScope.selectedOrder.id}">
                     <input type="hidden" name="status" value="${status}">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
             </c:forEach>
         </div>
