@@ -12,7 +12,7 @@
                         <c:if test="${fValue.featureId eq feature.id}">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="features[${feature.id}]" value="${fValue.value}">
+                                    <input type="checkbox" name="features" value="${feature.id}/${fValue.value}">
                                     ${fValue.value}
                                 </label>
                             </div>
