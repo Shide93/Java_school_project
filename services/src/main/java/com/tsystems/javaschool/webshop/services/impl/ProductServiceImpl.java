@@ -113,15 +113,16 @@ public class ProductServiceImpl implements ProductService {
             final String[] selectedFeatures) {
 
         Map<Integer, List<String>> map = new HashMap<>();
-
-        for (final String selectedFeature : selectedFeatures) {
-            String[] splFeature = selectedFeature.split("/");
-            Integer featureId = Integer.parseInt(splFeature[0]);
-            String featureVal = splFeature[1];
-            if (!map.containsKey(featureId)) {
-                map.put(featureId, new ArrayList<>());
+        if (selectedFeatures != null) {
+            for (final String selectedFeature : selectedFeatures) {
+                String[] splFeature = selectedFeature.split("/");
+                Integer featureId = Integer.parseInt(splFeature[0]);
+                String featureVal = splFeature[1];
+                if (!map.containsKey(featureId)) {
+                    map.put(featureId, new ArrayList<>());
+                }
+                map.get(featureId).add(featureVal);
             }
-            map.get(featureId).add(featureVal);
         }
         return productDAO.findByFeatures(map);
     }

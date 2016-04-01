@@ -2,12 +2,15 @@ package com.tsystems.javaschool.webshop.dao.impl;
 
 
 import com.tsystems.javaschool.webshop.dao.api.ProductDAO;
+import com.tsystems.javaschool.webshop.dao.entities.Feature;
 import com.tsystems.javaschool.webshop.dao.entities.Product;
+import com.tsystems.javaschool.webshop.dao.entities.ProductFeature;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -25,8 +28,8 @@ public class ProductDAOImpl extends AbstractGenericDAO<Product>
      */
     private static final Logger LOGGER =
             LogManager.getLogger(ProductDAOImpl.class);
-    @Override
-    public final List<Product> findByFeatures(
+//    @Override
+    public final List<Product> findByFeaturesOld(
             final Map<Integer, List<String>> featureValues) {
         StringBuilder queryString = new StringBuilder();
         queryString.append("select p from Product p ");
@@ -60,6 +63,42 @@ public class ProductDAOImpl extends AbstractGenericDAO<Product>
 
         TypedQuery<Product> query =
             manager.createQuery(queryString.toString(), Product.class);
+        return query.getResultList();
+    }
+
+    //criteria
+    @Override
+    public final List<Product> findByFeatures(
+            final Map<Integer, List<String>> featureValues) {
+        CriteriaBuilder builder = manager.getCriteriaBuilder();
+        CriteriaQuery<Product> criteriaQuery = builder.createQuery(Product.class);
+        Root<Product> product = criteriaQuery.from(Product.class);
+        Path<ProductFeature> feature = product.join("features"); //for IN with subQuery
+        CriteriaQuery<Product> select = criteriaQuery.select(product);
+
+        Predicate featurePredicate = builder.disjunction();
+        for (final Map.Entry<Integer, List<String>> fValue : featureValues.entrySet()) {
+            Predicate equalFeatureId =
+                    builder.equal(feature.get("featureId"),
+                            fValue.getKey());
+            List<String> values = fValue.getValue();
+            Predicate equalsValues = builder.disjunction();
+            for (String value : values) {
+                Predicate equalFeatureVal =
+                        builder.equal(feature.get("value"),
+                                value);
+                equalsValues = builder.or(equalsValues, equalFeatureVal);
+            }
+
+            featurePredicate = builder.or(featurePredicate,
+                    builder.and(equalFeatureId, equalsValues));
+        }
+        select.where(featurePredicate);
+        select.groupBy(product.get("id"));
+        select.having(builder.equal(builder.count(product), featureValues.size()));
+
+        TypedQuery<Product> query =
+                manager.createQuery(criteriaQuery);
         return query.getResultList();
     }
 
