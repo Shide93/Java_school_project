@@ -38,7 +38,7 @@ public class Address {
      * address zip.
      */
     @NotNull
-    private int zip;
+    private Integer zip;
     /**
      * address street.
      */
@@ -48,11 +48,11 @@ public class Address {
      * address building.
      */
     @NotNull
-    private int building;
+    private Integer building;
     /**
      * address flat.
      */
-    private int flat;
+    private Integer flat;
 
 
     /**
@@ -143,7 +143,7 @@ public class Address {
      */
     @Basic
     @Column(name = "zip")
-    public int getZip() {
+    public Integer getZip() {
         return zip;
     }
 
@@ -152,7 +152,7 @@ public class Address {
      *
      * @param zip the zip
      */
-    public void setZip(final int zip) {
+    public void setZip(final Integer zip) {
         this.zip = zip;
     }
 
@@ -183,7 +183,7 @@ public class Address {
      */
     @Basic
     @Column(name = "building")
-    public int getBuilding() {
+    public Integer getBuilding() {
         return building;
     }
 
@@ -192,7 +192,7 @@ public class Address {
      *
      * @param building the building
      */
-    public  void setBuilding(final int building) {
+    public  void setBuilding(final Integer building) {
         this.building = building;
     }
 
@@ -203,7 +203,7 @@ public class Address {
      */
     @Basic
     @Column(name = "flat")
-    public int getFlat() {
+    public Integer getFlat() {
         return flat;
     }
 
@@ -212,7 +212,7 @@ public class Address {
      *
      * @param flat the flat
      */
-    public void setFlat(final int flat) {
+    public void setFlat(final Integer flat) {
         this.flat = flat;
     }
 

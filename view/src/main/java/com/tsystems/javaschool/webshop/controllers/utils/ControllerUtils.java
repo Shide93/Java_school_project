@@ -1,4 +1,4 @@
-package com.tsystems.javaschool.webshop.servlets.utils;
+package com.tsystems.javaschool.webshop.controllers.utils;
 
 import com.tsystems.javaschool.webshop.dao.entities.Category;
 import com.tsystems.javaschool.webshop.services.api.CategoryService;
@@ -13,16 +13,16 @@ import java.util.List;
  *
  * @author Shide
  */
-public final class ServletUtils {
+public final class ControllerUtils {
     /**
      * Instantiates a new Servlet utils.
      */
-    private ServletUtils() { }
+    private ControllerUtils() { }
 
     /**
      * Max age of cookies.
      */
-    public static final int COOKIE_MAX_AGE = 60 * 60;
+    public static final int COOKIE_MAX_AGE = 2 * 60 * 60;
 
     /**
      * Creates a cookie with specified name and value

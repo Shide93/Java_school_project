@@ -20,7 +20,7 @@
     </appender>
 
     <root>
-        <priority value="INFO"/>
+        <priority value="DEBUG"/>
         <appender-ref ref="ALL-LOG"/>
         <appender-ref ref="CONSOLE-ALL"/>
     </root>

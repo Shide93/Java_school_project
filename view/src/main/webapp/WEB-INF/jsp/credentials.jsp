@@ -12,8 +12,9 @@
          </ul>
             <div class="tab-pane fade in active">
                 <h2>Your Profile, ${requestScope.user.name}!</h2>
-                <p>${requestScope.notValid}</p>
-                <form:form class="" role="form" action="/profile/credentials" method="post" modelAttribute="credentials">
+                <form:errors path="*" cssClass="error" /><br>
+                <form:form class="" role="form" action="/profile/credentials"
+                           method="post" modelAttribute="credentials">
                     <div class="form-group">
                         <h6>Change email:</h6>
                         <label>Email

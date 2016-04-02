@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -69,6 +70,48 @@ public class UserProfileController {
     @Qualifier(value = "authenticationManager")
     private AuthenticationManager authenticationManager;
 
+    /**
+     * The Validator.
+     */
+    @Autowired
+    @Qualifier("passwordValidator")
+    private Validator passwordValidator;
+
+    /**
+     * Gets user.
+     *
+     * @param user      the user
+     * @param model     the model
+     * @param principal the principal
+     */
+    @ModelAttribute
+    public final  void populateModel(final User user,
+                                     final Model model,
+                               final Principal principal) {
+
+        User oldUser = accountService.getUserByEmail(principal.getName());
+        user.setEmail(oldUser.getEmail());
+        user.setPassword(oldUser.getPassword());
+        user.setRole(oldUser.getRole());
+        user.setId(oldUser.getId());
+        model.addAttribute("user", user);
+        model.addAttribute("credentials", user);
+    }
+
+    @InitBinder
+    public final void initBinderProfile(final WebDataBinder binder) {
+
+        String format = "dd-MM-yyyy";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        dateFormat.setLenient(false);
+        CustomDateEditor customDateEditor = new CustomDateEditor(dateFormat, true, format.length());
+        binder.registerCustomEditor(Date.class, customDateEditor);
+    }
+
+    @InitBinder(value = "credentials")
+    public final void initBinderCredentials(final WebDataBinder binder) {
+        binder.setValidator(passwordValidator);
+    }
 
     /**
      * Gets profile.
@@ -89,37 +132,6 @@ public class UserProfileController {
     }
 
     /**
-     * Gets user.
-     *
-     * @param user      the user
-     * @param principal the principal
-     * @return the user
-     */
-//    @ModelAttribute(value = "user")
-//    public final  User getUser(final User user,
-//                               final Principal principal) {
-//
-//        User oldUser = accountService.getUserByEmail(principal.getName());
-//        user.setEmail(oldUser.getEmail());
-//        user.setPassword(oldUser.getPassword());
-//        user.setConfirmPassword(oldUser.getPassword());
-//        user.setRole(oldUser.getRole());
-//        user.setId(oldUser.getId());
-//        return user;
-//    }
-
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-
-        String format = "dd-MM-yyyy";
-        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
-        dateFormat.setLenient(false);
-        CustomDateEditor customDateEditor = new CustomDateEditor(dateFormat, true, format.length());
-
-        binder.registerCustomEditor(Date.class, customDateEditor);
-    }
-
-    /**
      * Save profile string.
      *
      * @param user          the user
@@ -128,7 +140,8 @@ public class UserProfileController {
      * @return the string
      */
     @RequestMapping(value = "/profile", method = RequestMethod.POST)
-    public String saveProfile(@ModelAttribute(value = "user") @Valid final User user,
+    public String saveProfile(@ModelAttribute(value = "user")
+                                  @Valid final User user,
                               final BindingResult bindingResult,
                               final Model model) {
         if (bindingResult.hasErrors()) {
@@ -139,7 +152,8 @@ public class UserProfileController {
         return "redirect:/profile";
     }
 
-    @RequestMapping(value = "/profile/credentials", method = RequestMethod.GET)
+    @RequestMapping(value = "/profile/credentials",
+            method = RequestMethod.GET)
     public String getCredentialsPage(final Model model,
                              final Principal principal) {
         User user = new User();
@@ -148,12 +162,17 @@ public class UserProfileController {
         return "credentials";
     }
 
-    @RequestMapping(value = "/profile/credentials", method = RequestMethod.POST)
-    public String saveCredentials(@ModelAttribute(value = "credentials") @Valid final User credentials,
+    @RequestMapping(value = "/profile/credentials",
+            method = RequestMethod.POST)
+    public String saveCredentials(@ModelAttribute(value = "credentials")
+                                      @Valid final User credentials,
                                   final BindingResult bindingResult,
                                   final Model model,
                                   final Principal principal,
                                   final HttpServletRequest request) {
+        if (bindingResult.hasErrors()) {
+            return "credentials";
+        }
         try {
             String password = credentials.getPassword();
             accountService.saveCredentials(credentials, principal.getName());
@@ -162,9 +181,9 @@ public class UserProfileController {
         } catch (AccountServiceException e) {
             bindingResult.rejectValue("email", "email.exists");
             //TODO: log and handle exception
-            return "profile";
+            return "credentials";
         } catch (AuthenticationException e) {
-            //LOGGER.error("Failure in autoLogin", e);
+            LOGGER.error("Failure in autoLogin", e);
             SecurityContextHolder.getContext().setAuthentication(null);
         }
         return "redirect:/profile/credentials";

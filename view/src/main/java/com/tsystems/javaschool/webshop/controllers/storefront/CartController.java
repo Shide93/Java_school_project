@@ -6,12 +6,10 @@ import com.tsystems.javaschool.webshop.dao.entities.CartProduct;
 import com.tsystems.javaschool.webshop.services.api.CartService;
 import com.tsystems.javaschool.webshop.services.exceptions.ExistsInCartException;
 import com.tsystems.javaschool.webshop.services.exceptions.OutOfStockException;
-import com.tsystems.javaschool.webshop.servlets.utils.ServletUtils;
+import com.tsystems.javaschool.webshop.controllers.utils.ControllerUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -46,7 +44,7 @@ public class CartController {
             return cart;
         }
         cartService.add(cart);
-        resp.addCookie(ServletUtils.createCookie("cartID",
+        resp.addCookie(ControllerUtils.createCookie("cartID",
                 "" + cart.getId()));
 
         return cart;
