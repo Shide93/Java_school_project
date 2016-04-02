@@ -106,6 +106,21 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
     }
 
     @Override
+    public final User saveCredentials(final User credentials,
+                                      final String oldEmail)
+            throws AccountServiceException {
+        User user = usersDAO.getUserByEmail(oldEmail);
+        if (!credentials.getEmail().equals(user.getEmail())
+                && usersDAO.getUserByEmail(credentials.getEmail()) != null) {
+            throw new AccountServiceException("Email has already taken");
+        }
+        user.setEmail(credentials.getEmail());
+        user.setPassword(passwordEncoder.encode(credentials.getPassword()));
+        usersDAO.update(user);
+        return credentials;
+    }
+
+    @Override
     public final List<User> getAll() {
         return usersDAO.getAll();
     }

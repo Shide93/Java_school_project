@@ -85,7 +85,6 @@ public class UserProfileController {
             user.setAddress(new Address());
         }
         model.addAttribute("user", user);
-        model.addAttribute("orders", orderService.getAllByUser(user.getId()));
         return "profile";
     }
 
@@ -96,18 +95,18 @@ public class UserProfileController {
      * @param principal the principal
      * @return the user
      */
-    @ModelAttribute(value = "user")
-    public final  User getUser(final User user,
-                               final Principal principal) {
-
-        User oldUser = accountService.getUserByEmail(principal.getName());
-        user.setEmail(oldUser.getEmail());
-        user.setPassword(oldUser.getPassword());
-        //user.setConfirmPassword(oldUser.getPassword());
-        user.setRole(oldUser.getRole());
-        user.setId(oldUser.getId());
-        return user;
-    }
+//    @ModelAttribute(value = "user")
+//    public final  User getUser(final User user,
+//                               final Principal principal) {
+//
+//        User oldUser = accountService.getUserByEmail(principal.getName());
+//        user.setEmail(oldUser.getEmail());
+//        user.setPassword(oldUser.getPassword());
+//        user.setConfirmPassword(oldUser.getPassword());
+//        user.setRole(oldUser.getRole());
+//        user.setId(oldUser.getId());
+//        return user;
+//    }
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -143,9 +142,9 @@ public class UserProfileController {
     @RequestMapping(value = "/profile/credentials", method = RequestMethod.GET)
     public String getCredentialsPage(final Model model,
                              final Principal principal) {
-        User user = accountService.getUserByEmail(principal.getName());
-        model.addAttribute("user", user);
-        model.addAttribute("orders", orderService.getAllByUser(user.getId()));
+        User user = new User();
+        user.setEmail(principal.getName());
+        model.addAttribute("credentials", user);
         return "credentials";
     }
 
@@ -153,10 +152,11 @@ public class UserProfileController {
     public String saveCredentials(@ModelAttribute(value = "credentials") @Valid final User credentials,
                                   final BindingResult bindingResult,
                                   final Model model,
+                                  final Principal principal,
                                   final HttpServletRequest request) {
         try {
             String password = credentials.getPassword();
-            accountService.saveProfile(credentials);
+            accountService.saveCredentials(credentials, principal.getName());
             accountService.doAutoLogin(credentials.getEmail(), password,
                     new WebAuthenticationDetails(request));
         } catch (AccountServiceException e) {
@@ -168,5 +168,13 @@ public class UserProfileController {
             SecurityContextHolder.getContext().setAuthentication(null);
         }
         return "redirect:/profile/credentials";
+    }
+
+    @RequestMapping(value = "/profile/orders", method = RequestMethod.GET)
+    public String getUserOrdersPage(final Model model,
+                                    final Principal principal) {
+        User user = accountService.getUserByEmail(principal.getName());
+        model.addAttribute("orders", orderService.getAllByUser(user.getId()));
+        return "profileOrders";
     }
 }

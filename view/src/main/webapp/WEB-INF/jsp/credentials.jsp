@@ -5,11 +5,15 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <t:frontendLayout>
     <jsp:attribute name="content">
-
-            <div id="profile" class="tab-pane fade in active">
+         <ul class="nav nav-tabs">
+             <li class=""><a href="<c:url value="/profile"/>">Profile</a></li>
+             <li class="active"><a href="<c:url value="/profile/credentials"/>">Credentials</a></li>
+             <li class=""><a href="<c:url value="/profile/orders"/>" >Orders</a></li>
+         </ul>
+            <div class="tab-pane fade in active">
                 <h2>Your Profile, ${requestScope.user.name}!</h2>
                 <p>${requestScope.notValid}</p>
-                <form:form class="" role="form" action="/profile" method="post" modelAttribute="credentials">
+                <form:form class="" role="form" action="/profile/credentials" method="post" modelAttribute="credentials">
                     <div class="form-group">
                         <h6>Change email:</h6>
                         <label>Email
@@ -20,7 +24,7 @@
                     <div class="form-group">
                         <h6>Change password:</h6>
 
-                        <label>Password
+                        <label>New password
                             <form:password class="form-control" path="password" />
                         </label>
                         <form:errors path="password" cssClass="error" /><br>
@@ -30,6 +34,8 @@
                         </label>
                         <form:errors path="confirmPassword" cssClass="error" /><br>
                     </div>
+                    <input class="btn btn-primary" value="Save credentials" type="submit">
+
                 </form:form>
             </div>
     </jsp:attribute>

@@ -53,6 +53,18 @@ public interface AccountService {
     User saveProfile(User user)  throws AccountServiceException;
 
     /**
+     * Save credentials user.
+     *
+     * @param credentials the credentials
+     * @param oldEmail    the old email
+     * @return the user
+     * @throws AccountServiceException the account service exception
+     */
+    User saveCredentials(User credentials,
+                         String oldEmail)
+            throws AccountServiceException;
+
+    /**
      * Gets all users.
      *
      * @return all users
@@ -83,7 +95,7 @@ public interface AccountService {
      * @param detils   the detils
      * @throws AuthenticationException the authentication exception
      */
-     void doAutoLogin(final String username,
+    void doAutoLogin(final String username,
                                   final String password,
                                   final WebAuthenticationDetails detils)
             throws AuthenticationException;

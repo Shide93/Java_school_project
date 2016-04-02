@@ -6,85 +6,12 @@
 <t:frontendLayout>
     <jsp:attribute name="content">
         <ul class="nav nav-tabs">
-            <li class="active"><a href="<c:url value="/profile"/>">Profile</a></li>
+            <li class=""><a href="<c:url value="/profile"/>">Profile</a></li>
             <li class=""><a href="<c:url value="/profile/credentials"/>">Credentials</a></li>
-            <li class=""><a href="<c:url value="/profile/orders"/>" >Orders</a></li>
+            <li class="active"><a href="<c:url value="/profile/orders"/>" >Orders</a></li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane fade in active">
-                <h2>Your Profile, ${requestScope.user.name}!</h2>
-                <form:form class="" role="form" action="/profile" method="post" modelAttribute="user">
-                    <div class="">
-                        <h6>Your email:</h6>
-                       <div> ${requestScope.user.email}</div>
-                    </div>
-
-                    <div class="form-group">
-                        <h6>Additional info</h6>
-                        <label>Name
-                            <form:input class="form-control" type="text" path="name"/>
-                        </label>
-                        <form:errors path="name" cssClass="error" /><br>
-
-                        <label>Last name
-                            <form:input class="form-control" type="text" path="lastName" />
-                        </label>
-                        <form:errors path="lastName" cssClass="error" /><br>
-                        <label>Phone
-                            <form:input class="form-control" type="text" path="phone" />
-                        </label>
-                        <form:errors path="phone" cssClass="error" /><br>
-
-                        <label>Birth date
-                            <form:input class="form-control" type="text" path="birthDate" />
-                        </label>
-                        <form:errors path="birthDate" cssClass="error" /><br>
-                    </div>
-
-                    <div class="form-group">
-                        <h6>Shipping address</h6>
-                        <label>Country
-                            <form:input class="form-control" type="text" path="address.country"  />
-                        </label>
-                        <form:errors path="address.country" cssClass="error" /><br>
-
-                        <label>Region
-                            <form:input class="form-control" type="text" path="address.region"  />
-                        </label>
-                        <form:errors path="address.region" cssClass="error" /><br>
-
-                        <label>City
-                            <form:input class="form-control" type="text" path="address.city" />
-                        </label>
-                        <form:errors path="address.city" cssClass="error" /><br>
-
-                        <label>Zip
-                            <form:input class="form-control" type="text" path="address.zip"  />
-                        </label>
-                        <form:errors path="address.zip" cssClass="error" /><br>
-
-                        <label>Street
-                            <form:input class="form-control" type="text" path="address.street"  />
-                        </label>
-                        <form:errors path="address.street" cssClass="error" /><br>
-
-                        <label>Building
-                            <form:input class="form-control" type="text" path="address.building"  />
-                        </label>
-                        <form:errors path="address.building" cssClass="error" /><br>
-
-                        <label>Flat
-                            <form:input class="form-control" type="text" path="address.flat" value="${requestScope.user.address.flat}" />
-                        </label>
-                        <form:errors path="address.flat" cssClass="error" /><br>
-
-                    </div>
-                    <input class="btn btn-primary" value="Save profile" type="submit">
-
-                </form:form>
-            </div>
-
-            <div id="myorders" class="tab-pane fade">
+            <div id="myorders" class="tab-pane fade in active">
                 <h1>My orders</h1>
                 <div class="panel-group" id="accordion">
                     <c:forEach var="order" items="${requestScope.orders}">
@@ -159,9 +86,9 @@
 
                                     <p class="order_shipping">
                                         Shipping:
-                                        <div class="">${order.shipping.name}</div>
-                                        <div class="">${order.shipping.description}</div>
-                                        <div class="">${order.shipping.cost}</div>
+                                    <div class="">${order.shipping.name}</div>
+                                    <div class="">${order.shipping.description}</div>
+                                    <div class="">${order.shipping.cost}</div>
                                     </p>
 
                                     <div class="order_address">
@@ -193,15 +120,15 @@
 
                                     <p class="order_payment">
                                         Payment:
-                                        <div class="">${order.payment.name}</div>
-                                        <div class="">${order.payment.description}</div>
+                                    <div class="">${order.payment.name}</div>
+                                    <div class="">${order.payment.description}</div>
                                     </p>
 
                                     <p class="order_comment">
                                         Comment:
-                                        <p class="">
-                                                ${order.comment}
-                                        </p>
+                                    <p class="">
+                                            ${order.comment}
+                                    </p>
                                     </p>
                                 </div>
                             </div>
