@@ -1,5 +1,6 @@
 package com.tsystems.javaschool.webshop.controllers.storefront;
 
+import com.tsystems.javaschool.webshop.controllers.webservice.StatisticsRestController;
 import com.tsystems.javaschool.webshop.services.api.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import java.util.GregorianCalendar;
  */
 @Controller
 public class StatisticController {
+
 
     /**
      * The Statistics service.
@@ -35,14 +37,15 @@ public class StatisticController {
         Calendar c = new GregorianCalendar();
         c.setTimeInMillis(System.currentTimeMillis());
         c.add(Calendar.MONTH, -1);
-        model.addAttribute("monthSales", statisticsService.periodSales(c.getTime()));
-        //TODO: count to settings
+        model.addAttribute("monthSales",
+                statisticsService.periodSales(c.getTime()));
         final int topCount = 3;
         model.addAttribute("topCustomers", statisticsService
                 .topCustomers(topCount));
         model.addAttribute("topProducts", statisticsService
                 .topProducts(topCount));
-
+        model.addAttribute("accessToken",
+                StatisticsRestController.ACCESS_TOKEN);
         return "backend/statistics";
     }
 }

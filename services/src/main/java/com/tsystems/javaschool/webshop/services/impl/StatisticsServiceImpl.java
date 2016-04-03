@@ -101,11 +101,6 @@ public class StatisticsServiceImpl implements StatisticsService {
                     .getProductSales(product.getId(), dateFrom));
             report.getTopProducts().add(productDTO);
         }
-
-//        for (Product product : productDAO.getOutOfStockProducts(minStock)) {
-//            report.getOutOfStock().add(new ProductDTO(product));
-//        }
-
         return report;
     }
 

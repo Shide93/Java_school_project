@@ -44,11 +44,11 @@ public class Product {
     /**
      * The Price.
      */
-    private int price;
+    private Integer price;
     /**
      * The Stock.
      */
-    private int stock;
+    private Integer stock;
     /**
      * The Description.
      */
@@ -77,7 +77,7 @@ public class Product {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -86,7 +86,7 @@ public class Product {
      *
      * @param id the id
      */
-    public void setId(final int id) {
+    public void setId(final Integer id) {
         this.id = id;
     }
 
@@ -117,7 +117,7 @@ public class Product {
      */
     @Basic
     @Column(name = "price")
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
@@ -126,7 +126,7 @@ public class Product {
      *
      * @param price the price
      */
-    public void setPrice(final int price) {
+    public void setPrice(final Integer price) {
         this.price = price;
     }
 
@@ -137,7 +137,7 @@ public class Product {
      */
     @Basic
     @Column(name = "stock")
-    public int getStock() {
+    public Integer getStock() {
         return stock;
     }
 
@@ -146,7 +146,7 @@ public class Product {
      *
      * @param stock the stock
      */
-    public void setStock(final int stock) {
+    public void setStock(final Integer stock) {
         this.stock = stock;
     }
 

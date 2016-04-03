@@ -1,9 +1,6 @@
 package com.tsystems.javaschool.webshop.services.impl;
 
-import com.tsystems.javaschool.webshop.dao.api.CartDAO;
-import com.tsystems.javaschool.webshop.dao.api.OrderDAO;
-import com.tsystems.javaschool.webshop.dao.api.PaymentDAO;
-import com.tsystems.javaschool.webshop.dao.api.ShippingDAO;
+import com.tsystems.javaschool.webshop.dao.api.*;
 import com.tsystems.javaschool.webshop.dao.entities.*;
 import com.tsystems.javaschool.webshop.dao.entities.Address;
 import com.tsystems.javaschool.webshop.dao.entities.enums.OrderStatus;
@@ -52,6 +49,12 @@ public class CheckoutServiceImpl implements CheckoutService {
     @Autowired
     private CartDAO cartDAO;
 
+    /**
+     * The Product dao.
+     */
+    @Autowired
+    private ProductDAO productDAO;
+
 
     @Override
     public final List<Payment> getPaymentTypes() {
@@ -83,7 +86,14 @@ public class CheckoutServiceImpl implements CheckoutService {
             orderItem.setOrder(order);
             orderItem.setOrderId(order.getId());
             orderItem.setQuantity(cartItem.getQuantity());
+            orderItem.setPrice(cartItem.getProduct().getPrice());
+            orderItem.setSummary(cartItem.getQuantity()
+                    * cartItem.getProduct().getPrice());
             orderItems.add(orderItem);
+
+            Product product = cartItem.getProduct();
+            product.setStock(product.getStock() - cartItem.getQuantity());
+            productDAO.update(product);
         }
         order.setProducts(orderItems);
 

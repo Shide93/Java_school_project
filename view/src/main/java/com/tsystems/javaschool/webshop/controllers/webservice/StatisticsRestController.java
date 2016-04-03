@@ -24,6 +24,11 @@ import java.util.Date;
 @RequestMapping(value = "/api")
 public class StatisticsRestController {
 
+    /**
+     * Token to access to REST service
+     */
+    public static final String ACCESS_TOKEN = "smP7ioTP1Ww1geS7O450";
+
     @Autowired
     private StatisticsService statisticsService;
 
@@ -36,8 +41,12 @@ public class StatisticsRestController {
                                              @RequestParam
                                              final Integer topProductsCount,
                                              @RequestParam
-                                             final Integer topUsersCount) {
-
+                                             final Integer topUsersCount,
+                                             @RequestParam
+                                             final String accessToken) {
+        if (!accessToken.equals(ACCESS_TOKEN)) {
+            throw new IllegalArgumentException("Wrong token value");
+        }
         return statisticsService.getShopReport(dateFrom,
                     topProductsCount,
                     topUsersCount);

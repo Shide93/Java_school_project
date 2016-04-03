@@ -140,8 +140,8 @@
         </div>
         <script>
             $(document).ready( function(){
-                $("input[name=shipping]").on('change', function(e) {
-                    var shippingCost = parseInt($("input[name=shipping]:checked")
+                $("input[name='shipping.id']").on('change', function(e) {
+                    var shippingCost = parseInt($("input[name='shipping.id']:checked")
                             .attr("shipping-cost"));
                     var total = parseInt(${sessionScope.cart.summary});
                     $('.shipping_total').text(shippingCost);

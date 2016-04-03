@@ -7,6 +7,7 @@ import com.tsystems.javaschool.webshop.dao.entities.Category;
 import com.tsystems.javaschool.webshop.dao.entities.Feature;
 import com.tsystems.javaschool.webshop.dao.entities.Product;
 import com.tsystems.javaschool.webshop.dao.entities.ProductFeature;
+import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -43,7 +44,7 @@ public class ProductServiceImplTest {
     private FeatureDAO featureDAO;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         productId = 1;
         categoryId = 2;
         featureId = 3;
@@ -62,13 +63,13 @@ public class ProductServiceImplTest {
     }
 
     @Test
-    public void addSuccess() throws Exception {
+    public void addSuccess() {
         productService.add(product);
         verify(productDAO).create(product);
     }
 
     @Test
-    public void updateSuccess() throws Exception {
+    public void updateSuccess() {
         product.setId(productId);
         category.setId(categoryId);
         product.setCategory(category);
@@ -81,13 +82,13 @@ public class ProductServiceImplTest {
     }
 
     @Test
-    public void deleteSuccess() throws Exception {
+    public void deleteSuccess() {
         productService.delete(productId);
         verify(productDAO).delete(productId);
     }
 
     @Test
-    public void getSuccess() throws Exception {
+    public void getSuccess() {
         product.setId(productId);
         when(productDAO.getById(productId)).thenReturn(product);
         assertEquals(product.getId(),
@@ -95,7 +96,7 @@ public class ProductServiceImplTest {
     }
 
     @Test
-    public void getAllSuccess() throws Exception {
+    public void getAllSuccess() {
         productList.add(product);
         when(productDAO.getAll()).thenReturn(productList);
         assertEquals(productList,
@@ -103,7 +104,7 @@ public class ProductServiceImplTest {
     }
 
     @Test
-    public void searchByFeatureSuccess() throws Exception {
+    public void searchByFeatureSuccess() {
         selectedFeatures = new String[]{"12/test1", "13/test2", "13/test3", "12/test4"};
         map.put(12, Arrays.asList("test1", "test4"));
         map.put(13, Arrays.asList("test2", "test3"));
@@ -112,7 +113,7 @@ public class ProductServiceImplTest {
     }
 
     @Test
-    public void addNewProductFeatureSuccess() throws Exception {
+    public void addNewProductFeatureSuccess() throws ServiceException {
         when(productDAO.getById(productId)).thenReturn(product);
         when(featureDAO.getById(featureId)).thenReturn(feature);
         productFeature.setProductId(productId);

@@ -52,11 +52,11 @@
                                             <c:forEach var="item" items="${order.products}">
                                                 <tr>
                                                     <td>${item.product.name}</td>
-                                                    <td>${item.product.price} $</td>
+                                                    <td>${item.price} $</td>
                                                     <td>
                                                         <span class="">${item.quantity}</span>
                                                     </td>
-                                                    <td>${item.product.price * item.quantity}</td>
+                                                    <td>${item.summary}</td>
                                                 </tr>
                                             </c:forEach>
 

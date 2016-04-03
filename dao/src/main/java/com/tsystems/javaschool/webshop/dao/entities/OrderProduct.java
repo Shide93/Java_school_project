@@ -12,12 +12,12 @@ import javax.persistence.*;
     @NamedQuery(name = "OrderProductEntity.getTopProducts",
         query = "select p.product from OrderProduct p " +
                 "join p.order o where o.orderDate > :dateFrom "
-                + "group by p.productId order by sum(p.quantity) desc"),
+                + "group by p.productId order by sum(p.summary) desc"),
     @NamedQuery(name = "OrderProductEntity.getProductTotal",
-            query = "select sum(op.quantity) from OrderProduct op " +
+            query = "select sum(op.summary) from OrderProduct op " +
                     "join op.order o " +
                     "where op.productId=:productId and " +
-                    "o.orderDate > :dateFrom ") //TODO: change on orderProduct.price
+                    "o.orderDate > :dateFrom ")
 })
 @Table(name = "order_product", schema = "web_shop")
 @IdClass(OrderProductPK.class)
@@ -33,7 +33,17 @@ public class OrderProduct {
     /**
      * The Quantity.
      */
-    private int quantity;
+    private Integer quantity;
+
+    /**
+     * The Price.
+     */
+    private Integer price;
+
+    /**
+     * The Summary.
+     */
+    private Integer summary;
     /**
      * The Order.
      */
@@ -90,7 +100,7 @@ public class OrderProduct {
      */
     @Basic
     @Column(name = "quantity")
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
@@ -99,8 +109,48 @@ public class OrderProduct {
      *
      * @param quantity the quantity
      */
-    public void setQuantity(final int quantity) {
+    public void setQuantity(final Integer quantity) {
         this.quantity = quantity;
+    }
+
+    /**
+     * Gets price.
+     *
+     * @return the price
+     */
+    @Basic
+    @Column(name = "price")
+    public Integer getPrice() {
+        return price;
+    }
+
+    /**
+     * Sets price.
+     *
+     * @param price the price
+     */
+    public void setPrice(final Integer price) {
+        this.price = price;
+    }
+
+    /**
+     * Gets summary.
+     *
+     * @return the summary
+     */
+    @Basic
+    @Column(name = "summary")
+    public Integer getSummary() {
+        return summary;
+    }
+
+    /**
+     * Sets summary.
+     *
+     * @param summary the summary
+     */
+    public void setSummary(final Integer summary) {
+        this.summary = summary;
     }
 
     /**

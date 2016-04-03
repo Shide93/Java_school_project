@@ -37,6 +37,23 @@
                 </c:if>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <span>Access token for REST report service:
+                </span>
+                <a href="#" class="show_token">Show</a>
+                <span class="token_value display-none">${accessToken}</span>
+            </div>
+        </div>
+        <script>
+            $(document).ready( function() {
+                $(".show_token").on('click', function (e) {
+                    e.preventDefault();
+                    $(".token_value").show();
+                    $(".show_token").hide();
+                });
+            });
+        </script>
     </jsp:attribute>
 
 </t:backendLayout>

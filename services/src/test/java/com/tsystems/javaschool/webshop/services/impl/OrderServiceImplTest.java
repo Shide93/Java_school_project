@@ -28,7 +28,7 @@ public class OrderServiceImplTest {
     private OrderDAO orderDAO;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         orderId = 1;
         order = new Order();
         orderList = new ArrayList<>();
@@ -39,25 +39,25 @@ public class OrderServiceImplTest {
     }
 
     @Test
-    public void addSuccess() throws Exception {
+    public void addSuccess() {
         orderService.add(order);
         verify(orderDAO).create(order);
     }
 
     @Test
-    public void updateSuccess() throws Exception {
+    public void updateSuccess() {
         orderService.update(order);
         verify(orderDAO).update(order);
     }
 
     @Test
-    public void deleteSuccess() throws Exception {
+    public void deleteSuccess() {
         orderService.delete(orderId);
         verify(orderDAO).delete(orderId);
     }
 
     @Test
-    public void getSuccess() throws Exception {
+    public void getSuccess() {
         order.setId(orderId);
         when(orderDAO.getById(orderId)).thenReturn(order);
         assertEquals(order.getId(),
@@ -65,14 +65,14 @@ public class OrderServiceImplTest {
     }
 
     @Test
-    public void getAllSuccess() throws Exception {
+    public void getAllSuccess() {
         orderList.add(order);
         when(orderDAO.getAll()).thenReturn(orderList);
         assertEquals(orderList,
                 orderService.getAll());
     }
     @Test
-    public void changeStatusSuccess() throws Exception {
+    public void changeStatusSuccess() {
         order.setOrderStatus(OrderStatus.NEW);
         when(orderDAO.getById(orderId)).thenReturn(order);
         orderService.changeStatus(orderId, OrderStatus.PAID);
@@ -80,7 +80,7 @@ public class OrderServiceImplTest {
     }
 
     @Test
-    public void testGetAllByUser() throws Exception {
+    public void testGetAllByUser() {
         int userId = 1;
         orderList.add(order);
         when(orderDAO.getByUser(userId)).thenReturn(orderList);

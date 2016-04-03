@@ -64,7 +64,7 @@ public class FeatureServiceImplTest {
     }
 
     @Test
-    public void getAllSuccess() throws Exception {
+    public void getAllSuccess() {
         featureList.add(feature);
         when(featureDAO.getAll()).thenReturn(featureList);
         assertEquals(featureList,

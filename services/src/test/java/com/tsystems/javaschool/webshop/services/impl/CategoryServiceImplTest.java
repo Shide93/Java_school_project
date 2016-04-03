@@ -27,7 +27,7 @@ public class CategoryServiceImplTest {
     private CategoryDAO categoryDAO;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         categoryId = 1;
         category = new Category();
         categoryList = new ArrayList<>();
@@ -38,13 +38,13 @@ public class CategoryServiceImplTest {
     }
 
     @Test
-    public void addSuccess() throws Exception {
+    public void addSuccess() {
         categoryService.add(category);
         verify(categoryDAO).create(category);
     }
 
     @Test
-    public void updateSuccess() throws Exception {
+    public void updateSuccess() {
         category.setId(categoryId);
         when(categoryDAO.getById(categoryId))
                 .thenReturn(category);
@@ -54,13 +54,13 @@ public class CategoryServiceImplTest {
     }
 
     @Test
-    public void deleteSuccess() throws Exception {
+    public void deleteSuccess() {
         categoryService.delete(categoryId);
         verify(categoryDAO).delete(categoryId);
     }
 
     @Test
-    public void getSuccess() throws Exception {
+    public void getSuccess() {
         category.setId(categoryId);
         when(categoryDAO.getById(categoryId)).thenReturn(category);
         assertEquals(category.getId(),
@@ -68,7 +68,7 @@ public class CategoryServiceImplTest {
     }
 
     @Test
-    public void getAllSuccess() throws Exception {
+    public void getAllSuccess() {
         categoryList.add(category);
         when(categoryDAO.getAll()).thenReturn(categoryList);
         assertEquals(categoryList,
@@ -76,7 +76,7 @@ public class CategoryServiceImplTest {
     }
 
     @Test
-    public void getAllIdNamesSuccess() throws Exception {
+    public void getAllIdNamesSuccess() {
         categoryList.add(category);
         when(categoryDAO.getAllIdNames()).thenReturn(categoryList);
         assertEquals(categoryList,
