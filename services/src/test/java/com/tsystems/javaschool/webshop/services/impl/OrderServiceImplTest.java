@@ -1,7 +1,7 @@
 package com.tsystems.javaschool.webshop.services.impl;
 
-import com.tsystems.javaschool.webshop.dao.api.OrderDAO;
-import com.tsystems.javaschool.webshop.dao.entities.Order;
+import com.tsystems.javaschool.webshop.dao.api.*;
+import com.tsystems.javaschool.webshop.dao.entities.*;
 import com.tsystems.javaschool.webshop.dao.entities.enums.OrderStatus;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,40 +20,109 @@ import static org.mockito.Mockito.*;
 public class OrderServiceImplTest {
 
     private OrderServiceImpl orderService;
-    private int orderId;
-    private Order order;
+    private List<Payment> payments;
+    private List<Shipping> shippings;
     private List<Order> orderList;
+    private Payment payment;
+    private Shipping shipping;
+
+    @Mock
+    private PaymentDAO paymentDAO;
+
+    @Mock
+    private ShippingDAO shippingDAO;
 
     @Mock
     private OrderDAO orderDAO;
 
+    @Mock
+    private CartDAO cartDAO;
+
+    @Mock
+    private ProductDAO productDAO;
+
+    private Order order;
+    private Cart cart;
+    private int cartId;
+    private int productId;
+    private int paymentId;
+    private int shippingId;
+    private int orderId;
+    private CartProduct item;
+    private Product product;
+
     @Before
     public void setUp() {
-        orderId = 1;
-        order = new Order();
+
+        cartId = 1;
+        productId = 2;
+        paymentId = 3;
+        shippingId = 4;
+        orderId = 5;
+        payments = new ArrayList<>();
+        shippings = new ArrayList<>();
         orderList = new ArrayList<>();
+
+        payment = new Payment();
+        payment.setId(paymentId);
+        shipping = new Shipping();
+        shipping.setCost(100);
+        shipping.setId(shippingId);
+
+        order = new Order();
+        order.setPayment(payment);
+        order.setShipping(shipping);
+
+        cart = new Cart();
+        cart.setId(cartId);
+        cart.setSummary(100500);
+
+        product = new Product();
+        product.setPrice(100);
+        product.setStock(10);
+
+        item = new CartProduct();
+        item.setProductId(productId);
+        item.setCartId(cartId);
+        item.setCart(cart);
+        item.setQuantity(10);
+        item.setProduct(product);
+
 
         MockitoAnnotations.initMocks(this);
         orderService = new OrderServiceImpl();
+        orderService.setCartDAO(cartDAO);
         orderService.setOrderDAO(orderDAO);
+        orderService.setPaymentDAO(paymentDAO);
+        orderService.setShippingDAO(shippingDAO);
+        orderService.setProductDAO(productDAO);
     }
 
     @Test
-    public void addSuccess() {
-        orderService.add(order);
+    public void getPaymentTypesSuccess() {
+        when(paymentDAO.getAll()).thenReturn(payments);
+        assertEquals(orderService.getPaymentTypes(), payments);
+    }
+
+    @Test
+    public void getShippingTypesSuccess() {
+        when(shippingDAO.getAll()).thenReturn(shippings);
+        assertEquals(orderService.getShippingTypes(), shippings);
+    }
+
+    @Test
+    public void createOrderSuccess() {
+        when(shippingDAO.getById(shippingId)).thenReturn(shipping);
+        when(paymentDAO.getById(paymentId)).thenReturn(payment);
+        cart.getItems().add(item);
+
+
+        orderService.createOrder(order, cart);
         verify(orderDAO).create(order);
-    }
-
-    @Test
-    public void updateSuccess() {
-        orderService.update(order);
-        verify(orderDAO).update(order);
-    }
-
-    @Test
-    public void deleteSuccess() {
-        orderService.delete(orderId);
-        verify(orderDAO).delete(orderId);
+        verify(cartDAO).delete(cart.getId());
+        verify(productDAO).update(product);
+        assertEquals(order.getTotal(), cart.getSummary() + shipping.getCost());
+        assertEquals(order.getProducts().size(), 1);
     }
 
     @Test
@@ -87,4 +156,5 @@ public class OrderServiceImplTest {
         assertEquals(orderList,
                 orderService.getAllByUser(userId));
     }
+    
 }

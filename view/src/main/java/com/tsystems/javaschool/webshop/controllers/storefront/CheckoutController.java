@@ -2,7 +2,7 @@ package com.tsystems.javaschool.webshop.controllers.storefront;
 
 import com.tsystems.javaschool.webshop.dao.entities.*;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
-import com.tsystems.javaschool.webshop.services.api.CheckoutService;
+import com.tsystems.javaschool.webshop.services.api.OrderService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class CheckoutController {
      * The Checkout service.
      */
     @Autowired
-    private CheckoutService checkoutService;
+    private OrderService checkoutService;
     /**
      * The Account service.
      */

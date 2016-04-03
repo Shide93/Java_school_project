@@ -2,7 +2,6 @@ package com.tsystems.javaschool.webshop.dao.impl;
 
 
 import com.tsystems.javaschool.webshop.dao.api.ProductDAO;
-import com.tsystems.javaschool.webshop.dao.entities.Feature;
 import com.tsystems.javaschool.webshop.dao.entities.Product;
 import com.tsystems.javaschool.webshop.dao.entities.ProductFeature;
 import org.apache.log4j.LogManager;
@@ -10,9 +9,12 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -28,56 +30,20 @@ public class ProductDAOImpl extends AbstractGenericDAO<Product>
      */
     private static final Logger LOGGER =
             LogManager.getLogger(ProductDAOImpl.class);
-//    @Override
-    public final List<Product> findByFeaturesOld(
-            final Map<Integer, List<String>> featureValues) {
-        StringBuilder queryString = new StringBuilder();
-        queryString.append("select p from Product p ");
-        queryString.append("inner join p.features f where f.id in ");
-        queryString.append("(select pf.id from ProductFeature pf where ");
 
-        Iterator<Map.Entry<Integer, List<String>>> entries =
-                featureValues.entrySet().iterator();
-        while (entries.hasNext()) {
-            Map.Entry<Integer, List<String>> fValue = entries.next();
-
-            queryString.append("(pf.featureId = ");
-            queryString.append(fValue.getKey());
-            queryString.append(" and (");
-            List<String> values = fValue.getValue();
-            for (int i = 0; i < values.size(); i++) {
-                if (i != 0) {
-                    queryString.append(" or ");
-                }
-                queryString.append("pf.value = '");
-                queryString.append(values.get(i));
-                queryString.append("'");
-            }
-            queryString.append(")) ");
-            if (entries.hasNext()) {
-                queryString.append("or ");
-            }
-        }
-        queryString.append(") group by p.id having count(p) = ");
-        queryString.append(featureValues.size());
-
-        TypedQuery<Product> query =
-            manager.createQuery(queryString.toString(), Product.class);
-        return query.getResultList();
-    }
-
-    //criteria
     @Override
     public final List<Product> findByFeatures(
             final Map<Integer, List<String>> featureValues) {
         CriteriaBuilder builder = manager.getCriteriaBuilder();
-        CriteriaQuery<Product> criteriaQuery = builder.createQuery(Product.class);
+        CriteriaQuery<Product> criteriaQuery =
+                builder.createQuery(Product.class);
         Root<Product> product = criteriaQuery.from(Product.class);
-        Path<ProductFeature> feature = product.join("features"); //for IN with subQuery
+        Path<ProductFeature> feature = product.join("features");
         CriteriaQuery<Product> select = criteriaQuery.select(product);
 
         Predicate featurePredicate = builder.disjunction();
-        for (final Map.Entry<Integer, List<String>> fValue : featureValues.entrySet()) {
+        for (final Map.Entry<Integer, List<String>> fValue
+                : featureValues.entrySet()) {
             Predicate equalFeatureId =
                     builder.equal(feature.get("featureId"),
                             fValue.getKey());
@@ -95,7 +61,8 @@ public class ProductDAOImpl extends AbstractGenericDAO<Product>
         }
         select.where(featurePredicate);
         select.groupBy(product.get("id"));
-        select.having(builder.equal(builder.count(product), featureValues.size()));
+        select.having(builder.equal(builder.count(product),
+                featureValues.size()));
 
         TypedQuery<Product> query =
                 manager.createQuery(criteriaQuery);

@@ -30,11 +30,9 @@
             <div class="container">
 
                 <div class="row">
-                    <!--Адаптивный блок aside-->
                     <aside class="col-lg-3">
                         <jsp:invoke fragment="sidebar"/>
                     </aside>
-                    <!--Адаптивный блок article-->
                     <article class="col-lg-9">
                         <jsp:invoke fragment="content"/>
                     </article>

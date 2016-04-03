@@ -73,6 +73,8 @@ public class CartServiceImplTest {
 
 
         product.setStock(10);
+        product.setPrice(1000);
+        item.setProduct(product);
 
         when(productDAO.getById(productId)).thenReturn(product);
 
@@ -87,7 +89,7 @@ public class CartServiceImplTest {
 
     @Test(expected = OutOfStockException.class)
     public void addToCartOutOfStockFail() throws ExistsInCartException, OutOfStockException {
-
+        product.setStock(0);
         when(productDAO.getById(productId)).thenReturn(product);
 
         cartService.addToCart(item);
@@ -116,6 +118,8 @@ public class CartServiceImplTest {
         newItem.setCartId(cartId);
         newItem.setCart(cart);
         newItem.setQuantity(3);
+        product.setPrice(1000);
+        newItem.setProduct(product);
 
         when(productDAO.getById(productId)).thenReturn(product);
 

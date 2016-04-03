@@ -36,6 +36,7 @@ public class StatisticsServiceImplTest {
     private int topCount;
     private List<User> topUsers;
     private List<Product> topProducts;
+    private Product product;
 
     @Before
     public void setUp() {
@@ -45,9 +46,12 @@ public class StatisticsServiceImplTest {
 
         topUsers = new ArrayList<>();
         topProducts = new ArrayList<>();
+        product = new Product();
+        product.setPrice(100);
+        product.setStock(10);
         for (int i = 0; i < topCount; i++) {
             topUsers.add(new User());
-            topProducts.add(new Product());
+            topProducts.add(product);
         }
 
         MockitoAnnotations.initMocks(this);
