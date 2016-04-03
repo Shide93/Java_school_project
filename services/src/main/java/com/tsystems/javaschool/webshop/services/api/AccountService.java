@@ -15,6 +15,16 @@ import java.util.List;
 public interface AccountService {
 
     /**
+     * Sign up user user.
+     *
+     * @param user the user
+     * @return the user
+     * @throws AccountServiceException the account service exception
+     */
+    User signUpUser(User user)
+            throws AccountServiceException;
+
+    /**
      * Saves user profile.
      *
      * @param user user with new values

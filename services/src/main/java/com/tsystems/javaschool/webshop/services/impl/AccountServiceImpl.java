@@ -66,6 +66,19 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
     }
 
     @Override
+    public final User signUpUser(final User user)
+            throws AccountServiceException {
+
+        if (usersDAO.getUserByEmail(user.getEmail()) != null) {
+            throw new AccountServiceException("email already registered");
+        }
+        //hash password
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        usersDAO.create(user);
+        return user;
+    }
+
+    @Override
     public final User saveProfile(final User user)
             throws AccountServiceException {
         usersDAO.update(user);

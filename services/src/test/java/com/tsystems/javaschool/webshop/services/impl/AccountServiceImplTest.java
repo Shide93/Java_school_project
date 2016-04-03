@@ -54,6 +54,27 @@ public class AccountServiceImplTest {
     }
 
     @Test
+    public void signUpUserSuccess() {
+        user.setEmail(email);
+        user.setPassword(password);
+        when(usersDAO.getUserByEmail(email)).thenReturn(null);
+        when(passwordEncoder.encode(password)).thenReturn(password);
+
+        User result = accountService.signUpUser(user);
+        verify(usersDAO).create(user);
+        assertEquals(result, user);
+    }
+
+    @Test(expected = AccountServiceException.class)
+    public void signUpUserEmailExistsFail() {
+        user.setEmail(email);
+        user.setPassword(password);
+        when(usersDAO.getUserByEmail(email)).thenReturn(user);
+
+        accountService.signUpUser(user);
+    }
+
+    @Test
     public void getUserByEmailSuccess() {
         when(usersDAO.getUserByEmail(email)).thenReturn(user);
         assertEquals(accountService.getUserByEmail(email), user);
@@ -77,7 +98,7 @@ public class AccountServiceImplTest {
 
         User savedUser = accountService.saveCredentials(credentials, email);
         verify(usersDAO).update(user);
-        assergitEquals(savedUser, user);
+        assertEquals(savedUser, user);
     }
 
     @Test
@@ -96,41 +117,3 @@ public class AccountServiceImplTest {
         assertEquals(user.getRole(), UserRole.ROLE_ADMIN);
     }
 }
-//    @Test
-//    public void signUpUserSuccess() {
-//        user.setEmail(email);
-//        user.setPassword(password);
-//        when(usersDAO.getUserByEmail(email)).thenReturn(null);
-//        when(passwordEncoder.encode(password)).thenReturn(password);
-//
-//        User result = accountService.signUpUser(user);
-//        verify(usersDAO).create(user);
-//        assertEquals(result, user);
-//    }
-//
-//    @Test(expected = AccountServiceException.class)
-//    public void signUpUserEmailExistsFail() {
-//        user.setEmail(email);
-//        user.setPassword(password);
-//        when(usersDAO.getUserByEmail(email)).thenReturn(user);
-//
-//        accountService.signUpUser(user);
-//    }
-//
-//    @Test
-//    public void signInUserSuccess() {
-//        user.setEmail(email);
-//        user.setPassword(password);
-//        when(usersDAO.getUserByEmail(email)).thenReturn(user);
-//
-//        accountService.signInUser(email, password);
-//    }
-//
-//    @Test(expected = AccountServiceException.class)
-//    public void signInUserNotExistsFail() {
-//        user.setEmail(email);
-//        user.setPassword(password);
-//        when(usersDAO.getUserByEmail(email)).thenReturn(user);
-//
-//        accountService.signInUser(email, password);
-//    }
