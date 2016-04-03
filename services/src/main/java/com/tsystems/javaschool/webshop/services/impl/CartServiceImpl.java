@@ -8,14 +8,11 @@ import com.tsystems.javaschool.webshop.dao.entities.Product;
 import com.tsystems.javaschool.webshop.services.api.CartService;
 import com.tsystems.javaschool.webshop.services.exceptions.ExistsInCartException;
 import com.tsystems.javaschool.webshop.services.exceptions.OutOfStockException;
-import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * The type Cart service.
@@ -46,24 +43,10 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public final void update(final Cart cart) {
-        cartDAO.update(cart);
-    }
-
-    @Override
-    public final void delete(final Integer cartId) {
-        cartDAO.delete(cartId);
-    }
-
-    @Override
     public final Cart get(final int cartId) {
         return cartDAO.getById(cartId);
     }
 
-    @Override
-    public final List<Cart> getAll() {
-        return cartDAO.getAll();
-    }
 
     @Override
     public final Cart addToCart(final CartProduct item)
@@ -94,7 +77,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public final Cart editCartProduct(final CartProduct item) throws OutOfStockException {
+    public final Cart editCartProduct(final CartProduct item)
+            throws OutOfStockException {
 
         Cart cart = item.getCart();
         Product product = productDAO.getById(item.getProductId());
@@ -143,6 +127,24 @@ public class CartServiceImpl implements CartService {
         }
         cart.setCount(count);
         cart.setSummary(summary);
+    }
+
+    /**
+     * Sets cart dao.
+     *
+     * @param dao injecting dao
+     */
+    public final void setCartDAO(final CartDAO dao) {
+        this.cartDAO = dao;
+    }
+
+    /**
+     * Sets product dao.
+     *
+     * @param dao injecting dao
+     */
+    public final void setProductDAO(final ProductDAO dao) {
+        this.productDAO = dao;
     }
 }
 

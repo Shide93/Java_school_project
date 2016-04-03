@@ -61,39 +61,6 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public final User signUpUser(final User user)
-            throws AccountServiceException {
-
-            if (usersDAO.getUserByEmail(user.getEmail()) != null) {
-                throw new AccountServiceException("email already registered");
-            }
-            //hash password
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            usersDAO.create(user);
-            return user;
-    }
-
-
-    @Override
-    public final User signInUser(final String email,
-                                 final String password)
-            throws AccountServiceException {
-
-        User user = usersDAO.getUserByEmail(email);
-
-        if (user == null
-                || passwordEncoder.matches(password, user.getPassword())) {
-            throw new AccountServiceException(
-                    "Wrong password or email");
-        }
-        return user;
-    }
-    @Override
-    public final User getUser(final int userID) {
-        return usersDAO.getById(userID);
-    }
-
-    @Override
     public final User getUserByEmail(final String email) {
         return usersDAO.getUserByEmail(email);
     }
@@ -117,7 +84,7 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
         user.setEmail(credentials.getEmail());
         user.setPassword(passwordEncoder.encode(credentials.getPassword()));
         usersDAO.update(user);
-        return credentials;
+        return user;
     }
 
     @Override
@@ -171,5 +138,34 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
                 authenticationManager.authenticate(token);
         //LOGGER.debug("Logging in with " + authentication.getPrincipal());
         SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    /**
+     * Sets users dao.
+     *
+     * @param dao the dao
+     */
+    public final void setUsersDAO(final UsersDAO dao) {
+        this.usersDAO = dao;
+    }
+
+    /**
+     * Sets authentication manager.
+     *
+     * @param manager the manager
+     */
+    public final void setAuthenticationManager(
+            final AuthenticationManager manager) {
+        this.authenticationManager = manager;
+    }
+
+    /**
+     * Sets password encoder.
+     *
+     * @param encoder the encoder
+     */
+    public final void setPasswordEncoder(
+            final PasswordEncoder encoder) {
+        this.passwordEncoder = encoder;
     }
 }

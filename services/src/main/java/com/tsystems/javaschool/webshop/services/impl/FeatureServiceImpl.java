@@ -33,7 +33,6 @@ public class FeatureServiceImpl implements FeatureService {
 
     @Override
     public final void add(final Feature feature) {
-
         featureDAO.create(feature);
     }
 
@@ -44,7 +43,6 @@ public class FeatureServiceImpl implements FeatureService {
 
     @Override
     public final void delete(final Integer featureId) {
-
         featureDAO.delete(featureId);
 
     }
@@ -60,5 +58,14 @@ public class FeatureServiceImpl implements FeatureService {
     @Override
     public final List<ProductFeature> getAllCategoryValues() {
         return featureDAO.getAllValues();
+    }
+
+    /**
+     * Sets feature dao.
+     *
+     * @param featureDAO the feature dao
+     */
+    public final void setFeatureDAO(final FeatureDAO featureDAO) {
+        this.featureDAO = featureDAO;
     }
 }

@@ -36,7 +36,7 @@ public class CartProduct {
     /**
      * The Quantity.
      */
-    private Integer quantity;
+    private int quantity;
     /**
      * The Cart.
      */
@@ -93,7 +93,7 @@ public class CartProduct {
      */
     @Basic
     @Column(name = "quantity")
-    public Integer getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
@@ -102,7 +102,7 @@ public class CartProduct {
      *
      * @param quantity the quantity
      */
-    public void setQuantity(final Integer quantity) {
+    public void setQuantity(final int quantity) {
         this.quantity = quantity;
     }
 

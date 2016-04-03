@@ -94,9 +94,11 @@ public class StatisticsServiceImpl implements StatisticsService {
             report.getTopUsers().add(new UserDTO(user));
         }
 
-        for (Product product : productDAO.topProducts(topProductsCount, dateFrom)) {
+        for (Product product
+                : productDAO.topProducts(topProductsCount, dateFrom)) {
             ProductDTO productDTO = new ProductDTO(product);
-            productDTO.setTotalSales(productDAO.getProductSales(product.getId(), dateFrom));
+            productDTO.setTotalSales(productDAO
+                    .getProductSales(product.getId(), dateFrom));
             report.getTopProducts().add(productDTO);
         }
 
@@ -126,5 +128,32 @@ public class StatisticsServiceImpl implements StatisticsService {
             default:
                 return -1;
         }
+    }
+
+    /**
+     * Sets order dao.
+     *
+     * @param dao the dao
+     */
+    public final void setOrderDAO(final OrderDAO dao) {
+        this.orderDAO = dao;
+    }
+
+    /**
+     * Sets product dao.
+     *
+     * @param dao the dao
+     */
+    public final void setProductDAO(final ProductDAO dao) {
+        this.productDAO = dao;
+    }
+
+    /**
+     * Sets users dao.
+     *
+     * @param dao the dao
+     */
+    public final void setUsersDAO(final UsersDAO dao) {
+        this.usersDAO = dao;
     }
 }

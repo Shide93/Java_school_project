@@ -4,12 +4,26 @@ import com.tsystems.javaschool.webshop.dao.entities.Cart;
 import com.tsystems.javaschool.webshop.dao.entities.CartProduct;
 import com.tsystems.javaschool.webshop.services.exceptions.ExistsInCartException;
 import com.tsystems.javaschool.webshop.services.exceptions.OutOfStockException;
-import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 
 /**
  * The interface Cart service.
  */
-public interface CartService extends GenericService<Cart> {
+public interface CartService {
+    /**
+     * Add cart.
+     *
+     * @param cart the cart
+     */
+    void add(Cart cart);
+
+    /**
+     * Get cart.
+     *
+     * @param cartId the cart id
+     * @return the cart
+     */
+    Cart get(int cartId);
+
     /**
      * Method adds product with it's quantity to cart.
      * <p>

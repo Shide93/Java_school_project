@@ -31,13 +31,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public final void add(final Category category) {
-
         categoryDAO.create(category);
     }
 
     @Override
     public final void update(final Category category) {
-
         Category persistedCategory =
                 categoryDAO.getById(category.getId());
         persistedCategory.setName(category.getName());
@@ -52,21 +50,27 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public final Category get(final int categoryId) {
-
         return categoryDAO.getById(categoryId);
     }
 
     @Override
     public final List<Category> getAll() {
-
         return categoryDAO.getAll();
     }
 
     @Override
     public final List<Category> getAllIdNames() {
-
         return categoryDAO.getAllIdNames();
     }
 
+
+    /**
+     * Sets category dao.
+     *
+     * @param categoryDAO the category dao
+     */
+    public final void setCategoryDAO(final CategoryDAO categoryDAO) {
+        this.categoryDAO = categoryDAO;
+    }
 }
 

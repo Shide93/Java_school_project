@@ -51,11 +51,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public final void add(final Product product) {
-
-
-
         productDAO.create(product);
-
     }
 
     @Override
@@ -64,7 +60,9 @@ public class ProductServiceImpl implements ProductService {
         Category category =
                 categoryDAO.getById(product.getCategory().getId());
         product.setCategory(category);
-       Iterator<ProductFeature> iterator = product.getFeatures().iterator();
+
+        //removes productFeatures with null or empty value
+        Iterator<ProductFeature> iterator = product.getFeatures().iterator();
         while (iterator.hasNext()) {
             ProductFeature productFeature = iterator.next();
             if (productFeature.getValue() == null
@@ -73,39 +71,21 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         productDAO.update(product);
-
     }
 
     @Override
     public final void delete(final Integer productId) {
-
         productDAO.delete(productId);
-
     }
 
     @Override
     public final Product get(final int productId) {
-
-
         return productDAO.getById(productId);
-
-
-
     }
 
     @Override
     public final List<Product> getAll() {
-
-
         return productDAO.getAll();
-    }
-
-    @Override
-    public final List<Product> searchProducts(final String searchQuery) {
-
-
-        return null;
-
     }
 
     @Override
@@ -156,5 +136,32 @@ public class ProductServiceImpl implements ProductService {
         product.getFeatures().add(productFeature);
         productDAO.update(product);
         return product;
+    }
+
+    /**
+     * Sets product dao.
+     *
+     * @param dao injecting dao
+     */
+    public final void setProductDAO(final ProductDAO dao) {
+        this.productDAO = dao;
+    }
+
+    /**
+     * Sets category dao.
+     *
+     * @param dao injecting dao
+     */
+    public final void setCategoryDAO(final CategoryDAO dao) {
+        this.categoryDAO = dao;
+    }
+
+    /**
+     * Sets feature dao.
+     *
+     * @param dao injecting dao
+     */
+    public final void setFeatureDAO(final FeatureDAO dao) {
+        this.featureDAO = dao;
     }
 }

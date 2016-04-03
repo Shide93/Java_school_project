@@ -15,42 +15,13 @@ import java.util.List;
 public interface AccountService {
 
     /**
-     * Signs up user in shop.
-     *
-     * @param user new user
-     * @return user id
-     * @throws AccountServiceException if email already registered
-     */
-    User signUpUser(User user)
-            throws AccountServiceException;
-
-    /**
-     * Sign in user to shop.
-     *
-     * @param email    user email
-     * @param password user password
-     * @return user object if found
-     * @throws AccountServiceException if password wrong or user not found
-     */
-    User signInUser(String email, String password)
-            throws AccountServiceException;
-
-    /**
-     * Returns user or null if not exists.
-     *
-     * @param userID user id
-     * @return user object
-     */
-    User getUser(int userID);
-
-    /**
      * Saves user profile.
      *
      * @param user user with new values
      * @return user that saved to db
      * @throws AccountServiceException the account service exception
      */
-    User saveProfile(User user)  throws AccountServiceException;
+    User saveProfile(User user) throws AccountServiceException;
 
     /**
      * Save credentials user.

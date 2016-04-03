@@ -66,4 +66,13 @@ public class OrderServiceImpl implements OrderService {
     public final List<Order> getAllByUser(final int userId) {
        return orderDAO.getByUser(userId);
     }
+
+    /**
+     * Sets order dao.
+     *
+     * @param dao injecting dao
+     */
+    public final void setOrderDAO(final OrderDAO dao) {
+        this.orderDAO = dao;
+    }
 }

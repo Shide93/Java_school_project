@@ -55,7 +55,6 @@ public class CheckoutServiceImpl implements CheckoutService {
 
     @Override
     public final List<Payment> getPaymentTypes() {
-
         return paymentDAO.getAll();
     }
 
@@ -89,5 +88,41 @@ public class CheckoutServiceImpl implements CheckoutService {
         order.setProducts(orderItems);
 
         cartDAO.delete(cart.getId());
+    }
+
+    /**
+     * Sets payment dao.
+     *
+     * @param dao injecting dao
+     */
+    public final void setPaymentDAO(final PaymentDAO dao) {
+        this.paymentDAO = dao;
+    }
+
+    /**
+     * Sets shipping dao.
+     *
+     * @param dao injecting dao
+     */
+    public final void setShippingDAO(final ShippingDAO dao) {
+        this.shippingDAO = dao;
+    }
+
+    /**
+     * Sets order dao.
+     *
+     * @param dao injecting dao
+     */
+    public final void setOrderDAO(final OrderDAO dao) {
+        this.orderDAO = dao;
+    }
+
+    /**
+     * Sets cart dao.
+     *
+     * @param dao injecting dao
+     */
+    public final void setCartDAO(final CartDAO dao) {
+        this.cartDAO = dao;
     }
 }

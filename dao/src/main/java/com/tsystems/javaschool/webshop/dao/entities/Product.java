@@ -48,7 +48,7 @@ public class Product {
     /**
      * The Stock.
      */
-    private Integer stock;
+    private int stock;
     /**
      * The Description.
      */
@@ -137,7 +137,7 @@ public class Product {
      */
     @Basic
     @Column(name = "stock")
-    public Integer getStock() {
+    public int getStock() {
         return stock;
     }
 
@@ -146,7 +146,7 @@ public class Product {
      *
      * @param stock the stock
      */
-    public void setStock(final Integer stock) {
+    public void setStock(final int stock) {
         this.stock = stock;
     }
 
