@@ -32,13 +32,6 @@ import java.util.List;
 @Service(value = "userDetailsService")
 @Transactional
 public class AccountServiceImpl implements AccountService, UserDetailsService {
-
-    /**
-     * The constant LOGGER.
-     */
-    private static final Logger LOGGER =
-            LogManager.getLogger(AccountService.class);
-
     /**
      * The Users dao.
      */

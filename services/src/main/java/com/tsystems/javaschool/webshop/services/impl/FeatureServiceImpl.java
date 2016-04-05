@@ -20,11 +20,6 @@ import java.util.List;
 @Transactional
 public class FeatureServiceImpl implements FeatureService {
 
-    /**
-     * The constant LOGGER.
-     */
-    private static final Logger LOGGER =
-            LogManager.getLogger(FeatureServiceImpl.class);
 
     /**
      * The Feature dao.

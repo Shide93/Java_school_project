@@ -30,7 +30,7 @@ public class Cart {
     /**
      * The interface for JsonView.
      */
-    public interface JSONCart { };
+    public interface JSONCart { }
 
     /**
      * The Id in table.

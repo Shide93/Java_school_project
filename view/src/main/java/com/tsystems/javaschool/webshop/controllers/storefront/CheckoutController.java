@@ -27,11 +27,6 @@ import java.util.List;
 public class CheckoutController {
 
     /**
-     * The constant LOGGER.
-     */
-    private static final Logger LOGGER =
-            LogManager.getLogger(CheckoutController.class);
-    /**
      * The Checkout service.
      */
     @Autowired

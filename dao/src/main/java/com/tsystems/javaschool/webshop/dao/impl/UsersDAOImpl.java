@@ -32,6 +32,7 @@ public class UsersDAOImpl extends AbstractGenericDAO<User>
             /*because in SingUp I need check
             that there is no user with this email
             and I expect that there will be no result*/
+            LOGGER.warn(e);
             return null;
         }
     }

@@ -17,12 +17,6 @@ import javax.persistence.Query;
 public class CartDAOImpl extends AbstractGenericDAO<Cart>
         implements CartDAO {
 
-    /**
-     * The constant LOGGER.
-     */
-    private static final Logger LOGGER =
-            LogManager.getLogger(CartDAOImpl.class);
-
 
     @Override
     public final void removeFromCart(final CartProduct cartProduct)

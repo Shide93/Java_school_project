@@ -22,11 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class CartServiceImpl implements CartService {
 
     /**
-     * The constant LOGGER.
-     */
-    private static final Logger LOGGER =
-            LogManager.getLogger(CartServiceImpl.class);
-    /**
      * The Cart dao.
      */
     @Autowired

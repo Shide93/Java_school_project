@@ -12,9 +12,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class PaymentDAOImpl extends AbstractGenericDAO<Payment>
         implements PaymentDAO {
-    /**
-     * The constant LOGGER.
-     */
-    private static final Logger LOGGER =
-            LogManager.getLogger(CartDAOImpl.class);
 }

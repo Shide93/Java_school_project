@@ -4,6 +4,8 @@ import com.tsystems.javaschool.webshop.dao.entities.User;
 import com.tsystems.javaschool.webshop.dao.entities.enums.UserRole;
 import com.tsystems.javaschool.webshop.services.api.AccountService;
 import com.tsystems.javaschool.webshop.services.exceptions.AccountServiceException;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,6 +32,11 @@ import javax.validation.Valid;
 @Controller
 public class SignUpController {
 
+    /**
+     * The constant LOGGER.
+     */
+    private static final Logger LOGGER =
+            LogManager.getLogger(SignUpController.class);
     /**
      * The Validator.
      */
@@ -100,13 +107,12 @@ public class SignUpController {
                     new WebAuthenticationDetails(request));
         } catch (AccountServiceException e) {
             bindingResult.rejectValue("email", "email.exists");
-            //TODO: log and handle exception
+            LOGGER.warn(e);
             return "signup";
         } catch (AuthenticationException e) {
-            //TODO: log and handle exception
+            LOGGER.warn(e);
             return "redirect:/signin?signup=success";
         }
-
         return "redirect:/";
     }
 

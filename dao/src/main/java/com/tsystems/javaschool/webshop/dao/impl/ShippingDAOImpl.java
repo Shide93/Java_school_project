@@ -12,10 +12,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ShippingDAOImpl extends AbstractGenericDAO<Shipping>
         implements ShippingDAO {
-    /**
-     * The constant LOGGER.
-     */
-    private static final Logger LOGGER =
-            LogManager.getLogger(CartDAOImpl.class);
 }
 

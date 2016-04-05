@@ -96,18 +96,17 @@ public class BackendFeaturesController {
      * Remove feature string.
      *
      * @param id    the id
-     * @param model the model
      * @return the string
      */
     @RequestMapping(value = BACKEND_FEATURES_PAGE, params = REMOVE_ACTION,
             method = RequestMethod.POST)
     @ResponseBody
-    public String removeFeature(@RequestParam final int id,
-                                final Model model) {
+    public String removeFeature(@RequestParam final int id) {
 
         try {
             featureService.delete(id);
         } catch (ServiceException e) {
+            LOGGER.error(e);
             return "{ \"removeFailed\" : \"Can't remove feature: it is already assigned to product.\" }";
         }
         return "{ \"id\" : \"" + id + "\" }";

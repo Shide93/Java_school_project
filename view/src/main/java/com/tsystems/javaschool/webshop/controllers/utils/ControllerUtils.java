@@ -29,7 +29,7 @@ public final class ControllerUtils {
     /**
      * The constant TOKEN_EXPIRATION_TIME.
      */
-    public static final long TOKEN_EXPIRATION_TIME = 5 * 60 * 1000;
+    public static final long TOKEN_EXPIRATION_TIME = 5 * 60 * 1000L;
 
     /**
      * Creates a cookie with specified name and value

@@ -110,12 +110,11 @@ public class BackendProductController {
     /**
      * Create product string.
      *
-     * @param model the model
      * @return the string
      */
     @RequestMapping(path = BACKEND_PRODUCT_PAGE,
             params = ADD_ACTION, method = RequestMethod.POST)
-    public final String createProduct(final Model model) {
+    public final String createProduct() {
         Product product = new Product();
         product.setName("New product");
         product.setPrice(0);
@@ -147,14 +146,12 @@ public class BackendProductController {
      *
      * @param id                 the id
      * @param redirectAttributes the redirect attributes
-     * @param model              the model
      * @return the string
      */
     @RequestMapping(path = BACKEND_PRODUCT_PAGE,
             params = REMOVE_ACTION, method = RequestMethod.POST)
     public final String removeProduct(@RequestParam final int id,
-                                      final RedirectAttributes redirectAttributes,
-                                      final Model model) {
+                                      final RedirectAttributes redirectAttributes) {
         try {
             productService.delete(id);
         } catch (ServiceException e) {

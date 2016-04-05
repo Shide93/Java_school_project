@@ -87,8 +87,7 @@ public class BackendCategoryController {
             params = SAVE_ACTION, method = RequestMethod.POST)
     public final String saveProduct(@ModelAttribute(value = SELECTED_CATEGORY)
                                     @Valid final Category category,
-                                    final BindingResult bindingResult,
-                                    final Model model) {
+                                    final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return BACKEND_CATEGORY_PAGE;
         }

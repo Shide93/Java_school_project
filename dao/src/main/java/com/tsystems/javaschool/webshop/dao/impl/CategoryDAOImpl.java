@@ -16,11 +16,6 @@ import java.util.List;
 public class CategoryDAOImpl  extends AbstractGenericDAO<Category>
         implements CategoryDAO {
 
-    /**
-     * The constant LOGGER.
-     */
-    private static final Logger LOGGER =
-            LogManager.getLogger(CategoryDAOImpl.class);
 
     @Override
     public final List<Category> getAllIdNames() {

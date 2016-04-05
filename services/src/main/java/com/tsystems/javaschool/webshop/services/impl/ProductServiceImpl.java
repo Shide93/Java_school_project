@@ -29,11 +29,6 @@ import java.util.Map;
 public class ProductServiceImpl implements ProductService {
 
     /**
-     * The constant LOGGER.
-     */
-    private static final Logger LOGGER =
-            LogManager.getLogger(ProductServiceImpl.class);
-    /**
      * The Product dao.
      */
     @Autowired

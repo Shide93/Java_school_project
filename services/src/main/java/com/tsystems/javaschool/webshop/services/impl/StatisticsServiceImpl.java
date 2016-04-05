@@ -29,11 +29,6 @@ import java.util.*;
 @Transactional
 public class StatisticsServiceImpl implements StatisticsService {
     /**
-     * The constant LOGGER.
-     */
-    private static final Logger LOGGER =
-            LogManager.getLogger(AccountService.class);
-    /**
      * The Order dao.
      */
     @Autowired

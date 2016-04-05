@@ -11,8 +11,22 @@ import org.springframework.validation.Validator;
  */
 @Component(value = "passwordValidator")
 public class PasswordValidator implements Validator {
+    /**
+     * The constant MIN_PASS_LENGTH.
+     */
     public static final int MIN_PASS_LENGTH = 8;
+    /**
+     * The constant MAX_PASS_LENGTH.
+     */
     public static final int MAX_PASS_LENGTH = 20;
+    /**
+     * The constant PASSWORD.
+     */
+    public static final String PASSWORD = "password";
+    /**
+     * The constant CONFIRM_PASSWORD.
+     */
+    public static final String CONFIRM_PASSWORD = "confirmPassword";
 
     @Override
     public final boolean supports(final Class<?> clazz) {
@@ -22,9 +36,9 @@ public class PasswordValidator implements Validator {
     @Override
     public final void validate(final Object target, final Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,
-                "password", "password.required");
+                PASSWORD, "password.required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,
-                "confirmPassword", "passwordConfirm.required");
+                CONFIRM_PASSWORD, "passwordConfirm.required");
         if (errors.hasErrors()) {
             return;
         }
@@ -32,11 +46,11 @@ public class PasswordValidator implements Validator {
         User user = (User) target;
         if (user.getPassword().length() < MIN_PASS_LENGTH
                 || user.getPassword().length() > MAX_PASS_LENGTH) {
-            errors.rejectValue("password", "password.wrongLength");
+            errors.rejectValue(PASSWORD, "password.wrongLength");
             return;
         }
         if (!user.getPassword().equals(user.getConfirmPassword())) {
-            errors.rejectValue("password", "password.notmatch");
+            errors.rejectValue(PASSWORD, "password.notmatch");
         }
     }
 }

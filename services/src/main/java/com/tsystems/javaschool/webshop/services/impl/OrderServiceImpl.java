@@ -32,12 +32,6 @@ import java.util.Set;
 public class OrderServiceImpl implements OrderService {
 
     /**
-     * The constant LOGGER.
-     */
-    private static final Logger LOGGER =
-            LogManager.getLogger(OrderService.class);
-
-    /**
      * The Payment dao.
      */
     @Autowired

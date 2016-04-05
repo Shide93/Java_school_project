@@ -53,21 +53,6 @@ public class UserProfileController {
     @Autowired
     private OrderService orderService;
 
-
-    /**
-     * The Sign up controller.
-     */
-    @Autowired
-    private SignUpController signUpController;
-
-
-    /**
-     * The Authentication manager.
-     */
-    @Autowired
-    @Qualifier(value = "authenticationManager")
-    private AuthenticationManager authenticationManager;
-
     /**
      * The Validator.
      */
@@ -96,6 +81,11 @@ public class UserProfileController {
         model.addAttribute("credentials", user);
     }
 
+    /**
+     * Init binder profile.
+     *
+     * @param binder the binder
+     */
     @InitBinder
     public final void initBinderProfile(final WebDataBinder binder) {
 
@@ -106,6 +96,11 @@ public class UserProfileController {
         binder.registerCustomEditor(Date.class, customDateEditor);
     }
 
+    /**
+     * Init binder credentials.
+     *
+     * @param binder the binder
+     */
     @InitBinder(value = "credentials")
     public final void initBinderCredentials(final WebDataBinder binder) {
         binder.setValidator(passwordValidator);
@@ -150,6 +145,13 @@ public class UserProfileController {
         return "redirect:/profile";
     }
 
+    /**
+     * Gets credentials page.
+     *
+     * @param model     the model
+     * @param principal the principal
+     * @return the credentials page
+     */
     @RequestMapping(value = "/profile/credentials",
             method = RequestMethod.GET)
     public String getCredentialsPage(final Model model,
@@ -160,6 +162,16 @@ public class UserProfileController {
         return "credentials";
     }
 
+    /**
+     * Save credentials string.
+     *
+     * @param credentials   the credentials
+     * @param bindingResult the binding result
+     * @param model         the model
+     * @param principal     the principal
+     * @param request       the request
+     * @return the string
+     */
     @RequestMapping(value = "/profile/credentials",
             method = RequestMethod.POST)
     public String saveCredentials(@ModelAttribute(value = "credentials")
@@ -178,7 +190,7 @@ public class UserProfileController {
                     new WebAuthenticationDetails(request));
         } catch (AccountServiceException e) {
             bindingResult.rejectValue("email", "email.exists");
-            //TODO: log and handle exception
+           LOGGER.error(e);
             return "credentials";
         } catch (AuthenticationException e) {
             LOGGER.error("Failure in autoLogin", e);
@@ -187,6 +199,13 @@ public class UserProfileController {
         return "redirect:/profile/credentials";
     }
 
+    /**
+     * Gets user orders page.
+     *
+     * @param model     the model
+     * @param principal the principal
+     * @return the user orders page
+     */
     @RequestMapping(value = "/profile/orders", method = RequestMethod.GET)
     public String getUserOrdersPage(final Model model,
                                     final Principal principal) {

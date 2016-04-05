@@ -19,12 +19,6 @@ import java.util.List;
 @Transactional
 public class CategoryServiceImpl implements CategoryService {
     /**
-     * The constant LOGGER.
-     */
-    private static final Logger LOGGER =
-            LogManager.getLogger(CategoryServiceImpl.class);
-
-    /**
      * The Category dao.
      */
     @Autowired

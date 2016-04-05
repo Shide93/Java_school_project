@@ -16,12 +16,6 @@ import java.util.List;
 @Repository
 public class FeatureDAOImpl extends AbstractGenericDAO<Feature>
         implements FeatureDAO {
-    /**
-     * The constant LOGGER.
-     */
-    private static final Logger LOGGER =
-            LogManager.getLogger(FeatureDAOImpl.class);
-
     @Override
     public final List<ProductFeature> getAllValues() {
         TypedQuery<ProductFeature> query =

@@ -25,11 +25,6 @@ import java.util.Map;
 public class ProductDAOImpl extends AbstractGenericDAO<Product>
         implements ProductDAO {
 
-    /**
-     * The constant LOGGER.
-     */
-    private static final Logger LOGGER =
-            LogManager.getLogger(ProductDAOImpl.class);
 
     @Override
     public final List<Product> findByFeatures(

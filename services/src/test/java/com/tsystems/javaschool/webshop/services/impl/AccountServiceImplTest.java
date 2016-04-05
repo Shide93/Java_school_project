@@ -102,7 +102,7 @@ public class AccountServiceImplTest {
     }
 
     @Test
-    public void getAllSuccess() throws Exception {
+    public void getAllSuccess() {
         users.add(user);
         when(usersDAO.getAll()).thenReturn(users);
         assertEquals(users,

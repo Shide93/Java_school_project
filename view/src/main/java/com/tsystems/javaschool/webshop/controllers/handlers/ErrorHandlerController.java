@@ -47,11 +47,10 @@ public class ErrorHandlerController {
     /**
      * Handle not found string.
      *
-     * @param model the model
      * @return the string
      */
     @RequestMapping(value = NOT_FOUND)
-    public final String handleNotFound(final Model model) {
+    public final String handleNotFound() {
 
         return NOT_FOUND_PAGE;
     }
@@ -59,11 +58,10 @@ public class ErrorHandlerController {
     /**
      * Handle forbidden string.
      *
-     * @param model the model
      * @return the string
      */
     @RequestMapping(value = FORBIDDEN)
-    public final String handleForbidden(final Model model) {
+    public final String handleForbidden() {
 
         return FORBIDDEN_PAGE;
     }
@@ -71,11 +69,10 @@ public class ErrorHandlerController {
     /**
      * Handle bad request string.
      *
-     * @param model the model
      * @return the string
      */
     @RequestMapping(value = BAD_REQUEST)
-    public final String handleBadRequest(final Model model) {
+    public final String handleBadRequest() {
 
         return BAD_REQUEST_PAGE;
     }
@@ -83,11 +80,10 @@ public class ErrorHandlerController {
     /**
      * Handle server error string.
      *
-     * @param model the model
      * @return the string
      */
     @RequestMapping(value = SERVER_ERROR)
-    public final String handleServerError(final Model model) {
+    public final String handleServerError() {
 
         return SERVER_ERROR_PAGE;
     }

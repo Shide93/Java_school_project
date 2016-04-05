@@ -20,11 +20,6 @@ import java.util.List;
 @Controller
 public class CategoryController {
     /**
-     * The constant LOGGER.
-     */
-    private static final Logger LOGGER =
-            LogManager.getLogger(CategoryController.class);
-    /**
      * The Category service.
      */
     @Autowired

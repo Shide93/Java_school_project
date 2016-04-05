@@ -19,12 +19,6 @@ import java.util.List;
 @Repository
 public class OrderDAOImpl extends AbstractGenericDAO<Order>
         implements OrderDAO {
-    /**
-     * The constant LOGGER.
-     */
-    private static final Logger LOGGER =
-            LogManager.getLogger(OrderDAOImpl.class);
-
     @Override
     public final List<Order> getByUser(final int userId) {
         TypedQuery<Order> q =
