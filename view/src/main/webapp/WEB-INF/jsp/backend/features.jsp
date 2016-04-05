@@ -101,8 +101,9 @@
                             function(JData) {
                                 if (JData.removeFailed) {
                                     alert(JData.removeFailed);
+                                } else {
+                                    row.remove();
                                 }
-                                row.remove();
                             }, "json");
                 });
 
