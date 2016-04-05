@@ -88,12 +88,12 @@
         </layout>
     </appender>
 
-    <category name="com.tsystems.javaschool.webshop">
-        <priority value="trace"/>
+    <logger name="com.tsystems.javaschool.webshop">
+        <level value="INFO"/>
         <appender-ref ref="LOG-WARN-ROLLING-WEBSHOP"/>
         <appender-ref ref="LOG-INFO-ROLLING-WEBSHOP"/>
         <appender-ref ref="LOG-DEBUG-ROLLING-WEBSHOP"/>
-    </category>
+    </logger>
 
     <root>
         <priority value="INFO"/>

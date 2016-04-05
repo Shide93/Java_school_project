@@ -39,24 +39,29 @@
                     </div>
                     <div>
                         <form:input type="hidden" path="id" value="${requestScope.selectedCategory.id}"/>
-                        <input class="save btn btn-default"  type="submit" value="Save category">
+                        <input class="save btn btn-default button_margin"  type="submit" value="Save category">
                     </div>
 
                 </form:form>
 
                 <form:form action="/backend/categories?action=remove" method="post" modelAttribute="selectedCategory">
                     <form:input type="hidden" path="id" value="${requestScope.selectedCategory.id}"/>
-                    <input class="delete btn btn-default" type="submit" value="Remove category">
+                    <input class="delete btn btn-default button_margin" type="submit" value="Remove category">
                 </form:form>
 
-                <div class="">
-                    <c:forEach var="product" items="${requestScope.selectedCategory.products}">
-                        <div>
-                            <a href="<c:url value="/backend/products?productId=${product.id}"/>">
-                                ${product.name}
-                            </a>
-                        </div>
-                    </c:forEach>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Products</div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            <c:forEach var="product" items="${requestScope.selectedCategory.products}">
+                                <li class="list-group-item">
+                                    <a href="<c:url value="/backend/products?productId=${product.id}"/>">
+                                        ${product.name}
+                                    </a>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </c:if>
