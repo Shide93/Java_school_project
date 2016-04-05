@@ -2,13 +2,17 @@ package com.tsystems.javaschool.webshop.services.impl;
 
 import com.tsystems.javaschool.webshop.dao.api.CategoryDAO;
 import com.tsystems.javaschool.webshop.dao.entities.Category;
+import com.tsystems.javaschool.webshop.dao.entities.Product;
+import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -22,7 +26,7 @@ public class CategoryServiceImplTest {
     private int categoryId;
     private Category category;
     private List<Category> categoryList;
-
+    private Set<Product> products;
     @Mock
     private CategoryDAO categoryDAO;
 
@@ -31,6 +35,8 @@ public class CategoryServiceImplTest {
         categoryId = 1;
         category = new Category();
         categoryList = new ArrayList<>();
+        products = new HashSet<>();
+        category.setProducts(products);
 
         MockitoAnnotations.initMocks(this);
         categoryService = new CategoryServiceImpl();
@@ -54,9 +60,17 @@ public class CategoryServiceImplTest {
     }
 
     @Test
-    public void deleteSuccess() {
+    public void deleteSuccess() throws ServiceException {
+        when(categoryDAO.getById(categoryId)).thenReturn(category);
         categoryService.delete(categoryId);
         verify(categoryDAO).delete(categoryId);
+    }
+
+    @Test(expected = ServiceException.class)
+    public void deleteFail() throws ServiceException {
+        products.add(new Product());
+        when(categoryDAO.getById(categoryId)).thenReturn(category);
+        categoryService.delete(categoryId);
     }
 
     @Test

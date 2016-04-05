@@ -1,12 +1,16 @@
 package com.tsystems.javaschool.webshop.controllers.storefront;
 
+import com.tsystems.javaschool.webshop.controllers.utils.ControllerUtils;
 import com.tsystems.javaschool.webshop.controllers.webservice.StatisticsRestController;
 import com.tsystems.javaschool.webshop.services.api.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletContext;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -16,7 +20,8 @@ import java.util.GregorianCalendar;
 @Controller
 public class StatisticController {
 
-
+    @Autowired
+    private ServletContext servletContext;
     /**
      * The Statistics service.
      */
@@ -44,8 +49,16 @@ public class StatisticController {
                 .topCustomers(topCount));
         model.addAttribute("topProducts", statisticsService
                 .topProducts(topCount));
-        model.addAttribute("accessToken",
-                StatisticsRestController.ACCESS_TOKEN);
         return "backend/statistics";
+    }
+
+    @RequestMapping(value = "/backend/statistics",
+            params = "action=getToken",
+            method = RequestMethod.POST)
+    @ResponseBody
+    public final String getAccessToken(final Model model) {
+        String token = statisticsService.generateAccessToken();
+        ControllerUtils.setTokenToContext(token, servletContext);
+        return "{ \"token\" : \"" + token + "\" }";
     }
 }

@@ -2,6 +2,7 @@ package com.tsystems.javaschool.webshop.controllers.backend;
 
 import com.tsystems.javaschool.webshop.dao.entities.Category;
 import com.tsystems.javaschool.webshop.services.api.CategoryService;
+import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
@@ -27,6 +29,13 @@ public class BackendCategoryController {
      */
     private static final Logger LOGGER =
             LogManager.getLogger(BackendCategoryController.class);
+    private static final String BACKEND_CATEGORY_PAGE = "/backend/categories";
+    private static final String SELECTED_CATEGORY = "selectedCategory";
+    private static final String ADD_ACTION = "action=add";
+    private static final String SAVE_ACTION = "action=save";
+    private static final String REMOVE_ACTION = "action=remove";
+    private static final String REMOVE_FAILED = "removeFailed";
+
     /**
      * The Category service.
      */
@@ -90,17 +99,16 @@ public class BackendCategoryController {
 
     @RequestMapping(path = "/backend/categories",
             params = "action=remove", method = RequestMethod.POST)
-    public final String removeProduct(@RequestParam final int id,
-                                            final Model model) {
-        RedirectView redirectView = new RedirectView();
+    public final String removeCategory(@RequestParam final int id,
+                                            final RedirectAttributes redirectAttributes) {
         try {
             categoryService.delete(id);
 
-        } catch (Exception e) {
+        } catch (ServiceException e) {
             LOGGER.warn(e.getMessage(), e);
-            model.addAttribute("cantRemove",
-                    "Can't remove category: Category has products");
-            //TODO: add message in jsp.
+            redirectAttributes.addAttribute(REMOVE_FAILED,
+                    "Can't remove category: Category already has products");
+                return "redirect:/backend/categories?categoryId=" + id;
         }
 
         return "redirect:/backend/categories";

@@ -2,13 +2,17 @@ package com.tsystems.javaschool.webshop.services.impl;
 
 import com.tsystems.javaschool.webshop.dao.api.FeatureDAO;
 import com.tsystems.javaschool.webshop.dao.entities.Feature;
+import com.tsystems.javaschool.webshop.dao.entities.ProductFeature;
+import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -22,15 +26,18 @@ public class FeatureServiceImplTest {
     private int featureId;
     private Feature feature;
     private List<Feature> featureList;
+    private Set<ProductFeature> products;
 
     @Mock
     private FeatureDAO featureDAO;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         featureId = 1;
         feature = new Feature();
         featureList = new ArrayList<>();
+        products = new HashSet<>();
+        feature.setProducts(products);
 
         MockitoAnnotations.initMocks(this);
         featureService = new FeatureServiceImpl();
@@ -38,25 +45,35 @@ public class FeatureServiceImplTest {
     }
 
     @Test
-    public void addSuccess() throws Exception {
+    public void addSuccess() {
         featureService.add(feature);
         verify(featureDAO).create(feature);
     }
 
     @Test
-    public void updateSuccess() throws Exception {
+    public void updateSuccess() {
         featureService.update(feature);
         verify(featureDAO).update(feature);
     }
 
     @Test
-    public void deleteSuccess() throws Exception {
+    public void deleteSuccess()
+            throws ServiceException {
+        when(featureDAO.getById(featureId)).thenReturn(feature);
         featureService.delete(featureId);
         verify(featureDAO).delete(featureId);
     }
 
+    @Test(expected = ServiceException.class)
+    public void deleteFail()
+            throws ServiceException {
+        products.add(new ProductFeature());
+        when(featureDAO.getById(featureId)).thenReturn(feature);
+        featureService.delete(featureId);
+    }
+
     @Test
-    public void getSuccess() throws Exception {
+    public void getSuccess() {
         feature.setId(featureId);
         when(featureDAO.getById(featureId)).thenReturn(feature);
         assertEquals(feature.getId(),

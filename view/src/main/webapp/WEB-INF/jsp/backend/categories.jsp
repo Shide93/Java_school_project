@@ -18,6 +18,9 @@
     </jsp:attribute>
 
     <jsp:attribute name="content">
+         <c:if test="${param.removeFailed ne null}">
+             <div class="alert alert-danger">${param.removeFailed}</div>
+         </c:if>
         <c:if test="${requestScope.selectedCategory.id != 0}">
             <div class="">
                 <h1 class="">Category ${requestScope.selectedCategory.name}</h1>
@@ -41,10 +44,10 @@
 
                 </form:form>
 
-                <form action="<c:url value="/backend/categories?action=remove"/>" method="post">
-                    <input type="hidden" name="id" value="${requestScope.selectedCategory.id}"/>
+                <form:form action="/backend/categories?action=remove" method="post" modelAttribute="selectedCategory">
+                    <form:input type="hidden" path="id" value="${requestScope.selectedCategory.id}"/>
                     <input class="delete btn btn-default" type="submit" value="Remove category">
-                </form>
+                </form:form>
 
                 <div class="">
                     <c:forEach var="product" items="${requestScope.selectedCategory.products}">

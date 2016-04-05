@@ -13,15 +13,12 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -35,9 +32,9 @@ public class BackendProductController {
     private static final String ADD_ACTION = "action=add";
     private static final String SAVE_ACTION = "action=save";
     private static final String REMOVE_ACTION = "action=remove";
+    private static final String REMOVE_FAILED = "removeFailed";
     private static final String ADD_FEATURE_ACTION = "action=addFeature";
-    private static final String REMOVE_FEATURE_ACTION = "action=removeFeature";
-    private static final String ADD_FAILED = "addFailed";
+    private static final String ADD_FEATURE_FAILED = "addFeatureFailed";
     /**
      * The constant LOGGER.
      */
@@ -119,12 +116,12 @@ public class BackendProductController {
                                       final Model model) {
         try {
             productService.delete(id);
-        } catch (Exception e) {
-            LOGGER.warn("Can't remove product", e);
+        } catch (ServiceException e) {
+            LOGGER.warn("Can't remove product" + id, e);
+            redirectAttributes.addAttribute(REMOVE_FAILED, "Can't remove product.");
 
             return "redirect:" + BACKEND_PRODUCT_PAGE + "?productId=" + id;
         }
-       //TODO: cant remove exception handle
         return "redirect:" + BACKEND_PRODUCT_PAGE;
     }
 
@@ -140,7 +137,7 @@ public class BackendProductController {
             model.addAttribute(SELECTED_PRODUCT, product);
         } catch (ServiceException e) {
             LOGGER.warn("Feature creation failed", e);
-            redirectAttributes.addAttribute(ADD_FAILED, "Cannot add feature: "
+            redirectAttributes.addAttribute(ADD_FEATURE_FAILED, "Cannot add feature: "
                     + e.getMessage());
 
         }

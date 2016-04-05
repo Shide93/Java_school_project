@@ -82,10 +82,20 @@ public class ProductServiceImplTest {
     }
 
     @Test
-    public void deleteSuccess() {
+    public void deleteSuccess()
+            throws ServiceException {
         productService.delete(productId);
         verify(productDAO).delete(productId);
     }
+
+    @Test(expected = ServiceException.class)
+    public void deleteFail()
+            throws ServiceException {
+        when(productDAO.isOrdered(productId)).thenReturn(true);
+        when(productDAO.isInCart(productId)).thenReturn(true);
+        productService.delete(productId);
+    }
+
 
     @Test
     public void getSuccess() {

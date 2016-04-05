@@ -99,8 +99,8 @@
                     var id = row.attr("feature-id");
                     $.post("?action=remove", "id=" + id,
                             function(JData) {
-                                if (JData.cantRemove) {
-                                    alert(JData.cantRemove);
+                                if (JData.removeFailed) {
+                                    alert(JData.removeFailed);
                                 }
                                 row.remove();
                             }, "json");

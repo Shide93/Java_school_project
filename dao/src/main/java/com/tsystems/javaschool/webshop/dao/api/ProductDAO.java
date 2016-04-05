@@ -47,4 +47,19 @@ public interface ProductDAO extends GenericDAO<Product> {
     long getProductSales(int productId, Date dateFrom);
 
 
+    /**
+     * Is ordered boolean.
+     *
+     * @param productId the product id
+     * @return the boolean
+     */
+    boolean isOrdered(int productId);
+
+    /**
+     * Is in cart boolean.
+     *
+     * @param productId the product id
+     * @return the boolean
+     */
+    boolean isInCart(int productId);
 }

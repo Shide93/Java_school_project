@@ -3,9 +3,9 @@
 <div>
     <div class="list-group">
         <a class="list-group-item" href="<c:url value="/search"/>">Search products</a>
-        <c:forEach var="category" items="${requestScope.categoryList}">
+        <c:forEach var="category" items="${applicationScope.categoryList}">
             <a class="list-group-item
-            <c:if test="${requestScope.category.id eq category.id}">active</c:if>
+            <c:if test="${applicationScope.category.id eq category.id}">active</c:if>
             " href="<c:url value="/category/${category.id}"/>">${category.name}</a>
         </c:forEach>
     </div>

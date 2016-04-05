@@ -62,4 +62,10 @@ public interface StatisticsService {
     StatisticsDTO getShopReport(Date dateFrom,
                                 Integer topProductsCount,
                                 Integer topUsersCount);
+    /**
+     * Generate access token string.
+     *
+     * @return access token
+     */
+    String generateAccessToken();
 }

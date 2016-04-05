@@ -3,6 +3,7 @@ package com.tsystems.javaschool.webshop.controllers.backend;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.tsystems.javaschool.webshop.dao.entities.Feature;
 import com.tsystems.javaschool.webshop.services.api.FeatureService;
+import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,11 +67,15 @@ public class BackendFeaturesController {
     @RequestMapping(value = "/backend/features", params = "action=remove",
             method = RequestMethod.POST)
     @ResponseBody
-    public int removeFeature(@RequestParam final int id,
+    public String removeFeature(@RequestParam final int id,
                                 final Model model) {
 
-        featureService.delete(id);
+        try {
+            featureService.delete(id);
+        } catch (ServiceException e) {
+            return "{ \"removeFailed\" : \"Can't remove feature: it is already assigned to product.\" }";
+        }
         //TODO: handle exception if already assigned to product
-        return id;
+        return "{ \"id\" : \"" + id + "\" }";
     }
 }

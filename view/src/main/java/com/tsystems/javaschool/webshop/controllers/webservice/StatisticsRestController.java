@@ -1,5 +1,6 @@
 package com.tsystems.javaschool.webshop.controllers.webservice;
 
+import com.tsystems.javaschool.webshop.controllers.utils.ControllerUtils;
 import com.tsystems.javaschool.webshop.dao.entities.dto.StatisticsDTO;
 import com.tsystems.javaschool.webshop.services.api.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
@@ -24,10 +26,8 @@ import java.util.Date;
 @RequestMapping(value = "/api")
 public class StatisticsRestController {
 
-    /**
-     * Token to access to REST service
-     */
-    public static final String ACCESS_TOKEN = "smP7ioTP1Ww1geS7O450";
+    @Autowired
+    private ServletContext servletContext;
 
     @Autowired
     private StatisticsService statisticsService;
@@ -44,7 +44,7 @@ public class StatisticsRestController {
                                              final Integer topUsersCount,
                                              @RequestParam
                                              final String accessToken) {
-        if (!accessToken.equals(ACCESS_TOKEN)) {
+        if (!ControllerUtils.isTokenExists(accessToken, servletContext)) {
             throw new IllegalArgumentException("Wrong token value");
         }
         return statisticsService.getShopReport(dateFrom,
@@ -52,7 +52,7 @@ public class StatisticsRestController {
                     topUsersCount);
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseBody
     public final String handleBadRequest(final HttpServletRequest req,

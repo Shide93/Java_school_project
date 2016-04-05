@@ -98,4 +98,22 @@ public class ProductDAOImpl extends AbstractGenericDAO<Product>
         query.setParameter("dateFrom", dateFrom);
         return query.getSingleResult();
     }
+
+    @Override
+    public final boolean isOrdered(final int productId) {
+        TypedQuery<Long> query =
+                manager.createNamedQuery("OrderProduct.productInOrders",
+                        Long.class);
+        query.setParameter("productId", productId);
+        return query.getSingleResult() != 0;
+    }
+
+    @Override
+    public final boolean isInCart(final int productId) {
+        TypedQuery<Long> query =
+                manager.createNamedQuery("OrderProduct.productInOrders",
+                        Long.class);
+        query.setParameter("productId", productId);
+        return query.getSingleResult() != 0;
+    }
 }

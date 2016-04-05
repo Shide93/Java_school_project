@@ -3,6 +3,7 @@ package com.tsystems.javaschool.webshop.services.impl;
 import com.tsystems.javaschool.webshop.dao.api.CategoryDAO;
 import com.tsystems.javaschool.webshop.dao.entities.Category;
 import com.tsystems.javaschool.webshop.services.api.CategoryService;
+import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public final void delete(final Integer categoryId) {
+    public final void delete(final Integer categoryId)
+            throws ServiceException {
+        if (categoryDAO.getById(categoryId).getProducts().size() > 0) {
+            throw new ServiceException("Can't remove product");
+        }
         categoryDAO.delete(categoryId);
     }
 

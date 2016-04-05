@@ -74,7 +74,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public final void delete(final Integer productId) {
+    public final void delete(final Integer productId) throws ServiceException {
+
+        if (productDAO.isOrdered(productId) || productDAO.isInCart(productId)) {
+            throw new ServiceException("Can't remove product");
+        }
         productDAO.delete(productId);
     }
 

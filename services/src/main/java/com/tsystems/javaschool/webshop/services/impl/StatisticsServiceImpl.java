@@ -14,12 +14,13 @@ import com.tsystems.javaschool.webshop.services.api.StatisticsService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import javax.validation.constraints.AssertTrue;
+import java.security.SecureRandom;
+import java.util.*;
 
 /**
  * Created by Shide on 03.03.2016.
@@ -104,25 +105,12 @@ public class StatisticsServiceImpl implements StatisticsService {
         return report;
     }
 
-    /**
-     * Gets calendar period value from string.
-     *
-     * @param period the period string
-     * @return the calendar period value
-     */
-    private int getCalendarPeriodValue(final String period) {
-        switch (period) {
-            case "day":
-                return Calendar.DAY_OF_YEAR;
-            case "week":
-                return Calendar.WEEK_OF_YEAR;
-            case "month":
-                return Calendar.MONTH;
-            case "year":
-                return Calendar.YEAR;
-            default:
-                return -1;
-        }
+    @Override
+    public final String generateAccessToken() {
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[20];
+        random.nextBytes(bytes);
+        return Base64.getEncoder().encodeToString(bytes);
     }
 
     /**
@@ -150,5 +138,14 @@ public class StatisticsServiceImpl implements StatisticsService {
      */
     public final void setUsersDAO(final UsersDAO dao) {
         this.usersDAO = dao;
+    }
+
+    /**
+     * Gets bla.
+     *
+     * @return the bla
+     */
+    public String getBla() {
+        return "bla";
     }
 }

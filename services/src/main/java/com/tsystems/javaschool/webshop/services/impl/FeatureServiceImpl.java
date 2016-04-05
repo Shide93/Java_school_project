@@ -4,6 +4,7 @@ import com.tsystems.javaschool.webshop.dao.api.FeatureDAO;
 import com.tsystems.javaschool.webshop.dao.entities.Feature;
 import com.tsystems.javaschool.webshop.dao.entities.ProductFeature;
 import com.tsystems.javaschool.webshop.services.api.FeatureService;
+import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,12 @@ public class FeatureServiceImpl implements FeatureService {
     }
 
     @Override
-    public final void delete(final Integer featureId) {
+    public final void delete(final Integer featureId)
+            throws ServiceException {
+        if (featureDAO.getById(featureId).getProducts().size() > 0) {
+            throw new ServiceException("Can't remove product");
+        }
         featureDAO.delete(featureId);
-
     }
     @Override
     public final Feature get(final int featureId) {

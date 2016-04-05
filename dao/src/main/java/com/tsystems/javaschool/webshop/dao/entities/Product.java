@@ -29,7 +29,11 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "Product.getOutOfStockProducts",
                 query = "select p from Product p " +
-                        "where p.stock < :stockLimit")
+                        "where p.stock < :stockLimit"),
+        @NamedQuery(name = "OrderProduct.productInOrders",
+                query = "select count(op) from OrderProduct op where op.productId = :productId"),
+        @NamedQuery(name = "CartProduct.productInCart",
+        query = "select count(cp) from CartProduct cp where cp.productId = :productId")
 })
 @Table(name = "product", schema = "web_shop")
 public class Product {

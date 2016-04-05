@@ -23,6 +23,9 @@
     </jsp:attribute>
     <jsp:attribute name="content">
         <form:errors cssClass="error" />
+         <c:if test="${param.removeFailed ne null}">
+             <div class="alert alert-danger">${param.removeFailed}</div>
+         </c:if>
         <c:if test="${requestScope.selectedProduct != null}">
             <div class="">
                 <h1 class="">Product ${requestScope.selectedProduct.name}</h1>
@@ -90,8 +93,8 @@
                             </div>
                         </c:forEach>
                         <div class="">
-                            <c:if test="${param.addFailed ne null}">
-                                <div class="alert alert-danger">${param.addFailed}</div>
+                            <c:if test="${param.addFeatureFailed ne null}">
+                                <div class="alert alert-danger">${param.addFeatureFailed}</div>
                             </c:if>
                             <label>
                                 <select form="add_feature_form" class="form-control"

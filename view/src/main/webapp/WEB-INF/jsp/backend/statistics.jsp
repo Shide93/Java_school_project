@@ -39,18 +39,20 @@
         </div>
         <div class="row">
             <div class="col-lg-8">
-                <span>Access token for REST report service:
+                <span>Access token for REST report service: ${applicationScope.bla}
                 </span>
-                <a href="#" class="show_token">Show</a>
-                <span class="token_value display-none">${accessToken}</span>
+                <a href="#" class="generate_token">Generate token</a>
+                <strong class="token_value display-none"></strong>
             </div>
         </div>
         <script>
             $(document).ready( function() {
-                $(".show_token").on('click', function (e) {
+                $(".generate_token").on('click', function (e) {
                     e.preventDefault();
-                    $(".token_value").show();
-                    $(".show_token").hide();
+                    $.post("?action=getToken", function(JData) {
+                        $(".token_value").text(JData.token).show();
+                        $(".generate_token").hide();
+                    }, "json");
                 });
             });
         </script>

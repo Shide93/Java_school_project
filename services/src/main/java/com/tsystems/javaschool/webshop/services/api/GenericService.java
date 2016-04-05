@@ -1,6 +1,8 @@
 package com.tsystems.javaschool.webshop.services.api;
 
 
+import com.tsystems.javaschool.webshop.services.exceptions.ServiceException;
+
 import java.util.List;
 
 /**
@@ -28,8 +30,9 @@ public interface GenericService<T> {
      * deletes object from DB.
      *
      * @param objId the obj id to delete
+     * @throws ServiceException thrown if deleting failed
      */
-    void delete(Integer objId);
+    void delete(Integer objId) throws ServiceException;
 
     /**
      * gets object by id.
