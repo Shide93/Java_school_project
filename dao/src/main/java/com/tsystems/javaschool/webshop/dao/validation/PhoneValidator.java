@@ -25,7 +25,8 @@ public class PhoneValidator implements ConstraintValidator<Phone, String> {
                 //validating phone number with extension length from 3 to 5
                 || phoneNo.matches("\\d{3}-\\d{3}-\\d{4}\\s(x|(ext))\\d{3,5}")
                 //validating phone number where area code is in braces ()
-                || phoneNo.matches("\\(\\d{3}\\)-\\d{3}-\\d{4}");
+                || phoneNo.matches("\\(\\d{3}\\)-\\d{3}-\\d{4}")
+                || phoneNo.matches("\\+\\d{1,3}\\s\\(\\d{3}\\)\\s\\d{3}\\s\\d{4}");
     }
 
 }

@@ -16,24 +16,28 @@
                 <p class="monthSales">Month sales: <b><c:out value="${requestScope.monthSales}" default="0"/></b></p>
             </div>
             <div class="topCustomers col-lg-4">
-                Top cusotmers:
+                <strong>Top cusotmers:</strong>
                 <c:if test="${requestScope.topCustomers != null}">
-                    <c:forEach var="customer" items="${requestScope.topCustomers}"  >
-                        <div>
-                            ${customer.name} ${customer.lastName}
-                        </div>
-                    </c:forEach>
+                    <ol>
+                        <c:forEach var="customer" items="${requestScope.topCustomers}"  >
+                            <li>
+                                ${customer.name} ${customer.lastName}
+                            </li>
+                        </c:forEach>
+                    </ol>
                 </c:if>
             </div>
 
             <div class="topProducts col-lg-4">
-                Top products:
+                <strong>Top products:</strong>
                 <c:if test="${requestScope.topProducts != null}">
-                    <c:forEach var="product" items="${requestScope.topProducts}" >
-                        <div>
-                            <a href="<c:url value="/backend/products?productId=${product.id}"/>">${product.name}</a>
-                        </div>
-                    </c:forEach>
+                    <ol>
+                        <c:forEach var="product" items="${requestScope.topProducts}" >
+                            <li>
+                                <a href="<c:url value="/backend/products?productId=${product.id}"/>">${product.name}</a>
+                            </li>
+                        </c:forEach>
+                    </ol>
                 </c:if>
             </div>
         </div>

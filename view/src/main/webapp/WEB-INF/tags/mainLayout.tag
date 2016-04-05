@@ -11,10 +11,14 @@
     <head>
         <title>${title}</title>
         <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/>" type="text/css"/>
+        <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap-formhelpers.min.css"/>" type="text/css"/>
+        <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap-datepicker.min.css"/>" type="text/css"/>
         <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" type="text/css"/>
         <script type="text/javascript" src="<c:url value="/resources/js/jquery-1.12.1.min.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/resources/js/main.js"/>"></script>
         <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
+        <script type="text/javascript" src="<c:url value="/resources/js/bootstrap-formhelpers.min.js"/>"></script>
+        <script type="text/javascript" src="<c:url value="/resources/js/bootstrap-datepicker.min.js"/>"></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <sec:csrfMetaTags />

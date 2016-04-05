@@ -5,91 +5,102 @@
 <t:frontendLayout>
     <jsp:attribute name="content">
         <div class="checkout">
-            <p>${requestScope.notValid}</p>
-            <p>${requestScope.required}</p>
             <form:form class="" role="form" action="/checkout" method="post" modelAttribute="order">
+
                 <div class = "contact-info">
-                    <div class="general form-group">
-                        <label>Name
-                            <form:input class="form-control" type="text" path="user.name"/>
-                        </label>
-                        <form:errors path="user.name" cssClass="error" /><br>
-                        <label>Last name
-                            <form:input class="form-control" type="text" path="user.lastName"/>
-                        </label>
-                        <form:errors path="user.lastName" cssClass="error" /><br>
-                        <label>Phone
-                            <form:input class="form-control" type="text" path="user.phone"/>
-                        </label>
-                        <form:errors path="user.phone" cssClass="error" /><br>
+                    <div class="general form-group panel panel-default">
+                        <div class="panel-heading">Contact info:</div>
+                        <div class="panel-body">
+                            <label>Name
+                                <form:input class="form-control" type="text" path="user.name"/>
+                            </label>
+                            <form:errors path="user.name" cssClass="error" /><br>
+                            <label>Last name
+                                <form:input class="form-control" type="text" path="user.lastName"/>
+                            </label>
+                            <form:errors path="user.lastName" cssClass="error" /><br>
+                            <label>Phone
+                                <form:input class="form-control input-medium bfh-phone"
+                                            data-format="+d (ddd) ddd dddd" type="text" path="user.phone" />
+                            </label>
+                            <form:errors path="user.phone" cssClass="error" /><br>
+                        </div>
                     </div>
-                    <div class="address form-group">
-                        <h6>Shipping address</h6>
-                        <label>Country
-                            <form:input class="form-control" type="text" path="address.country" />
-                        </label>
-                        <form:errors path="address.country" cssClass="error" /><br>
+                    <div class="address form-group panel panel-default">
+                        <div class="panel-heading">Shipping address</div>
+                        <div class="panel-body">
+                            <label>Country
+                                <form:input class="form-control" type="text" path="address.country" />
+                            </label>
+                            <form:errors path="address.country" cssClass="error" /><br>
 
-                        <label>Region
-                            <form:input class="form-control" type="text" path="address.region" />
-                        </label>
-                        <form:errors path="address.region" cssClass="error" /><br>
+                            <label>Region
+                                <form:input class="form-control" type="text" path="address.region" />
+                            </label>
+                            <form:errors path="address.region" cssClass="error" /><br>
 
-                        <label>City
-                            <form:input class="form-control" type="text" path="address.city" />
-                        </label>
-                        <form:errors path="address.city" cssClass="error" /><br>
+                            <label>City
+                                <form:input class="form-control" type="text" path="address.city" />
+                            </label>
+                            <form:errors path="address.city" cssClass="error" /><br>
 
-                        <label>Zip
-                            <form:input class="form-control" type="text" path="address.zip" />
-                        </label>
-                        <form:errors path="address.zip" cssClass="error" /><br>
+                            <label>Zip
+                                <form:input class="form-control" type="text" path="address.zip" />
+                            </label>
+                            <form:errors path="address.zip" cssClass="error" /><br>
 
-                        <label>Street
-                            <form:input class="form-control" type="text" path="address.street" />
-                        </label>
-                        <form:errors path="address.street" cssClass="error" /><br>
+                            <label>Street
+                                <form:input class="form-control" type="text" path="address.street" />
+                            </label>
+                            <form:errors path="address.street" cssClass="error" /><br>
 
-                        <label>Building
-                            <form:input class="form-control" type="text" path="address.building" />
-                        </label>
-                        <form:errors path="address.building" cssClass="error" /><br>
+                            <label>Building
+                                <form:input class="form-control" type="text" path="address.building" />
+                            </label>
+                            <form:errors path="address.building" cssClass="error" /><br>
 
-                        <label>Flat
-                            <form:input class="form-control" type="text" path="address.flat" />
-                        </label>
-                        <form:errors path="address.flat" cssClass="error" /><br>
-
+                            <label>Flat
+                                <form:input class="form-control" type="text" path="address.flat" />
+                            </label>
+                            <form:errors path="address.flat" cssClass="error" /><br>
+                        </div>
                     </div>
                 </div>
-                <div class = "shipping form-group">
-                    <c:forEach var="shippingType" items="${requestScope.shippingTypes}">
-                        <div class="radio">
-                            <label>
-                                <form:radiobutton path="shipping.id" shipping-cost="${shippingType.cost}" value="${shippingType.id}"/>
-                                    ${shippingType.name}
-                            </label>
-                            <span class="cost"><span class="shipping_cost">${shippingType.cost}</span>$</span>
-                            <div class="description">
-                                    ${shippingType.description}
+
+                <div class = "shipping form-group panel panel-default">
+                    <div class="panel-heading">Shipping type:</div>
+                    <div class="panel-body">
+                        <c:forEach var="shippingType" items="${requestScope.shippingTypes}">
+                            <div class="radio">
+                                <label>
+                                    <form:radiobutton path="shipping.id" shipping-cost="${shippingType.cost}" value="${shippingType.id}"/>
+                                        ${shippingType.name}
+                                </label>
+                                <span class="cost"><span class="shipping_cost">${shippingType.cost}</span>$</span>
+                                <div class="description">
+                                        ${shippingType.description}
+                                </div>
                             </div>
-                        </div>
-                    </c:forEach>
-                    <form:errors path="shipping" cssClass="error" /><br>
+                        </c:forEach>
+                        <form:errors path="shipping" cssClass="error" /><br>
+                    </div>
                 </div>
-                <div class = "payment form-group">
-                    <c:forEach var="paymentType" items="${requestScope.paymentTypes}">
-                        <div class="radio">
-                            <label>
-                                <form:radiobutton path="payment.id" value="${paymentType.id}"/>
-                                    ${paymentType.name}
-                            </label>
-                            <div class="description">
-                                    ${paymentType.description}
+                <div class = "payment form-group panel panel-default">
+                    <div class="panel-heading">Payment type:</div>
+                    <div class="panel-body">
+                        <c:forEach var="paymentType" items="${requestScope.paymentTypes}">
+                            <div class="radio">
+                                <label>
+                                    <form:radiobutton path="payment.id" value="${paymentType.id}"/>
+                                        ${paymentType.name}
+                                </label>
+                                <div class="description">
+                                        ${paymentType.description}
+                                </div>
                             </div>
-                        </div>
-                    </c:forEach>
-                    <form:errors path="payment" cssClass="error" /><br>
+                        </c:forEach>
+                        <form:errors path="payment" cssClass="error" /><br>
+                    </div>
                 </div>
                 <div class = "confirmation form-group">
 

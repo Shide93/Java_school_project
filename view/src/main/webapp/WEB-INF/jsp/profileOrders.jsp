@@ -25,17 +25,19 @@
                             <div id="order-${order.id}" class="panel-collapse collapse">
                                 <!-- Содержимое 1 панели -->
                                 <div class="panel-body">
-                                    <div class="order-date">
-                                        Placed: <fmt:formatDate value="${order.orderDate}"
-                                                                type="BOTH" dateStyle="short" timeStyle="short"/>
+                                    <div class="panel panel-default">
+
+                                        <div class="order-date panel-body">
+                                            Placed: <fmt:formatDate value="${order.orderDate}"
+                                                                    type="BOTH" dateStyle="short" timeStyle="short"/>
+                                        </div>
                                     </div>
 
-                                    <div class="order_user">
-                                        <div>${order.user.name}  ${order.user.lastName}</div>
-                                        <div>Email: ${order.user.email}</div>
-                                        <div>Phone: ${order.user.phone}</div>
-
-                                    </div>
+                                    <ul class="order_user">
+                                        <li class="list-group-item">${order.user.name}  ${order.user.lastName}</li>
+                                        <li  class="list-group-item">Email: ${order.user.email}</li>
+                                        <li  class="list-group-item">Phone: ${order.user.phone}</li>
+                                    </ul>
 
                                     <div class="order_products">
                                         <table class="table">
@@ -84,56 +86,68 @@
                                         </table>
                                     </div>
 
-                                    <p class="order_shipping">
-                                        Shipping:
-                                    <div class="">${order.shipping.name}</div>
-                                    <div class="">${order.shipping.description}</div>
-                                    <div class="">${order.shipping.cost}</div>
-                                    </p>
-
-                                    <div class="order_address">
-                                        <h6>Shipping address</h6>
-                                        <dl class="dl-horizontal">
-                                            <dt>Country: </dt>
-                                            <dd>${order.address.country}"</dd>
-
-                                            <dt>Region: </dt>
-                                            <dd class="">${order.address.region}</dd>
-
-                                            <dt>City</dt>
-                                            <dd class="">${order.address.city}</dd>
-
-                                            <dt>Zip</dt>
-                                            <dd class="">${order.address.zip}</dd>
-
-                                            <dt>Street</dt>
-                                            <dd class="">${order.address.street}</dd>
-
-                                            <dt>Building</dt>
-                                            <dd class="">${order.address.building}</dd>
-
-                                            <dt>Flat </dt>
-                                            <dd class="">${order.address.flat}</dd>
-
-                                        </dl>
+                                    <div class="list-group">
+                                        <div class="order_shipping list-group-item  row">
+                                            <div class="col-lg-1"><strong>Shipping:</strong></div>
+                                            <div class="col-lg-1"><strong>${order.shipping.name}</strong></div>
+                                            <div class="col-lg-3">${order.shipping.description}</div>
+                                            <div class=col-lg-1"><strong>${order.shipping.cost}$</strong></div>
+                                        </div>
+                                        <div class="order_payment list-group-item row">
+                                            <div class="col-lg-1"><strong>Payment:</strong></div>
+                                            <div class="col-lg-1"><strong>${order.payment.name}</strong></div>
+                                            <div class="col-lg-3">${order.payment.description}</div>
+                                        </div>
                                     </div>
 
-                                    <p class="order_payment">
-                                        Payment:
-                                    <div class="">${order.payment.name}</div>
-                                    <div class="">${order.payment.description}</div>
-                                    </p>
+                                    <div class="order_address">
+                                        <h4>Shipping address</h4>
 
-                                    <p class="order_comment">
-                                        Comment:
-                                    <p class="">
-                                            ${order.comment}
-                                    </p>
-                                    </p>
+                                        <table class="table">
+                                            <tr>
+                                                <td>Country: </td>
+                                                <td>${order.address.country}"</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Region: </td>
+                                                <td class="">${order.address.region}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>City</td>
+                                                <td class="">${order.address.city}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Zip</td>
+                                                <td class="">${order.address.zip}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Street</td>
+                                                <td class="">${order.address.street}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Building</td>
+                                                <td class="">${order.address.building}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Flat </td>
+                                                <td class="">${order.address.flat}</td>
+                                            </tr>
+                                        </table>
+
+                                    </div>
+
+                                    <div class="order_comment row">
+                                        <div class="col-lg-1"><strong>Comment:</strong></div>
+                                        <div class="col-lg-1"></div>
+                                        <div class="col-lg-9 well">
+                                            <p class=" lead">
+                                                    ${order.comment}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </c:forEach>
                 </div>
             </div>

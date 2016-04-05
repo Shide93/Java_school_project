@@ -19,7 +19,7 @@
 
 
         <h1 class="">Order #${requestScope.selectedOrder.id}</h1>
-        <div class="order_statuses">
+        <div class="order_statuses panel">
             <c:forEach var="status" items="${requestScope.orderStatuses}">
                 <c:if test="${status eq requestScope.selectedOrder.orderStatus}">
                     <c:set var="button" value="btn-primary" />
@@ -36,18 +36,22 @@
                 </form>
             </c:forEach>
         </div>
-       <div class="order-date">
-           Placed: <fmt:formatDate value="${requestScope.selectedOrder.orderDate}"
-                                   type="BOTH" dateStyle="short" timeStyle="short"/>
-       </div>
-        <div class="order_user">
-            <div>${requestScope.selectedOrder.user.name}  ${requestScope.selectedOrder.user.lastName}</div>
-            <div>Email: ${requestScope.selectedOrder.user.email}</div>
-            <div>Phone: ${requestScope.selectedOrder.user.phone}</div>
+        <div class="panel panel-default">
 
+           <div class="order-date panel-body">
+               Placed: <fmt:formatDate value="${requestScope.selectedOrder.orderDate}"
+                                       type="BOTH" dateStyle="short" timeStyle="short"/>
+           </div>
         </div>
 
-        <div class="order_products">
+        <ul class="order_user">
+            <li class="list-group-item">${requestScope.selectedOrder.user.name}  ${requestScope.selectedOrder.user.lastName}</li>
+            <li  class="list-group-item">Email: ${requestScope.selectedOrder.user.email}</li>
+            <li  class="list-group-item">Phone: ${requestScope.selectedOrder.user.phone}</li>
+        </ul>
+
+
+        <div class="order_products ">
             <table class="table">
                 <thead>
                 <tr>
@@ -94,53 +98,66 @@
             </table>
         </div>
 
-        <div class="order_shipping">
-            Shipping:
-            <div class="">${requestScope.selectedOrder.shipping.name}</div>
-            <div class="">${requestScope.selectedOrder.shipping.description}</div>
-            <div class="">${requestScope.selectedOrder.shipping.cost}</div>
+        <div class="list-group">
+            <div class="order_shipping list-group-item  row">
+                <div class="col-lg-1"><strong>Shipping:</strong></div>
+                <div class="col-lg-1"><strong>${requestScope.selectedOrder.shipping.name}</strong></div>
+                <div class="col-lg-3">${requestScope.selectedOrder.shipping.description}</div>
+                <div class=col-lg-1"><strong>${requestScope.selectedOrder.shipping.cost}$</strong></div>
+            </div>
+             <div class="order_payment list-group-item row">
+                 <div class="col-lg-1"><strong>Payment:</strong></div>
+                 <div class="col-lg-1"><strong>${requestScope.selectedOrder.payment.name}</strong></div>
+                 <div class="col-lg-3">${requestScope.selectedOrder.payment.description}</div>
+             </div>
         </div>
 
         <div class="order_address">
-            <h6>Shipping address</h6>
+            <h4>Shipping address</h4>
 
-            <dl class="dl-horizontal">
-                <dt>Country: </dt>
-                <dd>${requestScope.selectedOrder.address.country}"</dd>
-
-                <dt>Region: </dt>
-                <dd class="">${requestScope.selectedOrder.address.region}</dd>
-
-                <dt>City</dt>
-                <dd class="">${requestScope.selectedOrder.address.city}</dd>
-
-                <dt>Zip</dt>
-                <dd class="">${requestScope.selectedOrder.address.zip}</dd>
-
-                <dt>Street</dt>
-                <dd class="">${requestScope.selectedOrder.address.street}</dd>
-
-                <dt>Building</dt>
-                <dd class="">${requestScope.selectedOrder.address.building}</dd>
-
-                <dt>Flat </dt>
-                <dd class="">${requestScope.selectedOrder.address.flat}</dd>
-
-            </dl>
+            <table class="table">
+                <tr>
+                    <td>Country: </td>
+                    <td>${requestScope.selectedOrder.address.country}"</td>
+                </tr>
+                <tr>
+                    <td>Region: </td>
+                    <td class="">${requestScope.selectedOrder.address.region}</td>
+                </tr>
+                <tr>
+                    <td>City</td>
+                    <td class="">${requestScope.selectedOrder.address.city}</td>
+                </tr>
+                <tr>
+                    <td>Zip</td>
+                    <td class="">${requestScope.selectedOrder.address.zip}</td>
+                </tr>
+                <tr>
+                    <td>Street</td>
+                    <td class="">${requestScope.selectedOrder.address.street}</td>
+                </tr>
+                <tr>
+                    <td>Building</td>
+                    <td class="">${requestScope.selectedOrder.address.building}</td>
+                </tr>
+                <tr>
+                    <td>Flat </td>
+                    <td class="">${requestScope.selectedOrder.address.flat}</td>
+                </tr>
+            </table>
 
         </div>
 
-        <div class="order_payment">
-            Payment:
-            <div class="">${requestScope.selectedOrder.payment.name}</div>
-            <div class="">${requestScope.selectedOrder.payment.description}</div>
-        </div>
 
-        <div class="order_comment">
-            Comment:
-            <p class="">
-                 ${requestScope.selectedOrder.comment}
-            </p>
+
+        <div class="order_comment row">
+            <div class="col-lg-1"><strong>Comment:</strong></div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-9 well">
+                <p class=" lead">
+                        ${requestScope.selectedOrder.comment}
+                </p>
+            </div>
         </div>
     </jsp:attribute>
 

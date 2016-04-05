@@ -16,7 +16,7 @@
                      role="form"
                      action="/backend/products?action=add"
                      method="post">
-                   <input class="add_product list-group-item btn btn-default" type="submit" value="Add product">
+                   <input class="add_product list-group-item btn btn-default button_margin" type="submit" value="Add product">
                </form:form>
            </div>
        </div>
@@ -83,7 +83,7 @@
                                            name="features[${status.index}].featureId">
                                     <div>${prodFeature.feature.name}:</div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <label>
                                         <input type="text" class="form-control"
                                                value="${prodFeature.value}" name="features[${status.index}].value">
@@ -96,26 +96,33 @@
                             <c:if test="${param.addFeatureFailed ne null}">
                                 <div class="alert alert-danger">${param.addFeatureFailed}</div>
                             </c:if>
-                            <label>
-                                <select form="add_feature_form" class="form-control"
-                                        name="featureId">
-                                    <c:forEach var="feature" items="${requestScope.features}">
-                                        <option class="" value="${feature.id}">
-                                            ${feature.name}
-                                        </option>
-                                    </c:forEach>
-                                </select>
-                            </label>
-                            <input type="text" class="form-control" form="add_feature_form"
-                                   value="" name="value">
-                            <input class=" btn btn-default" type="submit"
+                            <div class="row">
+
+                                <div class="col-lg-4">
+                                    <label>
+                                        <select form="add_feature_form" class="form-control"
+                                                name="featureId">
+                                            <c:forEach var="feature" items="${requestScope.features}">
+                                                <option class="" value="${feature.id}">
+                                                    ${feature.name}
+                                                </option>
+                                            </c:forEach>
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="col-lg-6">
+                                   <input type="text" class="form-control button_margin" form="add_feature_form"
+                                       value="" name="value">
+                                </div>
+                            </div>
+                            <input class=" btn btn-default button_margin" type="submit"
                                    form="add_feature_form" value="Add feature">
                         </div>
                     </div>
 
                     <div>
                         <input class=""type="hidden" name="id" value="${requestScope.selectedProduct.id}">
-                        <input class="save btn btn-primary" type="submit" value="Save product">
+                        <input class="save btn btn-primary button_margin" type="submit" value="Save product">
                     </div>
                 </form:form>
                 <form action="<c:url value="/backend/products?action=remove"/>" method="post">

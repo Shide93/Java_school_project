@@ -18,3 +18,11 @@ footer {
 .display-none {
     display: none;
 }
+
+.button_margin {
+    margin: 5px 0;
+}
+.width-correction
+{
+    width: 211px;
+}

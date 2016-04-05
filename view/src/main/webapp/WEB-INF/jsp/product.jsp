@@ -26,11 +26,11 @@
                                 <input type="text" class="form-control" name="quantity" value="1">
                             </label>
                             <br>
-                            <input class="btn btn-default" type="submit" value="Add to cart">
+                            <input class="btn btn-default button_margin" type="submit" value="Add to cart">
                         </form>
                     </div>
                 </div>
-                <div class="description">
+                <div class="description well">
                     <p class="lead">${requestScope.product.description}</p>
                 </div>
                 <div class="features">
