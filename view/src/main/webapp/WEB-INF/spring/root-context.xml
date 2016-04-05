@@ -21,6 +21,7 @@
         <property name="defaultEncoding" value="UTF-8"/>
     </bean>
 
+    <import resource="aspect.xml"/>
     <import resource="data.xml"/>
     <import resource="security.xml" />
 </beans>

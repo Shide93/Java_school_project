@@ -53,7 +53,7 @@
     <jsp:attribute name="sidebar">
 <%--suppress XmlPathReference --%>
 <%--it warns but works properly--%>
-        <jsp:include page="sidebar.jsp"/>
+        <jsp:include page="/WEB-INF/jsp/sidebar.jsp"/>
     </jsp:attribute>
     <jsp:attribute name="content">
        <jsp:invoke fragment="content"/>

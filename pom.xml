@@ -19,6 +19,7 @@
         <org.springframework.security-version>4.0.3.RELEASE</org.springframework.security-version>
         <org.hibernate-version>5.0.7.Final</org.hibernate-version>
         <jackson-version>2.6.5</jackson-version>
+        <aspectj-version>1.8.8</aspectj-version>
         <maven-surefire-version>2.19.1</maven-surefire-version>
     </properties>
     <dependencyManagement>
@@ -35,6 +36,18 @@
                         <artifactId>commons-logging</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${org.springframework-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>${org.springframework-version}</version>
             </dependency>
 
             <dependency>
@@ -79,6 +92,20 @@
                 <version>${org.springframework.security-version}</version>
             </dependency>
 
+            <!-- AspectJ -->
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>${aspectj-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj-version}</version>
+            </dependency>
+
+            <!-- Jackson -->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>

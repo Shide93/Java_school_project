@@ -4,7 +4,7 @@
 <t:frontendLayout>
     <jsp:attribute name="content">
 
-        <h1 class="">Oops! Something wrong!</h1>
+        <h1 class="">Please enter correct data</h1>
 
     </jsp:attribute>
 

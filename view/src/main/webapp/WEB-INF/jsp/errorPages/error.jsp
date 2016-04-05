@@ -4,7 +4,8 @@
 <t:frontendLayout>
     <jsp:attribute name="content">
 
-        <h1 class="">404 error!</h1>
+        <h1 class="">Oops! Something wrong!</h1>
+        <h3>Please contact developers</h3>
 
     </jsp:attribute>
 
