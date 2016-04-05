@@ -15,19 +15,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class UserRightsController {
 
+    private static final String BACKEND_USERS_PAGE = "/backend/users";
     /**
      * The Account service.
      */
     @Autowired
     private AccountService accountService;
 
-    @RequestMapping(value = "/backend/users", method = RequestMethod.GET)
+    @RequestMapping(value = BACKEND_USERS_PAGE, method = RequestMethod.GET)
     public final String getUserList(final Model model) {
         model.addAttribute("users", accountService.getAll());
-        return "backend/users";
+        return BACKEND_USERS_PAGE;
     }
 
-    @RequestMapping(value = "/backend/users", method = RequestMethod.POST)
+    @RequestMapping(value = BACKEND_USERS_PAGE, method = RequestMethod.POST)
     public final void setRights(@RequestParam final int id,
                                 @RequestParam final boolean isAdmin) {
         UserRole role;

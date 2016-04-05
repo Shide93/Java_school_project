@@ -14,11 +14,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import static com.tsystems.javaschool.webshop.controllers.utils.StringConstants.*;
+
 /**
  * Created by Shide on 30.03.2016.
  */
 @Controller
 public class BackendFeaturesController {
+
+    /**
+     * The constant BACKEND_FEATURES_PAGE.
+     */
+    private static final String BACKEND_FEATURES_PAGE = "/backend/features";
 
     /**
      * The constant LOGGER.
@@ -31,14 +38,27 @@ public class BackendFeaturesController {
     @Autowired
     private FeatureService featureService;
 
-    @RequestMapping(value = "/backend/features", method = RequestMethod.GET)
-    public String getFeaturesPage(Model model) {
+    /**
+     * Gets features page.
+     *
+     * @param model the model
+     * @return the features page
+     */
+    @RequestMapping(value = BACKEND_FEATURES_PAGE, method = RequestMethod.GET)
+    public String getFeaturesPage(final Model model) {
 
         model.addAttribute("features", featureService.getAll());
-        return "backend/features";
+        return BACKEND_FEATURES_PAGE;
     }
 
-    @RequestMapping(value = "/backend/features", params = "action=add",
+    /**
+     * Add feature feature.
+     *
+     * @param name  the name
+     * @param model the model
+     * @return the feature
+     */
+    @RequestMapping(value = BACKEND_FEATURES_PAGE, params = ADD_ACTION,
             method = RequestMethod.POST)
     @ResponseBody
     @JsonView(Feature.class)
@@ -50,7 +70,15 @@ public class BackendFeaturesController {
         return feature;
     }
 
-    @RequestMapping(value = "/backend/features", params = "action=save",
+    /**
+     * Edit feature feature.
+     *
+     * @param id    the id
+     * @param name  the name
+     * @param model the model
+     * @return the feature
+     */
+    @RequestMapping(value = BACKEND_FEATURES_PAGE, params = SAVE_ACTION,
             method = RequestMethod.POST)
     @ResponseBody
     @JsonView(Feature.class)
@@ -64,7 +92,14 @@ public class BackendFeaturesController {
         return feature;
     }
 
-    @RequestMapping(value = "/backend/features", params = "action=remove",
+    /**
+     * Remove feature string.
+     *
+     * @param id    the id
+     * @param model the model
+     * @return the string
+     */
+    @RequestMapping(value = BACKEND_FEATURES_PAGE, params = REMOVE_ACTION,
             method = RequestMethod.POST)
     @ResponseBody
     public String removeFeature(@RequestParam final int id,
@@ -75,7 +110,6 @@ public class BackendFeaturesController {
         } catch (ServiceException e) {
             return "{ \"removeFailed\" : \"Can't remove feature: it is already assigned to product.\" }";
         }
-        //TODO: handle exception if already assigned to product
         return "{ \"id\" : \"" + id + "\" }";
     }
 }

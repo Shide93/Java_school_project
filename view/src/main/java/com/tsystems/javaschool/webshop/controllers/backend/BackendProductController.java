@@ -21,20 +21,23 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
+import static com.tsystems.javaschool.webshop.controllers.utils.StringConstants.*;
+
 /**
  * Created by Shide on 18.03.2016.
  */
 @Controller
 public class BackendProductController {
 
-    private static final String BACKEND_PRODUCT_PAGE = "/backend/products";
-    private static final String SELECTED_PRODUCT = "selectedProduct";
-    private static final String ADD_ACTION = "action=add";
-    private static final String SAVE_ACTION = "action=save";
-    private static final String REMOVE_ACTION = "action=remove";
-    private static final String REMOVE_FAILED = "removeFailed";
-    private static final String ADD_FEATURE_ACTION = "action=addFeature";
-    private static final String ADD_FEATURE_FAILED = "addFeatureFailed";
+    /**
+     * The constant BACKEND_PRODUCT_PAGE.
+     */
+    public static final String BACKEND_PRODUCT_PAGE = "/backend/products";
+    /**
+     * The constant SELECTED_PRODUCT.
+     */
+    public static final String SELECTED_PRODUCT = "selectedProduct";
+
     /**
      * The constant LOGGER.
      */
@@ -47,6 +50,9 @@ public class BackendProductController {
     @Autowired
     private ProductService productService;
 
+    /**
+     * The Category service.
+     */
     @Autowired
     private CategoryService categoryService;
     /**
@@ -55,6 +61,11 @@ public class BackendProductController {
     @Autowired
     private FeatureService featureService;
 
+    /**
+     * Populate model.
+     *
+     * @param model the model
+     */
     @ModelAttribute
     public final void populateModel(final Model model) {
         List<Product> products = productService.getAll();
@@ -69,6 +80,14 @@ public class BackendProductController {
         model.addAttribute("productFeature", productFeature);
     }
 
+    /**
+     * Gets product edit page.
+     *
+     * @param productId the product id
+     * @param products  the products
+     * @param model     the model
+     * @return the product edit page
+     */
     @RequestMapping(path = BACKEND_PRODUCT_PAGE, method = RequestMethod.GET)
     public final String getProductEditPage(@RequestParam(defaultValue = "0")
                                            final int productId,
@@ -88,6 +107,12 @@ public class BackendProductController {
         return BACKEND_PRODUCT_PAGE;
     }
 
+    /**
+     * Create product string.
+     *
+     * @param model the model
+     * @return the string
+     */
     @RequestMapping(path = BACKEND_PRODUCT_PAGE,
             params = ADD_ACTION, method = RequestMethod.POST)
     public final String createProduct(final Model model) {
@@ -100,15 +125,31 @@ public class BackendProductController {
 
     }
 
+    /**
+     * Save product string.
+     *
+     * @param product            the product
+     * @param redirectAttributes the redirect attributes
+     * @return the string
+     */
     @RequestMapping(path = BACKEND_PRODUCT_PAGE,
             params = SAVE_ACTION, method = RequestMethod.POST)
-    public final String saveProduct(@ModelAttribute(value = "product") final Product product,
+    public final String saveProduct(@ModelAttribute(value = "product")
+                                        final Product product,
                                     final RedirectAttributes redirectAttributes) {
         productService.update(product);
         return "redirect:" + BACKEND_PRODUCT_PAGE
                 + "?productId=" + product.getId();
     }
 
+    /**
+     * Remove product string.
+     *
+     * @param id                 the id
+     * @param redirectAttributes the redirect attributes
+     * @param model              the model
+     * @return the string
+     */
     @RequestMapping(path = BACKEND_PRODUCT_PAGE,
             params = REMOVE_ACTION, method = RequestMethod.POST)
     public final String removeProduct(@RequestParam final int id,
@@ -125,6 +166,14 @@ public class BackendProductController {
         return "redirect:" + BACKEND_PRODUCT_PAGE;
     }
 
+    /**
+     * Add feature string.
+     *
+     * @param productFeature     the product feature
+     * @param redirectAttributes the redirect attributes
+     * @param model              the model
+     * @return the string
+     */
     @RequestMapping(path = BACKEND_PRODUCT_PAGE,
             params = ADD_FEATURE_ACTION, method = RequestMethod.POST)
     public final String addFeature(@ModelAttribute(value = "productFeature")

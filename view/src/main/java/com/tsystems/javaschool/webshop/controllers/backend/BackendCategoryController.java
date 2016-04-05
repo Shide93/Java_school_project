@@ -19,6 +19,8 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.validation.Valid;
 import java.util.List;
 
+import static com.tsystems.javaschool.webshop.controllers.utils.StringConstants.*;
+
 /**
  * Category CRUD management in backend.
  */
@@ -31,10 +33,7 @@ public class BackendCategoryController {
             LogManager.getLogger(BackendCategoryController.class);
     private static final String BACKEND_CATEGORY_PAGE = "/backend/categories";
     private static final String SELECTED_CATEGORY = "selectedCategory";
-    private static final String ADD_ACTION = "action=add";
-    private static final String SAVE_ACTION = "action=save";
-    private static final String REMOVE_ACTION = "action=remove";
-    private static final String REMOVE_FAILED = "removeFailed";
+
 
     /**
      * The Category service.
@@ -48,7 +47,7 @@ public class BackendCategoryController {
         //TODO: make that list will be fetched once
     }
 
-    @RequestMapping(path = "backend/categories", method= RequestMethod.GET)
+    @RequestMapping(path = BACKEND_CATEGORY_PAGE, method= RequestMethod.GET)
     public final String getBackendCategory(@RequestParam(defaultValue = "-1")
                                            final int categoryId,
                                            @ModelAttribute
@@ -56,49 +55,49 @@ public class BackendCategoryController {
                                            final Model model) {
         if (categoryId == -1) {        //when enter page without params
             if (categories != null && categories.size() > 0) {
-                model.addAttribute("selectedCategory",
+                model.addAttribute(SELECTED_CATEGORY,
                         categoryService.get(categories.get(0).getId()));
             }
         } else {
             if (categoryId > 0) {                       //when choose category in sidebar
-                model.addAttribute("selectedCategory",
+                model.addAttribute(SELECTED_CATEGORY,
                         categoryService.get(categoryId));
             } else {
-                model.addAttribute("selectedCategory",
+                model.addAttribute(SELECTED_CATEGORY,
                         new Category());
             }
         }
-        return "backend/categories";
+        return BACKEND_CATEGORY_PAGE;
     }
 
-    @RequestMapping(path = "/backend/categories",
-            params = "action=add", method = RequestMethod.POST)
-    public final String addProduct(@ModelAttribute(value = "selectedCategory")
+    @RequestMapping(path = BACKEND_CATEGORY_PAGE,
+            params = ADD_ACTION, method = RequestMethod.POST)
+    public final String addProduct(@ModelAttribute(value = SELECTED_CATEGORY)
                                    @Valid final Category category,
                                    final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
 
-            return "/backend/categories";
+            return BACKEND_CATEGORY_PAGE;
         }
         categoryService.add(category);
-        return "redirect:/backend/categories?categoryId="+ category.getId();
+        return "redirect:" + BACKEND_CATEGORY_PAGE + "?categoryId="+ category.getId();
     }
 
-    @RequestMapping(path = "/backend/categories",
-            params = "action=save", method = RequestMethod.POST)
-    public final String saveProduct(@ModelAttribute(value = "selectedCategory")
+    @RequestMapping(path = BACKEND_CATEGORY_PAGE,
+            params = SAVE_ACTION, method = RequestMethod.POST)
+    public final String saveProduct(@ModelAttribute(value = SELECTED_CATEGORY)
                                     @Valid final Category category,
                                     final BindingResult bindingResult,
                                     final Model model) {
         if (bindingResult.hasErrors()) {
-            return "/backend/categories";
+            return BACKEND_CATEGORY_PAGE;
         }
         categoryService.update(category);
-        return "redirect:/backend/categories?categoryId="+ category.getId();
+        return "redirect:" + BACKEND_CATEGORY_PAGE + "?categoryId="+ category.getId();
     }
 
-    @RequestMapping(path = "/backend/categories",
-            params = "action=remove", method = RequestMethod.POST)
+    @RequestMapping(path = BACKEND_CATEGORY_PAGE,
+            params = REMOVE_ACTION, method = RequestMethod.POST)
     public final String removeCategory(@RequestParam final int id,
                                             final RedirectAttributes redirectAttributes) {
         try {
@@ -108,9 +107,9 @@ public class BackendCategoryController {
             LOGGER.warn(e.getMessage(), e);
             redirectAttributes.addAttribute(REMOVE_FAILED,
                     "Can't remove category: Category already has products");
-                return "redirect:/backend/categories?categoryId=" + id;
+                return "redirect:" + BACKEND_CATEGORY_PAGE + "?categoryId=" + id;
         }
 
-        return "redirect:/backend/categories";
+        return "redirect:" + BACKEND_CATEGORY_PAGE;
     }
 }

@@ -1,6 +1,5 @@
 package com.tsystems.javaschool.webshop.controllers.utils;
 
-import com.tsystems.javaschool.webshop.services.api.AccountService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;

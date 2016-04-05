@@ -35,6 +35,13 @@ public class CartController {
     private CartService cartService;
 
 
+    /**
+     * Create cart if none cart.
+     *
+     * @param cart the cart
+     * @param resp the resp
+     * @return the cart
+     */
     @ModelAttribute
     public final Cart createCartIfNone(final Cart cart,
                                        final HttpServletResponse resp) {
@@ -50,6 +57,13 @@ public class CartController {
         return cart;
     }
 
+    /**
+     * Gets item.
+     *
+     * @param cartItem the cart item
+     * @param cart     the cart
+     * @return the item
+     */
     @ModelAttribute
     public final CartProduct getItem(final CartProduct cartItem,
                                      @ModelAttribute final Cart cart) {
@@ -58,6 +72,13 @@ public class CartController {
         return cartItem;
     }
 
+    /**
+     * Gets cart page.
+     *
+     * @param cart  the cart
+     * @param model the model
+     * @return the cart page
+     */
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
     public final String getCartPage(@ModelAttribute("cart") final Cart cart,
                                     final Model model) {
@@ -85,12 +106,18 @@ public class CartController {
                                   @ModelAttribute final CartProduct cartItem,
                                   final Model model)
             throws OutOfStockException, ExistsInCartException {
-
-        //FIXME: if add to cart double times - exception
-
         return cartService.addToCart(cartItem);
     }
 
+    /**
+     * Edit cart item cart.
+     *
+     * @param cart     the cart
+     * @param cartItem the cart item
+     * @param model    the model
+     * @return the cart
+     * @throws OutOfStockException the out of stock exception
+     */
     @RequestMapping(value = "/cart", params = "action=edit",
             method = RequestMethod.POST)
     @ResponseBody
@@ -101,6 +128,14 @@ public class CartController {
         return cartService.editCartProduct(cartItem);
     }
 
+    /**
+     * Remove from cart cart.
+     *
+     * @param cart     the cart
+     * @param cartItem the cart item
+     * @param model    the model
+     * @return the cart
+     */
     @RequestMapping(value = "/cart", params = "action=remove",
             method = RequestMethod.POST)
     @ResponseBody
@@ -111,6 +146,12 @@ public class CartController {
         return cartService.removeFromCart(cartItem);
     }
 
+    /**
+     * Handle out of stock exception out of stock exception.
+     *
+     * @param e the e
+     * @return the out of stock exception
+     */
     @ExceptionHandler(OutOfStockException.class)
     @ResponseBody
     @JsonView(OutOfStockException.class)
@@ -120,6 +161,12 @@ public class CartController {
         return e;
     }
 
+    /**
+     * Handle exists in cart exception exists in cart exception.
+     *
+     * @param e the e
+     * @return the exists in cart exception
+     */
     @ExceptionHandler(ExistsInCartException.class)
     @ResponseBody
     @JsonView(ExistsInCartException.class)

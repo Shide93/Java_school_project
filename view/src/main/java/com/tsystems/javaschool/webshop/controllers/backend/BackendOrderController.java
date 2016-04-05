@@ -18,18 +18,40 @@ import java.util.List;
  */
 @Controller
 public class BackendOrderController {
+
+    /**
+     * The constant BACKEND_ORDERS_PAGE.
+     */
+    private static final String BACKEND_ORDERS_PAGE = "/backend/orders";
+    /**
+     * The constant SELECTED_ORDER.
+     */
+    private static final String SELECTED_ORDER = "selectedOrder";
     /**
      * The Order service.
      */
     @Autowired
     private OrderService orderService;
 
+    /**
+     * Gets order list.
+     *
+     * @return the order list
+     */
     @ModelAttribute(value = "orders")
     public final List<Order> getOrderList() {
         return orderService.getAll();
     }
 
-    @RequestMapping(value = "/backend/orders", method = RequestMethod.GET)
+    /**
+     * Gets order.
+     *
+     * @param orderId the order id
+     * @param orders  the orders
+     * @param model   the model
+     * @return the order
+     */
+    @RequestMapping(value = BACKEND_ORDERS_PAGE, method = RequestMethod.GET)
     public final String getOrder(@RequestParam(defaultValue = "-1")
                                      final int orderId,
                                  @ModelAttribute(value = "orders")
@@ -37,24 +59,31 @@ public class BackendOrderController {
                                  final Model model) {
         if (orderId == -1) {       //when enter page without params
             if (orders != null && orders.size() > 0) {
-                model.addAttribute("selectedOrder", orders.get(0));
+                model.addAttribute(SELECTED_ORDER, orders.get(0));
             }
         } else {
             if (orderId > 0) {    //when choose order in sidebar
-                model.addAttribute("selectedOrder",
+                model.addAttribute(SELECTED_ORDER,
                         orderService.get(orderId));
             } else {
-                model.addAttribute("selectedOrder", new Order());
+                model.addAttribute(SELECTED_ORDER, new Order());
             }
         }
         model.addAttribute("orderStatuses", OrderStatus.values());
-        return "backend/orders";
+        return BACKEND_ORDERS_PAGE;
     }
 
-    @RequestMapping(value = "/backend/orders", method = RequestMethod.POST)
+    /**
+     * Gets order.
+     *
+     * @param id     the id
+     * @param status the status
+     * @return the order
+     */
+    @RequestMapping(value = BACKEND_ORDERS_PAGE, method = RequestMethod.POST)
     public final String getOrder(@RequestParam final int id,
                                  @RequestParam final OrderStatus status) {
         orderService.changeStatus(id, status);
-        return "redirect:/backend/orders?orderId=" + id;
+        return "redirect:" + BACKEND_ORDERS_PAGE + "?orderId=" + id;
     }
 }
